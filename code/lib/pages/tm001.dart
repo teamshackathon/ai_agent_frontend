@@ -1,5 +1,5 @@
 import 'package:code/data/room/room.dart';
-import 'package:code/data/user/user.dart';
+import 'package:code/data/person/person.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -8,7 +8,7 @@ class TeacherMain extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final status = ref.watch(userStatusProvider);
+    final status = ref.watch(personStatusProvider);
     final rooms = ref.watch(roomsProvider);
     final displaySize = MediaQuery.of(context).size;
 

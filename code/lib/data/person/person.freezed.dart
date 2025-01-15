@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'user.dart';
+part of 'person.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,45 +14,45 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-Person _$UserFromJson(Map<String, dynamic> json) {
-  return _User.fromJson(json);
+Person _$PersonFromJson(Map<String, dynamic> json) {
+  return _Person.fromJson(json);
 }
 
 /// @nodoc
-mixin _$User {
+mixin _$Person {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get role => throw _privateConstructorUsedError;
   List<String> get roomIdList => throw _privateConstructorUsedError;
 
-  /// Serializes this User to a JSON map.
+  /// Serializes this Person to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of User
+  /// Create a copy of Person
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $UserCopyWith<Person> get copyWith => throw _privateConstructorUsedError;
+  $PersonCopyWith<Person> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UserCopyWith<$Res> {
-  factory $UserCopyWith(Person value, $Res Function(Person) then) =
-      _$UserCopyWithImpl<$Res, Person>;
+abstract class $PersonCopyWith<$Res> {
+  factory $PersonCopyWith(Person value, $Res Function(Person) then) =
+      _$PersonCopyWithImpl<$Res, Person>;
   @useResult
   $Res call({String id, String name, String role, List<String> roomIdList});
 }
 
 /// @nodoc
-class _$UserCopyWithImpl<$Res, $Val extends Person>
-    implements $UserCopyWith<$Res> {
-  _$UserCopyWithImpl(this._value, this._then);
+class _$PersonCopyWithImpl<$Res, $Val extends Person>
+    implements $PersonCopyWith<$Res> {
+  _$PersonCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of User
+  /// Create a copy of Person
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -84,23 +84,24 @@ class _$UserCopyWithImpl<$Res, $Val extends Person>
 }
 
 /// @nodoc
-abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
-  factory _$$UserImplCopyWith(
-          _$UserImpl value, $Res Function(_$UserImpl) then) =
-      __$$UserImplCopyWithImpl<$Res>;
+abstract class _$$PersonImplCopyWith<$Res> implements $PersonCopyWith<$Res> {
+  factory _$$PersonImplCopyWith(
+          _$PersonImpl value, $Res Function(_$PersonImpl) then) =
+      __$$PersonImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id, String name, String role, List<String> roomIdList});
 }
 
 /// @nodoc
-class __$$UserImplCopyWithImpl<$Res>
-    extends _$UserCopyWithImpl<$Res, _$UserImpl>
-    implements _$$UserImplCopyWith<$Res> {
-  __$$UserImplCopyWithImpl(_$UserImpl _value, $Res Function(_$UserImpl) _then)
+class __$$PersonImplCopyWithImpl<$Res>
+    extends _$PersonCopyWithImpl<$Res, _$PersonImpl>
+    implements _$$PersonImplCopyWith<$Res> {
+  __$$PersonImplCopyWithImpl(
+      _$PersonImpl _value, $Res Function(_$PersonImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of User
+  /// Create a copy of Person
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -110,7 +111,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? role = null,
     Object? roomIdList = null,
   }) {
-    return _then(_$UserImpl(
+    return _then(_$PersonImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -133,8 +134,8 @@ class __$$UserImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$UserImpl extends _User {
-  const _$UserImpl(
+class _$PersonImpl extends _Person {
+  const _$PersonImpl(
       {required this.id,
       required this.name,
       required this.role,
@@ -142,8 +143,8 @@ class _$UserImpl extends _User {
       : _roomIdList = roomIdList,
         super._();
 
-  factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
-      _$$UserImplFromJson(json);
+  factory _$PersonImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PersonImplFromJson(json);
 
   @override
   final String id;
@@ -161,14 +162,14 @@ class _$UserImpl extends _User {
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, role: $role, roomIdList: $roomIdList)';
+    return 'Person(id: $id, name: $name, role: $role, roomIdList: $roomIdList)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserImpl &&
+            other is _$PersonImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.role, role) || other.role == role) &&
@@ -181,31 +182,31 @@ class _$UserImpl extends _User {
   int get hashCode => Object.hash(runtimeType, id, name, role,
       const DeepCollectionEquality().hash(_roomIdList));
 
-  /// Create a copy of User
+  /// Create a copy of Person
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$UserImplCopyWith<_$UserImpl> get copyWith =>
-      __$$UserImplCopyWithImpl<_$UserImpl>(this, _$identity);
+  _$$PersonImplCopyWith<_$PersonImpl> get copyWith =>
+      __$$PersonImplCopyWithImpl<_$PersonImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$UserImplToJson(
+    return _$$PersonImplToJson(
       this,
     );
   }
 }
 
-abstract class _User extends Person {
-  const factory _User(
+abstract class _Person extends Person {
+  const factory _Person(
       {required final String id,
       required final String name,
       required final String role,
-      required final List<String> roomIdList}) = _$UserImpl;
-  const _User._() : super._();
+      required final List<String> roomIdList}) = _$PersonImpl;
+  const _Person._() : super._();
 
-  factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
+  factory _Person.fromJson(Map<String, dynamic> json) = _$PersonImpl.fromJson;
 
   @override
   String get id;
@@ -216,10 +217,10 @@ abstract class _User extends Person {
   @override
   List<String> get roomIdList;
 
-  /// Create a copy of User
+  /// Create a copy of Person
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UserImplCopyWith<_$UserImpl> get copyWith =>
+  _$$PersonImplCopyWith<_$PersonImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
