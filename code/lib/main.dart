@@ -1,6 +1,7 @@
-import 'package:code/route/route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../route/route.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
