@@ -1,10 +1,8 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class StudentMain extends ConsumerWidget {
-  const StudentMain({super.key});
+class PreviewAnswer extends ConsumerWidget {
+  const PreviewAnswer({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -13,7 +11,7 @@ class StudentMain extends ConsumerWidget {
       body: Center(
         child: Column(
           children: [
-            Text('生徒用'),
+            Text('ss002'),
           ],
         ),
       ),
