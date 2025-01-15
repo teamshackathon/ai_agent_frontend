@@ -29,10 +29,10 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
 
 String _$userStatusHash() => r'70ceea8d722154a781f95d179bc91e9ff6459b26';
 
-/// See also [UserStatus].
-@ProviderFor(UserStatus)
-final userStatusProvider = NotifierProvider<UserStatus, User>.internal(
-  UserStatus.new,
+/// See also [PersonStatus].
+@ProviderFor(PersonStatus)
+final userStatusProvider = NotifierProvider<PersonStatus, Person>.internal(
+  PersonStatus.new,
   name: r'userStatusProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product') ? null : _$userStatusHash,
@@ -40,6 +40,6 @@ final userStatusProvider = NotifierProvider<UserStatus, User>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef _$UserStatus = Notifier<User>;
+typedef _$UserStatus = Notifier<Person>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

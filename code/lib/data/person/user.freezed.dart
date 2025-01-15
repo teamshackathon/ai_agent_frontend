@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-User _$UserFromJson(Map<String, dynamic> json) {
+Person _$UserFromJson(Map<String, dynamic> json) {
   return _User.fromJson(json);
 }
 
@@ -31,19 +31,19 @@ mixin _$User {
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
+  $UserCopyWith<Person> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $UserCopyWith<$Res> {
-  factory $UserCopyWith(User value, $Res Function(User) then) =
-      _$UserCopyWithImpl<$Res, User>;
+  factory $UserCopyWith(Person value, $Res Function(Person) then) =
+      _$UserCopyWithImpl<$Res, Person>;
   @useResult
   $Res call({String id, String name, String role, List<String> roomIdList});
 }
 
 /// @nodoc
-class _$UserCopyWithImpl<$Res, $Val extends User>
+class _$UserCopyWithImpl<$Res, $Val extends Person>
     implements $UserCopyWith<$Res> {
   _$UserCopyWithImpl(this._value, this._then);
 
@@ -197,7 +197,7 @@ class _$UserImpl extends _User {
   }
 }
 
-abstract class _User extends User {
+abstract class _User extends Person {
   const factory _User(
       {required final String id,
       required final String name,
