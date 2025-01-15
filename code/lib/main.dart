@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 import '../route/route.dart';
+import 'app.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
