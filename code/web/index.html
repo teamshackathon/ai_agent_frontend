@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="">
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -37,13 +37,13 @@
     const serviceWorkerVersion = {{flutter_service_worker_version}};
   </script>
   <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
+  <script>{{flutter_bootstrap_js}}</script>
 </head>
 <body>
   <script>
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
-      _flutter.loader.loadEntrypoint({
+      _flutter.loader.load({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
         },
