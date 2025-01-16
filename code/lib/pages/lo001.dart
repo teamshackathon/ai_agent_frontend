@@ -24,9 +24,10 @@ class LoginPage extends HookConsumerWidget {
     final pass = useState<String>("");
     final displaySize = MediaQuery.of(context).size;
     final statusNot = ref.read(personStatusProvider.notifier);
-    final load = useState<bool>(false);
+    final registerLoad = useState<bool>(false);
+    final loginLoad = useState<bool>(false);
 
-    Future<void> tryAuth() async {
+    Future<void> registerFirebase() async {
       if (id.value == "") {
         Fluttertoast.showToast(msg: "アドレスが書かれていません");
         Logger().w("アドレスが書かれていません");
@@ -47,6 +48,31 @@ class LoginPage extends HookConsumerWidget {
         } catch (e) {
           Fluttertoast.showToast(msg: "登録できませんでした");
           Logger().w("登録できませんでした");
+        }
+      }
+    }
+
+    Future<void> loginFirebase() async{
+      if (id.value == "") {
+        Fluttertoast.showToast(msg: "アドレスが書かれていません");
+        Logger().w("アドレスが書かれていません");
+      } else if (pass.value.length < 6) {
+        Fluttertoast.showToast(msg: "パスは６字以上にしてください");
+        Logger().w("パスは６字以上にしてください");
+      } else {
+        try {
+          final FirebaseAuth auth = FirebaseAuth.instance;
+          final UserCredential result =
+          await auth.signInWithEmailAndPassword(
+            email: id.value,
+            password: pass.value,
+          );
+          final User user = result.user!;
+          Logger().i(user.toString());
+          Fluttertoast.showToast(msg: "ログイン成功！");
+        } catch (e) {
+          Fluttertoast.showToast(msg: "ログインできませんでした");
+          Logger().w("ログインできませんでした");
         }
       }
     }
@@ -77,33 +103,30 @@ class LoginPage extends HookConsumerWidget {
               ),
             ),
             LoadingButton(
-              text: "テスト",
+              text: "登録",
               width: displaySize.width * 0.28,
               height: displaySize.width * 0.07,
-              isLoading: load.value,
-              // onPressed: () async {
-              //   load.value = true;
-              //   var json = searchDummyList(id.value, "id", dummyUserList);
-              //   if (json != "{}") {
-              //     var person = Person.fromJson(convert.jsonDecode(json));
-              //     if (person.id == "1") {
-              //       statusNot.write(person);
-              //       var roomsJson =
-              //           fetchDummyList(person.roomIdList, "id", dummyRoomList);
-              //       mapListToRooms(ref, convert.jsonDecode(roomsJson)["data"]);
-              //       context.push(Routes.teacherMain);
-              //     } else if (person.id == "2") {
-              //       statusNot.write(person);
-              //       var roomsJson =
-              //           fetchDummyList(person.roomIdList, "id", dummyRoomList);
-              //       mapListToRooms(ref, convert.jsonDecode(roomsJson)["data"]);
-              //       context.push(Routes.studentMain);
-              //     }
-              //   }
-              //   load.value = false;
-              // },
+              isLoading: registerLoad.value,
+              enabled: !loginLoad.value,
               onPressed: () async {
-                await tryAuth();
+                registerLoad.value = true;
+                await registerFirebase();
+                registerLoad.value = false;
+              },
+            ),
+            SizedBox(
+              height: displaySize.width * 0.05,
+            ),
+            LoadingButton(
+              text: "ログイン",
+              width: displaySize.width * 0.28,
+              height: displaySize.width * 0.07,
+              isLoading: loginLoad.value,
+              enabled: !registerLoad.value,
+              onPressed: () async {
+                loginLoad.value = true;
+                await loginFirebase();
+                loginLoad.value = false;
               },
             ),
           ],
