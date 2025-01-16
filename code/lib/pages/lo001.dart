@@ -23,7 +23,6 @@ class LoginPage extends HookConsumerWidget {
     final id = useState<String>("");
     final pass = useState<String>("");
     final displaySize = MediaQuery.of(context).size;
-    final statusNot = ref.read(personStatusProvider.notifier);
     final registerLoad = useState<bool>(false);
     final loginLoad = useState<bool>(false);
 
