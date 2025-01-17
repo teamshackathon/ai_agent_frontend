@@ -1,9 +1,6 @@
 name: Dart Format Check
 
 on: 
-  push:
-    branches:
-      - AAHGC-26_flutter-run
   pull_request:
     branches:
       - stg
