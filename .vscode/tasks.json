@@ -68,7 +68,7 @@
         {
             "label": "dartコードの整形",
             "type": "shell",
-            "command": "flutter format lib",
+            "command": "dart format lib",
             "args": [],
             "problemMatcher": [],
         }
