@@ -20,7 +20,6 @@ class Person with _$Person {
   factory Person.fromJson(Map<String, dynamic> json) => _$PersonFromJson(json);
 }
 
-
 @Riverpod(keepAlive: true)
 class PersonStatus extends _$PersonStatus {
   @override
@@ -30,4 +29,3 @@ class PersonStatus extends _$PersonStatus {
 
   void write(Person person) => state = person;
 }
-
