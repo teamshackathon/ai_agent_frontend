@@ -18,12 +18,12 @@ String fetchDummyList(
   List<Map<String, dynamic>> list,
 ) {
   var itemList = [];
-  for(var id in idList){
-    for(var m in list){
-      if(m[column] == id)itemList.add(m);
+  for (var id in idList) {
+    for (var m in list) {
+      if (m[column] == id) itemList.add(m);
     }
   }
-  var map = {"data":itemList};
+  var map = {"data": itemList};
   return convert.json.encode(map);
 }
 
@@ -34,7 +34,12 @@ List<Map<String, dynamic>> dummyUserList = [
     "role": "教師",
     "roomIdList": ["1", "3", "4"]
   },
-  {"id": "2", "name": "生徒テスト", "role": "生徒", "roomIdList": ["2", "4"]},
+  {
+    "id": "2",
+    "name": "生徒テスト",
+    "role": "生徒",
+    "roomIdList": ["2", "4"]
+  },
 ];
 
 List<Map<String, dynamic>> dummyRoomList = [

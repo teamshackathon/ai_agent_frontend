@@ -9,13 +9,12 @@ part 'lesson.g.dart';
 class Lesson with _$Lesson {
   const Lesson._();
 
-  const factory Lesson({
-    required String id,
-    required int count,
-    required String roomId,
-    required String status,
-    required String quizId
-  }) = _Lesson;
+  const factory Lesson(
+      {required String id,
+      required int count,
+      required String roomId,
+      required String status,
+      required String quizId}) = _Lesson;
 
   factory Lesson.fromJson(Map<String, dynamic> json) => _$LessonFromJson(json);
 }
@@ -27,5 +26,5 @@ class Lessons extends _$Lessons {
 
   void reset() => state = [];
 
-  void add(Lesson lesson) => state = [...state , lesson];
+  void add(Lesson lesson) => state = [...state, lesson];
 }
