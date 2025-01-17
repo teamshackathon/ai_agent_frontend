@@ -36,7 +36,6 @@ class Routes {
 ///　ルータークラス
 @riverpod
 class Router extends _$Router {
-
   @override
   GoRouter build() {
     // ログイン状態に応じて、自動で画面遷移

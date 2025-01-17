@@ -7,7 +7,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 final authProvider = Provider<FirebaseAuth>((ref) => FirebaseAuth.instance);
 
 /// ログイン状態監視用プロバイダー
-final authStateProvider = StreamProvider<User?>((ref){
+final authStateProvider = StreamProvider<User?>((ref) {
   final firebaseAuth = ref.watch(authProvider);
   return firebaseAuth.authStateChanges();
 });

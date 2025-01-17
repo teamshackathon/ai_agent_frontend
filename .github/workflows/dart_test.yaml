@@ -1,0 +1,36 @@
+name: Dart Format Check
+
+on: 
+  pull_request:
+    branches:
+      - stg
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.27.1'
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Run Dart format and capture output
+      id: dart-format
+      run: |
+        dart format -o none lib > format_output.txt
+        cat format_output.txt
+
+    - name: Fail if formatting is required
+      run: |
+        if grep -q "Changed" format_output.txt; then
+          echo "Code formatting is required. Please run 'dart format lib' and commit the changes."
+          exit 1
+        fi
+      shell: bash
