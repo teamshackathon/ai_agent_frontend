@@ -6,7 +6,7 @@ part of 'route.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$routerHash() => r'9a47a8e665da0d8eab516c2f0f6346b013fc36c6';
+String _$routerHash() => r'd228de2b1866db3473e3269c0e78b4624f11097a';
 
 ///　ルータークラス
 ///

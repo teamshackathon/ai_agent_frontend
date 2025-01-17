@@ -9,6 +9,7 @@ part 'person.g.dart';
 class Person with _$Person {
   const Person._();
 
+  /// テスト
   const factory Person({
     required String id,
     required String name,
@@ -19,6 +20,7 @@ class Person with _$Person {
   factory Person.fromJson(Map<String, dynamic> json) => _$PersonFromJson(json);
 }
 
+
 @Riverpod(keepAlive: true)
 class PersonStatus extends _$PersonStatus {
   @override
@@ -28,3 +30,4 @@ class PersonStatus extends _$PersonStatus {
 
   void write(Person person) => state = person;
 }
+
