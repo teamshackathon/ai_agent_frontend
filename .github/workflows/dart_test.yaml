@@ -24,5 +24,16 @@ jobs:
     - name: Install dependencies
       run: flutter pub get
 
-    - name: Verify code format
-      run: dart format -o none lib
+    - name: Run Dart format and capture output
+      id: dart-format
+      run: |
+        dart format -o none lib > format_output.txt
+        cat format_output.txt
+
+    - name: Fail if formatting is required
+      run: |
+        if grep -q "Changed" format_output.txt; then
+          echo "Code formatting is required. Please run 'dart format lib' and commit the changes."
+          exit 1
+        fi
+      shell: bash
