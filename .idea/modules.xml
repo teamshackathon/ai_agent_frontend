@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/ai_agent_frontend.iml" filepath="$PROJECT_DIR$/.idea/ai_agent_frontend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/code_android.iml" filepath="$PROJECT_DIR$/android/code_android.iml" />
     </modules>
   </component>
 </project>
