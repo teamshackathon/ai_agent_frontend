@@ -1,0 +1,28 @@
+name: Dart Format Check
+
+on: 
+  push:
+    branches:
+      - AAHGC-26_flutter-run
+  pull_request:
+    branches:
+      - stg
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: 'latest'
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Verify code format
+      run: dart format -o none lib

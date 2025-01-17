@@ -59,16 +59,16 @@
             "problemMatcher": [],
         },
         {
-            "label": "flutterの起動(code)",
+            "label": "flutterの起動",
             "type": "shell",
-            "command": "cd code && flutter run -d ${input:device_id}",
+            "command": "flutter run -d ${input:device_id}",
             "args": [],
             "problemMatcher": [],
         },
         {
-            "label": "flutterの起動(flutter_application_1)",
+            "label": "dartコードの整形",
             "type": "shell",
-            "command": "cd flutter_application_1 && flutter run -d ${input:device_id}",
+            "command": "flutter format lib",
             "args": [],
             "problemMatcher": [],
         }
