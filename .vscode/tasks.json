@@ -36,6 +36,41 @@
             "command": "pull_request",
             "args": [],
             "problemMatcher": [],
+        },
+        {
+            "label": "flutterのデバイスの確認",
+            "type": "shell",
+            "command": "flutter devices",
+            "args": [],
+            "problemMatcher": [],
+        },
+        {
+            "label": "起動可能なAndroidのエミュレータの確認",
+            "type": "shell",
+            "command": "flutter emulators",
+            "args": [],
+            "problemMatcher": [],
+        },
+        {
+            "label": "Androidのエミュレータの起動",
+            "type": "shell",
+            "command": "flutter emulators --launch ${input:emulator_id}",
+            "args": [],
+            "problemMatcher": [],
+        },
+        {
+            "label": "flutterの起動(code)",
+            "type": "shell",
+            "command": "cd code && flutter run -d ${input:device_id}",
+            "args": [],
+            "problemMatcher": [],
+        },
+        {
+            "label": "flutterの起動(flutter_application_1)",
+            "type": "shell",
+            "command": "cd flutter_application_1 && flutter run -d ${input:device_id}",
+            "args": [],
+            "problemMatcher": [],
         }
     ],
     "inputs": [
@@ -49,6 +84,18 @@
             "type": "promptString",
             "id": "branch",
             "description": "ブランチ名を入力してください。",
+            "default": ""
+        },
+        {
+            "type": "promptString",
+            "id": "emulator_id",
+            "description": "エミュレータ名を入力してください。",
+            "default": ""
+        },
+        {
+            "type": "promptString",
+            "id": "device_id",
+            "description": "デバイス名を入力してください。",
             "default": ""
         }
     ]

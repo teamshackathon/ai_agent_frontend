@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "46244984723",
+    "project_id": "classistant-6f28f",
+    "storage_bucket": "classistant-6f28f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:46244984723:android:6dcf9e1b8bc28cf0b2da66",
+        "android_client_info": {
+          "package_name": "com.example.code"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "46244984723-n99mlhqkhlu09n45tbpi34vama3qkjv9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDe07GNb82zGFlEPS6Y2trbmAxi46vgd6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "46244984723-n99mlhqkhlu09n45tbpi34vama3qkjv9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
