@@ -59,9 +59,9 @@
             "problemMatcher": [],
         },
         {
-            "label": "flutterの起動",
+            "label": "flutterの起動(開発モード)",
             "type": "shell",
-            "command": "flutter run -d ${input:device_id}",
+            "command": "flutter run -d ${input:device_id} --dart-define=env=.env.development",
             "args": [],
             "problemMatcher": [],
         },
