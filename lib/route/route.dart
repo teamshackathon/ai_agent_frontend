@@ -1,7 +1,7 @@
 import 'package:code/firebase/provider/firebase_provider.dart';
-import 'package:code/pages/lo001.dart';
-import 'package:code/pages/sm001.dart';
-import 'package:code/pages/tm001.dart';
+import 'package:code/pages/login/login.dart';
+import 'package:code/pages/student/student_main.dart';
+import 'package:code/pages/teacher/teacher_main.dart';
 import 'package:code/pages/dr001.dart';
 import 'package:code/pages/dr002.dart';
 import 'package:code/pages/et001.dart';
@@ -19,11 +19,11 @@ part 'route.g.dart';
 /// ルート用ディレクトリ定数定義クラス
 
 class Routes {
-  static const String login = "/lo001";
-  static const String teacherMain = "/tm001";
-  static const String studentMain = "/sm001";
-  static const String makeQuizzes = "/mq001";
-  static const String editQuizzes = "/mq002";
+  static const String login = "/login";
+  static const String teacherMain = "/teacher";
+  static const String studentMain = "/student";
+  static const String makeQuizzes = "/quiz";
+  static const String editQuizzes = "/quiz/edit";
   static const String submitStatus = "/ss001";
   static const String previewAnswer = "/ss002";
   static const String editAnswer = "/ss003";
@@ -97,6 +97,18 @@ class Router extends _$Router {
         GoRoute(
           path: Routes.teacherMain,
           builder: (context, state) => TeacherMain(),
+          routes: [
+            GoRoute(
+              path: Routes.makeQuizzes,
+              builder: (context, state) => MakeQuizzes(),
+              routes: [
+                GoRoute(
+                  path: Routes.editQuizzes,
+                  builder: (context, state) => EditQuizzes(),
+                ),
+              ],
+            ),
+          ],
         ),
         GoRoute(
           path: Routes.studentMain,
