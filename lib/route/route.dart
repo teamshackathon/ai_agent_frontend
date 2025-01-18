@@ -19,9 +19,9 @@ part 'route.g.dart';
 /// ルート用ディレクトリ定数定義クラス
 
 class Routes {
-  static const String login = "/lo001";
-  static const String teacherMain = "/tm001";
-  static const String studentMain = "/sm001";
+  static const String login = "/login";
+  static const String teacherMain = "/teacher";
+  static const String studentMain = "/student";
   static const String makeQuizzes = "/mq001";
   static const String editQuizzes = "/mq002";
   static const String submitStatus = "/ss001";
