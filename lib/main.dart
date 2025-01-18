@@ -11,7 +11,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // 環境変数を読み込む
-  const envFile = String.fromEnvironment('env');
+  const envFile = '.env.development';
 
   // 環境変数を読み込む
   await dotenv.load(fileName: envFile);
