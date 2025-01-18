@@ -2,9 +2,11 @@ import 'package:code/data/room/room.dart';
 import 'package:code/data/person/person.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../firebase/auth/logout/logout_firebase.dart';
+import '../route/route.dart';
 import '../widget/loading_button.dart';
 
 class TeacherMain extends HookConsumerWidget {
@@ -32,6 +34,17 @@ class TeacherMain extends HookConsumerWidget {
           onPressed: () async {
             loading.value = true;
             await logoutFirebase();
+            loading.value = false;
+          },
+        ),
+        LoadingButton(
+          text: "次画面遷移",
+          width: displaySize.width * 0.28,
+          height: displaySize.width * 0.07,
+          isLoading: loading.value,
+          onPressed: () async {
+            loading.value = true;
+            context.go(Routes.makeQuizzes);
             loading.value = false;
           },
         ),
