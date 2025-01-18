@@ -113,7 +113,6 @@ class Router extends _$Router {
         GoRoute(
           path: Routes.studentMain,
           builder: (context, state) => StudentMain(),
-
         ),
       ],
       debugLogDiagnostics: false,
