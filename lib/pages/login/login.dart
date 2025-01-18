@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import '../firebase/auth/register/register_firebase.dart';
-import '../firebase/auth/login/login_firebase.dart';
-import '../widget/loading_button.dart';
+import '../../firebase/auth/register/register_firebase.dart';
+import '../../firebase/auth/login/login_firebase.dart';
+import '../../widget/loading_button.dart';
 
 class LoginPage extends HookWidget {
   const LoginPage({super.key});

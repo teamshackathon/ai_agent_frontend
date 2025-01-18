@@ -34,6 +34,8 @@ Future<void> loginFirebase({
     final User? user = result.user;
     if (user == null) throw Exception("通信に失敗しました");
     infoToast(toast: "ログイン成功", log: "ログイン成功");
+    infoToast(toast: "登録成功", log: result.toString());
+    infoToast(toast: "登録成功", log: auth.customAuthDomain);
   } catch (e) {
     //失敗は全部ここに行く
     warningToast(toast: e.toString(), log: e.toString());
