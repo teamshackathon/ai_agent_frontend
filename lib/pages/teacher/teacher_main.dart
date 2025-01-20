@@ -1,15 +1,10 @@
 import 'package:code/data/room/room.dart';
 import 'package:code/data/person/person.dart';
+import 'package:code/widget/base_page/base_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-// import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../firebase/auth/logout/logout_firebase.dart';
-// import '../../route/route.dart';
-import '../../widget/loading_button.dart';
-
-class TeacherMain extends HookConsumerWidget {
+class TeacherMain extends ConsumerWidget {
   const TeacherMain({super.key});
 
   @override
@@ -17,32 +12,24 @@ class TeacherMain extends HookConsumerWidget {
     final status = ref.watch(personStatusProvider);
     final rooms = ref.watch(roomsProvider);
     final displaySize = MediaQuery.of(context).size;
-    final loading = useState<bool>(false);
 
-    return Scaffold(
-      appBar: AppBar(),
+    return BasePage(
+      pageTitle: "教師メイン",
+
+      // childrenを縦に並べるWidget
       body: Column(children: [
-        LoadingButton(
-          text: "ログアウト",
-          width: displaySize.width * 0.28,
-          height: displaySize.width * 0.07,
-
-          // 読込中はここをtrue
-          isLoading: loading.value,
-
-          // 押されたときにログアウト処理
-          onPressed: () async {
-            loading.value = true;
-            await logoutFirebase();
-            loading.value = false;
-          },
-        ),
+        // status閲覧用
         SizedBox(
           width: displaySize.width * 0.8,
           height: displaySize.width * 0.1,
           child: Text(status.toString()),
         ),
+
+        // childをいい感じの大きさに変形するWidget
+        // Columnなどの中にListViewを入れたいときにないと怒られる
         Flexible(
+          // ListView : Widgetを並べて配置してくれる。スクロール機能付き
+          // builder : Widget一つ一つを宣言するわけじゃないならこの書き方
           child: ListView.builder(
             itemCount: rooms.length,
             itemBuilder: (context, index) => Card(

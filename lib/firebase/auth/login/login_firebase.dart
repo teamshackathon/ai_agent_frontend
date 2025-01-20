@@ -3,7 +3,9 @@
 // todo : タイムアウト実装
 // todo : エラーコード細分化
 
+import 'package:code/data/person/person.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../toast.dart';
 
@@ -13,6 +15,7 @@ import '../../../toast.dart';
 Future<void> loginFirebase({
   required String email,
   required String pass,
+  required WidgetRef ref,
 }) async {
   // try ~ catchでは例外が発生する処理を書く
   try {
@@ -33,9 +36,13 @@ Future<void> loginFirebase({
     // resultを確認して、userの中にデータが入っていればログイン
     final User? user = result.user;
     if (user == null) throw Exception("通信に失敗しました");
+    final item = await auth.currentUser?.getIdTokenResult();
     infoToast(toast: "ログイン成功", log: "ログイン成功");
     infoToast(toast: "登録成功", log: result.toString());
-    infoToast(toast: "登録成功", log: auth.customAuthDomain);
+    infoToast(toast: "登録成功", log: item.toString());
+    final statusNot = ref.read(personStatusProvider.notifier);
+    statusNot.write(Person(uid: user.uid, name: user.displayName ?? "", role: item?.claims?["role"], room: item?.claims?["room"]));
+    infoToast(toast: "登録成功", log: ref.read(personStatusProvider).toString());
   } catch (e) {
     //失敗は全部ここに行く
     warningToast(toast: e.toString(), log: e.toString());
