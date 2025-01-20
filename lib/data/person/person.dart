@@ -9,12 +9,14 @@ part 'person.g.dart';
 class Person with _$Person {
   const Person._();
 
-  /// テスト
+  /// 生徒、先生情報
   const factory Person({
-    required String id,
+    required String uid,
     required String name,
     required String role,
-    required List<String> roomIdList,
+    String? firstName,
+    String? familyName,
+    String? room,
   }) = _Person;
 
   factory Person.fromJson(Map<String, dynamic> json) => _$PersonFromJson(json);
@@ -23,9 +25,11 @@ class Person with _$Person {
 @Riverpod(keepAlive: true)
 class PersonStatus extends _$PersonStatus {
   @override
-  Person build() => Person(id: "", name: "", role: "", roomIdList: []);
+  Person build() => Person(uid: "", name: "", role: "");
 
-  void init() => state = Person(id: "", name: "", role: "", roomIdList: []);
+  ///stateを空リストに変更
+  void init() => state = Person(uid: "", name: "", role: "");
 
+  ///stateにpersonを上書き
   void write(Person person) => state = person;
 }

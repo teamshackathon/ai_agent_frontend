@@ -20,10 +20,12 @@ Person _$PersonFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Person {
-  String get id => throw _privateConstructorUsedError;
+  String get uid => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get role => throw _privateConstructorUsedError;
-  List<String> get roomIdList => throw _privateConstructorUsedError;
+  String? get firstName => throw _privateConstructorUsedError;
+  String? get familyName => throw _privateConstructorUsedError;
+  String? get room => throw _privateConstructorUsedError;
 
   /// Serializes this Person to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +41,13 @@ abstract class $PersonCopyWith<$Res> {
   factory $PersonCopyWith(Person value, $Res Function(Person) then) =
       _$PersonCopyWithImpl<$Res, Person>;
   @useResult
-  $Res call({String id, String name, String role, List<String> roomIdList});
+  $Res call(
+      {String uid,
+      String name,
+      String role,
+      String? firstName,
+      String? familyName,
+      String? room});
 }
 
 /// @nodoc
@@ -57,15 +65,17 @@ class _$PersonCopyWithImpl<$Res, $Val extends Person>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? uid = null,
     Object? name = null,
     Object? role = null,
-    Object? roomIdList = null,
+    Object? firstName = freezed,
+    Object? familyName = freezed,
+    Object? room = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
@@ -75,10 +85,18 @@ class _$PersonCopyWithImpl<$Res, $Val extends Person>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
-      roomIdList: null == roomIdList
-          ? _value.roomIdList
-          : roomIdList // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      firstName: freezed == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      familyName: freezed == familyName
+          ? _value.familyName
+          : familyName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      room: freezed == room
+          ? _value.room
+          : room // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -90,7 +108,13 @@ abstract class _$$PersonImplCopyWith<$Res> implements $PersonCopyWith<$Res> {
       __$$PersonImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String role, List<String> roomIdList});
+  $Res call(
+      {String uid,
+      String name,
+      String role,
+      String? firstName,
+      String? familyName,
+      String? room});
 }
 
 /// @nodoc
@@ -106,15 +130,17 @@ class __$$PersonImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? uid = null,
     Object? name = null,
     Object? role = null,
-    Object? roomIdList = null,
+    Object? firstName = freezed,
+    Object? familyName = freezed,
+    Object? room = freezed,
   }) {
     return _then(_$PersonImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
@@ -124,10 +150,18 @@ class __$$PersonImplCopyWithImpl<$Res>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
-      roomIdList: null == roomIdList
-          ? _value._roomIdList
-          : roomIdList // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      firstName: freezed == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      familyName: freezed == familyName
+          ? _value.familyName
+          : familyName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      room: freezed == room
+          ? _value.room
+          : room // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -136,33 +170,33 @@ class __$$PersonImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PersonImpl extends _Person {
   const _$PersonImpl(
-      {required this.id,
+      {required this.uid,
       required this.name,
       required this.role,
-      required final List<String> roomIdList})
-      : _roomIdList = roomIdList,
-        super._();
+      this.firstName,
+      this.familyName,
+      this.room})
+      : super._();
 
   factory _$PersonImpl.fromJson(Map<String, dynamic> json) =>
       _$$PersonImplFromJson(json);
 
   @override
-  final String id;
+  final String uid;
   @override
   final String name;
   @override
   final String role;
-  final List<String> _roomIdList;
   @override
-  List<String> get roomIdList {
-    if (_roomIdList is EqualUnmodifiableListView) return _roomIdList;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_roomIdList);
-  }
+  final String? firstName;
+  @override
+  final String? familyName;
+  @override
+  final String? room;
 
   @override
   String toString() {
-    return 'Person(id: $id, name: $name, role: $role, roomIdList: $roomIdList)';
+    return 'Person(uid: $uid, name: $name, role: $role, firstName: $firstName, familyName: $familyName, room: $room)';
   }
 
   @override
@@ -170,17 +204,20 @@ class _$PersonImpl extends _Person {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PersonImpl &&
-            (identical(other.id, id) || other.id == id) &&
+            (identical(other.uid, uid) || other.uid == uid) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.role, role) || other.role == role) &&
-            const DeepCollectionEquality()
-                .equals(other._roomIdList, _roomIdList));
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.familyName, familyName) ||
+                other.familyName == familyName) &&
+            (identical(other.room, room) || other.room == room));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, role,
-      const DeepCollectionEquality().hash(_roomIdList));
+  int get hashCode =>
+      Object.hash(runtimeType, uid, name, role, firstName, familyName, room);
 
   /// Create a copy of Person
   /// with the given fields replaced by the non-null parameter values.
@@ -200,22 +237,28 @@ class _$PersonImpl extends _Person {
 
 abstract class _Person extends Person {
   const factory _Person(
-      {required final String id,
+      {required final String uid,
       required final String name,
       required final String role,
-      required final List<String> roomIdList}) = _$PersonImpl;
+      final String? firstName,
+      final String? familyName,
+      final String? room}) = _$PersonImpl;
   const _Person._() : super._();
 
   factory _Person.fromJson(Map<String, dynamic> json) = _$PersonImpl.fromJson;
 
   @override
-  String get id;
+  String get uid;
   @override
   String get name;
   @override
   String get role;
   @override
-  List<String> get roomIdList;
+  String? get firstName;
+  @override
+  String? get familyName;
+  @override
+  String? get room;
 
   /// Create a copy of Person
   /// with the given fields replaced by the non-null parameter values.

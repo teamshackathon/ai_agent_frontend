@@ -7,27 +7,29 @@ part of 'person.dart';
 // **************************************************************************
 
 _$PersonImpl _$$PersonImplFromJson(Map<String, dynamic> json) => _$PersonImpl(
-      id: json['id'] as String,
+      uid: json['uid'] as String,
       name: json['name'] as String,
       role: json['role'] as String,
-      roomIdList: (json['roomIdList'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
+      firstName: json['firstName'] as String?,
+      familyName: json['familyName'] as String?,
+      room: json['room'] as String?,
     );
 
 Map<String, dynamic> _$$PersonImplToJson(_$PersonImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'uid': instance.uid,
       'name': instance.name,
       'role': instance.role,
-      'roomIdList': instance.roomIdList,
+      'firstName': instance.firstName,
+      'familyName': instance.familyName,
+      'room': instance.room,
     };
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$personStatusHash() => r'8b97f195f7aafd768e34f9d48bb2accb73da214b';
+String _$personStatusHash() => r'36a413a2df668ed633b28c26bab08f75ff1b2148';
 
 /// See also [PersonStatus].
 @ProviderFor(PersonStatus)
