@@ -1,5 +1,6 @@
 // todo : email_validatorいる？
 
+import 'package:code/firebase/firestore/get_subject.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -101,6 +102,7 @@ class LoginPage extends HookConsumerWidget {
               onPressed: () async {
                 loginLoad.value = true;
                 await loginFirebase(email: id.value, pass: pass.value, ref: ref);
+                getSubjects(ref: ref);
                 loginLoad.value = false;
               },
             ),

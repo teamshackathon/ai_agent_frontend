@@ -17,6 +17,7 @@ Future<void> loginFirebase({
   required String pass,
   required WidgetRef ref,
 }) async {
+  final statusNot = ref.read(personStatusProvider.notifier);
   // try ~ catchでは例外が発生する処理を書く
   try {
     // 失敗してそうなところでthrowを書くと、以降の処理をやめて、catchまで行く
@@ -36,13 +37,20 @@ Future<void> loginFirebase({
     // resultを確認して、userの中にデータが入っていればログイン
     final User? user = result.user;
     if (user == null) throw Exception("通信に失敗しました");
+
+    // authのclaimsを取りに行く
     final item = await auth.currentUser?.getIdTokenResult();
+    if (item == null) throw Exception("情報取得に失敗しました");
+
+    // 取ってきたデータからpersonStatusを更新
+    statusNot.write(Person(
+      uid: user.uid,
+      name: user.displayName ?? "",
+      role: item.claims?["role"],
+      room: item.claims?["room"],
+    ));
+
     infoToast(toast: "ログイン成功", log: "ログイン成功");
-    infoToast(toast: "登録成功", log: result.toString());
-    infoToast(toast: "登録成功", log: item.toString());
-    final statusNot = ref.read(personStatusProvider.notifier);
-    statusNot.write(Person(uid: user.uid, name: user.displayName ?? "", role: item?.claims?["role"], room: item?.claims?["room"]));
-    infoToast(toast: "登録成功", log: ref.read(personStatusProvider).toString());
   } catch (e) {
     //失敗は全部ここに行く
     warningToast(toast: e.toString(), log: e.toString());

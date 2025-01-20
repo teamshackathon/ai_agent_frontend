@@ -26,7 +26,7 @@ class Rooms extends _$Rooms {
   List<Room> build() => [];
 
   ///stateを空リストに変更
-  void reset() => state = [];
+  void init() => state = [];
 
   ///stateにRoomを追加
   void add(Room room) => state = [...state, room];
@@ -34,7 +34,7 @@ class Rooms extends _$Rooms {
 
 void mapListToRooms(WidgetRef ref, List<dynamic> mapList) {
   final roomsNot = ref.read(roomsProvider.notifier);
-  roomsNot.reset();
+  roomsNot.init();
   for (var map in mapList) {
     roomsNot.add(Room.fromJson(map));
   }
