@@ -101,7 +101,8 @@ class LoginPage extends HookConsumerWidget {
               enabled: !registerLoad.value,
               onPressed: () async {
                 loginLoad.value = true;
-                await loginFirebase(email: id.value, pass: pass.value, ref: ref);
+                await loginFirebase(
+                    email: id.value, pass: pass.value, ref: ref);
                 getSubjects(ref: ref);
                 loginLoad.value = false;
               },

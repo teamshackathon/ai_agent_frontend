@@ -27,7 +27,7 @@ Future<void> getSubjects({required WidgetRef ref}) async {
     // }
 
     roomsNot.init();
-    for(var d in dummyRoomList){
+    for (var d in dummyRoomList) {
       await Future.delayed(Duration(milliseconds: 500));
       roomsNot.add(Room.fromJson(d));
     }

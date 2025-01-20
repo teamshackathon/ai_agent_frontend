@@ -47,8 +47,11 @@ class Router extends _$Router {
 
     // authStateはStreamデータなので、whenDataで状態に応じた処理を書ける
     authState.whenData((user) {
-      initialLocation = user == null ? Routes.login
-          : status.role == "teacher" ? Routes.teacherMain : Routes.studentMain;
+      initialLocation = user == null
+          ? Routes.login
+          : status.role == "teacher"
+              ? Routes.teacherMain
+              : Routes.studentMain;
     });
 
     return GoRouter(
