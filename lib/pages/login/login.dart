@@ -1,17 +1,18 @@
 // todo : email_validatorいる？
 
+import 'package:code/firebase/firestore/get_subject.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import '../../firebase/auth/register/register_firebase.dart';
 import '../../firebase/auth/login/login_firebase.dart';
 import '../../widget/loading_button.dart';
 
-class LoginPage extends HookWidget {
+class LoginPage extends HookConsumerWidget {
   const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // ウィジェットを画面の大きさに依存させるために画面サイズを検出
     final displaySize = MediaQuery.of(context).size;
     // 再描画可能にするためにhooksのuseStateで宣言
@@ -65,31 +66,31 @@ class LoginPage extends HookWidget {
               ),
             ),
 
-            // 待っている間に中央でインジケータが表示されるボタン
-            LoadingButton(
-              text: "登録",
-              width: displaySize.width * 0.28,
-              height: displaySize.width * 0.07,
-
-              // 読込中はここをtrue
-              isLoading: registerLoad.value,
-
-              // 無効化したいときはここをfalse
-              enabled: !loginLoad.value,
-
-              // 押されたときに登録処理
-              // 処理中は他の行動ができないように、registerLoadにtrueを入れる
-              onPressed: () async {
-                registerLoad.value = true;
-                await registerFirebase(email: id.value, pass: pass.value);
-                registerLoad.value = false;
-              },
-            ),
-
-            // SizedBoxは隙間がほしいときにも使える
-            SizedBox(
-              height: displaySize.width * 0.05,
-            ),
+            // // 待っている間に中央でインジケータが表示されるボタン
+            // LoadingButton(
+            //   text: "登録",
+            //   width: displaySize.width * 0.28,
+            //   height: displaySize.width * 0.07,
+            //
+            //   // 読込中はここをtrue
+            //   isLoading: registerLoad.value,
+            //
+            //   // 無効化したいときはここをfalse
+            //   enabled: !loginLoad.value,
+            //
+            //   // 押されたときに登録処理
+            //   // 処理中は他の行動ができないように、registerLoadにtrueを入れる
+            //   onPressed: () async {
+            //     registerLoad.value = true;
+            //     await registerFirebase(email: id.value, pass: pass.value);
+            //     registerLoad.value = false;
+            //   },
+            // ),
+            //
+            // // SizedBoxは隙間がほしいときにも使える
+            // SizedBox(
+            //   height: displaySize.width * 0.05,
+            // ),
 
             // 前述のLoadingButtonとやってることは一緒
             LoadingButton(
@@ -100,7 +101,9 @@ class LoginPage extends HookWidget {
               enabled: !registerLoad.value,
               onPressed: () async {
                 loginLoad.value = true;
-                await loginFirebase(email: id.value, pass: pass.value);
+                await loginFirebase(
+                    email: id.value, pass: pass.value, ref: ref);
+                getSubjects(ref: ref);
                 loginLoad.value = false;
               },
             ),

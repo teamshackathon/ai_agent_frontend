@@ -1,3 +1,4 @@
+import 'package:code/data/person/person.dart';
 import 'package:code/firebase/provider/firebase_provider.dart';
 import 'package:code/pages/login/login.dart';
 import 'package:code/pages/student/student_main.dart';
@@ -39,13 +40,18 @@ class Router extends _$Router {
   @override
   GoRouter build() {
     // ログイン状態に応じて、自動で画面遷移
-    // firebase側でログイン状態を保持しておいてくれるっぽい
+    // firebase側でログイン状態を保持しておいてくれる
     final authState = ref.watch(authStateProvider);
+    final status = ref.watch(personStatusProvider);
     String initialLocation = Routes.login;
 
     // authStateはStreamデータなので、whenDataで状態に応じた処理を書ける
     authState.whenData((user) {
-      initialLocation = user != null ? Routes.teacherMain : Routes.login;
+      initialLocation = user == null
+          ? Routes.login
+          : status.role == "teacher"
+              ? Routes.teacherMain
+              : Routes.studentMain;
     });
 
     return GoRouter(
