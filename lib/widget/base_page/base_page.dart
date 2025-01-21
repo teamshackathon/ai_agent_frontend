@@ -1,7 +1,9 @@
 // ページごとに共通する部分をまとめて変更できるように分離
 
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../dummy/data/dummy_provider.dart';
 import '../../firebase/auth/logout/logout_firebase.dart';
 
 /// ハンバーガーメニュー付きページの雛型
@@ -51,11 +53,13 @@ class BasePage extends StatelessWidget {
 }
 
 /// ハンバーガーメニューの中身
-class CustomDrawer extends StatelessWidget {
+class CustomDrawer extends ConsumerWidget {
   const CustomDrawer({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final dummyNot = ref.read(dummyModeProvider.notifier);
+
     return Drawer(
       child: ListView(
         children: [
@@ -63,6 +67,10 @@ class CustomDrawer extends StatelessWidget {
           DrawerHeader(child: Text("メニュー")),
 
           // 以下、メニュー内容
+          ListTile(
+            title: Text("ダミーモード"),
+            onTap: () => dummyNot.state = true,
+          ),
           ListTile(
             title: Text("ログアウト"),
             onTap: () async => await logoutFirebase(),

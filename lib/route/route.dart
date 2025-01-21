@@ -4,6 +4,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../data/person/person.dart';
 import '../data/firebase/firebase_provider.dart';
+import '../dummy/data/dummy_provider.dart';
+import '../dummy/route/dummy_route.dart';
 import '../pages/login/login.dart';
 import '../pages/dr001.dart';
 import '../pages/dr002.dart';
@@ -50,15 +52,21 @@ class Router extends _$Router {
     final status = ref.watch(personStatusProvider);
     String initialLocation = Routes.login;
 
+    // ダミーモード用
+    final dummy = ref.watch(dummyModeProvider);
+
     // ログイン状態で初期画面のページを選択。ここが変わると強制的に呼び戻される仕組みらしい
     // authStateはStreamデータなので、whenDataで状態に応じた処理を書ける
     // 画面乗っ取りもこれを使えばできるかも・・・？
     authState.whenData((user) {
-      initialLocation = user == null
-          ? Routes.login
-          : status.role == "teacher"
-              ? Routes.teacherMain
-              : Routes.studentMain;
+      if (user == null) {
+        initialLocation = Routes.login;
+      } else if (dummy) {
+        initialLocation = DummyRoutes.main;
+      } else {
+        initialLocation =
+            status.role == "teacher" ? Routes.teacherMain : Routes.studentMain;
+      }
     });
 
     return GoRouter(
@@ -78,6 +86,9 @@ class Router extends _$Router {
           path: Routes.login,
           builder: (context, state) => LoginPage(),
         ),
+
+        // ダミー用の分岐
+        if (dummy) dummyBranch,
 
         // 先生用のbottomBarを含めた分岐
         if (status.role == "teacher") teacherBranch,
@@ -121,10 +132,6 @@ class Router extends _$Router {
         GoRoute(
           path: "/dr002",
           builder: (context, state) => RequestFix(),
-        ),
-        GoRoute(
-          path: Routes.login,
-          builder: (context, state) => LoginPage(),
         ),
       ],
       debugLogDiagnostics: false,
