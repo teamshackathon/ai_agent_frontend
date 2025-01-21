@@ -28,7 +28,7 @@ class TeacherBottomBar extends StatelessWidget {
             selectedIcon: Icon(Icons.notifications),
           ),
         ],
-        onDestinationSelected: (index){
+        onDestinationSelected: (index) {
           navigationShell.goBranch(
             index,
             initialLocation: index == navigationShell.currentIndex,

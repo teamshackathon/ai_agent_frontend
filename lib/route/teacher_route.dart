@@ -10,9 +10,11 @@ import '../widget/bottom_bar/teacher_bottom_bar.dart';
 import 'route.dart';
 
 // 各分岐の画面遷移を保持しておくのに使う。各ブランチに一つ
-final _teacherProfileKey = GlobalKey<NavigatorState>(debugLabel: 'teacherProfile');
+final _teacherProfileKey =
+    GlobalKey<NavigatorState>(debugLabel: 'teacherProfile');
 final _teacherMainKey = GlobalKey<NavigatorState>(debugLabel: 'teacherMain');
-final _teacherNotificationKey = GlobalKey<NavigatorState>(debugLabel: 'teacherNotification');
+final _teacherNotificationKey =
+    GlobalKey<NavigatorState>(debugLabel: 'teacherNotification');
 
 // BottomNavigationBarみたいにルートをぶった切って遷移する実装が欲しい場合、
 // ShellRouteを用いて、branchごとにそれぞれのページの遷移状態を保持しておける
