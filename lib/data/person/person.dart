@@ -16,7 +16,7 @@ class Person with _$Person {
     required String role,
     String? firstName,
     String? familyName,
-    String? room,
+    List<Map<String, String>>? rooms,
   }) = _Person;
 
   factory Person.fromJson(Map<String, dynamic> json) => _$PersonFromJson(json);

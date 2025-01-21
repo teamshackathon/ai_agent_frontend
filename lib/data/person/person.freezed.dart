@@ -25,7 +25,7 @@ mixin _$Person {
   String get role => throw _privateConstructorUsedError;
   String? get firstName => throw _privateConstructorUsedError;
   String? get familyName => throw _privateConstructorUsedError;
-  String? get room => throw _privateConstructorUsedError;
+  List<Map<String, String>>? get rooms => throw _privateConstructorUsedError;
 
   /// Serializes this Person to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -47,7 +47,7 @@ abstract class $PersonCopyWith<$Res> {
       String role,
       String? firstName,
       String? familyName,
-      String? room});
+      List<Map<String, String>>? rooms});
 }
 
 /// @nodoc
@@ -70,7 +70,7 @@ class _$PersonCopyWithImpl<$Res, $Val extends Person>
     Object? role = null,
     Object? firstName = freezed,
     Object? familyName = freezed,
-    Object? room = freezed,
+    Object? rooms = freezed,
   }) {
     return _then(_value.copyWith(
       uid: null == uid
@@ -93,10 +93,10 @@ class _$PersonCopyWithImpl<$Res, $Val extends Person>
           ? _value.familyName
           : familyName // ignore: cast_nullable_to_non_nullable
               as String?,
-      room: freezed == room
-          ? _value.room
-          : room // ignore: cast_nullable_to_non_nullable
-              as String?,
+      rooms: freezed == rooms
+          ? _value.rooms
+          : rooms // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, String>>?,
     ) as $Val);
   }
 }
@@ -114,7 +114,7 @@ abstract class _$$PersonImplCopyWith<$Res> implements $PersonCopyWith<$Res> {
       String role,
       String? firstName,
       String? familyName,
-      String? room});
+      List<Map<String, String>>? rooms});
 }
 
 /// @nodoc
@@ -135,7 +135,7 @@ class __$$PersonImplCopyWithImpl<$Res>
     Object? role = null,
     Object? firstName = freezed,
     Object? familyName = freezed,
-    Object? room = freezed,
+    Object? rooms = freezed,
   }) {
     return _then(_$PersonImpl(
       uid: null == uid
@@ -158,10 +158,10 @@ class __$$PersonImplCopyWithImpl<$Res>
           ? _value.familyName
           : familyName // ignore: cast_nullable_to_non_nullable
               as String?,
-      room: freezed == room
-          ? _value.room
-          : room // ignore: cast_nullable_to_non_nullable
-              as String?,
+      rooms: freezed == rooms
+          ? _value._rooms
+          : rooms // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, String>>?,
     ));
   }
 }
@@ -175,8 +175,9 @@ class _$PersonImpl extends _Person {
       required this.role,
       this.firstName,
       this.familyName,
-      this.room})
-      : super._();
+      final List<Map<String, String>>? rooms})
+      : _rooms = rooms,
+        super._();
 
   factory _$PersonImpl.fromJson(Map<String, dynamic> json) =>
       _$$PersonImplFromJson(json);
@@ -191,12 +192,19 @@ class _$PersonImpl extends _Person {
   final String? firstName;
   @override
   final String? familyName;
+  final List<Map<String, String>>? _rooms;
   @override
-  final String? room;
+  List<Map<String, String>>? get rooms {
+    final value = _rooms;
+    if (value == null) return null;
+    if (_rooms is EqualUnmodifiableListView) return _rooms;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'Person(uid: $uid, name: $name, role: $role, firstName: $firstName, familyName: $familyName, room: $room)';
+    return 'Person(uid: $uid, name: $name, role: $role, firstName: $firstName, familyName: $familyName, rooms: $rooms)';
   }
 
   @override
@@ -211,13 +219,13 @@ class _$PersonImpl extends _Person {
                 other.firstName == firstName) &&
             (identical(other.familyName, familyName) ||
                 other.familyName == familyName) &&
-            (identical(other.room, room) || other.room == room));
+            const DeepCollectionEquality().equals(other._rooms, _rooms));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, uid, name, role, firstName, familyName, room);
+  int get hashCode => Object.hash(runtimeType, uid, name, role, firstName,
+      familyName, const DeepCollectionEquality().hash(_rooms));
 
   /// Create a copy of Person
   /// with the given fields replaced by the non-null parameter values.
@@ -242,7 +250,7 @@ abstract class _Person extends Person {
       required final String role,
       final String? firstName,
       final String? familyName,
-      final String? room}) = _$PersonImpl;
+      final List<Map<String, String>>? rooms}) = _$PersonImpl;
   const _Person._() : super._();
 
   factory _Person.fromJson(Map<String, dynamic> json) = _$PersonImpl.fromJson;
@@ -258,7 +266,7 @@ abstract class _Person extends Person {
   @override
   String? get familyName;
   @override
-  String? get room;
+  List<Map<String, String>>? get rooms;
 
   /// Create a copy of Person
   /// with the given fields replaced by the non-null parameter values.

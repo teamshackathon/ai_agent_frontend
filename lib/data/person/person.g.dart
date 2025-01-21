@@ -12,7 +12,9 @@ _$PersonImpl _$$PersonImplFromJson(Map<String, dynamic> json) => _$PersonImpl(
       role: json['role'] as String,
       firstName: json['firstName'] as String?,
       familyName: json['familyName'] as String?,
-      room: json['room'] as String?,
+      rooms: (json['rooms'] as List<dynamic>?)
+          ?.map((e) => Map<String, String>.from(e as Map))
+          .toList(),
     );
 
 Map<String, dynamic> _$$PersonImplToJson(_$PersonImpl instance) =>
@@ -22,7 +24,7 @@ Map<String, dynamic> _$$PersonImplToJson(_$PersonImpl instance) =>
       'role': instance.role,
       'firstName': instance.firstName,
       'familyName': instance.familyName,
-      'room': instance.room,
+      'rooms': instance.rooms,
     };
 
 // **************************************************************************
