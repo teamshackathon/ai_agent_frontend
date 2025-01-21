@@ -66,32 +66,6 @@ class LoginPage extends HookConsumerWidget {
               ),
             ),
 
-            // // 待っている間に中央でインジケータが表示されるボタン
-            // LoadingButton(
-            //   text: "登録",
-            //   width: displaySize.width * 0.28,
-            //   height: displaySize.width * 0.07,
-            //
-            //   // 読込中はここをtrue
-            //   isLoading: registerLoad.value,
-            //
-            //   // 無効化したいときはここをfalse
-            //   enabled: !loginLoad.value,
-            //
-            //   // 押されたときに登録処理
-            //   // 処理中は他の行動ができないように、registerLoadにtrueを入れる
-            //   onPressed: () async {
-            //     registerLoad.value = true;
-            //     await registerFirebase(email: id.value, pass: pass.value);
-            //     registerLoad.value = false;
-            //   },
-            // ),
-            //
-            // // SizedBoxは隙間がほしいときにも使える
-            // SizedBox(
-            //   height: displaySize.width * 0.05,
-            // ),
-
             // 前述のLoadingButtonとやってることは一緒
             LoadingButton(
               text: "ログイン",

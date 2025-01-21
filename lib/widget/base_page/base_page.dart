@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../firebase/auth/logout/logout_firebase.dart';
 
-/// ハンバーガーメニュー付きページ
+/// ハンバーガーメニュー付きページの雛型
 ///
 /// @args
 ///
@@ -43,9 +43,6 @@ class BasePage extends StatelessWidget {
 
       // ページ背景色
       backgroundColor: null,
-
-      // ボトムメニュー
-      bottomNavigationBar: null,
 
       // bodyにWidgetが入っていなければ、Blank Pageと表示される
       body: body ?? Center(child: Text("BlankPage")),

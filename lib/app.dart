@@ -13,7 +13,8 @@ class MyApp extends ConsumerWidget {
     return MaterialApp.router(
       title: 'clAssIstant',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        primaryColor: Colors.green,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
         useMaterial3: true,
       ),
       routerConfig: goRouter,
