@@ -1,20 +1,20 @@
-// ページごとに共通する部分をまとめて変更できるように分離
+// ダミーのヘッダー
 
+import 'package:code/dummy/data/dummy_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../dummy/data/dummy_provider.dart';
 import '../../firebase/auth/logout/logout_firebase.dart';
 
-/// ハンバーガーメニュー付きページの雛型
+/// ハンバーガーメニュー付きページの雛型(ダミー)
 ///
 /// @args
 ///
 /// (String?) pageTitle : ページ名
 ///
 /// (Widget?) body : ページ本体
-class BasePage extends StatelessWidget {
-  const BasePage({super.key, this.pageTitle, this.body});
+class DummyBasePage extends StatelessWidget {
+  const DummyBasePage({super.key, this.pageTitle, this.body});
 
   // ページタイトル
   final String? pageTitle;
@@ -38,7 +38,7 @@ class BasePage extends StatelessWidget {
       ),
 
       // ハンバーガーメニューの中身
-      drawer: CustomDrawer(),
+      drawer: DummyCustomDrawer(),
 
       // bodyに重なって表示されるボタン
       floatingActionButton: null,
@@ -53,8 +53,8 @@ class BasePage extends StatelessWidget {
 }
 
 /// ハンバーガーメニューの中身
-class CustomDrawer extends ConsumerWidget {
-  const CustomDrawer({super.key});
+class DummyCustomDrawer extends ConsumerWidget {
+  const DummyCustomDrawer({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -64,16 +64,19 @@ class CustomDrawer extends ConsumerWidget {
       child: ListView(
         children: [
           // メニューのヘッダー、childにWidgetを置くことで見た目をいじれる
-          DrawerHeader(child: Text("メニュー")),
+          DrawerHeader(child: Text("ダミーメニュー")),
 
           // 以下、メニュー内容
           ListTile(
-            title: Text("ダミーモード"),
-            onTap: () => dummyNot.state = true,
+            title: Text("通常モード"),
+            onTap: () => dummyNot.state = false,
           ),
           ListTile(
             title: Text("ログアウト"),
-            onTap: () async => await logoutFirebase(),
+            onTap: () async {
+              dummyNot.state = false;
+              await logoutFirebase();
+            },
           ),
         ],
       ),

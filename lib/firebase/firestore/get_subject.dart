@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code/data/person/person.dart';
-import 'package:code/data/room/room.dart';
-import 'package:code/dummy.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../toast.dart';
+import '../../data/person/person.dart';
+import '../../data/room/room.dart';
+import '../../mock_data.dart';
+import '../../toast.dart';
 
 /// FireStoreから授業一覧を取得
 ///

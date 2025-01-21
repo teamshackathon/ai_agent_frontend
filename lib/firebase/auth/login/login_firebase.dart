@@ -3,10 +3,10 @@
 // todo : タイムアウト実装
 // todo : エラーコード細分化
 
-import 'package:code/data/person/person.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../data/person/person.dart';
 import '../../../toast.dart';
 
 /// Firebaseへメアドとパスワードでログイン

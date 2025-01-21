@@ -1,24 +1,27 @@
-import 'package:code/data/person/person.dart';
-import 'package:code/firebase/provider/firebase_provider.dart';
-import 'package:code/pages/login/login.dart';
-import 'package:code/pages/student/student_main.dart';
-import 'package:code/pages/teacher/teacher_main.dart';
-import 'package:code/pages/dr001.dart';
-import 'package:code/pages/dr002.dart';
-import 'package:code/pages/et001.dart';
-import 'package:code/pages/mq001.dart';
-import 'package:code/pages/mq002.dart';
-import 'package:code/pages/ss001.dart';
-import 'package:code/pages/ss002.dart';
-import 'package:code/pages/ss003.dart';
-import 'package:code/pages/tq001.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../data/person/person.dart';
+import '../data/firebase/firebase_provider.dart';
+import '../dummy/data/dummy_provider.dart';
+import '../dummy/route/dummy_route.dart';
+import '../pages/login/login.dart';
+import '../pages/dr001.dart';
+import '../pages/dr002.dart';
+import '../pages/et001.dart';
+import '../pages/mq001.dart';
+import '../pages/mq002.dart';
+import '../pages/ss001.dart';
+import '../pages/ss002.dart';
+import '../pages/ss003.dart';
+import '../pages/tq001.dart';
+import 'student_route.dart';
+import 'teacher_route.dart';
 
 part 'route.g.dart';
 
 /// ルート用ディレクトリ定数定義クラス
-
 class Routes {
   static const String login = "/login";
   static const String teacherMain = "/teacher";
@@ -32,7 +35,11 @@ class Routes {
   static const String editText = "/et001";
   static const String displayResult = "/dr001";
   static const String requestFix = "/dr002";
+  static const String profile = "/profile";
+  static const String notification = "/notification";
 }
+
+final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 ///　ルータークラス
 @riverpod
@@ -45,21 +52,51 @@ class Router extends _$Router {
     final status = ref.watch(personStatusProvider);
     String initialLocation = Routes.login;
 
+    // ダミーモード用
+    final dummy = ref.watch(dummyModeProvider);
+
+    // ログイン状態で初期画面のページを選択。ここが変わると強制的に呼び戻される仕組みらしい
     // authStateはStreamデータなので、whenDataで状態に応じた処理を書ける
+    // 画面乗っ取りもこれを使えばできるかも・・・？
     authState.whenData((user) {
-      initialLocation = user == null
-          ? Routes.login
-          : status.role == "teacher"
-              ? Routes.teacherMain
-              : Routes.studentMain;
+      if (user == null) {
+        initialLocation = Routes.login;
+      } else if (dummy) {
+        initialLocation = DummyRoutes.main;
+      } else {
+        initialLocation =
+            status.role == "teacher" ? Routes.teacherMain : Routes.studentMain;
+      }
     });
 
     return GoRouter(
       initialLocation: initialLocation,
+
+      // 画面遷移を保持しておくのに使う。
+      navigatorKey: _rootNavigatorKey,
+
+      // エラーを吐いた時に連れてくるページをここで決めるっぽい（調査不足）
       redirect: (context, state) {
         return null;
       },
+
+      // 実際に遷移するページをここに並べる
       routes: [
+        GoRoute(
+          path: Routes.login,
+          builder: (context, state) => LoginPage(),
+        ),
+
+        // ダミー用の分岐
+        if (dummy) dummyBranch,
+
+        // 先生用のbottomBarを含めた分岐
+        if (status.role == "teacher") teacherBranch,
+
+        // 生徒用のbottomBarを含めた分岐
+        if (status.role == "student") studentBranch,
+
+        //
         GoRoute(
           path: Routes.makeQuizzes,
           builder: (context, state) => MakeQuizzes(),
@@ -95,30 +132,6 @@ class Router extends _$Router {
         GoRoute(
           path: "/dr002",
           builder: (context, state) => RequestFix(),
-        ),
-        GoRoute(
-          path: Routes.login,
-          builder: (context, state) => LoginPage(),
-        ),
-        GoRoute(
-          path: Routes.teacherMain,
-          builder: (context, state) => TeacherMain(),
-          routes: [
-            GoRoute(
-              path: Routes.makeQuizzes,
-              builder: (context, state) => MakeQuizzes(),
-              routes: [
-                GoRoute(
-                  path: Routes.editQuizzes,
-                  builder: (context, state) => EditQuizzes(),
-                ),
-              ],
-            ),
-          ],
-        ),
-        GoRoute(
-          path: Routes.studentMain,
-          builder: (context, state) => StudentMain(),
         ),
       ],
       debugLogDiagnostics: false,
