@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -21,6 +20,8 @@ class Person with _$Person {
   }) = _Person;
 
   factory Person.fromJson(Map<String, dynamic> json) => _$PersonFromJson(json);
+
+  String get folderName => "$firstName.$familyName".toLowerCase();
 }
 
 @Riverpod(keepAlive: true)

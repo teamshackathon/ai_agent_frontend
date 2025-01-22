@@ -15,7 +15,6 @@ import '../pages/mq002.dart';
 import '../pages/ss001.dart';
 import '../pages/ss002.dart';
 import '../pages/ss003.dart';
-import '../pages/student/student_main.dart';
 import '../pages/tq001.dart';
 import 'student_route.dart';
 import 'teacher_route.dart';
@@ -89,13 +88,13 @@ class Router extends _$Router {
         ),
 
         // ダミー用の分岐
-        dummyBranch,
+        if (dummy) dummyBranch,
 
         // 先生用のbottomBarを含めた分岐
-        teacherBranch,
+        if (status.role == "teacher") teacherBranch,
 
         // 生徒用のbottomBarを含めた分岐
-        studentBranch,
+        if (status.role == "student") studentBranch,
 
         //
         GoRoute(

@@ -10,7 +10,7 @@ Future<void> getStatusFromUser({
   // user情報がなければ何もしない
   if(user == null)return;
 
-  final statusNot = ref.read(personStatusProvider.notifier);
+  final personNot = ref.read(personStatusProvider.notifier);
 
   // userのclaimsを取りに行く
   final token = await user.getIdTokenResult();
@@ -23,7 +23,7 @@ Future<void> getStatusFromUser({
   }
 
   // 取ってきたデータからpersonStatusを更新
-  statusNot.write(Person(
+  personNot.write(Person(
     uid: user.uid,
     name: user.displayName ?? "",
     role: token.claims?["role"],
