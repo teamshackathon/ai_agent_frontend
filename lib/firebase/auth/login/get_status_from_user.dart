@@ -8,7 +8,7 @@ Future<void> getStatusFromUser({
   User? user,
 }) async {
   // user情報がなければ何もしない
-  if(user == null)return;
+  if (user == null) return;
 
   final personNot = ref.read(personStatusProvider.notifier);
 
@@ -16,10 +16,9 @@ Future<void> getStatusFromUser({
   final token = await user.getIdTokenResult();
 
   // jsonの中の配列が気持ち悪い形で出てくるから手直し
-  final List<Map<String,String>> list = [];
+  final List<Map<String, String>> list = [];
   for (var item in token.claims?["rooms"]) {
-    list.add(
-        {"room": item["room"] as String, "year": item["year"] as String});
+    list.add({"room": item["room"] as String, "year": item["year"] as String});
   }
 
   // 取ってきたデータからpersonStatusを更新

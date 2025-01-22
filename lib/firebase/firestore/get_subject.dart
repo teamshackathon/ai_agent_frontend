@@ -46,7 +46,8 @@ Future<void> getSubjects({required WidgetRef ref}) async {
           // firestoreには教科名と教師名が入っていると想定
           // roomsNot.add(Room(id: doc.id, name: doc.data()["name"], teacher: doc.data()["teacher"], year: r["year"]));
           infoToast(log: doc.id);
-          roomsNot.add(Room(id: doc.id,
+          roomsNot.add(Room(
+              id: doc.id,
               name: subject[doc.id] ?? "",
               teacher: "テスト太郎",
               year: r["year"]));
@@ -54,9 +55,8 @@ Future<void> getSubjects({required WidgetRef ref}) async {
       }, onError: (e) {
         warningToast(log: e);
         return throw Exception(e);
-        });
+      });
     }
-
 
     // roomsNot.init();
     // for (var d in dummyRoomList) {
