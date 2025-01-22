@@ -1,3 +1,4 @@
+import 'package:code/firebase/firestore/get_subject.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -24,6 +25,10 @@ class StudentMain extends ConsumerWidget {
           width: displaySize.width * 0.8,
           height: displaySize.width * 0.1,
           child: Text(status.toString()),
+        ),
+        ElevatedButton(
+          onPressed: () async => await getSubjects(ref: ref),
+          child: Text("get"),
         ),
 
         // childをいい感じの大きさに変形するWidget

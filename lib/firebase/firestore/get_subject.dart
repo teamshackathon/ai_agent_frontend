@@ -10,21 +10,24 @@ import '../../toast.dart';
 ///
 /// Futureと書かれていた時は、時間のかかる処理が含まれている（非同期処理）
 Future<void> getSubjects({required WidgetRef ref}) async {
-  final statusNot = ref.read(personStatusProvider.notifier);
+  final status = ref.read(personStatusProvider);
   final roomsNot = ref.read(roomsProvider.notifier);
   // try ~ catchでは例外が発生する処理を書く
   try {
-    // firestoreからデータを受け取るならこうなる？
-    // final doc = await FirebaseFirestore.instance
-    //     .collection("years")
-    //     .doc("2023")
-    //     .collection("rooms")
-    //     .doc(status.room)
-    //     .collection("subjects")
-    //     .get();
-    // for(var sub in doc){
-    //    docから科目を一つずつroomsにいれる処理
+    final doc = await FirebaseFirestore.instance
+        .collection("2024")
+        .doc("1-1").collection("common").get();
+
+    var data = doc.docs.map((e){
+      return e.data();
+    }).toList;
+    infoToast(log: data);
+    //
+    // for (var e in doc.docs) {
+    //   infoToast(log: e.id);
     // }
+
+
 
     roomsNot.init();
     for (var d in dummyRoomList) {

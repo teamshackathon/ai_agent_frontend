@@ -10,6 +10,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../data/person/person.dart';
 import '../../../toast.dart';
+import 'get_status_from_user.dart';
 
 /// Firebaseへメアドとパスワードでログイン
 ///
@@ -40,32 +41,9 @@ Future<void> loginFirebase({
     final User? user = result.user;
     if (user == null) throw Exception("通信に失敗しました");
 
-    // authのclaimsを取りに行く
-    final token = await auth.currentUser?.getIdTokenResult();
-    if (token == null) throw Exception("情報取得に失敗しました");
+    getStatusFromUser(ref: ref, user: user);
 
-    infoToast(log: token.claims?["rooms"][0].toString());
-    infoToast(log: token.claims?["rooms"][0].runtimeType);
-    // infoToast(log: item.claims?);
-
-    // jsonの中の配列が気持ち悪い形で出てくるから手直し
-    final List<Map<String,String>> list = [];
-    for (var item in token.claims?["rooms"]) {
-      list.add(
-          {"room": item["room"] as String, "year": item["year"] as String});
-    }
-
-    // 取ってきたデータからpersonStatusを更新
-    statusNot.write(Person(
-      uid: user.uid,
-      name: user.displayName ?? "",
-      role: token.claims?["role"],
-      firstName: token.claims?["first_name"],
-      familyName: token.claims?["family_name"],
-      rooms: list,
-    ));
-
-    infoToast(toast: "ログイン成功", log: token.claims?["rooms"].toString());
+    infoToast(toast: "ログイン成功", log: "ログイン成功");
   } catch (e) {
     //失敗は全部ここに行く
     warningToast(toast: e.toString(), log: e.toString());

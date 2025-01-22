@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -27,9 +28,13 @@ class PersonStatus extends _$PersonStatus {
   @override
   Person build() => Person(uid: "", name: "", role: "");
 
-  ///stateを空リストに変更
+  /// stateを空リストに変更
   void init() => state = Person(uid: "", name: "", role: "");
 
-  ///stateにpersonを上書き
+  /// stateにpersonを上書き
+  ///
+  /// riverpod内のデータを書き換える際は以下のような書き方が必要になる
+  ///
+  ///     ref.read(~.notifier).write(ref.watch(~).copyWith(name:~))
   void write(Person person) => state = person;
 }
