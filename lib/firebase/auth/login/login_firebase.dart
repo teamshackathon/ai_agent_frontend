@@ -3,11 +3,14 @@
 // todo : タイムアウト実装
 // todo : エラーコード細分化
 
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../data/person/person.dart';
 import '../../../toast.dart';
+import 'get_status_from_user.dart';
 
 /// Firebaseへメアドとパスワードでログイン
 ///
@@ -38,17 +41,7 @@ Future<void> loginFirebase({
     final User? user = result.user;
     if (user == null) throw Exception("通信に失敗しました");
 
-    // authのclaimsを取りに行く
-    final item = await auth.currentUser?.getIdTokenResult();
-    if (item == null) throw Exception("情報取得に失敗しました");
-
-    // 取ってきたデータからpersonStatusを更新
-    statusNot.write(Person(
-      uid: user.uid,
-      name: user.displayName ?? "",
-      role: item.claims?["role"],
-      room: item.claims?["room"],
-    ));
+    getStatusFromUser(ref: ref, user: user);
 
     infoToast(toast: "ログイン成功", log: "ログイン成功");
   } catch (e) {

@@ -13,7 +13,8 @@ class Room with _$Room {
   const factory Room({
     required String id,
     required String name,
-    required String teacherId,
+    required String teacher,
+    required String year,
   }) = _Room;
 
   factory Room.fromJson(Map<String, dynamic> json) => _$RoomFromJson(json);
@@ -32,10 +33,10 @@ class Rooms extends _$Rooms {
   void add(Room room) => state = [...state, room];
 }
 
-void mapListToRooms(WidgetRef ref, List<dynamic> mapList) {
-  final roomsNot = ref.read(roomsProvider.notifier);
-  roomsNot.init();
-  for (var map in mapList) {
-    roomsNot.add(Room.fromJson(map));
-  }
-}
+// void mapListToRooms(WidgetRef ref, List<dynamic> mapList) {
+//   final roomsNot = ref.read(roomsProvider.notifier);
+//   roomsNot.init();
+//   for (var map in mapList) {
+//     roomsNot.add(Room.fromJson(map));
+//   }
+// }

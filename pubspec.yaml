@@ -29,6 +29,9 @@ dependencies:
   firebase_auth: ^5.4.0
   flutter_dotenv: ^5.2.1
   cloud_firestore: ^5.6.1
+  google_fonts: ^6.2.1
+  flutter_svg: ^2.0.17
+  lottie: ^3.3.1
 
 dev_dependencies:
   flutter_test:
@@ -48,3 +51,4 @@ flutter:
     - .env.development
     - .env.staging
     - .env.production
+    - assets/

@@ -16,10 +16,12 @@ class Person with _$Person {
     required String role,
     String? firstName,
     String? familyName,
-    String? room,
+    List<Map<String, String>>? rooms,
   }) = _Person;
 
   factory Person.fromJson(Map<String, dynamic> json) => _$PersonFromJson(json);
+
+  String get folderName => "$firstName.$familyName".toLowerCase();
 }
 
 @Riverpod(keepAlive: true)
@@ -27,9 +29,13 @@ class PersonStatus extends _$PersonStatus {
   @override
   Person build() => Person(uid: "", name: "", role: "");
 
-  ///stateを空リストに変更
+  /// stateを空リストに変更
   void init() => state = Person(uid: "", name: "", role: "");
 
-  ///stateにpersonを上書き
+  /// stateにpersonを上書き
+  ///
+  /// riverpod内のデータを書き換える際は以下のような書き方が必要になる
+  ///
+  ///     ref.read(~.notifier).write(ref.watch(~).copyWith(name:~))
   void write(Person person) => state = person;
 }

@@ -9,14 +9,16 @@ part of 'room.dart';
 _$RoomImpl _$$RoomImplFromJson(Map<String, dynamic> json) => _$RoomImpl(
       id: json['id'] as String,
       name: json['name'] as String,
-      teacherId: json['teacherId'] as String,
+      teacher: json['teacher'] as String,
+      year: json['year'] as String,
     );
 
 Map<String, dynamic> _$$RoomImplToJson(_$RoomImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'teacherId': instance.teacherId,
+      'teacher': instance.teacher,
+      'year': instance.year,
     };
 
 // **************************************************************************
