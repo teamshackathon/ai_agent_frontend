@@ -1,8 +1,8 @@
-// todo : email_validatorいる？
-
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../firebase/auth/login/login_firebase.dart';
 import '../../firebase/firestore/get_subject.dart';
@@ -13,75 +13,122 @@ class LoginPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // ウィジェットを画面の大きさに依存させるために画面サイズを検出
     final displaySize = MediaQuery.of(context).size;
-    // 再描画可能にするためにhooksのuseStateで宣言
     final id = useState<String>("");
     final pass = useState<String>("");
     final registerLoad = useState<bool>(false);
     final loginLoad = useState<bool>(false);
 
-    // Scaffold(足場)はページのベースになる設定を行うWidget
-    // ・画面上部のバー(appBar)、今いるページ名を表示したりできる
-    // ・ページ本体(body)
-    // ・bodyに重なって表示されるボタン(floatingActionButton) etc
     return Scaffold(
-      // 子Widget(child)を親Widgetの中央に配置するWidget
-      // 画面の中央ではなく、親Widgetの中央に配置する点に注意
-      body: Center(
-        // childrenに書かれたWidget達を縦に並べるWidget
-        child: Column(
-          // childrenを中央揃えにしている
-          mainAxisAlignment: MainAxisAlignment.center,
-          // children間の幅を設定
-          spacing: 30,
-          children: <Widget>[
-            // 子Widgetのサイズをある程度指定するWidget
-            SizedBox(
-              // 大きさを画面サイズに依存して決定している
-              width: displaySize.width * 0.8,
-
-              // ユーザーが記入できるテキストフィールド
-              child: TextField(
-                // InputDecorationに色々追加することで、見た目等々がいじれる
-                decoration: const InputDecoration(labelText: 'メールアドレス'),
-
-                // ユーザーが何か文字を書くたびに呼び出される
-                onChanged: (str) {
-                  id.value = str;
-                },
-              ),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFF87CEFA), // 明るい空色
+              Color(0xFFB0E0E6), // 淡い青
+              Color(0xFFFFFFFF), // 白色（雲をイメージ）
+            ],
+            begin: Alignment.topCenter, // 上部から開始
+            end: Alignment.bottomCenter, // 下部に向かう
+          ),
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Manabiya AI",
+                  style: GoogleFonts.sawarabiGothic(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.pinkAccent,
+                  ),
+                ),
+                SizedBox(height: 20),
+                // SvgPicture.asset('assets/sakura.svg'),
+                Lottie.asset('assets/sakura.json'),
+                SizedBox(height: 20),
+                SizedBox(
+                  width: displaySize.width * 0.8,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      labelText: 'メールアドレス',
+                      labelStyle: TextStyle(
+                        color: Colors.pinkAccent,
+                        fontSize: 14,
+                      ),
+                      prefixIcon: Icon(Icons.email, color: Colors.pinkAccent),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide:
+                            BorderSide(color: Colors.pinkAccent, width: 1),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: BorderSide(color: Colors.pink, width: 2),
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                    ),
+                    onChanged: (str) {
+                      id.value = str;
+                    },
+                  ),
+                ),
+                SizedBox(height: 15),
+                SizedBox(
+                  width: displaySize.width * 0.8,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      labelText: 'パスワード',
+                      labelStyle: TextStyle(
+                        color: Colors.pinkAccent,
+                        fontSize: 14,
+                      ),
+                      prefixIcon: Icon(Icons.lock, color: Colors.pinkAccent),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide:
+                            BorderSide(color: Colors.pinkAccent, width: 1),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: BorderSide(color: Colors.pink, width: 2),
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                    ),
+                    obscureText: true,
+                    onChanged: (str) {
+                      pass.value = str;
+                    },
+                  ),
+                ),
+                SizedBox(height: 30),
+                LoadingButton(
+                  text: "ログイン",
+                  width: displaySize.width * 0.28,
+                  height: displaySize.width * 0.07,
+                  isLoading: loginLoad.value,
+                  enabled: !registerLoad.value,
+                  onPressed: () async {
+                    loginLoad.value = true;
+                    await loginFirebase(
+                        email: id.value, pass: pass.value, ref: ref);
+                    getSubjects(ref: ref);
+                    loginLoad.value = false;
+                  },
+                ),
+              ],
             ),
-
-            // ほとんど↑と同じ
-            SizedBox(
-              width: displaySize.width * 0.8,
-              child: TextField(
-                decoration: const InputDecoration(labelText: 'パスワード'),
-                // obscureTextをtrueにすると、入力された文字を画面上で隠せる
-                obscureText: true,
-                onChanged: (str) {
-                  pass.value = str;
-                },
-              ),
-            ),
-
-            // 前述のLoadingButtonとやってることは一緒
-            LoadingButton(
-              text: "ログイン",
-              width: displaySize.width * 0.28,
-              height: displaySize.width * 0.07,
-              isLoading: loginLoad.value,
-              enabled: !registerLoad.value,
-              onPressed: () async {
-                loginLoad.value = true;
-                await loginFirebase(
-                    email: id.value, pass: pass.value, ref: ref);
-                getSubjects(ref: ref);
-                loginLoad.value = false;
-              },
-            ),
-          ],
+          ),
         ),
       ),
     );
