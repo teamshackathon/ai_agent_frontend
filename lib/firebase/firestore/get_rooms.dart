@@ -51,7 +51,6 @@ Future<void> getSubjects({required WidgetRef ref}) async {
           );
         }
       }, onError: (e) {
-        warningToast(log: e);
         return throw Exception(e);
       });
     }
