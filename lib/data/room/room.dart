@@ -14,6 +14,7 @@ class Room with _$Room {
     required String name,
     required String teacher,
     required String year,
+    required String roomNumber,
   }) = _Room;
 
   factory Room.fromJson(Map<String, dynamic> json) => _$RoomFromJson(json);

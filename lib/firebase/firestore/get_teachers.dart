@@ -20,24 +20,25 @@ Map<String, String> subjects = {
 Future<void> getTeachers({required WidgetRef ref}) async {
   final teachersNot = ref.read(teachersProvider.notifier);
   final store = FirebaseFirestore.instance;
-  // try ~ catchでは例外が発生する処理を書く
   try {
+    // teachersProvider初期化
     teachersNot.init();
 
+    // firestoreのteachersフォルダ指定
     var docRef = store.collection("teachers");
 
+    // teachersからデータを持ってきた後に、teachersProviderに入れてく
     docRef.get().then((querySnapshot) {
       for (var doc in querySnapshot.docs) {
         teachersNot.add(
           Teacher(
             id: doc.id,
             name: doc.data()["name"],
-            teach: getTeachingList(doc.data()),
+            teach: _getTeachingList(doc.data()),
           ),
         );
       }
     }, onError: (e) {
-      warningToast(log: e);
       return throw Exception(e);
     });
   } catch (e) {
@@ -46,7 +47,8 @@ Future<void> getTeachers({required WidgetRef ref}) async {
   }
 }
 
-List<Map<String, String>> getTeachingList(Map<String, dynamic> data) {
+// storeに格納されていた担当クラス一覧を変換して返す
+List<Map<String, String>> _getTeachingList(Map<String, dynamic> data) {
   final List<Map<String, String>> list = [];
   for (var subject in subjects.keys) {
     if (data[subject] != null) {

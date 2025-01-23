@@ -17,7 +17,7 @@ Map<String, String> subject = {
 /// FireStoreから授業一覧を取得
 ///
 /// Futureと書かれていた時は、時間のかかる処理が含まれている（非同期処理）
-Future<void> getSubjects({required WidgetRef ref}) async {
+Future<void> getRooms({required WidgetRef ref}) async {
   final person = ref.watch(personStatusProvider);
   final teachersNot = ref.read(teachersProvider.notifier);
   final roomsNot = ref.read(roomsProvider.notifier);
@@ -45,8 +45,11 @@ Future<void> getSubjects({required WidgetRef ref}) async {
             Room(
               id: doc.id,
               name: subject[doc.id] ?? "",
-              teacher: teachersNot.inChargeOf(r["room"], r["year"], doc.id)?.name ?? "",
+              teacher:
+                  teachersNot.inChargeOf(r["room"], r["year"], doc.id)?.name ??
+                      "",
               year: r["year"],
+              roomNumber: r["room"],
             ),
           );
         }

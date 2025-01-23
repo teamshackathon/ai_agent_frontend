@@ -22,9 +22,6 @@ Lesson _$LessonFromJson(Map<String, dynamic> json) {
 mixin _$Lesson {
   String get id => throw _privateConstructorUsedError;
   int get count => throw _privateConstructorUsedError;
-  String get roomId => throw _privateConstructorUsedError;
-  String get status => throw _privateConstructorUsedError;
-  String get quizId => throw _privateConstructorUsedError;
 
   /// Serializes this Lesson to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,8 +37,7 @@ abstract class $LessonCopyWith<$Res> {
   factory $LessonCopyWith(Lesson value, $Res Function(Lesson) then) =
       _$LessonCopyWithImpl<$Res, Lesson>;
   @useResult
-  $Res call(
-      {String id, int count, String roomId, String status, String quizId});
+  $Res call({String id, int count});
 }
 
 /// @nodoc
@@ -61,9 +57,6 @@ class _$LessonCopyWithImpl<$Res, $Val extends Lesson>
   $Res call({
     Object? id = null,
     Object? count = null,
-    Object? roomId = null,
-    Object? status = null,
-    Object? quizId = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -74,18 +67,6 @@ class _$LessonCopyWithImpl<$Res, $Val extends Lesson>
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
               as int,
-      roomId: null == roomId
-          ? _value.roomId
-          : roomId // ignore: cast_nullable_to_non_nullable
-              as String,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      quizId: null == quizId
-          ? _value.quizId
-          : quizId // ignore: cast_nullable_to_non_nullable
-              as String,
     ) as $Val);
   }
 }
@@ -97,8 +78,7 @@ abstract class _$$LessonImplCopyWith<$Res> implements $LessonCopyWith<$Res> {
       __$$LessonImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id, int count, String roomId, String status, String quizId});
+  $Res call({String id, int count});
 }
 
 /// @nodoc
@@ -116,9 +96,6 @@ class __$$LessonImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? count = null,
-    Object? roomId = null,
-    Object? status = null,
-    Object? quizId = null,
   }) {
     return _then(_$LessonImpl(
       id: null == id
@@ -129,18 +106,6 @@ class __$$LessonImplCopyWithImpl<$Res>
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
               as int,
-      roomId: null == roomId
-          ? _value.roomId
-          : roomId // ignore: cast_nullable_to_non_nullable
-              as String,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      quizId: null == quizId
-          ? _value.quizId
-          : quizId // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -148,13 +113,7 @@ class __$$LessonImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$LessonImpl extends _Lesson {
-  const _$LessonImpl(
-      {required this.id,
-      required this.count,
-      required this.roomId,
-      required this.status,
-      required this.quizId})
-      : super._();
+  const _$LessonImpl({required this.id, required this.count}) : super._();
 
   factory _$LessonImpl.fromJson(Map<String, dynamic> json) =>
       _$$LessonImplFromJson(json);
@@ -163,16 +122,10 @@ class _$LessonImpl extends _Lesson {
   final String id;
   @override
   final int count;
-  @override
-  final String roomId;
-  @override
-  final String status;
-  @override
-  final String quizId;
 
   @override
   String toString() {
-    return 'Lesson(id: $id, count: $count, roomId: $roomId, status: $status, quizId: $quizId)';
+    return 'Lesson(id: $id, count: $count)';
   }
 
   @override
@@ -181,16 +134,12 @@ class _$LessonImpl extends _Lesson {
         (other.runtimeType == runtimeType &&
             other is _$LessonImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.count, count) || other.count == count) &&
-            (identical(other.roomId, roomId) || other.roomId == roomId) &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.quizId, quizId) || other.quizId == quizId));
+            (identical(other.count, count) || other.count == count));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, count, roomId, status, quizId);
+  int get hashCode => Object.hash(runtimeType, id, count);
 
   /// Create a copy of Lesson
   /// with the given fields replaced by the non-null parameter values.
@@ -209,12 +158,8 @@ class _$LessonImpl extends _Lesson {
 }
 
 abstract class _Lesson extends Lesson {
-  const factory _Lesson(
-      {required final String id,
-      required final int count,
-      required final String roomId,
-      required final String status,
-      required final String quizId}) = _$LessonImpl;
+  const factory _Lesson({required final String id, required final int count}) =
+      _$LessonImpl;
   const _Lesson._() : super._();
 
   factory _Lesson.fromJson(Map<String, dynamic> json) = _$LessonImpl.fromJson;
@@ -223,12 +168,6 @@ abstract class _Lesson extends Lesson {
   String get id;
   @override
   int get count;
-  @override
-  String get roomId;
-  @override
-  String get status;
-  @override
-  String get quizId;
 
   /// Create a copy of Lesson
   /// with the given fields replaced by the non-null parameter values.

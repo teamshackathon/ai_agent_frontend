@@ -7,7 +7,7 @@ import 'package:lottie/lottie.dart';
 import 'dart:io';
 
 import '../../firebase/auth/login/login_firebase.dart';
-import '../../firebase/firestore/get_subjects.dart';
+import '../../firebase/firestore/get_rooms.dart';
 import '../../widget/loading_button.dart';
 
 class LoginPage extends HookConsumerWidget {
@@ -148,7 +148,7 @@ class LoginPage extends HookConsumerWidget {
                         loginLoad.value = true;
                         await loginFirebase(
                             email: id.value, pass: pass.value, ref: ref);
-                        getSubjects(ref: ref);
+                        getRooms(ref: ref);
                         loginLoad.value = false;
                       },
                     ),

@@ -1,5 +1,6 @@
 // 長くなりそうなのでファイル分け
 
+import 'package:code/pages/student/student_lessons.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -24,7 +25,7 @@ final studentBranch = StatefulShellRoute.indexedStack(
       StudentBottomBar(navigationShell: navigationShell),
 
   // 生徒用画面はここに追加していく
-  branches: [
+  branches: <StatefulShellBranch>[
     // プロフィール画面の分岐
     StatefulShellBranch(
       navigatorKey: _studentProfileKey,
@@ -43,6 +44,12 @@ final studentBranch = StatefulShellRoute.indexedStack(
         GoRoute(
           path: Routes.studentMain,
           builder: (context, state) => StudentMain(),
+          routes: [
+            GoRoute(
+              path: "lessons",
+              builder: (context, state) => StudentLessons(),
+            ),
+          ],
         ),
       ],
     ),

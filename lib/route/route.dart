@@ -26,6 +26,7 @@ class Routes {
   static const String login = "/login";
   static const String teacherMain = "/teacher";
   static const String studentMain = "/student";
+  static const String studentLessons = "/student/lessons";
   static const String makeQuizzes = "/quiz";
   static const String editQuizzes = "/quiz/edit";
   static const String submitStatus = "/ss001";
@@ -39,7 +40,7 @@ class Routes {
   static const String notification = "/notification";
 }
 
-final _rootNavigatorKey = GlobalKey<NavigatorState>();
+final rootNavigatorKey = GlobalKey<NavigatorState>();
 
 ///　ルータークラス
 @riverpod
@@ -73,7 +74,7 @@ class Router extends _$Router {
       initialLocation: initialLocation,
 
       // 画面遷移を保持しておくのに使う。
-      navigatorKey: _rootNavigatorKey,
+      navigatorKey: rootNavigatorKey,
 
       // エラーを吐いた時に連れてくるページをここで決めるっぽい（調査不足）
       redirect: (context, state) {
@@ -96,43 +97,43 @@ class Router extends _$Router {
         // 生徒用のbottomBarを含めた分岐
         if (status.role == "student") studentBranch,
 
-        //
-        GoRoute(
-          path: Routes.makeQuizzes,
-          builder: (context, state) => MakeQuizzes(),
-        ),
-        GoRoute(
-          path: Routes.editQuizzes,
-          builder: (context, state) => EditQuizzes(),
-        ),
-        GoRoute(
-          path: Routes.submitStatus,
-          builder: (context, state) => SubmitStatus(),
-        ),
-        GoRoute(
-          path: Routes.previewAnswer,
-          builder: (context, state) => PreviewAnswer(),
-        ),
-        GoRoute(
-          path: Routes.editAnswer,
-          builder: (context, state) => EditAnswer(),
-        ),
-        GoRoute(
-          path: Routes.editText,
-          builder: (context, state) => EditText(),
-        ),
-        GoRoute(
-          path: "/tq001",
-          builder: (context, state) => TakeQuizzes(),
-        ),
-        GoRoute(
-          path: "/dr001",
-          builder: (context, state) => DisplayResult(),
-        ),
-        GoRoute(
-          path: "/dr002",
-          builder: (context, state) => RequestFix(),
-        ),
+        // //
+        // GoRoute(
+        //   path: Routes.makeQuizzes,
+        //   builder: (context, state) => MakeQuizzes(),
+        // ),
+        // GoRoute(
+        //   path: Routes.editQuizzes,
+        //   builder: (context, state) => EditQuizzes(),
+        // ),
+        // GoRoute(
+        //   path: Routes.submitStatus,
+        //   builder: (context, state) => SubmitStatus(),
+        // ),
+        // GoRoute(
+        //   path: Routes.previewAnswer,
+        //   builder: (context, state) => PreviewAnswer(),
+        // ),
+        // GoRoute(
+        //   path: Routes.editAnswer,
+        //   builder: (context, state) => EditAnswer(),
+        // ),
+        // GoRoute(
+        //   path: Routes.editText,
+        //   builder: (context, state) => EditText(),
+        // ),
+        // GoRoute(
+        //   path: "/tq001",
+        //   builder: (context, state) => TakeQuizzes(),
+        // ),
+        // GoRoute(
+        //   path: "/dr001",
+        //   builder: (context, state) => DisplayResult(),
+        // ),
+        // GoRoute(
+        //   path: "/dr002",
+        //   builder: (context, state) => RequestFix(),
+        // ),
       ],
       debugLogDiagnostics: false,
     );
