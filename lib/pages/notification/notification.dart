@@ -9,7 +9,7 @@ class NotificationPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return BasePage(
-      pageTitle: "通知一覧",
+      pageTitle: "アクティビティ",
       body: Center(
         child: Text("通知ページ"),
       ),
