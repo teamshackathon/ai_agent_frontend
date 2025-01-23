@@ -24,8 +24,8 @@ class MyApp extends HookConsumerWidget {
     return MaterialApp.router(
       title: 'clAssIstant',
       theme: ThemeData(
-        primaryColor: Colors.green,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
+        primaryColor: Colors.lightBlue,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlueAccent),
         useMaterial3: true,
       ),
       routerConfig: goRouter,

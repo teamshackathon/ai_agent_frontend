@@ -3,12 +3,9 @@
 // todo : タイムアウト実装
 // todo : エラーコード細分化
 
-import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../data/person/person.dart';
 import '../../../toast.dart';
 import 'get_status_from_user.dart';
 
@@ -20,7 +17,6 @@ Future<void> loginFirebase({
   required String pass,
   required WidgetRef ref,
 }) async {
-  final statusNot = ref.read(personStatusProvider.notifier);
   // try ~ catchでは例外が発生する処理を書く
   try {
     // 失敗してそうなところでthrowを書くと、以降の処理をやめて、catchまで行く

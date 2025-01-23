@@ -5,14 +5,14 @@ import 'package:go_router/go_router.dart';
 
 import '../pages/notification/notification.dart';
 import '../pages/profile/profile.dart';
-import '../pages/student/student_main.dart';
+import '../pages/student/student_home.dart';
 import '../widget/bottom_bar/student_bottom_bar.dart';
 import 'route.dart';
 
 // 各分岐の画面遷移を保持しておくのに使う。各ブランチに一つ
 final _studentProfileKey =
     GlobalKey<NavigatorState>(debugLabel: 'studentProfile');
-final _studentMainKey = GlobalKey<NavigatorState>(debugLabel: 'studentMain');
+final _studentMainKey = GlobalKey<NavigatorState>(debugLabel: 'studentHome');
 final _studentNotificationKey =
     GlobalKey<NavigatorState>(debugLabel: 'studentNotification');
 
@@ -42,7 +42,7 @@ final studentBranch = StatefulShellRoute.indexedStack(
       routes: [
         GoRoute(
           path: Routes.studentMain,
-          builder: (context, state) => StudentMain(),
+          builder: (context, state) => StudentHome(),
         ),
       ],
     ),

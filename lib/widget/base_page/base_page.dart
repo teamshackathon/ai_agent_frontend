@@ -34,7 +34,11 @@ class BasePage extends StatelessWidget {
         title: pageTitle == null ? null : Text(pageTitle!),
 
         // バー背景色
-        backgroundColor: null,
+        backgroundColor: Colors.white,
+
+        elevation: 10, // 数値を大きくすると濃くなります
+
+        shadowColor: Colors.grey.withOpacity(0.5),
       ),
 
       // ハンバーガーメニューの中身
@@ -47,7 +51,20 @@ class BasePage extends StatelessWidget {
       backgroundColor: null,
 
       // bodyにWidgetが入っていなければ、Blank Pageと表示される
-      body: body ?? Center(child: Text("BlankPage")),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFFFFFFFF),
+              Color(0xFFB0E0E6),
+              Color(0xFF87CEFA),
+            ],
+            begin: Alignment.topCenter, // 上部から開始
+            end: Alignment.bottomCenter, // 下部に向かう
+          ),
+        ),
+        child: body ?? Center(child: Text("BlankPage")),
+      ),
     );
   }
 }

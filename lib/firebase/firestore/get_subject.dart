@@ -3,7 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../data/person/person.dart';
 import '../../data/room/room.dart';
-import '../../mock_data.dart';
 import '../../toast.dart';
 
 Map<String, String> subject = {
