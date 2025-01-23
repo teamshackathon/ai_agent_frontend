@@ -3,8 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:lottie/lottie.dart';
-// sleepを使うために必要
-import 'dart:io';
 
 import '../../firebase/auth/login/login_firebase.dart';
 import '../../firebase/firestore/get_rooms.dart';
@@ -48,9 +46,9 @@ class LoginPage extends HookConsumerWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color(0xFF87CEFA), // 明るい空色
-                  Color(0xFFB0E0E6), // 淡い青
-                  Color(0xFFFFFFFF), // 白色（雲をイメージ）
+                  Color(0xFFFFFFFF),
+                  Color(0xFFB0E0E6),
+                  Color(0xFF87CEFA), // 白色（雲をイメージ）
                 ],
                 begin: Alignment.topCenter, // 上部から開始
                 end: Alignment.bottomCenter, // 下部に向かう
