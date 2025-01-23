@@ -51,15 +51,6 @@ class LoadingButton extends StatelessWidget {
             ),
           ),
         ),
-        if (isLoading)
-          Positioned(
-            width: height * 0.7, // 調整済みサイズ
-            height: height * 0.7,
-            child: CircularProgressIndicator(
-              color: Colors.pink, // インジケータをピンクに
-              strokeWidth: height * 0.1,
-            ),
-          ),
       ],
     );
   }
