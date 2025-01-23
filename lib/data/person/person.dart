@@ -16,6 +16,7 @@ class Person with _$Person {
     required String role,
     String? firstName,
     String? familyName,
+    // [ { "room": "~", "year": "~" }, ... ]
     List<Map<String, String>>? rooms,
   }) = _Person;
 

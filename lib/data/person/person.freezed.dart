@@ -24,7 +24,8 @@ mixin _$Person {
   String get name => throw _privateConstructorUsedError;
   String get role => throw _privateConstructorUsedError;
   String? get firstName => throw _privateConstructorUsedError;
-  String? get familyName => throw _privateConstructorUsedError;
+  String? get familyName =>
+      throw _privateConstructorUsedError; // [ { "room": "~", "year": "~" }, ... ]
   List<Map<String, String>>? get rooms => throw _privateConstructorUsedError;
 
   /// Serializes this Person to a JSON map.
@@ -192,7 +193,9 @@ class _$PersonImpl extends _Person {
   final String? firstName;
   @override
   final String? familyName;
+// [ { "room": "~", "year": "~" }, ... ]
   final List<Map<String, String>>? _rooms;
+// [ { "room": "~", "year": "~" }, ... ]
   @override
   List<Map<String, String>>? get rooms {
     final value = _rooms;
@@ -264,7 +267,7 @@ abstract class _Person extends Person {
   @override
   String? get firstName;
   @override
-  String? get familyName;
+  String? get familyName; // [ { "room": "~", "year": "~" }, ... ]
   @override
   List<Map<String, String>>? get rooms;
 

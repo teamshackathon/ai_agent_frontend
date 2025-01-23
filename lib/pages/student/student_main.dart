@@ -1,9 +1,11 @@
-import 'package:code/firebase/firestore/get_subject.dart';
+import '../../data/teacher/teacher.dart';
+import '../../firebase/firestore/get_subjects.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../data/room/room.dart';
 import '../../data/person/person.dart';
+import '../../firebase/firestore/get_teachers.dart';
 import '../../widget/base_page/base_page.dart';
 
 class StudentMain extends ConsumerWidget {
@@ -13,6 +15,7 @@ class StudentMain extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final status = ref.watch(personStatusProvider);
     final rooms = ref.watch(roomsProvider);
+    final teachers = ref.watch(teachersProvider);
     final displaySize = MediaQuery.of(context).size;
 
     return BasePage(
@@ -27,7 +30,10 @@ class StudentMain extends ConsumerWidget {
           child: Text(status.toString()),
         ),
         ElevatedButton(
-          onPressed: () async => await getSubjects(ref: ref),
+          onPressed: () async {
+            await getTeachers(ref: ref);
+            await getSubjects(ref: ref);
+          },
           child: Text("get"),
         ),
 

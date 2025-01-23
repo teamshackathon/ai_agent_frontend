@@ -7,7 +7,7 @@ import 'package:lottie/lottie.dart';
 import 'dart:io';
 
 import '../../firebase/auth/login/login_firebase.dart';
-import '../../firebase/firestore/get_subject.dart';
+import '../../firebase/firestore/get_subjects.dart';
 import '../../widget/loading_button.dart';
 
 class LoginPage extends HookConsumerWidget {
