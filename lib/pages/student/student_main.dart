@@ -4,8 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../data/room/room.dart';
 import '../../widget/base_page/base_page.dart';
 
-class StudentHome extends ConsumerWidget {
-  const StudentHome({super.key});
+class StudentMain extends ConsumerWidget {
+  const StudentMain({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
