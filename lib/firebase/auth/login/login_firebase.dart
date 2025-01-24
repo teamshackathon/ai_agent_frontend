@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../toast.dart';
+import '../../firestore/get_rooms.dart';
 import 'get_status_from_user.dart';
 
 /// Firebaseへメアドとパスワードでログイン
@@ -37,7 +38,7 @@ Future<void> loginFirebase({
     final User? user = result.user;
     if (user == null) throw Exception("通信に失敗しました");
 
-    getStatusFromUser(ref: ref, user: user);
+    await getStatusFromUser(ref: ref, user: user);
 
     infoToast(toast: "ログイン成功", log: "ログイン成功");
   } catch (e) {

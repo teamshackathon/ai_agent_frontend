@@ -28,7 +28,6 @@ Future<void> getRooms({required WidgetRef ref}) async {
 
     // 各年ごとにroomsに入れていく。年代も区別せずに一つの配列に入れる。
     for (var r in person.rooms ?? []) {
-      // infoToast(log: r.toString());
       // firestoreのフォルダを指定
       var docRef = store
           .collection(r["year"])
@@ -36,15 +35,13 @@ Future<void> getRooms({required WidgetRef ref}) async {
           .collection(person.folderName);
 
       //フォルダを持ってきて、roomsに入れていく
-      docRef.get().then((querySnapshot) {
+      await docRef.get().then((querySnapshot) {
         for (var doc in querySnapshot.docs) {
-          // firestoreには教科名と教師名が入っていると想定
-          // roomsNot.add(Room(id: doc.id, name: doc.data()["name"], teacher: doc.data()["teacher"], year: r["year"]));
-          // infoToast(log: doc.id);
           roomsNot.add(
             Room(
               id: doc.id,
               name: subject[doc.id] ?? "",
+              // teachersはすでに読み込んでいるので、当てはまる先生を探す
               teacher:
                   teachersNot.inChargeOf(r["room"], r["year"], doc.id)?.name ??
                       "",
@@ -54,6 +51,7 @@ Future<void> getRooms({required WidgetRef ref}) async {
           );
         }
       }, onError: (e) {
+        warningToast(log: e);
         return throw Exception(e);
       });
     }
