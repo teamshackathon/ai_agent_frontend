@@ -1,4 +1,4 @@
-import 'package:code/data/pdf/pdf.dart';
+import 'package:code/data/pdf_path/pdf_path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -10,10 +10,10 @@ class StudentReading extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pdf = ref.watch(pdfProvider);
+    final pdfPath = ref.read(pdfPathProvider.notifier);
 
     return Scaffold(
-      body: PDFView(pdfData: pdf),
+      body: PdfViewer.uri(pdfPath.getUri()),
     );
   }
 }

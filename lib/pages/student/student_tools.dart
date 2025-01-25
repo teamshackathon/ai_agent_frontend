@@ -22,8 +22,9 @@ class StudentTools extends ConsumerWidget {
         child: InkWell(
           onTap: () async {
             await getText(ref: ref);
-            // PDF読み込みは一回諦め
-            // GoRouter.of(context).push(Routes.studentReading);
+            if(context.mounted){
+              GoRouter.of(context).push(Routes.studentReading);
+            }
           },
           child: Card(
             child: SizedBox(

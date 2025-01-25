@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'pdf_path.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class PdfPath extends _$PdfPath {
   @override
   String build() => "";
@@ -14,5 +14,8 @@ class PdfPath extends _$PdfPath {
 
   void add(String path) => state = path;
 
-  Uri getUri() => Uri.parse(state);
+  Uri getUri(){
+    infoToast(log: state);
+    return Uri.parse(state);
+  }
 }
