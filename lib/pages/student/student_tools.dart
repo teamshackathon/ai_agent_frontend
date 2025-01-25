@@ -22,7 +22,7 @@ class StudentTools extends ConsumerWidget {
         child: InkWell(
           onTap: () async {
             await getText(ref: ref);
-            if(context.mounted){
+            if (context.mounted) {
               GoRouter.of(context).push(Routes.studentReading);
             }
           },

@@ -14,7 +14,7 @@ class PdfPath extends _$PdfPath {
 
   void add(String path) => state = path;
 
-  Uri getUri(){
+  Uri getUri() {
     infoToast(log: state);
     return Uri.parse(state);
   }
