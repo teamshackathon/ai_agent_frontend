@@ -15,7 +15,7 @@ Future<void> getText({required WidgetRef ref}) async {
     final storage = FirebaseStorage.instance;
     var data = await storage.ref("englishMock.pdf").getData();
     if (data != null) pdfNot.add(data);
-    infoToast(log:data!.isEmpty);
+    infoToast(log: data!.isEmpty);
   } on FirebaseException catch (e) {
     //失敗は全部ここに行く
     warningToast(log: "${e.code} : ${e.message}");

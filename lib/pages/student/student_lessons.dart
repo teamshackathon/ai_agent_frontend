@@ -29,7 +29,7 @@ class StudentLessons extends ConsumerWidget {
             child: ListView.builder(
               itemCount: lessons.length,
               itemBuilder: (context, index) => InkWell(
-                onTap: (){
+                onTap: () {
                   GoRouter.of(context).push(Routes.studentTools);
                 },
                 child: Card(

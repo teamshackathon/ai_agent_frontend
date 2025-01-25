@@ -34,10 +34,11 @@ class Teachers extends _$Teachers {
   ///stateにRoomを追加
   void add(Teacher teacher) => state = [...state, teacher];
 
-  Teacher? inChargeOf(String room, String year, String subject){
-    for(var teacher in state){
-      for(var t in teacher.teach){
-        if(t["room"] == room && t["year"] == year && t["subject"] == subject)return teacher;
+  Teacher? inChargeOf(String room, String year, String subject) {
+    for (var teacher in state) {
+      for (var t in teacher.teach) {
+        if (t["room"] == room && t["year"] == year && t["subject"] == subject)
+          return teacher;
       }
     }
     return null;

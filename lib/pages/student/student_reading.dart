@@ -4,7 +4,6 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pdfrx/pdfrx.dart';
 
-
 /// hotreloadの際は一度mainに帰って
 class StudentReading extends ConsumerWidget {
   const StudentReading({super.key});

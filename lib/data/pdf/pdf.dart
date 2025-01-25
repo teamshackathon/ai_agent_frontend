@@ -12,7 +12,7 @@ class Pdf extends _$Pdf {
 
   void init() => state = Uint8List(0);
 
-  void add(Uint8List pdf){
+  void add(Uint8List pdf) {
     state = pdf;
     infoToast(log: "add pdf");
   }

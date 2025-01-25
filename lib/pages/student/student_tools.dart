@@ -20,8 +20,8 @@ class StudentTools extends ConsumerWidget {
       // childrenを縦に並べるWidget
       body: Center(
         child: InkWell(
-          onTap: () async{
-            await getText(ref:ref);
+          onTap: () async {
+            await getText(ref: ref);
             // PDF読み込みは一回諦め
             // GoRouter.of(context).push(Routes.studentReading);
           },
