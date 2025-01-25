@@ -18,9 +18,7 @@ class StudentMain extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final status = ref.watch(personStatusProvider);
     final rooms = ref.watch(roomsProvider);
-    final teachers = ref.watch(teachersProvider);
     final displaySize = MediaQuery.of(context).size;
 
     return BasePage(

@@ -27,6 +27,8 @@ class Routes {
   static const String teacherMain = "/teacher";
   static const String studentMain = "/student";
   static const String studentLessons = "/student/lessons";
+  static const String studentTools = "/student/lessons/tools";
+  static const String studentReading = "/student/lessons/tools/reading";
   static const String makeQuizzes = "/quiz";
   static const String editQuizzes = "/quiz/edit";
   static const String submitStatus = "/ss001";
