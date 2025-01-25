@@ -15,8 +15,8 @@ class LoginPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final displaySize = MediaQuery.of(context).size;
-    final id = useState<String>("");
-    final pass = useState<String>("");
+    final mail = useState<String>("asuka.morita@manabiya.ai.com");
+    final pass = useState<String>("Manab1yaa1asuka.morita");
     final registerLoad = useState<bool>(false);
     final loginLoad = useState<bool>(false);
 
@@ -99,7 +99,7 @@ class LoginPage extends HookConsumerWidget {
                               vertical: 12, horizontal: 16),
                         ),
                         onChanged: (str) {
-                          id.value = str;
+                          mail.value = str;
                         },
                       ),
                     ),
@@ -146,7 +146,7 @@ class LoginPage extends HookConsumerWidget {
                       onPressed: () async {
                         loginLoad.value = true;
                         await loginFirebase(
-                            email: id.value, pass: pass.value, ref: ref);
+                            email: mail.value, pass: pass.value, ref: ref);
                         await getTeachers(ref: ref);
                         await getRooms(ref: ref);
                         loginLoad.value = false;
