@@ -20,7 +20,7 @@ Future<void> getLessons({
   final store = FirebaseFirestore.instance;
   // try ~ catchでは例外が発生する処理を書く
   try {
-    lessonsNot.init();
+    lessonsNot.clear();
 
     // とりあえずcommonの中から探す
     var docRef = store

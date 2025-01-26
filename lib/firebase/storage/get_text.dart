@@ -11,7 +11,7 @@ Future<void> getText({required WidgetRef ref}) async {
   final pdfNot = ref.read(pdfPathProvider.notifier);
   // try ~ catchでは例外が発生する処理を書く
   try {
-    pdfNot.init();
+    pdfNot.clear();
     final storage = FirebaseStorage.instance;
     // 一時的にデータのURLを持ってくる仕様にしている
     // 本来はfirestoreにURLを保存し、それを読み込んでくる仕様にしていく

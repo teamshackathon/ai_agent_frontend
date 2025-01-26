@@ -27,7 +27,7 @@ class Rooms extends _$Rooms {
   List<Room> build() => [];
 
   ///stateを空リストに変更
-  void init() => state = [];
+  void clear() => state = [];
 
   ///stateにRoomを追加
   void add(Room room) => state = [...state, room];

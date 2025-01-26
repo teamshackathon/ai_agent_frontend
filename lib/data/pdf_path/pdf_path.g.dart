@@ -6,7 +6,7 @@ part of 'pdf_path.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$pdfPathHash() => r'8c2b67152f848b87468908acc01a08ffd0253b99';
+String _$pdfPathHash() => r'df41ca4e9063bca747bbe385fd1ad43ea9dd4ee6';
 
 /// See also [PdfPath].
 @ProviderFor(PdfPath)

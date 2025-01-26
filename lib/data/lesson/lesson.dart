@@ -25,7 +25,7 @@ class Lessons extends _$Lessons {
   @override
   List<Lesson> build() => [];
 
-  void init() => state = [];
+  void clear() => state = [];
 
   void add(Lesson lesson) => state = [...state, lesson];
 }

@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../data/person/person.dart';
-import '../data/firebase/firebase_provider.dart';
+import '../data/firebase/auth_provider.dart';
 import '../dummy/data/dummy_provider.dart';
 import '../dummy/route/dummy_route.dart';
 import '../pages/login/login.dart';
@@ -39,7 +39,7 @@ class Routes {
   static const String displayResult = "/dr001";
   static const String requestFix = "/dr002";
   static const String profile = "/profile";
-  static const String notification = "/notification";
+  static const String activity = "/activity";
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();

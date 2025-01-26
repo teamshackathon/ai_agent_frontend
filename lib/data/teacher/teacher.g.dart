@@ -26,7 +26,7 @@ Map<String, dynamic> _$$TeacherImplToJson(_$TeacherImpl instance) =>
 // RiverpodGenerator
 // **************************************************************************
 
-String _$teachersHash() => r'fdeb18b872fcd493a62f170c094214e5faedac4a';
+String _$teachersHash() => r'ce0029d45148b49b70532190df838b22e208bb38';
 
 /// See also [Teachers].
 @ProviderFor(Teachers)

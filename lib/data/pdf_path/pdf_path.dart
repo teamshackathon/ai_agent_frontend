@@ -10,7 +10,7 @@ class PdfPath extends _$PdfPath {
   @override
   String build() => "";
 
-  void init() => state = "";
+  void clear() => state = "";
 
   void add(String path) => state = path;
 

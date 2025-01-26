@@ -29,7 +29,7 @@ class Teachers extends _$Teachers {
   List<Teacher> build() => [];
 
   ///stateを空リストに変更
-  void init() => state = [];
+  void clear() => state = [];
 
   ///stateにRoomを追加
   void add(Teacher teacher) => state = [...state, teacher];
@@ -37,8 +37,9 @@ class Teachers extends _$Teachers {
   Teacher? inChargeOf(String room, String year, String subject) {
     for (var teacher in state) {
       for (var t in teacher.teach) {
-        if (t["room"] == room && t["year"] == year && t["subject"] == subject)
+        if (t["room"] == room && t["year"] == year && t["subject"] == subject) {
           return teacher;
+        }
       }
     }
     return null;

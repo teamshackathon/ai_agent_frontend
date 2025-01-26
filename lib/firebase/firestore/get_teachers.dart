@@ -22,7 +22,7 @@ Future<void> getTeachers({required WidgetRef ref}) async {
   final store = FirebaseFirestore.instance;
   try {
     // teachersProvider初期化
-    teachersNot.init();
+    teachersNot.clear();
 
     // firestoreのteachersフォルダ指定
     var docRef = store.collection("teachers");

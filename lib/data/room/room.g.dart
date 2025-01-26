@@ -27,7 +27,7 @@ Map<String, dynamic> _$$RoomImplToJson(_$RoomImpl instance) =>
 // RiverpodGenerator
 // **************************************************************************
 
-String _$roomsHash() => r'a1c4aab8c0b4e74dcc8ad73af608ee5235925cde';
+String _$roomsHash() => r'25fff33c9dd88043b0ebe45887c474c9393a0913';
 
 /// See also [Rooms].
 @ProviderFor(Rooms)

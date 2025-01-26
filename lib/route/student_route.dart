@@ -4,7 +4,7 @@ import 'package:code/pages/student/student_reading.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../pages/notification/notification.dart';
+import '../pages/activity/activity.dart';
 import '../pages/profile/profile.dart';
 import '../pages/student/student_lessons.dart';
 import '../pages/student/student_main.dart';
@@ -77,8 +77,8 @@ final studentBranch = StatefulShellRoute.indexedStack(
       navigatorKey: _studentNotificationKey,
       routes: [
         GoRoute(
-          path: Routes.notification,
-          builder: (context, state) => NotificationPage(),
+          path: Routes.activity,
+          builder: (context, state) => ActivityPage(),
         ),
       ],
     ),

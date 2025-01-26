@@ -21,6 +21,11 @@ Future<void> getStatusFromUser({
     list.add({"room": item["room"] as String, "year": item["year"] as String});
   }
 
+  // 最新の情報が0番目に来るようにソート
+  if(list.length > 1){
+    list.sort((a,b) => -int.parse(a["year"]!).compareTo(int.parse(b["year"]!)));
+  }
+
   // 取ってきたデータからpersonStatusを更新
   personNot.write(Person(
     uid: user.uid,

@@ -24,7 +24,7 @@ Future<void> getRooms({required WidgetRef ref}) async {
   final store = FirebaseFirestore.instance;
   // try ~ catchでは例外が発生する処理を書く
   try {
-    roomsNot.init();
+    roomsNot.clear();
 
     // 各年ごとにroomsに入れていく。年代も区別せずに一つの配列に入れる。
     for (var r in person.rooms ?? []) {

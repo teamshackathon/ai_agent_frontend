@@ -1,31 +1,56 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:code/toast.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'notification.freezed.dart';
-
-part 'notification.g.dart';
+part 'notice.freezed.dart';
 
 @freezed
-class Lesson with _$Lesson {
-  const Lesson._();
+class Notice with _$Notice {
+  const Notice._();
 
-  // とりあえずidと回数だけ持ってる
-  const factory Lesson({
-    required String id,
-    required int count,
-  }) = _Lesson;
+  // 通知データ。クラス、名前はfirestore側だけ持つ。
+  const factory Notice({
+    // タイムスタンプ
+    required DateTime timeStamp,
+    // 通知のタイトル
+    required String title,
+    // 通知本文
+    required String text,
+    // 通知を送った人の名前
+    required String publisher,
+    // 既読かどうか
+    required bool read,
+    // firestore上の通知が置かれているところまでのPath
+    required DocumentReference reference,
+    // クラス名、名前は送信時にしか使わない引数
+    String? room,
+    String? folderName,
+  }) = _Notice;
 
-  factory Lesson.fromJson(Map<String, dynamic> json) => _$LessonFromJson(json);
+  factory Notice.fromFirestore(
+      DocumentSnapshot<Map<String, dynamic>> snapshot) {
+    final map = snapshot.data();
+    return Notice(
+      timeStamp: map != null && map["timeStamp"] != null
+          ? map["timeStamp"].toDate()
+          : DateTime.now(),
+      title: map?["title"] ?? "",
+      text: map?["text"] ?? "",
+      publisher: map?["publisher"] ?? "",
+      read: map?["read"] ?? false,
+      reference: snapshot.reference,
+    );
+  }
 
-  String get displayCount => "第$count回";
-}
-
-@Riverpod(keepAlive: true)
-class Lessons extends _$Lessons {
-  @override
-  List<Lesson> build() => [];
-
-  void init() => state = [];
-
-  void add(Lesson lesson) => state = [...state, lesson];
+  Map<String, dynamic> toMap() {
+    return {
+      "timeStamp": FieldValue.serverTimestamp(),
+      "room": room,
+      "folderName": folderName,
+      "publisher": publisher,
+      "title": title,
+      "text": text,
+      "read": read,
+    };
+  }
 }
