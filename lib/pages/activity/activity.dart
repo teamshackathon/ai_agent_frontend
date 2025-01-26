@@ -38,8 +38,8 @@ class ActivityPage extends ConsumerWidget {
       ),
       body: notices.when(
         // データを受け取れたときの処理
-        data: (data){
-          infoToast(log:data.docs.length);
+        data: (data) {
+          infoToast(log: data.docs.length);
           return ListView.builder(
             itemCount: data.docs.length,
             itemBuilder: (context, index) {
@@ -49,19 +49,18 @@ class ActivityPage extends ConsumerWidget {
                   // タップすると既読に更新
                   // notice自身が自身のfirestore上の位置へのPathを持ち続けているため
                   // updateを使用するだけで情報を更新できる
-                  await notice.reference.update({"read":true});
+                  await notice.reference.update({"read": true});
                 },
                 child: Card(
                     child: Column(
-                      children: [
-                        Text(notice.read ? "既読" : "未読"),
-                        Text(notice.title),
-                        Text(notice.text),
-                        Text(notice.publisher),
-                        Text(notice.timeStamp.toString()),
-                      ],
-                    )
-                ),
+                  children: [
+                    Text(notice.read ? "既読" : "未読"),
+                    Text(notice.title),
+                    Text(notice.text),
+                    Text(notice.publisher),
+                    Text(notice.timeStamp.toString()),
+                  ],
+                )),
               );
             },
           );

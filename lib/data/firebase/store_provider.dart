@@ -53,5 +53,5 @@ final noticeGetReferenceProvider = Provider((ref) {
 /// タイムスタンプの新しい順に並び替えている
 final noticesProvider = StreamProvider((ref) {
   final reference = ref.watch(noticeGetReferenceProvider);
-  return reference.orderBy("timeStamp",descending: true).snapshots();
+  return reference.orderBy("timeStamp", descending: true).snapshots();
 });
