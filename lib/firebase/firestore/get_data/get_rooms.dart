@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code/data/teacher/teacher.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../data/person/person.dart';
-import '../../data/room/room.dart';
-import '../../toast.dart';
+import '../../../data/person/person.dart';
+import '../../../data/room/room.dart';
+import '../../../toast.dart';
 
 Map<String, String> subject = {
   "japanese": "国語",

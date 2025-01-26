@@ -23,8 +23,8 @@ class Notice with _$Notice {
     // firestore上の通知が置かれているところまでのPath
     required DocumentReference reference,
     // クラス名、名前は送信時にしか使わない引数
-    String? room,
-    String? folderName,
+    required String room,
+    required String folderName,
   }) = _Notice;
 
   factory Notice.fromFirestore(
@@ -39,6 +39,8 @@ class Notice with _$Notice {
       publisher: map?["publisher"] ?? "",
       read: map?["read"] ?? false,
       reference: snapshot.reference,
+      room: map?["room"] ?? "",
+      folderName: map?["folderName"] ?? "",
     );
   }
 

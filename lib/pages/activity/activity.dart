@@ -1,12 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code/data/notice/notice.dart';
-import 'package:code/data/person/person.dart';
-import 'package:code/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../widget/base_page/base_page.dart';
 import '../../data/firebase/store_provider.dart';
+import '../../firebase/firestore/notice/send_notice_to_myself.dart';
+import '../../toast.dart';
+import '../../widget/base_page/base_page.dart';
 
 class ActivityPage extends ConsumerWidget {
   const ActivityPage({super.key});
@@ -14,27 +12,13 @@ class ActivityPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notices = ref.watch(noticesProvider);
-    final reference = ref.read(noticeSetReferenceProvider);
-    final status = ref.watch(personStatusProvider);
 
     return BasePage(
       pageTitle: "アクティビティ",
       // 画面に重なってボタンが配置される
       // 一時的に生徒側の画面でも、テスト通知（自身にしか見えない）を送れる様になっている
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final newNotice = Notice(
-            timeStamp: DateTime.now(),
-            title: "テスト",
-            text: "テスト通知",
-            publisher: "Myself",
-            read: false,
-            room: status.rooms?[0]["room"] ?? "",
-            folderName: status.folderName,
-            reference: reference.doc(), // IDが勝手に入る
-          );
-          await newNotice.reference.set(newNotice);
-        },
+        onPressed: () async => await sendNoticeToMyself(ref),
       ),
       body: notices.when(
         // データを受け取れたときの処理

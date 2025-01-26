@@ -25,8 +25,8 @@ mixin _$Notice {
       throw _privateConstructorUsedError; // firestore上の通知が置かれているところまでのPath
   DocumentReference<Object?> get reference =>
       throw _privateConstructorUsedError; // クラス名、名前は送信時にしか使わない引数
-  String? get room => throw _privateConstructorUsedError;
-  String? get folderName => throw _privateConstructorUsedError;
+  String get room => throw _privateConstructorUsedError;
+  String get folderName => throw _privateConstructorUsedError;
 
   /// Create a copy of Notice
   /// with the given fields replaced by the non-null parameter values.
@@ -46,8 +46,8 @@ abstract class $NoticeCopyWith<$Res> {
       String publisher,
       bool read,
       DocumentReference<Object?> reference,
-      String? room,
-      String? folderName});
+      String room,
+      String folderName});
 }
 
 /// @nodoc
@@ -71,8 +71,8 @@ class _$NoticeCopyWithImpl<$Res, $Val extends Notice>
     Object? publisher = null,
     Object? read = null,
     Object? reference = null,
-    Object? room = freezed,
-    Object? folderName = freezed,
+    Object? room = null,
+    Object? folderName = null,
   }) {
     return _then(_value.copyWith(
       timeStamp: null == timeStamp
@@ -99,14 +99,14 @@ class _$NoticeCopyWithImpl<$Res, $Val extends Notice>
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
               as DocumentReference<Object?>,
-      room: freezed == room
+      room: null == room
           ? _value.room
           : room // ignore: cast_nullable_to_non_nullable
-              as String?,
-      folderName: freezed == folderName
+              as String,
+      folderName: null == folderName
           ? _value.folderName
           : folderName // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ) as $Val);
   }
 }
@@ -125,8 +125,8 @@ abstract class _$$NoticeImplCopyWith<$Res> implements $NoticeCopyWith<$Res> {
       String publisher,
       bool read,
       DocumentReference<Object?> reference,
-      String? room,
-      String? folderName});
+      String room,
+      String folderName});
 }
 
 /// @nodoc
@@ -148,8 +148,8 @@ class __$$NoticeImplCopyWithImpl<$Res>
     Object? publisher = null,
     Object? read = null,
     Object? reference = null,
-    Object? room = freezed,
-    Object? folderName = freezed,
+    Object? room = null,
+    Object? folderName = null,
   }) {
     return _then(_$NoticeImpl(
       timeStamp: null == timeStamp
@@ -176,14 +176,14 @@ class __$$NoticeImplCopyWithImpl<$Res>
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
               as DocumentReference<Object?>,
-      room: freezed == room
+      room: null == room
           ? _value.room
           : room // ignore: cast_nullable_to_non_nullable
-              as String?,
-      folderName: freezed == folderName
+              as String,
+      folderName: null == folderName
           ? _value.folderName
           : folderName // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -198,8 +198,8 @@ class _$NoticeImpl extends _Notice {
       required this.publisher,
       required this.read,
       required this.reference,
-      this.room,
-      this.folderName})
+      required this.room,
+      required this.folderName})
       : super._();
 
 // タイムスタンプ
@@ -222,9 +222,9 @@ class _$NoticeImpl extends _Notice {
   final DocumentReference<Object?> reference;
 // クラス名、名前は送信時にしか使わない引数
   @override
-  final String? room;
+  final String room;
   @override
-  final String? folderName;
+  final String folderName;
 
   @override
   String toString() {
@@ -271,8 +271,8 @@ abstract class _Notice extends Notice {
       required final String publisher,
       required final bool read,
       required final DocumentReference<Object?> reference,
-      final String? room,
-      final String? folderName}) = _$NoticeImpl;
+      required final String room,
+      required final String folderName}) = _$NoticeImpl;
   const _Notice._() : super._();
 
 // タイムスタンプ
@@ -289,9 +289,9 @@ abstract class _Notice extends Notice {
   @override
   DocumentReference<Object?> get reference; // クラス名、名前は送信時にしか使わない引数
   @override
-  String? get room;
+  String get room;
   @override
-  String? get folderName;
+  String get folderName;
 
   /// Create a copy of Notice
   /// with the given fields replaced by the non-null parameter values.

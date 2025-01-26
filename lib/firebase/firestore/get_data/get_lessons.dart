@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../data/lesson/lesson.dart';
-import '../../data/person/person.dart';
-import '../../data/room/room.dart';
-import '../../data/teacher/teacher.dart';
-import '../../toast.dart';
+import '../../../data/lesson/lesson.dart';
+import '../../../data/person/person.dart';
+import '../../../data/room/room.dart';
+import '../../../data/teacher/teacher.dart';
+import '../../../toast.dart';
 
 /// FireStoreから教師一覧を取得
 ///
