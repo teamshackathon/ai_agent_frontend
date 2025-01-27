@@ -16,6 +16,8 @@ class Person with _$Person {
     required String role,
     String? firstName,
     String? familyName,
+    // [ { "room": "~", "year": "~" }, ... ]
+    // indexの低い方に最新のクラスが来る
     List<Map<String, String>>? rooms,
   }) = _Person;
 
@@ -30,7 +32,7 @@ class PersonStatus extends _$PersonStatus {
   Person build() => Person(uid: "", name: "", role: "");
 
   /// stateを空リストに変更
-  void init() => state = Person(uid: "", name: "", role: "");
+  void clear() => state = Person(uid: "", name: "", role: "");
 
   /// stateにpersonを上書き
   ///

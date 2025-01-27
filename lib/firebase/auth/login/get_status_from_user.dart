@@ -17,8 +17,14 @@ Future<void> getStatusFromUser({
 
   // jsonの中の配列が気持ち悪い形で出てくるから手直し
   final List<Map<String, String>> list = [];
-  for (var item in token.claims?["rooms"]) {
+  for (var item in token.claims?["rooms"] ?? []) {
     list.add({"room": item["room"] as String, "year": item["year"] as String});
+  }
+
+  // 最新の情報が0番目に来るようにソート
+  if (list.length > 1) {
+    list.sort(
+        (a, b) => -int.parse(a["year"]!).compareTo(int.parse(b["year"]!)));
   }
 
   // 取ってきたデータからpersonStatusを更新

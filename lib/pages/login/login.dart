@@ -5,7 +5,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../firebase/auth/login/login_firebase.dart';
-import '../../firebase/firestore/get_subject.dart';
+import '../../firebase/firestore/get_data/get_rooms.dart';
+import '../../firebase/firestore/get_data/get_teachers.dart';
 import '../../widget/loading_button.dart';
 
 class LoginPage extends HookConsumerWidget {
@@ -14,8 +15,8 @@ class LoginPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final displaySize = MediaQuery.of(context).size;
-    final id = useState<String>("");
-    final pass = useState<String>("");
+    final mail = useState<String>("asuka.morita@manabiya.ai.com");
+    final pass = useState<String>("Manab1yaa1asuka.morita");
     final registerLoad = useState<bool>(false);
     final loginLoad = useState<bool>(false);
 
@@ -98,7 +99,7 @@ class LoginPage extends HookConsumerWidget {
                               vertical: 12, horizontal: 16),
                         ),
                         onChanged: (str) {
-                          id.value = str;
+                          mail.value = str;
                         },
                       ),
                     ),
@@ -145,8 +146,9 @@ class LoginPage extends HookConsumerWidget {
                       onPressed: () async {
                         loginLoad.value = true;
                         await loginFirebase(
-                            email: id.value, pass: pass.value, ref: ref);
-                        await getSubjects(ref: ref);
+                            email: mail.value, pass: pass.value, ref: ref);
+                        await getTeachers(ref: ref);
+                        await getRooms(ref: ref);
                         loginLoad.value = false;
                       },
                     ),

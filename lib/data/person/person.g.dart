@@ -31,7 +31,7 @@ Map<String, dynamic> _$$PersonImplToJson(_$PersonImpl instance) =>
 // RiverpodGenerator
 // **************************************************************************
 
-String _$personStatusHash() => r'36a413a2df668ed633b28c26bab08f75ff1b2148';
+String _$personStatusHash() => r'7d8e6f71e9d3e92ca4528444153b696558bc6df2';
 
 /// See also [PersonStatus].
 @ProviderFor(PersonStatus)

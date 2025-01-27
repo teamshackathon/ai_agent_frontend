@@ -14,13 +14,21 @@ import '../../firebase/auth/logout/logout_firebase.dart';
 ///
 /// (Widget?) body : ページ本体
 class BasePage extends StatelessWidget {
-  const BasePage({super.key, this.pageTitle, this.body});
+  const BasePage({
+    super.key,
+    this.pageTitle,
+    this.body,
+    this.floatingActionButton,
+  });
 
   // ページタイトル
   final String? pageTitle;
 
   // ページの本体部分
   final Widget? body;
+
+  // ページに重なって表示されるボタン
+  final Widget? floatingActionButton;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +53,7 @@ class BasePage extends StatelessWidget {
       drawer: CustomDrawer(),
 
       // bodyに重なって表示されるボタン
-      floatingActionButton: null,
+      floatingActionButton: floatingActionButton,
 
       // ページ背景色
       backgroundColor: null,

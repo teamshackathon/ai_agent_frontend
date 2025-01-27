@@ -1,45 +1,44 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'room.dart';
+part of 'teacher.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$RoomImpl _$$RoomImplFromJson(Map<String, dynamic> json) => _$RoomImpl(
+_$TeacherImpl _$$TeacherImplFromJson(Map<String, dynamic> json) =>
+    _$TeacherImpl(
       id: json['id'] as String,
       name: json['name'] as String,
-      teacher: json['teacher'] as String,
-      year: json['year'] as String,
-      roomNumber: json['roomNumber'] as String,
+      teach: (json['teach'] as List<dynamic>)
+          .map((e) => Map<String, String>.from(e as Map))
+          .toList(),
     );
 
-Map<String, dynamic> _$$RoomImplToJson(_$RoomImpl instance) =>
+Map<String, dynamic> _$$TeacherImplToJson(_$TeacherImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'teacher': instance.teacher,
-      'year': instance.year,
-      'roomNumber': instance.roomNumber,
+      'teach': instance.teach,
     };
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$roomsHash() => r'25fff33c9dd88043b0ebe45887c474c9393a0913';
+String _$teachersHash() => r'ce0029d45148b49b70532190df838b22e208bb38';
 
-/// See also [Rooms].
-@ProviderFor(Rooms)
-final roomsProvider = NotifierProvider<Rooms, List<Room>>.internal(
-  Rooms.new,
-  name: r'roomsProvider',
+/// See also [Teachers].
+@ProviderFor(Teachers)
+final teachersProvider = NotifierProvider<Teachers, List<Teacher>>.internal(
+  Teachers.new,
+  name: r'teachersProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$roomsHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$teachersHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$Rooms = Notifier<List<Room>>;
+typedef _$Teachers = Notifier<List<Teacher>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
