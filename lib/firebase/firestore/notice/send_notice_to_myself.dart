@@ -4,7 +4,7 @@ import '../../../data/firebase/store_provider.dart';
 import '../../../data/notice/notice.dart';
 import '../../../data/person/person.dart';
 
-Future<void> sendNoticeToMyself(WidgetRef ref) async {
+Future<void> sendNoticeToMyself({required WidgetRef ref}) async {
   final reference = ref.watch(noticeSetReferenceProvider);
   final status = ref.watch(personStatusProvider);
 

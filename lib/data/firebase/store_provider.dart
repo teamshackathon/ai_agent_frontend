@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code/data/person/person.dart';
-import 'package:code/toast.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../notice/notice.dart';
@@ -15,19 +14,20 @@ final firestoreProvider =
 final noticeSetReferenceProvider = Provider((ref) {
   final store = ref.watch(firestoreProvider);
 
-  // noticeコレクションにまとめて入れるため、set,getで分けた
+  // noticeコレクションにまとめて入れるため、set,getで参照元が異なる
   return store.collection("notice").withConverter<Notice>(
         fromFirestore: ((snapshot, _) => Notice.fromFirestore(snapshot)),
         toFirestore: ((notice, _) {
-          infoToast(log: notice.toMap());
           return notice.toMap();
         }),
       );
 });
 
-/// noticeコレクションへの参照を持つget専用プロバイダー
+/// noticeコレクションへの参照を持つ生徒用getプロバイダー
 ///
 /// 色々改良の余地がありそうだけど、一旦はこれで
+///
+/// 教師用は別に作ったほうがいいかも
 final noticeGetReferenceProvider = Provider((ref) {
   final store = ref.watch(firestoreProvider);
   final user = ref.watch(personStatusProvider);
