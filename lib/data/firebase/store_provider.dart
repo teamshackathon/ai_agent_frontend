@@ -64,7 +64,7 @@ final hackedProvider = StreamProvider((ref) {
   return hackRef.snapshots();
 });
 
-final hackingProvider = StreamProvider((ref){
+final hackingProvider = StreamProvider((ref) {
   final store = ref.watch(firestoreProvider);
   final hackRef = store.collection("2024").doc("2-1");
   return hackRef.snapshots();

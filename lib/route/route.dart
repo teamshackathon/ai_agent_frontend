@@ -68,13 +68,13 @@ class Router extends _$Router {
         initialLocation = Routes.login;
       } else if (dummy) {
         initialLocation = DummyRoutes.main;
-      } else if(status.role == "teacher"){
+      } else if (status.role == "teacher") {
         initialLocation = Routes.teacherMain;
-      } else if(status.role == "student"){
-        hackState.whenData((hack){
-          if(hack.data()?["hack"] == true){
+      } else if (status.role == "student") {
+        hackState.whenData((hack) {
+          if (hack.data()?["hack"] == true) {
             initialLocation = Routes.displayResult;
-          }else{
+          } else {
             initialLocation = Routes.studentMain;
           }
         });

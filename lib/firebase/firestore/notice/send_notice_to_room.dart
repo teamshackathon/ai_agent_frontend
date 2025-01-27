@@ -13,7 +13,7 @@ Future<void> sendNoticeToRoom({
   final reference = ref.watch(noticeSetReferenceProvider);
 
   final list = await _getStudentFromRoom(ref: ref, room: room);
-  for(var folderName in list){
+  for (var folderName in list) {
     final newNotice = Notice(
       timeStamp: DateTime.now(),
       title: title,
