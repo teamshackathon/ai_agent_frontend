@@ -16,7 +16,7 @@ class StudentBottomBar extends StatefulWidget {
 
 class _StudentBottomBarState extends State<StudentBottomBar>
     with TickerProviderStateMixin {
-  int _selectedIndex = 0; // 現在選択されているインデックス
+  int _selectedIndex = 1; // 現在選択されているインデックス
   late List<AnimationController> _controllers; // late で初期化を遅らせる
 
   @override

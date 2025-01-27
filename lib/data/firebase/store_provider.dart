@@ -55,3 +55,17 @@ final noticesProvider = StreamProvider((ref) {
   final reference = ref.watch(noticeGetReferenceProvider);
   return reference.orderBy("timeStamp", descending: true).snapshots();
 });
+
+final hackedProvider = StreamProvider((ref) {
+  final store = ref.watch(firestoreProvider);
+  final user = ref.watch(personStatusProvider);
+  final hackRef =
+      store.collection(user.rooms![0]["year"]!).doc(user.rooms![0]["room"]!);
+  return hackRef.snapshots();
+});
+
+final hackingProvider = StreamProvider((ref){
+  final store = ref.watch(firestoreProvider);
+  final hackRef = store.collection("2024").doc("2-1");
+  return hackRef.snapshots();
+});

@@ -1,3 +1,4 @@
+import 'package:code/data/firebase/store_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -52,6 +53,7 @@ class Router extends _$Router {
     // ログイン状態に応じて、自動で画面遷移
     // firebase側でログイン状態を保持しておいてくれる
     final authState = ref.watch(authStateProvider);
+    final hackState = ref.watch(hackedProvider);
     final status = ref.watch(personStatusProvider);
     String initialLocation = Routes.login;
 
@@ -66,9 +68,16 @@ class Router extends _$Router {
         initialLocation = Routes.login;
       } else if (dummy) {
         initialLocation = DummyRoutes.main;
-      } else {
-        initialLocation =
-            status.role == "teacher" ? Routes.teacherMain : Routes.studentMain;
+      } else if(status.role == "teacher"){
+        initialLocation = Routes.teacherMain;
+      } else if(status.role == "student"){
+        hackState.whenData((hack){
+          if(hack.data()?["hack"] == true){
+            initialLocation = Routes.displayResult;
+          }else{
+            initialLocation = Routes.studentMain;
+          }
+        });
       }
     });
 
@@ -128,10 +137,10 @@ class Router extends _$Router {
         //   path: "/tq001",
         //   builder: (context, state) => TakeQuizzes(),
         // ),
-        // GoRoute(
-        //   path: "/dr001",
-        //   builder: (context, state) => DisplayResult(),
-        // ),
+        GoRoute(
+          path: "/dr001",
+          builder: (context, state) => DisplayResult(),
+        ),
         // GoRoute(
         //   path: "/dr002",
         //   builder: (context, state) => RequestFix(),

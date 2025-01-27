@@ -2,7 +2,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../data/firebase/store_provider.dart';
 import '../../../data/notice/notice.dart';
-import '../../../data/person/person.dart';
 
 Future<void> sendNoticeToRoom({
   required WidgetRef ref,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../data/room/room.dart';
-import '../../data/person/person.dart';
-import '../../widget/base_page/base_page.dart';
+import '../../../data/room/room.dart';
+import '../../../data/person/person.dart';
+import '../../../widget/base_page/base_page.dart';
 
 class TeacherMain extends ConsumerWidget {
   const TeacherMain({super.key});

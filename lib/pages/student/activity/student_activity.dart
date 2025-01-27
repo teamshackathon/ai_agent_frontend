@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../data/firebase/store_provider.dart';
-import '../../firebase/firestore/notice/send_notice_to_myself.dart';
-import '../../widget/base_page/base_page.dart';
+import '../../../data/firebase/store_provider.dart';
+import '../../../firebase/firestore/notice/send_notice_to_myself.dart';
+import '../../../widget/base_page/base_page.dart';
 
-class ActivityPage extends ConsumerWidget {
-  const ActivityPage({super.key});
+class StudentActivityPage extends ConsumerWidget {
+  const StudentActivityPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notices = ref.watch(noticesProvider);
 
     return BasePage(
-      pageTitle: "アクティビティ",
+      pageTitle: "生徒アクティビティ",
       // 画面に重なってボタンが配置される
       // 一時的に生徒側の画面でも、テスト通知（自身にしか見えない）を送れる様になっている
       floatingActionButton: FloatingActionButton(

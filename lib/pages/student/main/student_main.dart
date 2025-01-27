@@ -2,16 +2,16 @@ import 'package:code/firebase/firestore/get_data/get_lessons.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../data/teacher/teacher.dart';
-import '../../firebase/firestore/get_data/get_rooms.dart';
+import '../../../data/teacher/teacher.dart';
+import '../../../firebase/firestore/get_data/get_rooms.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../data/room/room.dart';
-import '../../data/person/person.dart';
-import '../../firebase/firestore/get_data/get_teachers.dart';
-import '../../route/route.dart';
-import '../../widget/base_page/base_page.dart';
+import '../../../data/room/room.dart';
+import '../../../data/person/person.dart';
+import '../../../firebase/firestore/get_data/get_teachers.dart';
+import '../../../route/route.dart';
+import '../../../widget/base_page/base_page.dart';
 
 class StudentMain extends HookConsumerWidget {
   const StudentMain({super.key});

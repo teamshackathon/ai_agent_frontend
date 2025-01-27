@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../data/lesson/lesson.dart';
-import '../../route/route.dart';
-import '../../widget/base_page/base_page.dart';
+import '../../../data/lesson/lesson.dart';
+import '../../../route/route.dart';
+import '../../../widget/base_page/base_page.dart';
 
 /// hotreloadの際は一度mainに帰って
 class StudentLessons extends ConsumerWidget {

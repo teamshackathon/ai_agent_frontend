@@ -17,7 +17,7 @@ Future<void> getStatusFromUser({
 
   // jsonの中の配列が気持ち悪い形で出てくるから手直し
   final List<Map<String, String>> list = [];
-  for (var item in token.claims?["rooms"]) {
+  for (var item in token.claims?["rooms"] ?? []) {
     list.add({"room": item["room"] as String, "year": item["year"] as String});
   }
 
