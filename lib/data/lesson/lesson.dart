@@ -28,4 +28,8 @@ class Lessons extends _$Lessons {
   void clear() => state = [];
 
   void add(Lesson lesson) => state = [...state, lesson];
+
+  Lesson currentLesson() {
+    return state[0];
+  }
 }
