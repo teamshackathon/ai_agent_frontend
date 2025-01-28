@@ -13,7 +13,9 @@ import '../../../data/person/person.dart';
 import '../../../firebase/firestore/get_data/get_teachers.dart';
 import '../../../route/route.dart';
 import '../../../widget/base_page/base_page.dart';
-import '../../../widget/sakura_redial_menu/radial_menu.dart';
+import '../../../widget/sakura_redial_menu/components/radial_sakura_menu.dart';
+import '../../../widget/sakura_redial_menu/components/radial_sakura_menu_item.dart';
+
 
 class StudentMain extends HookConsumerWidget {
   StudentMain({super.key});
@@ -34,12 +36,13 @@ class StudentMain extends HookConsumerWidget {
       _menuKey.currentState?.openMenu();
     }
 
-    useEffect(() {
-      Future(() {
-        getTeachers(ref: ref);
-        getRooms(ref: ref);
-      });
-    }, [user]);
+    // useEffect(() {
+    //   Future(() async{
+    //     await getTeachers(ref: ref);
+    //     await getRooms(ref: ref);
+    //   });
+    //   return null;
+    // }, [user]);
 
     useEffect(() {
       if (rooms.isNotEmpty) {

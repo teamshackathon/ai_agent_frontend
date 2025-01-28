@@ -149,7 +149,6 @@ class LoginPage extends HookConsumerWidget {
                             email: mail.value, pass: pass.value, ref: ref);
                         await getTeachers(ref: ref);
                         await getRooms(ref: ref);
-                        loginLoad.value = false;
                       },
                     ),
                   ],
