@@ -14,13 +14,15 @@ import '../../firebase/auth/logout/logout_firebase.dart';
 ///
 /// (Widget?) body : ページ本体
 class DummyBasePage extends StatelessWidget {
-  const DummyBasePage({super.key, this.pageTitle, this.body});
+  const DummyBasePage({super.key, this.pageTitle, this.body, this.backgroundColor});
 
   // ページタイトル
   final String? pageTitle;
 
   // ページの本体部分
   final Widget? body;
+
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,7 @@ class DummyBasePage extends StatelessWidget {
       floatingActionButton: null,
 
       // ページ背景色
-      backgroundColor: null,
+      backgroundColor: backgroundColor,
 
       // bodyにWidgetが入っていなければ、Blank Pageと表示される
       body: body ?? Center(child: Text("BlankPage")),

@@ -8,10 +8,29 @@ class DummyMain extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final displaySize = MediaQuery.sizeOf(context);
+    final List<String> list = ["チョコ", "バナナ"];
+
     return DummyBasePage(
+      backgroundColor: Colors.blue,
       pageTitle: "ダミーメイン",
-      body: Center(
-        child: Text("メインページ(ダミー)"),
+      body: SizedBox.expand(
+        child: FractionallySizedBox(
+          alignment: Alignment.center,
+          widthFactor: 0.5,
+          heightFactor: 0.9,
+          child: PageView.builder(
+            itemCount: list.length,
+            itemBuilder: (context, index) {
+              return Flexible(
+                child: Column(children: [
+                    Text(list[index]),
+                  ElevatedButton(onPressed: (){}, child: Text("ダミー")),
+                ],),
+              );
+            },
+          ),
+        ),
       ),
     );
   }
