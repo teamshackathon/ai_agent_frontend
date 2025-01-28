@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../data/person/person.dart';
+// import '../../data/person/person.dart';
 import '../../data/room/room.dart';
 import '../../mock_data.dart';
 import '../../toast.dart';
@@ -10,7 +10,7 @@ import '../../toast.dart';
 ///
 /// Futureと書かれていた時は、時間のかかる処理が含まれている（非同期処理）
 Future<void> getSubjects({required WidgetRef ref}) async {
-  final statusNot = ref.read(personStatusProvider.notifier);
+  // final statusNot = ref.read(personStatusProvider.notifier);
   final roomsNot = ref.read(roomsProvider.notifier);
   // try ~ catchでは例外が発生する処理を書く
   try {

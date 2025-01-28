@@ -45,7 +45,6 @@ class LoginPage extends HookConsumerWidget {
               child: TextField(
                 // InputDecorationに色々追加することで、見た目等々がいじれる
                 decoration: const InputDecoration(labelText: 'メールアドレス'),
-
                 // ユーザーが何か文字を書くたびに呼び出される
                 onChanged: (str) {
                   id.value = str;
