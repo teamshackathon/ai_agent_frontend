@@ -9,6 +9,23 @@ enum MenuOptions {
   math,
 }
 
+MenuOptions getOptionFromIndex(String subject) {
+  switch (subject) {
+    case 'japanese':
+      return MenuOptions.japanese;
+    case 'english':
+      return MenuOptions.english;
+    case 'social':
+      return MenuOptions.social;
+    case 'science':
+      return MenuOptions.science;
+    case 'math':
+      return MenuOptions.math;
+    default:
+      return MenuOptions.japanese;
+  }
+}
+
 String getSakuraSvgPath(MenuOptions option) {
   switch (option) {
     case MenuOptions.japanese:
@@ -31,6 +48,7 @@ class RadialSakuraMenuItem extends StatelessWidget {
     required this.angle,
     this.width = 150.0,
     this.height = 150.0,
+    required this.onPressed,
   }) : super(key: key);
 
   final MenuOptions value;
@@ -38,15 +56,20 @@ class RadialSakuraMenuItem extends StatelessWidget {
   final double width;
   final double height;
 
+  final VoidCallback onPressed;
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Transform.rotate(
         angle: angle,
-        child: SvgPicture.asset(
-          getSakuraSvgPath(value),
-          width: width,
-          height: height,
+        child: InkWell(
+          onTap: onPressed,
+          child: SvgPicture.asset(
+            getSakuraSvgPath(value),
+            width: width,
+            height: height,
+          ),
         ),
       ),
     );
