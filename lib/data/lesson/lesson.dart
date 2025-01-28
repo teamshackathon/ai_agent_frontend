@@ -29,7 +29,7 @@ class Lessons extends _$Lessons {
 
   void add(Lesson lesson) => state = [...state, lesson];
 
-  Lesson currentLesson(){
+  Lesson currentLesson() {
     return state[0];
   }
 }

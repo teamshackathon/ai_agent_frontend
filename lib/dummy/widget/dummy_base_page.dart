@@ -14,7 +14,8 @@ import '../../firebase/auth/logout/logout_firebase.dart';
 ///
 /// (Widget?) body : ページ本体
 class DummyBasePage extends StatelessWidget {
-  const DummyBasePage({super.key, this.pageTitle, this.body,this.floatingActionButton});
+  const DummyBasePage(
+      {super.key, this.pageTitle, this.body, this.floatingActionButton});
   final Widget? floatingActionButton;
   // ページタイトル
   final String? pageTitle;

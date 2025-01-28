@@ -93,11 +93,10 @@ class CustomDrawer extends ConsumerWidget {
 
           // 以下、メニュー内容
           ListTile(
-            title: Text("ダミーモード"),
-            onTap: (){
-              dummyNot.state = true;
-            }
-          ),
+              title: Text("ダミーモード"),
+              onTap: () {
+                dummyNot.state = true;
+              }),
           ListTile(
             title: Text("ログアウト"),
             onTap: () async => await logoutFirebase(),
