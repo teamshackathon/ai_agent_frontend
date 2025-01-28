@@ -9,9 +9,9 @@ class DummyProfilePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return DummyBasePage(
-      pageTitle: "ダミープロフィール",
+      pageTitle: "ダミーマイページ",
       body: Center(
-        child: Text("個人情報ページ(ダミー)"),
+        child: Text("マイページ(ダミー)"),
       ),
     );
   }

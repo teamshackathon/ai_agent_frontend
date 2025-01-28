@@ -1,9 +1,10 @@
+import 'package:code/data/firebase/store_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../data/person/person.dart';
-import '../data/firebase/firebase_provider.dart';
+import '../data/firebase/auth_provider.dart';
 import '../dummy/data/dummy_provider.dart';
 import '../dummy/route/dummy_route.dart';
 import '../pages/login/login.dart';
@@ -26,6 +27,9 @@ class Routes {
   static const String login = "/login";
   static const String teacherMain = "/teacher";
   static const String studentMain = "/student";
+  static const String studentLessons = "/student/lessons";
+  static const String studentTools = "/student/lessons/tools";
+  static const String studentReading = "/student/lessons/tools/reading";
   static const String makeQuizzes = "/quiz";
   static const String editQuizzes = "/quiz/edit";
   static const String submitStatus = "/ss001";
@@ -36,10 +40,10 @@ class Routes {
   static const String displayResult = "/dr001";
   static const String requestFix = "/dr002";
   static const String profile = "/profile";
-  static const String notification = "/notification";
+  static const String activity = "/activity";
 }
 
-final _rootNavigatorKey = GlobalKey<NavigatorState>();
+final rootNavigatorKey = GlobalKey<NavigatorState>();
 
 ///　ルータークラス
 @riverpod
@@ -49,6 +53,7 @@ class Router extends _$Router {
     // ログイン状態に応じて、自動で画面遷移
     // firebase側でログイン状態を保持しておいてくれる
     final authState = ref.watch(authStateProvider);
+    final hackState = ref.watch(hackedProvider);
     final status = ref.watch(personStatusProvider);
     String initialLocation = Routes.login;
 
@@ -63,9 +68,16 @@ class Router extends _$Router {
         initialLocation = Routes.login;
       } else if (dummy) {
         initialLocation = DummyRoutes.main;
-      } else {
-        initialLocation =
-            status.role == "teacher" ? Routes.teacherMain : Routes.studentMain;
+      } else if (status.role == "teacher") {
+        initialLocation = Routes.teacherMain;
+      } else if (status.role == "student") {
+        hackState.whenData((hack) {
+          if (hack.data()?["hack"] == true) {
+            initialLocation = Routes.displayResult;
+          } else {
+            initialLocation = Routes.studentMain;
+          }
+        });
       }
     });
 
@@ -73,7 +85,7 @@ class Router extends _$Router {
       initialLocation: initialLocation,
 
       // 画面遷移を保持しておくのに使う。
-      navigatorKey: _rootNavigatorKey,
+      navigatorKey: rootNavigatorKey,
 
       // エラーを吐いた時に連れてくるページをここで決めるっぽい（調査不足）
       redirect: (context, state) {
@@ -96,43 +108,43 @@ class Router extends _$Router {
         // 生徒用のbottomBarを含めた分岐
         if (status.role == "student") studentBranch,
 
-        //
-        GoRoute(
-          path: Routes.makeQuizzes,
-          builder: (context, state) => MakeQuizzes(),
-        ),
-        GoRoute(
-          path: Routes.editQuizzes,
-          builder: (context, state) => EditQuizzes(),
-        ),
-        GoRoute(
-          path: Routes.submitStatus,
-          builder: (context, state) => SubmitStatus(),
-        ),
-        GoRoute(
-          path: Routes.previewAnswer,
-          builder: (context, state) => PreviewAnswer(),
-        ),
-        GoRoute(
-          path: Routes.editAnswer,
-          builder: (context, state) => EditAnswer(),
-        ),
-        GoRoute(
-          path: Routes.editText,
-          builder: (context, state) => EditText(),
-        ),
-        GoRoute(
-          path: "/tq001",
-          builder: (context, state) => TakeQuizzes(),
-        ),
+        // //
+        // GoRoute(
+        //   path: Routes.makeQuizzes,
+        //   builder: (context, state) => MakeQuizzes(),
+        // ),
+        // GoRoute(
+        //   path: Routes.editQuizzes,
+        //   builder: (context, state) => EditQuizzes(),
+        // ),
+        // GoRoute(
+        //   path: Routes.submitStatus,
+        //   builder: (context, state) => SubmitStatus(),
+        // ),
+        // GoRoute(
+        //   path: Routes.previewAnswer,
+        //   builder: (context, state) => PreviewAnswer(),
+        // ),
+        // GoRoute(
+        //   path: Routes.editAnswer,
+        //   builder: (context, state) => EditAnswer(),
+        // ),
+        // GoRoute(
+        //   path: Routes.editText,
+        //   builder: (context, state) => EditText(),
+        // ),
+        // GoRoute(
+        //   path: "/tq001",
+        //   builder: (context, state) => TakeQuizzes(),
+        // ),
         GoRoute(
           path: "/dr001",
           builder: (context, state) => DisplayResult(),
         ),
-        GoRoute(
-          path: "/dr002",
-          builder: (context, state) => RequestFix(),
-        ),
+        // GoRoute(
+        //   path: "/dr002",
+        //   builder: (context, state) => RequestFix(),
+        // ),
       ],
       debugLogDiagnostics: false,
     );

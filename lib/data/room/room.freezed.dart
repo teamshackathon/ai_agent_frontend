@@ -24,6 +24,7 @@ mixin _$Room {
   String get name => throw _privateConstructorUsedError;
   String get teacher => throw _privateConstructorUsedError;
   String get year => throw _privateConstructorUsedError;
+  String get roomNumber => throw _privateConstructorUsedError;
 
   /// Serializes this Room to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +40,8 @@ abstract class $RoomCopyWith<$Res> {
   factory $RoomCopyWith(Room value, $Res Function(Room) then) =
       _$RoomCopyWithImpl<$Res, Room>;
   @useResult
-  $Res call({String id, String name, String teacher, String year});
+  $Res call(
+      {String id, String name, String teacher, String year, String roomNumber});
 }
 
 /// @nodoc
@@ -61,6 +63,7 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
     Object? name = null,
     Object? teacher = null,
     Object? year = null,
+    Object? roomNumber = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -79,6 +82,10 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
           ? _value.year
           : year // ignore: cast_nullable_to_non_nullable
               as String,
+      roomNumber: null == roomNumber
+          ? _value.roomNumber
+          : roomNumber // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -90,7 +97,8 @@ abstract class _$$RoomImplCopyWith<$Res> implements $RoomCopyWith<$Res> {
       __$$RoomImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String teacher, String year});
+  $Res call(
+      {String id, String name, String teacher, String year, String roomNumber});
 }
 
 /// @nodoc
@@ -109,6 +117,7 @@ class __$$RoomImplCopyWithImpl<$Res>
     Object? name = null,
     Object? teacher = null,
     Object? year = null,
+    Object? roomNumber = null,
   }) {
     return _then(_$RoomImpl(
       id: null == id
@@ -127,6 +136,10 @@ class __$$RoomImplCopyWithImpl<$Res>
           ? _value.year
           : year // ignore: cast_nullable_to_non_nullable
               as String,
+      roomNumber: null == roomNumber
+          ? _value.roomNumber
+          : roomNumber // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -138,7 +151,8 @@ class _$RoomImpl extends _Room {
       {required this.id,
       required this.name,
       required this.teacher,
-      required this.year})
+      required this.year,
+      required this.roomNumber})
       : super._();
 
   factory _$RoomImpl.fromJson(Map<String, dynamic> json) =>
@@ -152,10 +166,12 @@ class _$RoomImpl extends _Room {
   final String teacher;
   @override
   final String year;
+  @override
+  final String roomNumber;
 
   @override
   String toString() {
-    return 'Room(id: $id, name: $name, teacher: $teacher, year: $year)';
+    return 'Room(id: $id, name: $name, teacher: $teacher, year: $year, roomNumber: $roomNumber)';
   }
 
   @override
@@ -166,12 +182,15 @@ class _$RoomImpl extends _Room {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.teacher, teacher) || other.teacher == teacher) &&
-            (identical(other.year, year) || other.year == year));
+            (identical(other.year, year) || other.year == year) &&
+            (identical(other.roomNumber, roomNumber) ||
+                other.roomNumber == roomNumber));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, teacher, year);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, teacher, year, roomNumber);
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
@@ -194,7 +213,8 @@ abstract class _Room extends Room {
       {required final String id,
       required final String name,
       required final String teacher,
-      required final String year}) = _$RoomImpl;
+      required final String year,
+      required final String roomNumber}) = _$RoomImpl;
   const _Room._() : super._();
 
   factory _Room.fromJson(Map<String, dynamic> json) = _$RoomImpl.fromJson;
@@ -207,6 +227,8 @@ abstract class _Room extends Room {
   String get teacher;
   @override
   String get year;
+  @override
+  String get roomNumber;
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.

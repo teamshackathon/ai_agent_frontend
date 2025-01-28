@@ -11,7 +11,7 @@ class DisplayResult extends ConsumerWidget {
       body: Center(
         child: Column(
           children: [
-            Text('dr001'),
+            Text('ハッキング中'),
           ],
         ),
       ),

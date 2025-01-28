@@ -1,9 +1,11 @@
+import 'package:code/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import 'firebase/firebase_options.dart';
 import 'app.dart';
@@ -35,6 +37,15 @@ Future<void> main() async {
       // Firestoreのエミュレータを使用する
       FirebaseFirestore.instance
           .useFirestoreEmulator(firestoreHost, int.parse(firestorePort));
+    }
+
+    final firestorageHost = dotenv.env['FIREBASE_STORAGE_EMULATOR_HOST'];
+    final firestoragePort = dotenv.env['FIREBASE_STORAGE_EMULATOR_PORT'];
+    if (firestorageHost != null && firestoragePort != null) {
+      // storageのエミュレータを使用する
+      FirebaseStorage.instance
+          .useStorageEmulator(firestorageHost, int.parse(firestoragePort));
+      infoToast(log: "エミュレータ起動");
     }
   }
 
