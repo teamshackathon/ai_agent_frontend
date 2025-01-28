@@ -6,8 +6,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../data/person/person.dart';
 import '../../../toast.dart';
+import '../../firestore/get_data/get_rooms.dart';
+import 'get_status_from_user.dart';
 
 /// Firebaseへメアドとパスワードでログイン
 ///
@@ -17,7 +18,6 @@ Future<void> loginFirebase({
   required String pass,
   required WidgetRef ref,
 }) async {
-  final statusNot = ref.read(personStatusProvider.notifier);
   // try ~ catchでは例外が発生する処理を書く
   try {
     // 失敗してそうなところでthrowを書くと、以降の処理をやめて、catchまで行く
@@ -38,17 +38,7 @@ Future<void> loginFirebase({
     final User? user = result.user;
     if (user == null) throw Exception("通信に失敗しました");
 
-    // authのclaimsを取りに行く
-    final item = await auth.currentUser?.getIdTokenResult();
-    if (item == null) throw Exception("情報取得に失敗しました");
-
-    // 取ってきたデータからpersonStatusを更新
-    statusNot.write(Person(
-      uid: user.uid,
-      name: user.displayName ?? "",
-      role: item.claims?["role"],
-      room: item.claims?["room"],
-    ));
+    await getStatusFromUser(ref: ref, user: user);
 
     infoToast(toast: "ログイン成功", log: "ログイン成功");
   } catch (e) {

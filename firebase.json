@@ -1,37 +1,39 @@
 {
-  "flutter": {
-    "platforms": {
-      "android": {
-        "default": {
-          "projectId": "classistant-6f28f",
-          "appId": "1:46244984723:android:6dcf9e1b8bc28cf0b2da66",
-          "fileOutput": "android/app/google-services.json"
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "demo-manabiya-ai",
+                    "appId": "1:46244984723:android:6dcf9e1b8bc28cf0b2da66",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "demo-manabiya-ai",
+                    "configurations": {
+                        "android": "1:46244984723:android:6dcf9e1b8bc28cf0b2da66",
+                        "macos": "1:46244984723:ios:a03399f0369de0a0b2da66",
+                        "web": "1:46244984723:web:c8875db7c7b59f86b2da66",
+                        "windows": "1:46244984723:web:7232d1b502df65d2b2da66"
+                    }
+                }
+            }
         }
-      },
-      "dart": {
-        "lib/firebase_options.dart": {
-          "projectId": "classistant-6f28f",
-          "configurations": {
-            "android": "1:46244984723:android:6dcf9e1b8bc28cf0b2da66",
-            "web": "1:46244984723:web:c8875db7c7b59f86b2da66"
-          }
+    },
+    "emulators": {
+        "auth": {
+            "port": 9099
+        },
+        "functions": {
+            "port": 5001
+        },
+        "firestore": {
+            "port": 8080
+        },
+        "ui": {
+            "enabled": true,
+            "port": 7077
         }
-      }
     }
-  },
-  "emulators": {
-    "auth": {
-      "port": 9099
-    },
-    "functions": {
-      "port": 5001
-    },
-    "firestore": {
-      "port": 8080
-    },
-    "ui": {
-      "enabled": true,
-      "port": 7077
-    }
-  }
 }

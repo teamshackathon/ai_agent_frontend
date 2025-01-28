@@ -9,14 +9,15 @@ part 'lesson.g.dart';
 class Lesson with _$Lesson {
   const Lesson._();
 
-  const factory Lesson(
-      {required String id,
-      required int count,
-      required String roomId,
-      required String status,
-      required String quizId}) = _Lesson;
+  // とりあえずidと回数だけ持ってる
+  const factory Lesson({
+    required String id,
+    required int count,
+  }) = _Lesson;
 
   factory Lesson.fromJson(Map<String, dynamic> json) => _$LessonFromJson(json);
+
+  String get displayCount => "第$count回";
 }
 
 @Riverpod(keepAlive: true)
@@ -24,7 +25,7 @@ class Lessons extends _$Lessons {
   @override
   List<Lesson> build() => [];
 
-  void reset() => state = [];
+  void clear() => state = [];
 
   void add(Lesson lesson) => state = [...state, lesson];
 

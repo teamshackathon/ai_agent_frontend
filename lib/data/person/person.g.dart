@@ -12,7 +12,9 @@ _$PersonImpl _$$PersonImplFromJson(Map<String, dynamic> json) => _$PersonImpl(
       role: json['role'] as String,
       firstName: json['firstName'] as String?,
       familyName: json['familyName'] as String?,
-      room: json['room'] as String?,
+      rooms: (json['rooms'] as List<dynamic>?)
+          ?.map((e) => Map<String, String>.from(e as Map))
+          .toList(),
     );
 
 Map<String, dynamic> _$$PersonImplToJson(_$PersonImpl instance) =>
@@ -22,14 +24,14 @@ Map<String, dynamic> _$$PersonImplToJson(_$PersonImpl instance) =>
       'role': instance.role,
       'firstName': instance.firstName,
       'familyName': instance.familyName,
-      'room': instance.room,
+      'rooms': instance.rooms,
     };
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$personStatusHash() => r'36a413a2df668ed633b28c26bab08f75ff1b2148';
+String _$personStatusHash() => r'7d8e6f71e9d3e92ca4528444153b696558bc6df2';
 
 /// See also [PersonStatus].
 @ProviderFor(PersonStatus)

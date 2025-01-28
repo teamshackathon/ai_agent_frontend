@@ -9,25 +9,19 @@ part of 'lesson.dart';
 _$LessonImpl _$$LessonImplFromJson(Map<String, dynamic> json) => _$LessonImpl(
       id: json['id'] as String,
       count: (json['count'] as num).toInt(),
-      roomId: json['roomId'] as String,
-      status: json['status'] as String,
-      quizId: json['quizId'] as String,
     );
 
 Map<String, dynamic> _$$LessonImplToJson(_$LessonImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'count': instance.count,
-      'roomId': instance.roomId,
-      'status': instance.status,
-      'quizId': instance.quizId,
     };
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$lessonsHash() => r'0bf290883eeeca73385e4c03784e5115f88d68d3';
+String _$lessonsHash() => r'c1c3a6ea6cd9b1f2eb17c2a7ca9083b554d39968';
 
 /// See also [Lessons].
 @ProviderFor(Lessons)

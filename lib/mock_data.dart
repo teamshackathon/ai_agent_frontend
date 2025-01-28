@@ -44,7 +44,8 @@ List<Map<String, dynamic>> dummyUserList = [
 
 List<Map<String, dynamic>> dummyRoomList = [
   {"id": "1", "name": "国語", "teacherId": "1"},
-  {"id": "2", "name": "英語", "teacherId": "1"},
-  {"id": "3", "name": "数学", "teacherId": "1"},
-  {"id": "4", "name": "道徳", "teacherId": "1"},
+  {"id": "2", "name": "数学", "teacherId": "1"},
+  {"id": "3", "name": "理科", "teacherId": "1"},
+  {"id": "4", "name": "社会", "teacherId": "1"},
+  {"id": "5", "name": "英語", "teacherId": "1"}
 ];

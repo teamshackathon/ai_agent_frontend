@@ -1,11 +1,14 @@
 // 長くなりそうなのでファイル分け
 
+import 'package:code/pages/student/main/student_reading.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../pages/notification/notification.dart';
+import '../pages/student/activity/student_activity.dart';
 import '../pages/profile/profile.dart';
-import '../pages/student/student_main.dart';
+import '../pages/student/main/student_lessons.dart';
+import '../pages/student/main/student_main.dart';
+import '../pages/student/main/student_tools.dart';
 import '../widget/bottom_bar/student_bottom_bar.dart';
 import 'route.dart';
 
@@ -24,7 +27,7 @@ final studentBranch = StatefulShellRoute.indexedStack(
       StudentBottomBar(navigationShell: navigationShell),
 
   // 生徒用画面はここに追加していく
-  branches: [
+  branches: <StatefulShellBranch>[
     // プロフィール画面の分岐
     StatefulShellBranch(
       navigatorKey: _studentProfileKey,
@@ -41,8 +44,30 @@ final studentBranch = StatefulShellRoute.indexedStack(
       navigatorKey: _studentMainKey,
       routes: [
         GoRoute(
+          parentNavigatorKey: _studentMainKey,
           path: Routes.studentMain,
           builder: (context, state) => StudentMain(),
+          routes: [
+            GoRoute(
+              parentNavigatorKey: _studentMainKey,
+              path: "lessons",
+              builder: (context, state) => StudentLessons(),
+              routes: [
+                GoRoute(
+                  parentNavigatorKey: _studentMainKey,
+                  path: "tools",
+                  builder: (context, state) => StudentTools(),
+                  routes: [
+                    GoRoute(
+                      parentNavigatorKey: rootNavigatorKey,
+                      path: "reading",
+                      builder: (context, state) => StudentReading(),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
         ),
       ],
     ),
@@ -52,8 +77,8 @@ final studentBranch = StatefulShellRoute.indexedStack(
       navigatorKey: _studentNotificationKey,
       routes: [
         GoRoute(
-          path: Routes.notification,
-          builder: (context, state) => NotificationPage(),
+          path: Routes.activity,
+          builder: (context, state) => StudentActivityPage(),
         ),
       ],
     ),

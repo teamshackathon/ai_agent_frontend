@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../pages/notification/notification.dart';
 import '../pages/profile/profile.dart';
-import '../pages/teacher/teacher_main.dart';
+import '../pages/teacher/activity/teacher_activity.dart';
+import '../pages/teacher/main/teacher_main.dart';
 import '../widget/bottom_bar/teacher_bottom_bar.dart';
 import 'route.dart';
 
@@ -52,8 +52,8 @@ final teacherBranch = StatefulShellRoute.indexedStack(
       navigatorKey: _teacherNotificationKey,
       routes: [
         GoRoute(
-          path: Routes.notification,
-          builder: (context, state) => NotificationPage(),
+          path: Routes.activity,
+          builder: (context, state) => TeacherActivityPage(),
         ),
       ],
     ),

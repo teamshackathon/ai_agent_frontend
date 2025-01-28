@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 part 'room.freezed.dart';
 
@@ -13,7 +12,9 @@ class Room with _$Room {
   const factory Room({
     required String id,
     required String name,
-    required String teacherId,
+    required String teacher,
+    required String year,
+    required String roomNumber,
   }) = _Room;
 
   factory Room.fromJson(Map<String, dynamic> json) => _$RoomFromJson(json);
@@ -26,16 +27,16 @@ class Rooms extends _$Rooms {
   List<Room> build() => [];
 
   ///stateを空リストに変更
-  void init() => state = [];
+  void clear() => state = [];
 
   ///stateにRoomを追加
   void add(Room room) => state = [...state, room];
 }
 
-void mapListToRooms(WidgetRef ref, List<dynamic> mapList) {
-  final roomsNot = ref.read(roomsProvider.notifier);
-  roomsNot.init();
-  for (var map in mapList) {
-    roomsNot.add(Room.fromJson(map));
-  }
-}
+// void mapListToRooms(WidgetRef ref, List<dynamic> mapList) {
+//   final roomsNot = ref.read(roomsProvider.notifier);
+//   roomsNot.init();
+//   for (var map in mapList) {
+//     roomsNot.add(Room.fromJson(map));
+//   }
+// }
