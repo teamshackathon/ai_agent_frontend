@@ -1,88 +1,42 @@
-import 'dart:async';
 import 'dart:math' as Math;
 
+import 'package:code/widget/sakura_redial_menu/components/radial_sakura_menu_item.dart';
 import 'package:flutter/material.dart';
-import './arc_progress_indicator.dart';
-import './radial_menu_button.dart';
-import './radial_menu_center_button.dart';
-import './radial_menu_item.dart';
 
 const double _radiansPerDegree = Math.pi / 180;
 final double _startAngle = -90.0 * _radiansPerDegree;
 
 typedef double ItemAngleCalculator(int index);
 
-/// A radial menu for selecting from a list of items.
-///
-/// A radial menu lets the user select from a number of items. It displays a
-/// button that opens the menu, showing its items arranged in an arc. Selecting
-/// an item triggers the animation of a progress bar drawn at the specified
-/// [radius] around the central menu button.
-///
-/// The type `T` is the type of the values the radial menu represents. All the
-/// entries in a given menu must represent values with consistent types.
-/// Typically, an enum is used. Each [RadialMenuItem] in [items] must be
-/// specialized with that same type argument.
-///
-/// Requires one of its ancestors to be a [Material] widget.
-///
-/// See also:
-///
-///  * [RadialMenuItem], the widget used to represent the [items].
-///  * [RadialMenuCenterButton], the button used to open and close the menu.
-class RadialMenu<T> extends StatefulWidget {
-  /// Creates a dropdown button.
-  ///
-  /// The [items] must have distinct values.
-  ///
-  /// The [radius], [menuAnimationDuration], and [progressAnimationDuration]
-  /// arguments must not be null (they all have defaults, so do not need to be
-  /// specified).
-  const RadialMenu({
+class RadialSakuraMenu extends StatefulWidget {
+  const RadialSakuraMenu({
     required Key key,
     required this.items,
     required this.onSelected,
     this.radius = 100.0,
     this.menuAnimationDuration = const Duration(milliseconds: 1000),
     this.progressAnimationDuration = const Duration(milliseconds: 1000),
-  })  : super(key: key);
+  }) : super(key: key);
 
-  /// The list of possible items to select among.
-  final List<RadialMenuItem<T>> items;
-
-  /// Called when the user selects an item.
-  final ValueChanged<T> onSelected;
-
-  /// The radius of the arc used to lay out the items and draw the progress bar.
-  ///
-  /// Defaults to 100.0.
+  final List<RadialSakuraMenuItem> items;
+  final ValueChanged onSelected;
   final double radius;
-
-  /// Duration of the menu opening/closing animation.
-  ///
-  /// Defaults to 1000 milliseconds.
   final Duration menuAnimationDuration;
-
-  /// Duration of the action activation progress arc animation.
-  ///
-  /// Defaults to 1000 milliseconds.
   final Duration progressAnimationDuration;
 
   @override
-  RadialMenuState createState() => RadialMenuState();
+  RadialSakuraMenuState createState() => RadialSakuraMenuState();
 }
 
-class RadialMenuState extends State<RadialMenu> with TickerProviderStateMixin {
+class RadialSakuraMenuState extends State<RadialSakuraMenu>
+    with TickerProviderStateMixin {
   AnimationController? _menuAnimationController;
   AnimationController? _progressAnimationController;
-  bool _isOpen = false;
   int? _activeItemIndex;
 
-  // todo: xqwzts: allow users to pass in their own calculator as a param.
-  // and change this to the default: radialItemAngleCalculator.
   double calculateItemAngle(int index) {
-    double _itemSpacing = 360.0 / widget.items.length;
-    return _startAngle + index * _itemSpacing * _radiansPerDegree;
+    double itemSpacing = 360.0 / widget.items.length;
+    return _startAngle + index * itemSpacing * _radiansPerDegree;
   }
 
   @override
@@ -105,72 +59,42 @@ class RadialMenuState extends State<RadialMenu> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  void _openMenu() {
+  void openMenu() {
     _menuAnimationController?.forward();
-    setState(() => _isOpen = true);
   }
 
-  void _closeMenu() {
+  void closeMenu() {
     _menuAnimationController?.reverse();
-    setState(() => _isOpen = false);
   }
 
-  Future<Null> _activate(int itemIndex) async {
-    setState(() => _activeItemIndex = itemIndex);
-    await _progressAnimationController?.forward().orCancel;
-    widget.onSelected(widget.items[itemIndex].value);
-  }
+  bool get isOpen =>
+      _menuAnimationController!.status == AnimationStatus.completed;
 
   /// Resets the menu to its initial (closed) state.
   void reset() {
     _menuAnimationController?.reset();
     _progressAnimationController?.reverse();
     setState(() {
-      _isOpen = false;
       _activeItemIndex = null;
     });
   }
 
   Widget _buildActionButton(int index) {
-    final RadialMenuItem item = widget.items[index];
-
+    final RadialSakuraMenuItem item = widget.items[index];
     return LayoutId(
       id: '${_RadialMenuLayout.actionButton}$index',
-      child: RadialMenuButton(
+      child: AnimatedBuilder(
+        animation: _menuAnimationController!,
+        builder: (context, child) {
+          return Opacity(
+            opacity: CurvedAnimation(
+              parent: _menuAnimationController!,
+              curve: Interval(0.0, 1.0, curve: Curves.easeInOut),
+            ).value,
+            child: child,
+          );
+        },
         child: item,
-        backgroundColor: item.backgroundColor,
-        onPressed: () => _activate(index),
-      ),
-    );
-  }
-
-  Widget _buildActiveAction(int index) {
-    final RadialMenuItem item = widget.items[index];
-    final IconData iconData = (item.child as Icon?)?.icon ?? Icons.help;
-
-    return LayoutId(
-      id: '${_RadialMenuLayout.activeAction}$index',
-      child: ArcProgressIndicator(
-        controller: _progressAnimationController!.view,
-        radius: widget.radius,
-        color: item.backgroundColor,
-        icon: iconData,
-        iconColor: item.iconColor,
-        startAngle: calculateItemAngle(index),
-        width: 30,
-        iconSize: 15,
-      ),
-    );
-  }
-
-  Widget _buildCenterButton() {
-    return LayoutId(
-      id: _RadialMenuLayout.menuButton,
-      child: RadialMenuCenterButton(
-        openCloseAnimationController: _menuAnimationController!.view,
-        activateAnimationController: _progressAnimationController!.view,
-        isOpen: _isOpen,
-        onPressed: _isOpen ? _closeMenu : _openMenu,
       ),
     );
   }
@@ -184,12 +108,6 @@ class RadialMenuState extends State<RadialMenu> with TickerProviderStateMixin {
         children.add(_buildActionButton(i));
       }
     }
-
-    if (_activeItemIndex != null) {
-      children.add(_buildActiveAction(_activeItemIndex!));
-    }
-
-    children.add(_buildCenterButton());
 
     return AnimatedBuilder(
       animation: _menuAnimationController!,
@@ -268,6 +186,8 @@ class _RadialMenuLayout extends MultiChildLayoutDelegate {
             center.dy - arcSize.height / 2,
           ),
         );
+
+        // opacity
       }
 
       if (hasChild(actionButtonId)) {
