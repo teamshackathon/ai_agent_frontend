@@ -48,8 +48,6 @@ class DummyMain extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final displaySize = MediaQuery.sizeOf(context);
-    final List<String> list = ["チョコ", "バナナ"];
 
     return DummyBasePage(
       pageTitle: "ダミープロフィール",
