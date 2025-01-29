@@ -27,13 +27,3 @@ class Lesson with _$Lesson {
     return {"count": count};
   }
 }
-
-// @Riverpod(keepAlive: true)
-// class Lessons extends _$Lessons {
-//   @override
-//   List<Lesson> build() => [];
-//
-//   void clear() => state = [];
-//
-//   void add(Lesson lesson) => state = [...state, lesson];
-// }

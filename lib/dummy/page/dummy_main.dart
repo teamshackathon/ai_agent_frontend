@@ -1,4 +1,4 @@
-import 'package:code/dummy/data/dummy_provider.dart';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:math' as math;
@@ -55,27 +55,18 @@ class DummyMain extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final dummyNot = ref.read(dummyModeProvider.notifier);
     dummyNot.state = true;
+    final quizNot = ref.read(quizNotiferProvider.notifier);
+    final quiz = ref.watch(quizNotiferProvider);
 
     return DummyBasePage(
-      pageTitle: "ダミープロフィール",
-      body: Scaffold(
-        body: RadialSakuraMenu(
-          key: _menuKey,
-          items: items,
-          radius: 100.0,
-          onSelected: onItemSelected,
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.restore),
-          onPressed: () {
-            if (_menuKey.currentState != null) {
-              if (_menuKey.currentState!.isOpen) {
-                _menuKey.currentState?.closeMenu();
-              } else {
-                _menuKey.currentState?.openMenu();
-              }
-            }
-          },
+      floatingActionButton:
+          FloatingActionButton(onPressed: () => quizNot.init(readQuiz("mock"))),
+      pageTitle: "ダミーメイン",
+      body: ListView.builder(
+        itemCount: quiz.length,
+        itemBuilder: (context, index) => AnswerWidget(
+          quiz: quiz[index],
+          onChanged: (value) => quizNot.writeAnswer(quiz[index].title, value),
         ),
       ),
     );
