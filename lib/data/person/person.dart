@@ -1,43 +1,67 @@
+import 'package:code/data/firebase/auth_provider.dart';
+import 'package:code/toast.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'person.freezed.dart';
+part 'student.freezed.dart';
 
-part 'person.g.dart';
+part 'student.g.dart';
 
 @freezed
-class Person with _$Person {
-  const Person._();
+class Student with _$Student {
+  const Student._();
 
   /// 生徒、先生情報
-  const factory Person({
+  const factory Student({
     required String uid,
     required String name,
     required String role,
-    String? firstName,
-    String? familyName,
-    // [ { "room": "~", "year": "~" }, ... ]
+    required String firstName,
+    required String familyName,
     // indexの低い方に最新のクラスが来る
+    /// [ { "room": "~", "year": "~" }, ... ]
     List<Map<String, String>>? rooms,
-  }) = _Person;
-
-  factory Person.fromJson(Map<String, dynamic> json) => _$PersonFromJson(json);
+  }) = _Student;
 
   String get folderName => "$firstName.$familyName".toLowerCase();
 }
 
-@Riverpod(keepAlive: true)
-class PersonStatus extends _$PersonStatus {
+@riverpod
+class StudentStatus extends _$StudentStatus {
   @override
-  Person build() => Person(uid: "", name: "", role: "");
+  Future<Student> build() async {
+    final auth = ref.watch(authProvider);
+    final user = auth.currentUser;
 
-  /// stateを空リストに変更
-  void clear() => state = Person(uid: "", name: "", role: "");
+    // そもそもuserがnullになる仕様の時点でやばいから、今すぐ報告
+    if (user == null) {
+      warningToast(log: "Error(StudentStatus) : USER IS NULL");
+      return Student(
+          uid: "", name: "", role: "", firstName: "", familyName: "");
+    }
 
-  /// stateにpersonを上書き
-  ///
-  /// riverpod内のデータを書き換える際は以下のような書き方が必要になる
-  ///
-  ///     ref.read(~.notifier).write(ref.watch(~).copyWith(name:~))
-  void write(Person person) => state = person;
+    // userの付加情報(claim)を見に行く
+    final token = await user.getIdTokenResult();
+
+    // jsonの中の配列が気持ち悪い形で出てくるから手直し
+    final List<Map<String, String>> list = [];
+    for (var item in token.claims?["rooms"] ?? []) {
+      list.add(
+          {"room": item["room"] as String, "year": item["year"] as String});
+    }
+
+    // 最新の情報が0番目に来るようにソート
+    if (list.length > 1) {
+      list.sort((a, b) => -a["year"]!.compareTo(b["year"]!));
+    }
+
+    return Student(
+      uid: user.uid,
+      name: user.displayName ?? "",
+      role: token.claims?["role"],
+      firstName: token.claims?["first_name"],
+      familyName: token.claims?["family_name"],
+      rooms: list,
+    );
+  }
 }
