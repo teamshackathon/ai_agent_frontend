@@ -6,7 +6,7 @@ import '../../../data/person/person.dart';
 
 Future<void> sendNoticeToMyself({required WidgetRef ref}) async {
   final reference = ref.watch(noticeSetReferenceProvider);
-  final status = ref.watch(personStatusProvider);
+  final status = await ref.watch(personStatusProvider.future);
 
   final newNotice = Notice(
     timeStamp: DateTime.now(),
@@ -14,7 +14,7 @@ Future<void> sendNoticeToMyself({required WidgetRef ref}) async {
     text: "テスト通知",
     publisher: "Myself",
     read: false,
-    room: status.rooms?[0]["room"] ?? "",
+    room: status.rooms[0]["room"] ?? "",
     folderName: status.folderName,
     reference: reference.doc(), // IDが勝手に入る
   );

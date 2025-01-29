@@ -14,17 +14,11 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-Lesson _$LessonFromJson(Map<String, dynamic> json) {
-  return _Lesson.fromJson(json);
-}
-
 /// @nodoc
 mixin _$Lesson {
-  String get id => throw _privateConstructorUsedError;
   int get count => throw _privateConstructorUsedError;
-
-  /// Serializes this Lesson to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  DocumentReference<Object?> get reference =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of Lesson
   /// with the given fields replaced by the non-null parameter values.
@@ -37,7 +31,7 @@ abstract class $LessonCopyWith<$Res> {
   factory $LessonCopyWith(Lesson value, $Res Function(Lesson) then) =
       _$LessonCopyWithImpl<$Res, Lesson>;
   @useResult
-  $Res call({String id, int count});
+  $Res call({int count, DocumentReference<Object?> reference});
 }
 
 /// @nodoc
@@ -55,18 +49,18 @@ class _$LessonCopyWithImpl<$Res, $Val extends Lesson>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? count = null,
+    Object? reference = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       count: null == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
               as int,
+      reference: null == reference
+          ? _value.reference
+          : reference // ignore: cast_nullable_to_non_nullable
+              as DocumentReference<Object?>,
     ) as $Val);
   }
 }
@@ -78,7 +72,7 @@ abstract class _$$LessonImplCopyWith<$Res> implements $LessonCopyWith<$Res> {
       __$$LessonImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, int count});
+  $Res call({int count, DocumentReference<Object?> reference});
 }
 
 /// @nodoc
@@ -94,38 +88,36 @@ class __$$LessonImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? count = null,
+    Object? reference = null,
   }) {
     return _then(_$LessonImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       count: null == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
               as int,
+      reference: null == reference
+          ? _value.reference
+          : reference // ignore: cast_nullable_to_non_nullable
+              as DocumentReference<Object?>,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$LessonImpl extends _Lesson {
-  const _$LessonImpl({required this.id, required this.count}) : super._();
+  const _$LessonImpl({required this.count, required this.reference})
+      : super._();
 
-  factory _$LessonImpl.fromJson(Map<String, dynamic> json) =>
-      _$$LessonImplFromJson(json);
-
-  @override
-  final String id;
   @override
   final int count;
+  @override
+  final DocumentReference<Object?> reference;
 
   @override
   String toString() {
-    return 'Lesson(id: $id, count: $count)';
+    return 'Lesson(count: $count, reference: $reference)';
   }
 
   @override
@@ -133,13 +125,13 @@ class _$LessonImpl extends _Lesson {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LessonImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.count, count) || other.count == count));
+            (identical(other.count, count) || other.count == count) &&
+            (identical(other.reference, reference) ||
+                other.reference == reference));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, count);
+  int get hashCode => Object.hash(runtimeType, count, reference);
 
   /// Create a copy of Lesson
   /// with the given fields replaced by the non-null parameter values.
@@ -148,26 +140,18 @@ class _$LessonImpl extends _Lesson {
   @pragma('vm:prefer-inline')
   _$$LessonImplCopyWith<_$LessonImpl> get copyWith =>
       __$$LessonImplCopyWithImpl<_$LessonImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$LessonImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _Lesson extends Lesson {
-  const factory _Lesson({required final String id, required final int count}) =
-      _$LessonImpl;
+  const factory _Lesson(
+      {required final int count,
+      required final DocumentReference<Object?> reference}) = _$LessonImpl;
   const _Lesson._() : super._();
 
-  factory _Lesson.fromJson(Map<String, dynamic> json) = _$LessonImpl.fromJson;
-
-  @override
-  String get id;
   @override
   int get count;
+  @override
+  DocumentReference<Object?> get reference;
 
   /// Create a copy of Lesson
   /// with the given fields replaced by the non-null parameter values.
