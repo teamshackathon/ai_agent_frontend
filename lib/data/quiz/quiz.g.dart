@@ -87,7 +87,7 @@ Map<String, dynamic> _$$KijutsuImplToJson(_$KijutsuImpl instance) =>
 // RiverpodGenerator
 // **************************************************************************
 
-String _$quizNotiferHash() => r'7c83da47321be2ed800d533554b18345272c1638';
+String _$quizNotiferHash() => r'272aaa391ed38cc1fd59e9ef0372b26f3c77bb40';
 
 /// See also [QuizNotifer].
 @ProviderFor(QuizNotifer)

@@ -142,8 +142,8 @@ class Router extends _$Router {
           builder: (context, state) => LoginPage(),
         ),
 
-        // ダミー用の分岐
-        if (dummy) dummyBranch,
+        // // ダミー用の分岐
+        // if (dummy) dummyBranch,
 
         // 先生用のbottomBarを含めた分岐
         if (role.value == "teacher") teacherBranch,

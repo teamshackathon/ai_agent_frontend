@@ -54,12 +54,12 @@ class QuizNotifer extends _$QuizNotifer {
 
   void rebuild() => state = [];
 
-  void init(List<Map<String, dynamic>> list) {
-    rebuild();
-    for (var quizJson in list) {
-      add(fromJsonDetectFormat(quizJson));
-    }
-  }
+  // void init(List<Map<String, dynamic>> list) {
+  //   rebuild();
+  //   for (var quizJson in list) {
+  //     add(fromJsonDetectFormat(quizJson));
+  //   }
+  // }
 
   Quiz fromJsonDetectFormat(Map<String, dynamic> json) {
     if (json["format"] == "Sentaku") {
@@ -73,16 +73,16 @@ class QuizNotifer extends _$QuizNotifer {
     }
   }
 
-  void reConst() {
-    final lessonsNot = ref.read(lessonsProvider.notifier);
-    Lesson les = lessonsNot.currentLesson();
-    final jsonList = readQuiz(les.id);
-    init(jsonList);
-  }
-
-  void add(Quiz quiz) {
-    state = [...state, quiz];
-  }
+  // void reConst() {
+  //   final lessonsNot = ref.read(lessonsProvider.notifier);
+  //   Lesson les = lessonsNot.currentLesson();
+  //   final jsonList = readQuiz(les.id);
+  //   init(jsonList);
+  // }
+  //
+  // void add(Quiz quiz) {
+  //   state = [...state, quiz];
+  // }
 
   void writeAnswer(String title, String answer) {
     state = [
