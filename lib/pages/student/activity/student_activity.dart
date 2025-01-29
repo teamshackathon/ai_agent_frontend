@@ -23,7 +23,7 @@ class StudentActivityPage extends ConsumerWidget {
         // データを受け取れたときの処理
         data: (snapshot) {
           final notices = snapshot.docs;
-          if(notices.isEmpty){
+          if (notices.isEmpty) {
             return Center(child: Text("通知がありません"));
           }
           return ListView.builder(

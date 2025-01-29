@@ -68,7 +68,7 @@ class RadicalSakuraMenuEx extends HookConsumerWidget {
           child: RadialSakuraMenuItemEx(
             subject: room.subject,
             angle: 2 * math.pi / rooms.length * rooms.indexOf(room),
-            onPressed: (){
+            onPressed: () {
               // lessonsを取得できるように入れる
               GoRouter.of(context).push(Routes.studentLessons);
             },

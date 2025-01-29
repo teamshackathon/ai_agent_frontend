@@ -8,7 +8,6 @@ class MyApp extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final goRouter = ref.watch(routerProvider);
 
     return MaterialApp.router(

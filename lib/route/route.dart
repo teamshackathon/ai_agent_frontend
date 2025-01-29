@@ -121,9 +121,9 @@ class Router extends _$Router {
 
             // ユーザーがログイン済みの場合
             if (isLoggingIn) {
-              if(role.value == "teacher"){
+              if (role.value == "teacher") {
                 return Routes.teacherMain;
-              }else if(role.value == "student"){
+              } else if (role.value == "student") {
                 return Routes.studentMain;
               }
             }

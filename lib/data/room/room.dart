@@ -32,7 +32,7 @@ class Room with _$Room {
 
 //教室用配列プロバイダー
 @riverpod
-Future<List<Room>> rooms(ref) async{
+Future<List<Room>> rooms(ref) async {
   try {
     final Person person = await ref.read(personStatusProvider.future);
 
@@ -53,7 +53,7 @@ Future<List<Room>> buildFromStudent(Student student) async {
   final store = FirebaseFirestore.instance;
   for (var r in student.rooms) {
     var docRef =
-    store.collection(r["year"]!).doc(r["room"]!).collection("common");
+        store.collection(r["year"]!).doc(r["room"]!).collection("common");
     await docRef.get().then((querySnapshot) {
       for (var doc in querySnapshot.docs) {
         list.add(
@@ -70,7 +70,7 @@ Future<List<Room>> buildFromStudent(Student student) async {
 
   // ここにたどり着いたときは、多分store側に部屋データがない
   // auth側に関してはpersonプロバイダーができてる限り問題ない
-  if (list.isEmpty){
+  if (list.isEmpty) {
     throw Exception("Error(buildFromStudent) : ROOMS IS EMPTY");
   }
 
@@ -101,7 +101,7 @@ Future<List<Room>> buildFromTeacher(Teacher teacher) async {
 
   // ここにたどり着いたときは、多分store側に部屋データがない
   // auth側に関してはpersonプロバイダーができてる限り問題ない
-  if (list.isEmpty){
+  if (list.isEmpty) {
     throw Exception("Error(buildFromStudent) : ROOMS IS EMPTY");
   }
 
@@ -109,22 +109,22 @@ Future<List<Room>> buildFromTeacher(Teacher teacher) async {
 }
 
 @riverpod
-Future<List<Room>> activeRooms(ref)async{
+Future<List<Room>> activeRooms(ref) async {
   final List<Room> list = [];
   final rooms = await ref.read(roomsProvider.future);
-  for(final room in rooms){
-    if(room.year == latestYear)list.add(room);
+  for (final room in rooms) {
+    if (room.year == latestYear) list.add(room);
   }
 
   return list;
 }
 
 @riverpod
-Future<List<Room>> archiveRooms(ref)async{
+Future<List<Room>> archiveRooms(ref) async {
   final List<Room> list = [];
   final rooms = await ref.read(roomsProvider.future);
-  for(final room in rooms){
-    if(room.year != latestYear)list.add(room);
+  for (final room in rooms) {
+    if (room.year != latestYear) list.add(room);
   }
 
   return list;

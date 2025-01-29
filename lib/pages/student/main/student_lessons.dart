@@ -27,12 +27,10 @@ class StudentLessons extends ConsumerWidget {
           }
           return ListView.builder(
             itemCount: lessons.length,
-            itemBuilder: (context,index){
+            itemBuilder: (context, index) {
               final lesson = lessons[index].data();
               return InkWell(
-                onTap: () async {
-
-                },
+                onTap: () async {},
                 child: Card(
                   child: Column(
                     children: [
