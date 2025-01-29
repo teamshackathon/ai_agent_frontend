@@ -1,0 +1,105 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'quiz.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_$SentakuImpl _$$SentakuImplFromJson(Map<String, dynamic> json) =>
+    _$SentakuImpl(
+      title: json['title'] as String,
+      format: json['format'] as String,
+      question: json['question'] as String,
+      correctAnswer: json['correctAnswer'] as String,
+      options: (json['options'] as List<dynamic>)
+          .map((e) => (e as Map<String, dynamic>).map(
+                (k, e) => MapEntry(k, e as Object),
+              ))
+          .toList(),
+      answer: json['answer'] as String? ?? "",
+      correctFlag: json['correctFlag'] as bool? ?? false,
+      comment: json['comment'] as String?,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$SentakuImplToJson(_$SentakuImpl instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'format': instance.format,
+      'question': instance.question,
+      'correctAnswer': instance.correctAnswer,
+      'options': instance.options,
+      'answer': instance.answer,
+      'correctFlag': instance.correctFlag,
+      'comment': instance.comment,
+      'runtimeType': instance.$type,
+    };
+
+_$AnaumeImpl _$$AnaumeImplFromJson(Map<String, dynamic> json) => _$AnaumeImpl(
+      title: json['title'] as String,
+      format: json['format'] as String,
+      question: json['question'] as String,
+      correctAnswer: json['correctAnswer'] as String,
+      answer: json['answer'] as String?,
+      correctFlag: json['correctFlag'] as bool? ?? false,
+      comment: json['comment'] as String?,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$AnaumeImplToJson(_$AnaumeImpl instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'format': instance.format,
+      'question': instance.question,
+      'correctAnswer': instance.correctAnswer,
+      'answer': instance.answer,
+      'correctFlag': instance.correctFlag,
+      'comment': instance.comment,
+      'runtimeType': instance.$type,
+    };
+
+_$KijutsuImpl _$$KijutsuImplFromJson(Map<String, dynamic> json) =>
+    _$KijutsuImpl(
+      title: json['title'] as String,
+      format: json['format'] as String,
+      question: json['question'] as String,
+      correctAnswer: json['correctAnswer'] as String,
+      answer: json['answer'] as String?,
+      correctFlag: json['correctFlag'] as bool? ?? false,
+      comment: json['comment'] as String?,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$KijutsuImplToJson(_$KijutsuImpl instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'format': instance.format,
+      'question': instance.question,
+      'correctAnswer': instance.correctAnswer,
+      'answer': instance.answer,
+      'correctFlag': instance.correctFlag,
+      'comment': instance.comment,
+      'runtimeType': instance.$type,
+    };
+
+// **************************************************************************
+// RiverpodGenerator
+// **************************************************************************
+
+String _$quizNotiferHash() => r'272aaa391ed38cc1fd59e9ef0372b26f3c77bb40';
+
+/// See also [QuizNotifer].
+@ProviderFor(QuizNotifer)
+final quizNotiferProvider = NotifierProvider<QuizNotifer, List<Quiz>>.internal(
+  QuizNotifer.new,
+  name: r'quizNotiferProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$quizNotiferHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$QuizNotifer = Notifier<List<Quiz>>;
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

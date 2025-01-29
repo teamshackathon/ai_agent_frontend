@@ -1,6 +1,5 @@
 import 'package:code/data/pdf_path/pdf_path.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pdfrx/pdfrx.dart';
 

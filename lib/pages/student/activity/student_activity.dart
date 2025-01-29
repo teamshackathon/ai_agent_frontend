@@ -10,7 +10,7 @@ class StudentActivityPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final notices = ref.watch(noticesProvider);
+    final noticeStream = ref.watch(noticeGetProvider);
 
     return BasePage(
       pageTitle: "生徒アクティビティ",
@@ -19,13 +19,17 @@ class StudentActivityPage extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () async => await sendNoticeToMyself(ref: ref),
       ),
-      body: notices.when(
+      body: noticeStream.when(
         // データを受け取れたときの処理
-        data: (data) {
+        data: (snapshot) {
+          final notices = snapshot.docs;
+          if (notices.isEmpty) {
+            return Center(child: Text("通知がありません"));
+          }
           return ListView.builder(
-            itemCount: data.docs.length,
+            itemCount: notices.length,
             itemBuilder: (context, index) {
-              final notice = data.docs[index].data();
+              final notice = notices[index].data();
               return InkWell(
                 onTap: () async {
                   // タップすると既読に更新

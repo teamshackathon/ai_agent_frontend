@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code/data/person/person.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../lesson/lesson.dart';
 import '../notice/notice.dart';
+import '../person/person.dart';
 
 /// firestoreのインスタンス監視用プロバイダー
 final firestoreProvider =
@@ -17,55 +18,52 @@ final noticeSetReferenceProvider = Provider((ref) {
   // noticeコレクションにまとめて入れるため、set,getで参照元が異なる
   return store.collection("notice").withConverter<Notice>(
         fromFirestore: ((snapshot, _) => Notice.fromFirestore(snapshot)),
-        toFirestore: ((notice, _) {
-          return notice.toMap();
-        }),
-      );
-});
-
-/// noticeコレクションへの参照を持つ生徒用getプロバイダー
-///
-/// 色々改良の余地がありそうだけど、一旦はこれで
-///
-/// 教師用は別に作ったほうがいいかも
-final noticeGetReferenceProvider = Provider((ref) {
-  final store = ref.watch(firestoreProvider);
-  final user = ref.watch(personStatusProvider);
-
-  return store
-      .collection("notice")
-// 部屋とフォルダ名で誰宛てなのかを判断している。UIDで指定できるようにしたっていい
-      .where("room", isEqualTo: user.rooms![0]["room"])
-      .where("folderName", isEqualTo: user.folderName)
-// ひとまずは20件だけ読み込まれる設定。更に過去の通知を見に行けるようにしたいなら要相談
-      .limit(20)
-// ここでNoticeクラスに変換して渡せるようにしている
-      .withConverter<Notice>(
-        fromFirestore: ((snapshot, _) => Notice.fromFirestore(snapshot)),
         toFirestore: ((notice, _) => notice.toMap()),
       );
 });
 
-/// noticeReferenceProviderが指定する参照元から最新データを取り続けるプロバイダー
-///
-/// 最新データを保持してくれるため、改めてプロバイダーを用意する必要はない
-///
-/// タイムスタンプの新しい順に並び替えている
-final noticesProvider = StreamProvider((ref) {
-  final reference = ref.watch(noticeGetReferenceProvider);
-  return reference.orderBy("timeStamp", descending: true).snapshots();
+/// Claudeを崇拝せよ
+final noticeGetProvider = StreamProvider((ref) async* {
+  final store = ref.watch(firestoreProvider);
+  final student = await ref.watch(personStatusProvider.future) as Student;
+
+  // QueryをStreamとして直接返す
+  yield* store
+      .collection("notice")
+      .where("room", isEqualTo: student.rooms[0]["room"])
+      .where("folderName", isEqualTo: student.folderName)
+      .limit(20)
+      .withConverter<Notice>(
+        fromFirestore: ((snapshot, _) => Notice.fromFirestore(snapshot)),
+        toFirestore: ((notice, _) => notice.toMap()),
+      )
+      .orderBy("timeStamp", descending: true)
+      .snapshots();
 });
 
-final hackedProvider = StreamProvider((ref) {
-  final store = ref.watch(firestoreProvider);
-  final user = ref.watch(personStatusProvider);
-  final hackRef =
-      store.collection(user.rooms![0]["year"]!).doc(user.rooms![0]["room"]!);
-  return hackRef.snapshots();
-});
+final lessonStreamProvider =
+    StreamProvider.family<QuerySnapshot<Lesson>, CollectionReference>(
+  (ref, reference) {
+    return reference
+        .withConverter<Lesson>(
+          fromFirestore: ((snapshot, _) => Lesson.fromFirestore(snapshot)),
+          toFirestore: ((lesson, _) => lesson.toMap()),
+        )
+        .orderBy("count")
+        .snapshots();
+  },
+);
 
-final hackingProvider = StreamProvider((ref) {
-  final store = ref.watch(firestoreProvider);
-  final hackRef = store.collection("2024").doc("2-1");
-  return hackRef.snapshots();
-});
+// final hackedProvider = StreamProvider((ref) {
+//   final store = ref.watch(firestoreProvider);
+//   final student = ref.watch(personStatusProvider) as Student;
+//   final hackRef =
+//       store.collection(student.rooms[0]["year"]!).doc(student.rooms[0]["room"]!);
+//   return hackRef.snapshots();
+// });
+//
+// final hackingProvider = StreamProvider((ref) {
+//   final store = ref.watch(firestoreProvider);
+//   final hackRef = store.collection("2024").doc("2-1");
+//   return hackRef.snapshots();
+// });

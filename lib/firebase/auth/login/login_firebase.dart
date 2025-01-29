@@ -13,11 +13,8 @@ import 'get_status_from_user.dart';
 /// Firebaseへメアドとパスワードでログイン
 ///
 /// Futureと書かれていた時は、時間のかかる処理が含まれている（非同期処理）
-Future<void> loginFirebase({
-  required String email,
-  required String pass,
-  required WidgetRef ref,
-}) async {
+Future<void> loginFirebase(
+    {required String email, required String pass}) async {
   // try ~ catchでは例外が発生する処理を書く
   try {
     // 失敗してそうなところでthrowを書くと、以降の処理をやめて、catchまで行く
@@ -37,8 +34,6 @@ Future<void> loginFirebase({
     // resultを確認して、userの中にデータが入っていればログイン
     final User? user = result.user;
     if (user == null) throw Exception("通信に失敗しました");
-
-    await getStatusFromUser(ref: ref, user: user);
 
     infoToast(toast: "ログイン成功", log: "ログイン成功");
   } catch (e) {

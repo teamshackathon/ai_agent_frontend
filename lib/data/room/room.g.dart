@@ -3,36 +3,15 @@
 part of 'room.dart';
 
 // **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
-_$RoomImpl _$$RoomImplFromJson(Map<String, dynamic> json) => _$RoomImpl(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      teacher: json['teacher'] as String,
-      year: json['year'] as String,
-      roomNumber: json['roomNumber'] as String,
-    );
-
-Map<String, dynamic> _$$RoomImplToJson(_$RoomImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'teacher': instance.teacher,
-      'year': instance.year,
-      'roomNumber': instance.roomNumber,
-    };
-
-// **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$roomsHash() => r'25fff33c9dd88043b0ebe45887c474c9393a0913';
+String _$roomsHash() => r'4c0e0002a799958261b15ceb0d0791b286970aa8';
 
-/// See also [Rooms].
-@ProviderFor(Rooms)
-final roomsProvider = NotifierProvider<Rooms, List<Room>>.internal(
-  Rooms.new,
+/// See also [rooms].
+@ProviderFor(rooms)
+final roomsProvider = AutoDisposeFutureProvider<List<Room>>.internal(
+  rooms,
   name: r'roomsProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product') ? null : _$roomsHash,
@@ -40,6 +19,40 @@ final roomsProvider = NotifierProvider<Rooms, List<Room>>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef _$Rooms = Notifier<List<Room>>;
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef RoomsRef = AutoDisposeFutureProviderRef<List<Room>>;
+String _$activeRoomsHash() => r'924d50e8890a2c4680e8f3735aa7d3f403fad122';
+
+/// See also [activeRooms].
+@ProviderFor(activeRooms)
+final activeRoomsProvider = AutoDisposeFutureProvider<List<Room>>.internal(
+  activeRooms,
+  name: r'activeRoomsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$activeRoomsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef ActiveRoomsRef = AutoDisposeFutureProviderRef<List<Room>>;
+String _$archiveRoomsHash() => r'710c8469c547d26fc0f5da584243eb6363a4401f';
+
+/// See also [archiveRooms].
+@ProviderFor(archiveRooms)
+final archiveRoomsProvider = AutoDisposeFutureProvider<List<Room>>.internal(
+  archiveRooms,
+  name: r'archiveRoomsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$archiveRoomsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef ArchiveRoomsRef = AutoDisposeFutureProviderRef<List<Room>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

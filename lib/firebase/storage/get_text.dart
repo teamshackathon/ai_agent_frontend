@@ -17,7 +17,6 @@ Future<void> getText({required WidgetRef ref}) async {
     // 本来はfirestoreにURLを保存し、それを読み込んでくる仕様にしていく
     var path = await storage.ref("englishMock.pdf").getDownloadURL();
     pdfNot.add(path);
-    infoToast(log: path);
   } on FirebaseException catch (e) {
     //失敗は全部ここに行く
     warningToast(log: "${e.code} : ${e.message}");

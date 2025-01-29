@@ -42,7 +42,7 @@ final teacherBranch = StatefulShellRoute.indexedStack(
       routes: [
         GoRoute(
           path: Routes.teacherMain,
-          builder: (context, state) => TeacherMain(),
+          // builder: (context, state) => TeacherMain(),
         ),
       ],
     ),
@@ -53,7 +53,7 @@ final teacherBranch = StatefulShellRoute.indexedStack(
       routes: [
         GoRoute(
           path: Routes.activity,
-          builder: (context, state) => TeacherActivityPage(),
+          // builder: (context, state) => TeacherActivityPage(),
         ),
       ],
     ),
