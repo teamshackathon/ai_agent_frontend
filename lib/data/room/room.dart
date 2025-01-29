@@ -1,6 +1,3 @@
-// todo : ofActive, ofArchived
-// todo : currentRoomProvider
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code/toast.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
