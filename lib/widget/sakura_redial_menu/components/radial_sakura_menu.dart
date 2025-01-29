@@ -147,7 +147,7 @@ class _RadialMenuLayout extends MultiChildLayoutDelegate {
     required this.calculateItemAngle,
     required this.controller,
   }) : _progress = Tween<double>(begin: 0.0, end: radius).animate(
-            CurvedAnimation(curve: Curves.elasticOut, parent: controller));
+      CurvedAnimation(curve: Curves.elasticOut, parent: controller));
 
   late Offset center;
 
@@ -194,7 +194,7 @@ class _RadialMenuLayout extends MultiChildLayoutDelegate {
 
       if (hasChild(actionButtonId)) {
         final Size buttonSize =
-            layoutChild(actionButtonId, BoxConstraints.loose(size));
+        layoutChild(actionButtonId, BoxConstraints.loose(size));
 
         final double itemAngle = calculateItemAngle(i);
 
@@ -214,8 +214,8 @@ class _RadialMenuLayout extends MultiChildLayoutDelegate {
   @override
   bool shouldRelayout(_RadialMenuLayout oldDelegate) =>
       itemCount != oldDelegate.itemCount ||
-      radius != oldDelegate.radius ||
-      calculateItemAngle != oldDelegate.calculateItemAngle ||
-      controller != oldDelegate.controller ||
-      _progress != oldDelegate._progress;
+          radius != oldDelegate.radius ||
+          calculateItemAngle != oldDelegate.calculateItemAngle ||
+          controller != oldDelegate.controller ||
+          _progress != oldDelegate._progress;
 }

@@ -9,11 +9,11 @@ import '../../firebase/firestore/get_data/get_rooms.dart';
 import '../../firebase/firestore/get_data/get_teachers.dart';
 import '../../widget/loading_button.dart';
 
-class LoginPage extends HookConsumerWidget {
+class LoginPage extends HookWidget {
   const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final displaySize = MediaQuery.of(context).size;
     final mail = useState<String>("asuka.morita@manabiya.ai.com");
     final pass = useState<String>("Manab1yaa1asuka.morita");
@@ -146,9 +146,10 @@ class LoginPage extends HookConsumerWidget {
                       onPressed: () async {
                         loginLoad.value = true;
                         await loginFirebase(
-                            email: mail.value, pass: pass.value, ref: ref);
-                        await getTeachers(ref: ref);
-                        await getRooms(ref: ref);
+                          email: mail.value,
+                          pass: pass.value,
+                        );
+                        loginLoad.value = false;
                       },
                     ),
                   ],

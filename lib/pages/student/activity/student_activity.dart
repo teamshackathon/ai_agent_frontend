@@ -10,7 +10,7 @@ class StudentActivityPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final notices = ref.watch(noticesProvider);
+    final notices = ref.watch(noticeGetProvider);
 
     return BasePage(
       pageTitle: "生徒アクティビティ",

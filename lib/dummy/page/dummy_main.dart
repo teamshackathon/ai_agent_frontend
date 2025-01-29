@@ -1,3 +1,4 @@
+import 'package:code/dummy/data/dummy_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:math' as math;
@@ -52,6 +53,8 @@ class DummyMain extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final dummyNot = ref.read(dummyModeProvider.notifier);
+    dummyNot.state = true;
 
     return DummyBasePage(
       pageTitle: "ダミープロフィール",
