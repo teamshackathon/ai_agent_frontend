@@ -55,7 +55,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '46244984723',
     projectId: 'demo-manabiya-ai',
     authDomain: 'demo-manabiya-ai.firebaseapp.com',
-    storageBucket: 'demo-manabiya-ai.firebasestorage.app',
+    storageBucket: 'demo-manabiya-ai.appspot.com',
     measurementId: 'G-HCM3YZLMJ5',
   );
 
@@ -64,6 +64,6 @@ class DefaultFirebaseOptions {
     appId: '1:46244984723:android:6dcf9e1b8bc28cf0b2da66',
     messagingSenderId: '46244984723',
     projectId: 'demo-manabiya-ai',
-    storageBucket: 'demo-manabiya-ai.firebasestorage.app',
+    storageBucket: 'demo-manabiya-ai.appspot.com',
   );
 }

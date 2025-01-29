@@ -36,8 +36,11 @@ class StudentMain extends HookConsumerWidget {
               itemBuilder: (context, index) {
                 final room = snapshot.data?[index];
                 return InkWell(
-                  onTap: (){
-                    GoRouter.of(context).push(Routes.studentLessons);
+                  onTap: () {
+                    GoRouter.of(context).push(
+                      Routes.studentLessons,
+                      extra: room.reference,
+                    );
                   },
                   child: Card(
                     child: Column(

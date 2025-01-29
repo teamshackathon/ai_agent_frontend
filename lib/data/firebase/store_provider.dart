@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../lesson/lesson.dart';
 import '../notice/notice.dart';
 import '../person/person.dart';
 
@@ -17,9 +18,7 @@ final noticeSetReferenceProvider = Provider((ref) {
   // noticeコレクションにまとめて入れるため、set,getで参照元が異なる
   return store.collection("notice").withConverter<Notice>(
         fromFirestore: ((snapshot, _) => Notice.fromFirestore(snapshot)),
-        toFirestore: ((notice, _) {
-          return notice.toMap();
-        }),
+        toFirestore: ((notice, _) => notice.toMap()),
       );
 });
 
@@ -41,6 +40,19 @@ final noticeGetProvider = StreamProvider((ref) async* {
       .orderBy("timeStamp", descending: true)
       .snapshots();
 });
+
+final lessonStreamProvider =
+    StreamProvider.family<QuerySnapshot<Lesson>, CollectionReference>(
+  (ref, reference) {
+    return reference
+        .withConverter<Lesson>(
+          fromFirestore: ((snapshot, _) => Lesson.fromFirestore(snapshot)),
+          toFirestore: ((lesson, _) => lesson.toMap()),
+        )
+        .orderBy("count")
+        .snapshots();
+  },
+);
 
 // final hackedProvider = StreamProvider((ref) {
 //   final store = ref.watch(firestoreProvider);

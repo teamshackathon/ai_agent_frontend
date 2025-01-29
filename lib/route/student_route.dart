@@ -1,13 +1,14 @@
 // 長くなりそうなのでファイル分け
 
-import 'package:code/pages/student/main/student_reading.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../pages/student/activity/student_activity.dart';
 import '../pages/profile/profile.dart';
+import '../pages/student/activity/student_activity.dart';
 import '../pages/student/main/student_lessons.dart';
 import '../pages/student/main/student_main.dart';
+import '../pages/student/main/student_reading.dart';
 import '../pages/student/main/student_tools.dart';
 import '../widget/bottom_bar/student_bottom_bar.dart';
 import 'route.dart';
@@ -51,7 +52,9 @@ final studentBranch = StatefulShellRoute.indexedStack(
             GoRoute(
               parentNavigatorKey: _studentMainKey,
               path: "lessons",
-              builder: (context, state) => StudentLessons(),
+              builder: (context, state) => StudentLessons(
+                reference: state.extra as CollectionReference,
+              ),
               routes: [
                 GoRoute(
                   parentNavigatorKey: _studentMainKey,

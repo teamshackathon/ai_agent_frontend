@@ -1,9 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'lesson.freezed.dart';
-
-part 'lesson.g.dart';
 
 @freezed
 class Lesson with _$Lesson {
@@ -11,21 +10,30 @@ class Lesson with _$Lesson {
 
   // とりあえずidと回数だけ持ってる
   const factory Lesson({
-    required String id,
     required int count,
+    required DocumentReference reference,
   }) = _Lesson;
 
-  factory Lesson.fromJson(Map<String, dynamic> json) => _$LessonFromJson(json);
+  factory Lesson.fromFirestore(
+      DocumentSnapshot<Map<String, dynamic>> snapshot) {
+    final map = snapshot.data();
+    return Lesson(
+      reference: snapshot.reference,
+      count: map?["count"] ?? 0,
+    );
+  }
 
-  String get displayCount => "第$count回";
+  Map<String, dynamic> toMap() {
+    return {"count": count};
+  }
 }
 
-@Riverpod(keepAlive: true)
-class Lessons extends _$Lessons {
-  @override
-  List<Lesson> build() => [];
-
-  void clear() => state = [];
-
-  void add(Lesson lesson) => state = [...state, lesson];
-}
+// @Riverpod(keepAlive: true)
+// class Lessons extends _$Lessons {
+//   @override
+//   List<Lesson> build() => [];
+//
+//   void clear() => state = [];
+//
+//   void add(Lesson lesson) => state = [...state, lesson];
+// }
