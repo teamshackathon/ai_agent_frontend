@@ -15,7 +15,6 @@ class StudentTools extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return BasePage(
       pageTitle: "生徒機能選択",
-
       body: Center(
         child: FractionallySizedBox(
           widthFactor: 0.95,

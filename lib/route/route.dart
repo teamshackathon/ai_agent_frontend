@@ -90,7 +90,7 @@ class Router extends _$Router {
 
             // ユーザーがログイン済みの場合
             if (isLoggingIn) {
-              if(dummy) return DummyRoutes.main;
+              if (dummy) return DummyRoutes.main;
               if (role.value == "teacher") {
                 return Routes.teacherMain;
               } else if (role.value == "student") {
@@ -131,4 +131,3 @@ class Router extends _$Router {
     );
   }
 }
-

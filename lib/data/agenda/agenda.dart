@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part "agenda.freezed.dart";
 
 @freezed
-class Agenda with _$Agenda{
+class Agenda with _$Agenda {
   const Agenda._();
 
   const factory Agenda({
@@ -25,9 +25,9 @@ class Agenda with _$Agenda{
 
   Map<String, dynamic> toMap() {
     return {
-      "title":title,
-      "time":time,
-      "steps":steps,
+      "title": title,
+      "time": time,
+      "steps": steps,
     };
   }
 }

@@ -38,9 +38,7 @@ class TeacherToolsDisplay extends ConsumerWidget {
     return Column(
       children: [
         InkWell(
-          onTap: () async {
-
-          },
+          onTap: () async {},
           child: ListTile(
             title: Card(
               child: Column(

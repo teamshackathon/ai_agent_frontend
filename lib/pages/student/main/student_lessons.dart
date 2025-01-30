@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code/data/firebase/tool_stream.dart';
-import 'package:code/data/person/person.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -9,7 +8,8 @@ import '../../../data/firebase/lesson_stream.dart';
 import '../../../data/lesson/lesson.dart';
 import '../../../route/route.dart';
 import '../../../widget/base_page/base_page.dart';
-import '../../../widget/lessons/lesson_widget.dart';
+import '../../../widget/lessons/components/lesson_card.dart';
+import '../../../widget/lessons/components/lessons_summary.dart';
 
 class StudentLessons extends ConsumerWidget {
   const StudentLessons({super.key});
@@ -48,26 +48,27 @@ class StudentLessonsDisplay extends ConsumerWidget {
 
     return lessons.isEmpty
         ? Center(child: Text("授業がありません"))
-        : ListView.builder(
-            itemCount: lessons.length,
-            itemBuilder: (context, index) {
-              final lesson = lessons[index].data();
-              return InkWell(
-                onTap: () async {
-                  currentLessonRefNot.state = lesson.reference;
-                  GoRouter.of(context).push(Routes.studentTools);
+        : Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: LessonsSummary(),
+              ),
+              Expanded(
+                  child: ListView.builder(
+                itemCount: lessons.length,
+                itemBuilder: (context, index) {
+                  final lesson = lessons[index].data();
+                  return LessonCard(
+                    lesson: lesson,
+                    onTap: () {
+                      currentLessonRefNot.state = lesson.reference;
+                      GoRouter.of(context).push(Routes.studentTools);
+                    },
+                  );
                 },
-                child: Card(
-                  child: Column(
-                    children: [
-                      Text(""),
-                      Text("第${lesson.count}回"),
-                      Text(""),
-                    ],
-                  ),
-                ),
-              );
-            },
+              ))
+            ],
           );
   }
 }

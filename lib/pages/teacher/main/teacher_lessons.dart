@@ -58,16 +58,16 @@ class TeacherLessonsDisplay extends HookConsumerWidget {
           flex: 20,
           child: InkWell(
             onTap: () async {
-                    disable.value = true;
-                    infoToast(log: currentRoomRef.toString());
-                    await currentRoomRef.add(
-                      Lesson(
-                        count: lessons.length + 1,
-                        reference: currentRoomRef.doc(),
-                      ).toMap(),
-                    );
-                    disable.value = false;
-                  },
+              disable.value = true;
+              infoToast(log: currentRoomRef.toString());
+              await currentRoomRef.add(
+                Lesson(
+                  count: lessons.length + 1,
+                  reference: currentRoomRef.doc(),
+                ).toMap(),
+              );
+              disable.value = false;
+            },
             child: Card(
               child: Center(
                 child: Text("新規授業作成"),

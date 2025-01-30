@@ -35,10 +35,8 @@ Future<List<Room>> activeRooms(ref) async {
     final store = FirebaseFirestore.instance;
     for (var r in student.rooms) {
       if (r["year"] == latestYear) {
-        var docRef = store
-            .collection(r["year"]!)
-            .doc(r["room"]!)
-            .collection("common");
+        var docRef =
+            store.collection(r["year"]!).doc(r["room"]!).collection("common");
         await docRef.get().then((querySnapshot) {
           for (var doc in querySnapshot.docs) {
             list.add(
@@ -64,7 +62,7 @@ Future<List<Room>> activeRooms(ref) async {
   }
 
   // 教師の現在のroom一覧作成
-  List<Room> buildFromTeacher(Teacher teacher){
+  List<Room> buildFromTeacher(Teacher teacher) {
     final List<Room> list = [];
     final store = FirebaseFirestore.instance;
     for (var r in teacher.rooms) {
@@ -117,10 +115,8 @@ Future<List<Room>> archiveRooms(ref) async {
     final store = FirebaseFirestore.instance;
     for (var r in student.rooms) {
       if (r["year"] != latestYear) {
-        var docRef = store
-            .collection(r["year"]!)
-            .doc(r["room"]!)
-            .collection("common");
+        var docRef =
+            store.collection(r["year"]!).doc(r["room"]!).collection("common");
         await docRef.get().then((querySnapshot) {
           for (var doc in querySnapshot.docs) {
             list.add(
@@ -146,7 +142,7 @@ Future<List<Room>> archiveRooms(ref) async {
   }
 
   // 教師の過去のroom一覧作成
-  List<Room> buildFromTeacher(Teacher teacher){
+  List<Room> buildFromTeacher(Teacher teacher) {
     final List<Room> list = [];
     final store = FirebaseFirestore.instance;
     for (var r in teacher.rooms) {
