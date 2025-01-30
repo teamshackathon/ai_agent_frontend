@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../lesson/lesson.dart';
 
 part 'quiz.freezed.dart';
 part 'quiz.g.dart';
@@ -16,10 +15,10 @@ class Quiz with _$Quiz {
     required String question,
     required String correctAnswer,
     required List<Map<String, Object>> options,
+    required int score,
     @Default("") String answer,
-    // int? answerNo,
-    @Default(false) bool correctFlag,
-    String? comment,
+    @Default(false) bool correct,
+    @Default(false) bool reloadFlag,
   }) = Sentaku;
 
   const factory Quiz.anaume({
@@ -27,9 +26,10 @@ class Quiz with _$Quiz {
     required String format,
     required String question,
     required String correctAnswer,
-    String? answer,
-    @Default(false) bool correctFlag,
-    String? comment,
+    required int score,
+    @Default("") String answer,
+    @Default(false) bool correctF,
+    @Default(false) bool reloadFlag,
   }) = Anaume;
 
   const factory Quiz.kijutsu({
@@ -37,9 +37,10 @@ class Quiz with _$Quiz {
     required String format,
     required String question,
     required String correctAnswer,
-    String? answer,
-    @Default(false) bool correctFlag,
-    String? comment,
+    required int score,
+    @Default("") String answer,
+    @Default(false) bool correct,
+    @Default(false) bool reloadFlag,
   }) = Kijutsu;
 
   factory Quiz.fromJson(Map<String, dynamic> json) => _$QuizFromJson(json);
@@ -53,13 +54,6 @@ class QuizNotifer extends _$QuizNotifer {
   List<Quiz> build() => [];
 
   void rebuild() => state = [];
-
-  // void init(List<Map<String, dynamic>> list) {
-  //   rebuild();
-  //   for (var quizJson in list) {
-  //     add(fromJsonDetectFormat(quizJson));
-  //   }
-  // }
 
   Quiz fromJsonDetectFormat(Map<String, dynamic> json) {
     if (json["format"] == "Sentaku") {
