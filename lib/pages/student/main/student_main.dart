@@ -17,15 +17,21 @@ class StudentMain extends HookConsumerWidget {
 
     return BasePage(
       pageTitle: "あなたの教室",
-      body: activeRooms.when(
-        data: (rooms) => StudentMainDisplay(rooms: rooms),
-        // エラー時の表示
-        error: (_, __) => const Center(
-          child: Text("読み込み失敗"),
-        ),
-        // 読込中の表示
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
+      body: Center(
+        child: FractionallySizedBox(
+          widthFactor: 0.95,
+          heightFactor: 0.95,
+          child: activeRooms.when(
+            data: (rooms) => StudentMainDisplay(rooms: rooms),
+            // エラー時の表示
+            error: (_, __) => const Center(
+              child: Text("読み込み失敗"),
+            ),
+            // 読込中の表示
+            loading: () => const Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
         ),
       ),
     );
