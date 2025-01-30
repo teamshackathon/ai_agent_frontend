@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code/data/firebase/tool_stream.dart';
+import 'package:code/data/person/person.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -8,6 +9,7 @@ import '../../../data/firebase/lesson_stream.dart';
 import '../../../data/lesson/lesson.dart';
 import '../../../route/route.dart';
 import '../../../widget/base_page/base_page.dart';
+import '../../../widget/lessons/lesson_widget.dart';
 
 class StudentLessons extends ConsumerWidget {
   const StudentLessons({super.key});
