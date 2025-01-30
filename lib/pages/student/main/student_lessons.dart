@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:code/data/person/person.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../data/firebase/store_provider.dart';
 import '../../../widget/base_page/base_page.dart';
+import '../../../widget/lessons/lesson_widget.dart';
 
 /// hotreloadの際は一度mainに帰って
 class StudentLessons extends ConsumerWidget {
@@ -15,7 +17,6 @@ class StudentLessons extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final lessonStream = ref.watch(lessonStreamProvider(reference));
-    final displaySize = MediaQuery.of(context).size;
 
     return BasePage(
       pageTitle: "生徒コマ選択",
@@ -25,21 +26,26 @@ class StudentLessons extends ConsumerWidget {
           if (lessons.isEmpty) {
             return Center(child: Text("授業がありません"));
           }
-          return ListView.builder(
-            itemCount: lessons.length,
-            itemBuilder: (context, index) {
-              final lesson = lessons[index].data();
-              return InkWell(
-                onTap: () async {},
-                child: Card(
-                  child: Column(
-                    children: [
-                      Text("第${lesson.count}回"),
-                    ],
-                  ),
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: LessonsSammury(
+                  reference: reference,
                 ),
-              );
-            },
+              ),
+              Expanded(
+                  child: ListView.builder(
+                itemCount: lessons.length,
+                itemBuilder: (context, index) {
+                  final lesson = lessons[index].data();
+                  return LessonCard(
+                    lesson: lesson,
+                    onTap: () {},
+                  );
+                },
+              ))
+            ],
           );
         },
         // エラー時の表示
