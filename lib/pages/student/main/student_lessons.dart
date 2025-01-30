@@ -44,6 +44,7 @@ class StudentLessonsDisplay extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final currentRoomNot = ref.read(currentRoomProvider);
     final currentLessonRefNot = ref.read(currentLessonRefProvider.notifier);
 
     return lessons.isEmpty
@@ -52,22 +53,23 @@ class StudentLessonsDisplay extends ConsumerWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: LessonsSummary(),
+                child: LessonsSummary(room: currentRoomNot),
               ),
               Expanded(
-                  child: ListView.builder(
-                itemCount: lessons.length,
-                itemBuilder: (context, index) {
-                  final lesson = lessons[index].data();
-                  return LessonCard(
-                    lesson: lesson,
-                    onTap: () {
-                      currentLessonRefNot.state = lesson.reference;
-                      GoRouter.of(context).push(Routes.studentTools);
-                    },
-                  );
-                },
-              ))
+                child: ListView.builder(
+                  itemCount: lessons.length,
+                  itemBuilder: (context, index) {
+                    final lesson = lessons[index].data();
+                    return LessonCard(
+                      lesson: lesson,
+                      onTap: () {
+                        currentLessonRefNot.state = lesson.reference;
+                        GoRouter.of(context).push(Routes.studentTools);
+                      },
+                    );
+                  },
+                ),
+              ),
             ],
           );
   }

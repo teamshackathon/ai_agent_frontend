@@ -44,7 +44,7 @@ class TeacherMainDisplay extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentRoomRefNot = ref.read(currentRoomRefProvider.notifier);
+    final currentRoomRefNot = ref.read(currentRoomProvider.notifier);
 
     return rooms.isEmpty
         ? Center(child: Text("授業がありません"))
@@ -54,7 +54,7 @@ class TeacherMainDisplay extends ConsumerWidget {
               final room = rooms[index];
               return InkWell(
                 onTap: () {
-                  currentRoomRefNot.state = room.reference;
+                  currentRoomRefNot.state = room;
                   GoRouter.of(context).push(Routes.teacherLessons);
                 },
                 child: Card(

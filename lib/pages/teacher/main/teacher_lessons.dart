@@ -49,7 +49,7 @@ class TeacherLessonsDisplay extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentLessonRefNot = ref.read(currentLessonRefProvider.notifier);
-    final currentRoomRef = ref.watch(currentRoomRefProvider);
+    final currentRoom = ref.watch(currentRoomProvider);
     final disable = useState<bool>(false);
 
     return Column(
@@ -59,11 +59,11 @@ class TeacherLessonsDisplay extends HookConsumerWidget {
           child: InkWell(
             onTap: () async {
               disable.value = true;
-              infoToast(log: currentRoomRef.toString());
-              await currentRoomRef.add(
+              infoToast(log: currentRoom.toString());
+              await currentRoom.reference.add(
                 Lesson(
                   count: lessons.length + 1,
-                  reference: currentRoomRef.doc(),
+                  reference: currentRoom.reference.doc(),
                 ).toMap(),
               );
               disable.value = false;
