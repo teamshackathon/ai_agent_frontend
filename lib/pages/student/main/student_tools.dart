@@ -13,63 +13,69 @@ class StudentTools extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final displaySize = MediaQuery.of(context).size;
-
     return BasePage(
       pageTitle: "生徒機能選択",
 
-      // childrenを縦に並べるWidget
       body: Center(
         child: FractionallySizedBox(
           widthFactor: 0.95,
           heightFactor: 0.95,
-          child: Column(
-            children: [
-              InkWell(
-                onTap: () async {
-                  await getText(ref: ref);
-                  if (context.mounted) {
-                    GoRouter.of(context).push(Routes.studentReading);
-                  }
-                },
-                child: Card(
-                  child: Column(
-                    children: [
-                      Text(""),
-                      Text("教科書を見る"),
-                      Text(""),
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {},
-                child: Card(
-                  child: Column(
-                    children: [
-                      Text(""),
-                      Text("小テストの確認"),
-                      Text(""),
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {},
-                child: Card(
-                  child: Column(
-                    children: [
-                      Text(""),
-                      Text("宿題"),
-                      Text(""),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+          child: StudentToolsDisplay(),
         ),
       ),
+    );
+  }
+}
+
+class StudentToolsDisplay extends ConsumerWidget {
+  const StudentToolsDisplay({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Column(
+      children: [
+        InkWell(
+          onTap: () async {
+            await getText(ref: ref);
+            if (context.mounted) {
+              GoRouter.of(context).push(Routes.studentReading);
+            }
+          },
+          child: Card(
+            child: Column(
+              children: [
+                Text(""),
+                Text("教科書を見る"),
+                Text(""),
+              ],
+            ),
+          ),
+        ),
+        InkWell(
+          onTap: () {},
+          child: Card(
+            child: Column(
+              children: [
+                Text(""),
+                Text("小テストの確認"),
+                Text(""),
+              ],
+            ),
+          ),
+        ),
+        InkWell(
+          onTap: () {},
+          child: Card(
+            child: Column(
+              children: [
+                Text(""),
+                Text("宿題"),
+                Text(""),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -23,53 +23,62 @@ class TeacherTools extends ConsumerWidget {
         child: FractionallySizedBox(
           widthFactor: 0.95,
           heightFactor: 0.95,
-          child: Column(
-            children: [
-              InkWell(
-                onTap: () async {
-                  await getText(ref: ref);
-                  if (context.mounted) {
-                    GoRouter.of(context).push(Routes.studentReading);
-                  }
-                },
-                child: Card(
-                  child: Column(
-                    children: [
-                      Text(""),
-                      Text("教科書を見る"),
-                      Text(""),
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {},
-                child: Card(
-                  child: Column(
-                    children: [
-                      Text(""),
-                      Text("小テストの確認"),
-                      Text(""),
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {},
-                child: Card(
-                  child: Column(
-                    children: [
-                      Text(""),
-                      Text("宿題"),
-                      Text(""),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+          child: TeacherToolsDisplay(),
         ),
       ),
+    );
+  }
+}
+
+class TeacherToolsDisplay extends ConsumerWidget {
+  const TeacherToolsDisplay({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Column(
+      children: [
+        InkWell(
+          onTap: () async {
+            await getText(ref: ref);
+            if (context.mounted) {
+              GoRouter.of(context).push(Routes.studentReading);
+            }
+          },
+          child: Card(
+            child: Column(
+              children: [
+                Text(""),
+                Text("教科書を見る"),
+                Text(""),
+              ],
+            ),
+          ),
+        ),
+        InkWell(
+          onTap: () {},
+          child: Card(
+            child: Column(
+              children: [
+                Text(""),
+                Text("小テストの確認"),
+                Text(""),
+              ],
+            ),
+          ),
+        ),
+        InkWell(
+          onTap: () {},
+          child: Card(
+            child: Column(
+              children: [
+                Text(""),
+                Text("宿題"),
+                Text(""),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

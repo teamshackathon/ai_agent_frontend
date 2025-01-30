@@ -1,4 +1,3 @@
-import 'package:code/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -14,52 +13,61 @@ class TeacherMain extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final activeRooms = ref.watch(activeRoomsProvider);
-    final currentRefNot = ref.read(currentRoomRefProvider.notifier);
 
     return BasePage(
       pageTitle: "教師メイン",
-      body: activeRooms.when(
-        data: (rooms) {
-          if (rooms.isEmpty) {
-            return Center(child: Text("クラスがありません"));
-          }
-          return Center(
-            child: FractionallySizedBox(
-              widthFactor: 0.95,
-              heightFactor: 0.95,
-              child: ListView.builder(
-                itemCount: rooms.length,
-                itemBuilder: (context, index) {
-                  final room = rooms[index];
-                  return InkWell(
-                    onTap: () {
-                      currentRefNot.state = room.reference;
-                      GoRouter.of(context).push(Routes.teacherLessons);
-                    },
-                    child: Card(
-                      child: Column(
-                        children: [
-                          Text(room.year),
-                          Text(room.roomNumber),
-                          Text(room.subject),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
+      body: Center(
+        child: FractionallySizedBox(
+          widthFactor: 0.95,
+          heightFactor: 0.95,
+          child: activeRooms.when(
+            data: (rooms) => TeacherMainDisplay(rooms: rooms),
+            // エラー時の表示
+            error: (_, __) => const Center(
+              child: Text("読み込み失敗"),
             ),
-          );
-        },
-        // エラー時の表示
-        error: (_, __) => const Center(
-          child: Text("読み込み失敗"),
-        ),
-        // 読込中の表示
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
+            // 読込中の表示
+            loading: () => const Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
         ),
       ),
     );
+  }
+}
+
+class TeacherMainDisplay extends ConsumerWidget {
+  const TeacherMainDisplay({super.key, required this.rooms});
+
+  final List<Room> rooms;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentRoomRefNot = ref.read(currentRoomRefProvider.notifier);
+
+    return rooms.isEmpty
+        ? Center(child: Text("授業がありません"))
+        : ListView.builder(
+            itemCount: rooms.length,
+            itemBuilder: (context, index) {
+              final room = rooms[index];
+              return InkWell(
+                onTap: () {
+                  currentRoomRefNot.state = room.reference;
+                  GoRouter.of(context).push(Routes.teacherLessons);
+                },
+                child: Card(
+                  child: Column(
+                    children: [
+                      Text(room.year),
+                      Text(room.roomNumber),
+                      Text(room.subject),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
   }
 }
