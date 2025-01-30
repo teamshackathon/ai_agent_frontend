@@ -24,6 +24,6 @@ class Lesson with _$Lesson {
   }
 
   Map<String, dynamic> toMap() {
-    return {"count": count};
+    return {"count": this.count};
   }
 }

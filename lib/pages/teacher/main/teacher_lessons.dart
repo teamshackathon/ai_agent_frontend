@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code/data/firebase/store_provider.dart';
+import 'package:code/toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -40,23 +41,33 @@ class TeacherLessons extends ConsumerWidget {
   }
 }
 
-class TeacherLessonsDisplay extends ConsumerWidget {
+class TeacherLessonsDisplay extends HookConsumerWidget {
   const TeacherLessonsDisplay({super.key, required this.lessons});
 
   final List<QueryDocumentSnapshot<Lesson>> lessons;
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final currentLessonRefNot = ref.read(currentLessonRefProvider.notifier);
-    final currentRoomRef = ref.read(currentRoomRefProvider);
-    final store = ref.read(firestoreProvider);
+    final currentRoomRef = ref.watch(currentRoomRefProvider);
+    final disable = useState<bool>(false);
 
     return Column(
       children: [
         Flexible(
           flex: 20,
           child: InkWell(
-            onTap: () async {},
+            onTap: () async {
+                    disable.value = true;
+                    infoToast(log: currentRoomRef.toString());
+                    await currentRoomRef.add(
+                      Lesson(
+                        count: lessons.length + 1,
+                        reference: currentRoomRef.doc(),
+                      ).toMap(),
+                    );
+                    disable.value = false;
+                  },
             child: Card(
               child: Center(
                 child: Text("新規授業作成"),

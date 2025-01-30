@@ -39,42 +39,45 @@ class TeacherToolsDisplay extends ConsumerWidget {
       children: [
         InkWell(
           onTap: () async {
-            await getText(ref: ref);
-            if (context.mounted) {
-              GoRouter.of(context).push(Routes.studentReading);
-            }
+
           },
-          child: Card(
-            child: Column(
-              children: [
-                Text(""),
-                Text("教科書を見る"),
-                Text(""),
-              ],
+          child: ListTile(
+            title: Card(
+              child: Column(
+                children: [
+                  Text(""),
+                  Text("授業開始"),
+                  Text(""),
+                ],
+              ),
             ),
           ),
         ),
         InkWell(
           onTap: () {},
-          child: Card(
-            child: Column(
-              children: [
-                Text(""),
-                Text("小テストの確認"),
-                Text(""),
-              ],
+          child: ListTile(
+            title: Card(
+              child: Column(
+                children: [
+                  Text(""),
+                  Text("小テストの確認"),
+                  Text(""),
+                ],
+              ),
             ),
           ),
         ),
         InkWell(
           onTap: () {},
-          child: Card(
-            child: Column(
-              children: [
-                Text(""),
-                Text("宿題"),
-                Text(""),
-              ],
+          child: ListTile(
+            title: Card(
+              child: Column(
+                children: [
+                  Text(""),
+                  Text("宿題"),
+                  Text(""),
+                ],
+              ),
             ),
           ),
         ),

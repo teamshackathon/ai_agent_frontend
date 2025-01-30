@@ -49,26 +49,46 @@ class StudentMainDisplay extends ConsumerWidget {
 
     return rooms.isEmpty
         ? Center(child: Text("授業がありません"))
-        : ListView.builder(
-            itemCount: rooms.length,
-            itemBuilder: (context, index) {
-              final room = rooms[index];
-              return InkWell(
-                onTap: () {
-                  currentRefNot.state = room.reference;
-                  GoRouter.of(context).push(Routes.studentLessons);
-                },
-                child: Card(
-                  child: Column(
-                    children: [
-                      Text(room.year),
-                      Text(room.roomNumber),
-                      Text(room.subject),
-                    ],
-                  ),
+        : Column(
+            children: [
+              // Flexible(
+              //   flex: 2,
+              //   child: ListTile(
+              //     title: InkWell(
+              //       onTap: () {
+              //
+              //       },
+              //       child: Card(
+              //         child: Center(child: Text("ショートカット")),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              Flexible(
+                flex: 8,
+                child: ListView.builder(
+                  itemCount: rooms.length,
+                  itemBuilder: (context, index) {
+                    final room = rooms[index];
+                    return InkWell(
+                      onTap: () {
+                        currentRefNot.state = room.reference;
+                        GoRouter.of(context).push(Routes.studentLessons);
+                      },
+                      child: Card(
+                        child: Column(
+                          children: [
+                            Text(room.year),
+                            Text(room.roomNumber),
+                            Text(room.subject),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
+              ),
+            ],
           );
   }
 }

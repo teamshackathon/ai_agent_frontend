@@ -89,6 +89,7 @@ class Router extends _$Router {
 
             // ユーザーがログイン済みの場合
             if (isLoggingIn) {
+              if(dummy) return DummyRoutes.main;
               if (role.value == "teacher") {
                 return Routes.teacherMain;
               } else if (role.value == "student") {
@@ -111,7 +112,7 @@ class Router extends _$Router {
         ),
 
         // // ダミー用の分岐
-        // if (dummy) dummyBranch,
+        dummyBranch,
 
         // 先生用のbottomBarを含めた分岐
         if (role.value == "teacher") teacherBranch,
@@ -129,3 +130,4 @@ class Router extends _$Router {
     );
   }
 }
+
