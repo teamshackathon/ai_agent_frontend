@@ -18,39 +18,39 @@ class DummyMain extends ConsumerWidget {
 
   final GlobalKey<RadialSakuraMenuState> _menuKey =
       GlobalKey<RadialSakuraMenuState>();
-
-  final List<RadialSakuraMenuItem> items = <RadialSakuraMenuItem>[
-    RadialSakuraMenuItem(
-      key: UniqueKey(),
-      value: MenuOptions.japanese,
-      angle: 0.0,
-      onPressed: () => onItemSelected("japanese"),
-    ),
-    RadialSakuraMenuItem(
-      key: UniqueKey(),
-      value: MenuOptions.english,
-      angle: 2 * math.pi / 5 * 1,
-      onPressed: () => onItemSelected("english"),
-    ),
-    RadialSakuraMenuItem(
-      key: UniqueKey(),
-      value: MenuOptions.social,
-      angle: 2 * math.pi / 5 * 2,
-      onPressed: () => onItemSelected("social"),
-    ),
-    RadialSakuraMenuItem(
-      key: UniqueKey(),
-      value: MenuOptions.science,
-      angle: 2 * math.pi / 5 * 3,
-      onPressed: () => onItemSelected("science"),
-    ),
-    RadialSakuraMenuItem(
-      key: UniqueKey(),
-      value: MenuOptions.math,
-      angle: 2 * math.pi / 5 * 4,
-      onPressed: () => onItemSelected("math"),
-    ),
-  ];
+  //
+  // final List<RadialSakuraMenuItem> items = <RadialSakuraMenuItem>[
+  //   RadialSakuraMenuItem(
+  //     key: UniqueKey(),
+  //     value: MenuOptions.japanese,
+  //     angle: 0.0,
+  //     onPressed: () => onItemSelected("japanese"),
+  //   ),
+  //   RadialSakuraMenuItem(
+  //     key: UniqueKey(),
+  //     value: MenuOptions.english,
+  //     angle: 2 * math.pi / 5 * 1,
+  //     onPressed: () => onItemSelected("english"),
+  //   ),
+  //   RadialSakuraMenuItem(
+  //     key: UniqueKey(),
+  //     value: MenuOptions.social,
+  //     angle: 2 * math.pi / 5 * 2,
+  //     onPressed: () => onItemSelected("social"),
+  //   ),
+  //   RadialSakuraMenuItem(
+  //     key: UniqueKey(),
+  //     value: MenuOptions.science,
+  //     angle: 2 * math.pi / 5 * 3,
+  //     onPressed: () => onItemSelected("science"),
+  //   ),
+  //   RadialSakuraMenuItem(
+  //     key: UniqueKey(),
+  //     value: MenuOptions.math,
+  //     angle: 2 * math.pi / 5 * 4,
+  //     onPressed: () => onItemSelected("math"),
+  //   ),
+  // ];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

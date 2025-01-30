@@ -27,11 +27,13 @@ class StudentMain extends HookConsumerWidget {
           child: activeRooms.when(
             data: (rooms) => StudentMainDisplay(rooms: rooms),
             // エラー時の表示
-            error: (_, __) => const Center(
+            error: (_, __) =>
+            const Center(
               child: Text("読み込み失敗"),
             ),
             // 読込中の表示
-            loading: () => const Center(
+            loading: () =>
+            const Center(
               child: CircularProgressIndicator(),
             ),
           ),
@@ -53,39 +55,41 @@ class StudentMainDisplay extends ConsumerWidget {
     return rooms.isEmpty
         ? Center(child: Text("授業がありません"))
         : Column(
-              children: [
-                Padding(
-                    padding: EdgeInsets.only(top: 0),
-                    child: Text(
-                      "${rooms[0].year}年度 ${rooms[0].roomNumber}",
-                      style: TextStyle(fontSize: 20),
-                    )),
-                Padding(
-                    padding: EdgeInsets.only(top: 0),
-                    child: Text(
-                      "授業を選んでください",
-                      style: TextStyle(fontSize: 15),
-                    )),
-                Spacer(),
-                Expanded(
-                  child: RadialSakuraMenu(
-                      items: rooms
-                          .map((room) => RadialSakuraMenuItem(
-                                key: UniqueKey(),
-                                subject: getOptionFromIndex(room.subject),
-                                angle: 2 *
-                                    math.pi /
-                                    rooms.length *
-                                    rooms.indexOf(room),
-                                onTap: () {
-                                  GoRouter.of(context).push(
-                                    Routes.studentLessons,
-                                    extra: room.reference,
-                                  );
-                                },
-                              ))
-                          .toList()),
-                )
-              ],
-            );
+      children: [
+        Padding(
+            padding: EdgeInsets.only(top: 0),
+            child: Text(
+              "${rooms[0].year}年度 ${rooms[0].roomNumber}",
+              style: TextStyle(fontSize: 20),
+            )),
+        Padding(
+            padding: EdgeInsets.only(top: 0),
+            child: Text(
+              "授業を選んでください",
+              style: TextStyle(fontSize: 15),
+            )),
+        Spacer(),
+        Expanded(
+          child: RadialSakuraMenu(
+              items: rooms
+                  .map((room) =>
+                  RadialSakuraMenuItem(
+                    key: UniqueKey(),
+                    subject: getOptionFromIndex(room.subject),
+                    angle: 2 *
+                        math.pi /
+                        rooms.length *
+                        rooms.indexOf(room),
+                    onTap: () {
+                      GoRouter.of(context).push(
+                        Routes.studentLessons,
+                        extra: room.reference,
+                      );
+                    },
+                  ))
+                  .toList()),
+        )
+      ],
+    );
+  }
 }
