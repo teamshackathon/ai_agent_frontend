@@ -35,49 +35,49 @@ class TeacherToolsDisplay extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Column(
+    return Stack(
       children: [
-        InkWell(
-          onTap: () async {},
-          child: ListTile(
-            title: Card(
-              child: Column(
-                children: [
-                  Text(""),
-                  Text("授業開始"),
-                  Text(""),
-                ],
-              ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: InkWell(
+            onTap: () async {},
+            child:Card(
+              child: Text("授業開始"),
             ),
           ),
         ),
-        InkWell(
-          onTap: () {},
-          child: ListTile(
-            title: Card(
-              child: Column(
-                children: [
-                  Text(""),
-                  Text("小テストの確認"),
-                  Text(""),
-                ],
+        Column(
+          children: [
+
+            InkWell(
+              onTap: () {},
+              child: ListTile(
+                title: Card(
+                  child: Column(
+                    children: [
+                      Text(""),
+                      Text("小テストの確認"),
+                      Text(""),
+                    ],
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-        InkWell(
-          onTap: () {},
-          child: ListTile(
-            title: Card(
-              child: Column(
-                children: [
-                  Text(""),
-                  Text("宿題"),
-                  Text(""),
-                ],
+            InkWell(
+              onTap: () {},
+              child: ListTile(
+                title: Card(
+                  child: Column(
+                    children: [
+                      Text(""),
+                      Text("宿題"),
+                      Text(""),
+                    ],
+                  ),
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ],
     );
