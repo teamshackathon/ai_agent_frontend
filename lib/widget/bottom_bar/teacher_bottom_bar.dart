@@ -2,13 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class TeacherBottomBar extends StatelessWidget {
-  const TeacherBottomBar({super.key, required this.navigationShell});
+  const TeacherBottomBar({
+    super.key,
+    required this.navigationShell,
+    this.name,
+  });
+
+  final String? name;
   final StatefulNavigationShell navigationShell;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: navigationShell,
+      floatingActionButton: FloatingActionButton(onPressed: () {}),
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
         destinations: const [

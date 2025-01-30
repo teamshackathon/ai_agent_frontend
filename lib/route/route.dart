@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../data/firebase/auth_provider.dart';
 import '../dummy/data/dummy_provider.dart';
+
 import '../dummy/route/dummy_route.dart';
 import '../pages/login/login.dart';
 import '../pages/dr001.dart';
@@ -17,11 +18,13 @@ part 'route.g.dart';
 /// 正しい階層構造になっていないと、遷移に失敗するため注意
 class Routes {
   static const String login = "/";
-  static const String teacherMain = "/teacher";
   static const String studentMain = "/student";
   static const String studentLessons = "/student/lessons";
   static const String studentTools = "/student/lessons/tools";
   static const String studentReading = "/student/lessons/tools/reading";
+  static const String teacherMain = "/teacher";
+  static const String teacherLessons = "/teacher/lessons";
+  static const String teacherTools = "/teacher/lessons/tools";
   static const String makeQuizzes = "/quiz";
   static const String editQuizzes = "/quiz/edit";
   static const String submitStatus = "/ss001";
@@ -61,45 +64,11 @@ class Router extends _$Router {
     // 画面乗っ取りを常に監視
     // final hackState = ref.watch(hackedProvider);
 
-    // // 画面の初期位置。これが変化することで勝手に画面遷移する
-    // var initialLocation = Routes.login;
-
     // personプロバイダーから情報を得ずに、authから情報を取ってくるように変更
     final role = ref.watch(roleProvider);
 
     // ダミーモード用
     final dummy = ref.watch(dummyModeProvider);
-
-    // ログイン状態で初期画面のページを選択。ここが変わると強制的に呼び戻される仕組みらしい
-    // authStateはStreamデータなので、whenDataで状態に応じた処理を書ける
-    // 画面乗っ取りもこれを使えばできるかも・・・？
-    // authState.whenData((user) async {
-    //   // ログアウトするとuserがnullになるため、強制的にログイン画面に戻される
-    //   if (user == null) {
-    //     initialLocation = Routes.login;
-    //   } else {
-    //     if (role.value == "teacher") {
-    //       if (dummy) {
-    //         initialLocation = DummyRoutes.main;
-    //       } else {
-    //         initialLocation = Routes.teacherMain;
-    //       }
-    //     } else if (role.value == "student") {
-    //       if (dummy) {
-    //         initialLocation = DummyRoutes.main;
-    //       } else {
-    //         initialLocation = Routes.studentMain;
-    //         // hackState.whenData((hack) {
-    //         //   if (hack.data()?["hack"]) {
-    //         //     initialLocation = Routes.displayResult;
-    //         //   } else {
-    //         //     initialLocation = Routes.studentMain;
-    //         //   }
-    //         // });
-    //       }
-    //     }
-    //   }
-    // });
 
     // 実際の画面遷移構成
     return GoRouter(
@@ -108,7 +77,7 @@ class Router extends _$Router {
       // 画面遷移を保持しておくのに使う。
       navigatorKey: rootNavigatorKey,
 
-      // エラーを吐いた時に連れてくるページをここで決める
+      // 画面遷移時、もしくはref.watchしている値の変化時に起動する
       redirect: (context, state) {
         return authState.when(
           data: (user) {
@@ -121,6 +90,7 @@ class Router extends _$Router {
 
             // ユーザーがログイン済みの場合
             if (isLoggingIn) {
+              if (dummy) return DummyRoutes.main;
               if (role.value == "teacher") {
                 return Routes.teacherMain;
               } else if (role.value == "student") {
@@ -143,7 +113,7 @@ class Router extends _$Router {
         ),
 
         // // ダミー用の分岐
-        // if (dummy) dummyBranch,
+        dummyBranch,
 
         // 先生用のbottomBarを含めた分岐
         if (role.value == "teacher") teacherBranch,

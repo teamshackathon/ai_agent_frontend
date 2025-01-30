@@ -6,23 +6,7 @@ part of 'room.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$roomsHash() => r'4c0e0002a799958261b15ceb0d0791b286970aa8';
-
-/// See also [rooms].
-@ProviderFor(rooms)
-final roomsProvider = AutoDisposeFutureProvider<List<Room>>.internal(
-  rooms,
-  name: r'roomsProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$roomsHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef RoomsRef = AutoDisposeFutureProviderRef<List<Room>>;
-String _$activeRoomsHash() => r'924d50e8890a2c4680e8f3735aa7d3f403fad122';
+String _$activeRoomsHash() => r'2c928c0a8d840a10d3350097f2fd2215aa3b65f0';
 
 /// See also [activeRooms].
 @ProviderFor(activeRooms)
@@ -38,7 +22,7 @@ final activeRoomsProvider = AutoDisposeFutureProvider<List<Room>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef ActiveRoomsRef = AutoDisposeFutureProviderRef<List<Room>>;
-String _$archiveRoomsHash() => r'710c8469c547d26fc0f5da584243eb6363a4401f';
+String _$archiveRoomsHash() => r'8fb58252d2048c2e01022fe2ba870ad6de02c94e';
 
 /// See also [archiveRooms].
 @ProviderFor(archiveRooms)
