@@ -67,17 +67,6 @@ class QuizNotifer extends _$QuizNotifer {
     }
   }
 
-  // void reConst() {
-  //   final lessonsNot = ref.read(lessonsProvider.notifier);
-  //   Lesson les = lessonsNot.currentLesson();
-  //   final jsonList = readQuiz(les.id);
-  //   init(jsonList);
-  // }
-  //
-  // void add(Quiz quiz) {
-  //   state = [...state, quiz];
-  // }
-
   void writeAnswer(String title, String answer) {
     state = [
       for (final quiz in state)
