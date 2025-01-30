@@ -78,10 +78,9 @@ class StudentMainDisplay extends ConsumerWidget {
                                   rooms.length *
                                   rooms.indexOf(room),
                               onTap: () {
-                                GoRouter.of(context).push(
-                                  Routes.studentLessons,
-                                  extra: room.reference,
-                                );
+                                currentRefNot.state = room.reference;
+                                GoRouter.of(context)
+                                    .push(Routes.studentLessons);
                               },
                             ))
                         .toList()),
