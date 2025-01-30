@@ -1,6 +1,9 @@
+import 'package:code/widget/sakura_redial_menu/components/radial_sakura_menu.dart';
+import 'package:code/widget/sakura_redial_menu/components/radial_sakura_menu_item.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'dart:math' as math;
 
 import '../../../data/room/room.dart';
 import '../../../route/route.dart';
@@ -30,29 +33,43 @@ class StudentMain extends HookConsumerWidget {
             // firestore側にデータがない場合はこうなるはず
             return Center(child: Text("受けてる授業なし"));
           } else {
-            // 読み込み完了
-            return ListView.builder(
-              itemCount: snapshot.data?.length,
-              itemBuilder: (context, index) {
-                final room = snapshot.data?[index];
-                return InkWell(
-                  onTap: () {
-                    GoRouter.of(context).push(
-                      Routes.studentLessons,
-                      extra: room.reference,
-                    );
-                  },
-                  child: Card(
-                    child: Column(
-                      children: [
-                        Text(room!.year),
-                        Text(room.roomNumber),
-                        Text(room.subject),
-                      ],
-                    ),
-                  ),
-                );
-              },
+            final rooms = snapshot.data ?? [];
+
+            return Column(
+              children: [
+                Padding(
+                    padding: EdgeInsets.only(top: 0),
+                    child: Text(
+                      "${rooms[0].year}年度 ${rooms[0].roomNumber}",
+                      style: TextStyle(fontSize: 20),
+                    )),
+                Padding(
+                    padding: EdgeInsets.only(top: 0),
+                    child: Text(
+                      "授業を選んでください",
+                      style: TextStyle(fontSize: 15),
+                    )),
+                Spacer(),
+                Expanded(
+                  child: RadialSakuraMenu(
+                      items: rooms
+                          .map((room) => RadialSakuraMenuItem(
+                                key: UniqueKey(),
+                                subject: getOptionFromIndex(room.subject),
+                                angle: 2 *
+                                    math.pi /
+                                    rooms.length *
+                                    rooms.indexOf(room),
+                                onTap: () {
+                                  GoRouter.of(context).push(
+                                    Routes.studentLessons,
+                                    extra: room.reference,
+                                  );
+                                },
+                              ))
+                          .toList()),
+                )
+              ],
             );
           }
         },
