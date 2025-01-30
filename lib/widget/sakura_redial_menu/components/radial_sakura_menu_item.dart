@@ -44,19 +44,19 @@ String getSakuraSvgPath(MenuOptions option) {
 class RadialSakuraMenuItem extends StatelessWidget {
   const RadialSakuraMenuItem({
     required Key key,
-    required this.value,
+    required this.subject,
     required this.angle,
     this.width = 150.0,
     this.height = 150.0,
-    required this.onPressed,
+    required this.onTap,
   }) : super(key: key);
 
-  final MenuOptions value;
+  final MenuOptions subject;
   final double angle;
   final double width;
   final double height;
 
-  final VoidCallback onPressed;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -64,9 +64,9 @@ class RadialSakuraMenuItem extends StatelessWidget {
       child: Transform.rotate(
         angle: angle,
         child: InkWell(
-          onTap: onPressed,
+          onTap: onTap,
           child: SvgPicture.asset(
-            getSakuraSvgPath(value),
+            getSakuraSvgPath(subject),
             width: width,
             height: height,
           ),
