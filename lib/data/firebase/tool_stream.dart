@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // 選択されたlessonのtoolsへのPathを保持しておくプロバイダー
 final currentLessonRefProvider = StateProvider<DocumentReference>((ref) {
   // nullにすると面倒くさいから適当なPATHをいれている(危なそう)
-  return FirebaseFirestore.instance.collection("2024").doc("");
+  return FirebaseFirestore.instance.collection("2024").doc();
 });
 
 // // CurrentLessonRefで指定したcollectionを監視するプロバイダー

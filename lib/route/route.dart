@@ -17,11 +17,13 @@ part 'route.g.dart';
 /// 正しい階層構造になっていないと、遷移に失敗するため注意
 class Routes {
   static const String login = "/";
-  static const String teacherMain = "/teacher";
   static const String studentMain = "/student";
   static const String studentLessons = "/student/lessons";
   static const String studentTools = "/student/lessons/tools";
   static const String studentReading = "/student/lessons/tools/reading";
+  static const String teacherMain = "/teacher";
+  static const String teacherLessons = "/teacher/lessons";
+  static const String teacherTools = "/teacher/lessons/tools";
   static const String makeQuizzes = "/quiz";
   static const String editQuizzes = "/quiz/edit";
   static const String submitStatus = "/ss001";
