@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'lesson.freezed.dart';
 
@@ -24,6 +23,8 @@ class Lesson with _$Lesson {
   }
 
   Map<String, dynamic> toMap() {
-    return {"count": this.count};
+    return {
+      "count": this.count,
+    };
   }
 }
