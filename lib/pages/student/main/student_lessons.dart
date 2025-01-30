@@ -55,19 +55,20 @@ class StudentLessonsDisplay extends ConsumerWidget {
                 child: LessonsSummary(),
               ),
               Expanded(
-                  child: ListView.builder(
-                itemCount: lessons.length,
-                itemBuilder: (context, index) {
-                  final lesson = lessons[index].data();
-                  return LessonCard(
-                    lesson: lesson,
-                    onTap: () {
-                      currentLessonRefNot.state = lesson.reference;
-                      GoRouter.of(context).push(Routes.studentTools);
-                    },
-                  );
-                },
-              ))
+                child: ListView.builder(
+                  itemCount: lessons.length,
+                  itemBuilder: (context, index) {
+                    final lesson = lessons[index].data();
+                    return LessonCard(
+                      lesson: lesson,
+                      onTap: () {
+                        currentLessonRefNot.state = lesson.reference;
+                        GoRouter.of(context).push(Routes.studentTools);
+                      },
+                    );
+                  },
+                ),
+              ),
             ],
           );
   }
