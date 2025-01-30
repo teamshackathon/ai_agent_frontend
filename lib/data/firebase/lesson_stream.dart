@@ -8,12 +8,11 @@ import '../room/room.dart';
 final currentRoomProvider = StateProvider<Room>((ref) {
   // nullにすると面倒くさいから適当なデータをいれている(危なそう)
   return Room(
-    year: "2024",
-    roomNumber: "3-1",
-    subject: "english",
-    reference: FirebaseFirestore.instance.collection("2024"),
-    teacher: ""
-  );
+      year: "2024",
+      roomNumber: "3-1",
+      subject: "english",
+      reference: FirebaseFirestore.instance.collection("2024"),
+      teacher: "");
 });
 
 // CurrentRoomRefProviderで指定したcollectionを監視するプロバイダー

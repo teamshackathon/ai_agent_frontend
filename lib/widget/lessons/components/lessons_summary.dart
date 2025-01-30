@@ -10,7 +10,6 @@ class LessonsSummary extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     return SizedBox(
         width: double.infinity,
         child: Column(
