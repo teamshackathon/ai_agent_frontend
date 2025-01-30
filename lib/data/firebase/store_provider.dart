@@ -41,19 +41,6 @@ final noticeGetProvider = StreamProvider((ref) async* {
       .snapshots();
 });
 
-final lessonStreamProvider =
-    StreamProvider.family<QuerySnapshot<Lesson>, CollectionReference>(
-  (ref, reference) {
-    return reference
-        .withConverter<Lesson>(
-          fromFirestore: ((snapshot, _) => Lesson.fromFirestore(snapshot)),
-          toFirestore: ((lesson, _) => lesson.toMap()),
-        )
-        .orderBy("count")
-        .snapshots();
-  },
-);
-
 // final hackedProvider = StreamProvider((ref) {
 //   final store = ref.watch(firestoreProvider);
 //   final student = ref.watch(personStatusProvider) as Student;

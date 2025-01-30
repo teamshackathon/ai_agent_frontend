@@ -5,7 +5,9 @@ import 'package:go_router/go_router.dart';
 
 import '../pages/profile/profile.dart';
 import '../pages/teacher/activity/teacher_activity.dart';
+import '../pages/teacher/main/teacher_lessons.dart';
 import '../pages/teacher/main/teacher_main.dart';
+import '../pages/teacher/main/teacher_tools.dart';
 import '../widget/bottom_bar/teacher_bottom_bar.dart';
 import 'route.dart';
 
@@ -42,7 +44,21 @@ final teacherBranch = StatefulShellRoute.indexedStack(
       routes: [
         GoRoute(
           path: Routes.teacherMain,
-          // builder: (context, state) => TeacherMain(),
+          builder: (context, state) => TeacherMain(),
+          routes: [
+            GoRoute(
+              parentNavigatorKey: _teacherMainKey,
+              path: "lessons",
+              builder: (context, state) => TeacherLessons(),
+              routes: [
+                GoRoute(
+                  parentNavigatorKey: _teacherMainKey,
+                  path: "tools",
+                  builder: (context, state) => TeacherTools(),
+                ),
+              ],
+            ),
+          ],
         ),
       ],
     ),
@@ -53,7 +69,7 @@ final teacherBranch = StatefulShellRoute.indexedStack(
       routes: [
         GoRoute(
           path: Routes.activity,
-          // builder: (context, state) => TeacherActivityPage(),
+          builder: (context, state) => TeacherActivityPage(),
         ),
       ],
     ),
