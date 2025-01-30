@@ -52,9 +52,7 @@ final studentBranch = StatefulShellRoute.indexedStack(
             GoRoute(
               parentNavigatorKey: _studentMainKey,
               path: "lessons",
-              builder: (context, state) => StudentLessons(
-                reference: state.extra as CollectionReference,
-              ),
+              builder: (context, state) => StudentLessons(),
               routes: [
                 GoRoute(
                   parentNavigatorKey: _studentMainKey,

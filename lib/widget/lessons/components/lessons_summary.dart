@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class LessonsSammury extends HookConsumerWidget {
-  const LessonsSammury({super.key, required this.reference});
+class LessonsSummary extends HookConsumerWidget {
+  const LessonsSummary({super.key, this.reference});
 
-  final CollectionReference reference;
+  final CollectionReference? reference;
 
   String getSubject() {
-    final String path = reference.path;
+    final String path = reference?.path ?? "";
     final List<String> pathList = path.split("/");
-    final subject = pathList[pathList.length - 2];
+    final subject = "";
     switch (subject) {
       case "math":
         return "数学";
