@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code/toast.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'notice.freezed.dart';
@@ -25,6 +24,8 @@ class Notice with _$Notice {
     // クラス名、名前は送信時にしか使わない引数
     required String room,
     required String folderName,
+    // 授業へのショートカットなどが入る予定。nullableな点に注意
+    DocumentReference? shortcut,
   }) = _Notice;
 
   factory Notice.fromFirestore(
@@ -41,6 +42,7 @@ class Notice with _$Notice {
       reference: snapshot.reference,
       room: map?["room"] ?? "",
       folderName: map?["folderName"] ?? "",
+      shortcut: map?["shortcut"],
     );
   }
 
@@ -53,6 +55,7 @@ class Notice with _$Notice {
       "title": title,
       "text": text,
       "read": read,
+      "shortcut": shortcut,
     };
   }
 }

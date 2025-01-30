@@ -26,7 +26,10 @@ mixin _$Notice {
   DocumentReference<Object?> get reference =>
       throw _privateConstructorUsedError; // クラス名、名前は送信時にしか使わない引数
   String get room => throw _privateConstructorUsedError;
-  String get folderName => throw _privateConstructorUsedError;
+  String get folderName =>
+      throw _privateConstructorUsedError; // 授業へのショートカットなどが入る予定。nullableな点に注意
+  DocumentReference<Object?>? get shortcut =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of Notice
   /// with the given fields replaced by the non-null parameter values.
@@ -47,7 +50,8 @@ abstract class $NoticeCopyWith<$Res> {
       bool read,
       DocumentReference<Object?> reference,
       String room,
-      String folderName});
+      String folderName,
+      DocumentReference<Object?>? shortcut});
 }
 
 /// @nodoc
@@ -73,6 +77,7 @@ class _$NoticeCopyWithImpl<$Res, $Val extends Notice>
     Object? reference = null,
     Object? room = null,
     Object? folderName = null,
+    Object? shortcut = freezed,
   }) {
     return _then(_value.copyWith(
       timeStamp: null == timeStamp
@@ -107,6 +112,10 @@ class _$NoticeCopyWithImpl<$Res, $Val extends Notice>
           ? _value.folderName
           : folderName // ignore: cast_nullable_to_non_nullable
               as String,
+      shortcut: freezed == shortcut
+          ? _value.shortcut
+          : shortcut // ignore: cast_nullable_to_non_nullable
+              as DocumentReference<Object?>?,
     ) as $Val);
   }
 }
@@ -126,7 +135,8 @@ abstract class _$$NoticeImplCopyWith<$Res> implements $NoticeCopyWith<$Res> {
       bool read,
       DocumentReference<Object?> reference,
       String room,
-      String folderName});
+      String folderName,
+      DocumentReference<Object?>? shortcut});
 }
 
 /// @nodoc
@@ -150,6 +160,7 @@ class __$$NoticeImplCopyWithImpl<$Res>
     Object? reference = null,
     Object? room = null,
     Object? folderName = null,
+    Object? shortcut = freezed,
   }) {
     return _then(_$NoticeImpl(
       timeStamp: null == timeStamp
@@ -184,6 +195,10 @@ class __$$NoticeImplCopyWithImpl<$Res>
           ? _value.folderName
           : folderName // ignore: cast_nullable_to_non_nullable
               as String,
+      shortcut: freezed == shortcut
+          ? _value.shortcut
+          : shortcut // ignore: cast_nullable_to_non_nullable
+              as DocumentReference<Object?>?,
     ));
   }
 }
@@ -199,7 +214,8 @@ class _$NoticeImpl extends _Notice {
       required this.read,
       required this.reference,
       required this.room,
-      required this.folderName})
+      required this.folderName,
+      this.shortcut})
       : super._();
 
 // タイムスタンプ
@@ -225,10 +241,13 @@ class _$NoticeImpl extends _Notice {
   final String room;
   @override
   final String folderName;
+// 授業へのショートカットなどが入る予定。nullableな点に注意
+  @override
+  final DocumentReference<Object?>? shortcut;
 
   @override
   String toString() {
-    return 'Notice(timeStamp: $timeStamp, title: $title, text: $text, publisher: $publisher, read: $read, reference: $reference, room: $room, folderName: $folderName)';
+    return 'Notice(timeStamp: $timeStamp, title: $title, text: $text, publisher: $publisher, read: $read, reference: $reference, room: $room, folderName: $folderName, shortcut: $shortcut)';
   }
 
   @override
@@ -247,12 +266,14 @@ class _$NoticeImpl extends _Notice {
                 other.reference == reference) &&
             (identical(other.room, room) || other.room == room) &&
             (identical(other.folderName, folderName) ||
-                other.folderName == folderName));
+                other.folderName == folderName) &&
+            (identical(other.shortcut, shortcut) ||
+                other.shortcut == shortcut));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, timeStamp, title, text,
-      publisher, read, reference, room, folderName);
+      publisher, read, reference, room, folderName, shortcut);
 
   /// Create a copy of Notice
   /// with the given fields replaced by the non-null parameter values.
@@ -272,7 +293,8 @@ abstract class _Notice extends Notice {
       required final bool read,
       required final DocumentReference<Object?> reference,
       required final String room,
-      required final String folderName}) = _$NoticeImpl;
+      required final String folderName,
+      final DocumentReference<Object?>? shortcut}) = _$NoticeImpl;
   const _Notice._() : super._();
 
 // タイムスタンプ
@@ -291,7 +313,9 @@ abstract class _Notice extends Notice {
   @override
   String get room;
   @override
-  String get folderName;
+  String get folderName; // 授業へのショートカットなどが入る予定。nullableな点に注意
+  @override
+  DocumentReference<Object?>? get shortcut;
 
   /// Create a copy of Notice
   /// with the given fields replaced by the non-null parameter values.
