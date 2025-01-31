@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'dart:math' as math;
 
 import '../../../data/firebase/lesson_stream.dart';
 import '../../../data/lesson/lesson.dart';
@@ -61,6 +62,7 @@ class StudentLessonsDisplay extends ConsumerWidget {
                     final lesson = lessons[index].data();
                     return LessonCard(
                       lesson: lesson,
+                      angle: math.pi * (index % 2 == 0 ? 0 : 1),
                       onTap: () {
                         currentLessonNot.state = lessons[index];
                         GoRouter.of(context).push(Routes.studentTools);
