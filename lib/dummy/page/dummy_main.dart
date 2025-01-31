@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'dart:math' as math;
 
 import '../../data/quiz/quiz.dart';
 import '../data/dummy_provider.dart';
 import '../widget/dummy_base_page.dart';
-import '../../widget/sakura_redial_menu/radial_menu.dart';
 import '../../../toast.dart';
 
 void onItemSelected(dynamic value) {
@@ -15,9 +13,6 @@ void onItemSelected(dynamic value) {
 
 class DummyMain extends ConsumerWidget {
   DummyMain({super.key});
-
-  final GlobalKey<RadialSakuraMenuState> _menuKey =
-      GlobalKey<RadialSakuraMenuState>();
 
   // final List<RadialSakuraMenuItem> items = <RadialSakuraMenuItem>[
   //   RadialSakuraMenuItem(

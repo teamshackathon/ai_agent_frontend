@@ -3,6 +3,7 @@ import 'package:code/data/firebase/tool_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'dart:math' as math;
 
 import '../../../data/firebase/lesson_stream.dart';
 import '../../../data/lesson/lesson.dart';
@@ -52,7 +53,7 @@ class StudentLessonsDisplay extends ConsumerWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: LessonsSummary(),
+                child: LessonsSummary(reference: lessons[0].reference.parent),
               ),
               Expanded(
                   child: ListView.builder(
@@ -61,6 +62,7 @@ class StudentLessonsDisplay extends ConsumerWidget {
                   final lesson = lessons[index].data();
                   return LessonCard(
                     lesson: lesson,
+                    angle: math.pi * (index % 2 == 0 ? 0 : 1),
                     onTap: () {
                       currentLessonRefNot.state = lesson.reference;
                       GoRouter.of(context).push(Routes.studentTools);
