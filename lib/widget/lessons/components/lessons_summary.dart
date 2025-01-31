@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../data/room/room.dart';
+import 'lesson_badge_icon.dart';
 
 class LessonsSummary extends HookConsumerWidget {
   const LessonsSummary({super.key, required this.room});
@@ -35,27 +36,19 @@ class LessonsSummary extends HookConsumerWidget {
                   ],
                 )),
                 Expanded(
-                    child: Column(
-                  children: [
-                    IconButton(onPressed: () {}, icon: Icon(Icons.chat)),
-                    Text("先生に聞く"),
-                  ],
-                )),
+                  child: ChatToTeacherBadgeIcon(onPressed: () {}),
+                ),
                 Expanded(
-                    child: Column(
-                  children: [
-                    IconButton(onPressed: () {}, icon: Icon(Icons.smart_toy)),
-                    Text("AIに聞く"),
-                  ],
-                )),
+                  child: ChatToAIBadgeIcon(onPressed: () {}),
+                ),
                 Expanded(
-                    child: Column(
-                  children: [
-                    IconButton(onPressed: () {}, icon: Icon(Icons.analytics)),
-                    Text("自己分析"),
-                  ],
-                )),
-              ])
+                  child: AnalyticsBadgeIcon(onPressed: () {}),
+                ),
+              ]),
+              Divider(),
+              Container(
+                height: 15,
+              ),
             ]));
   }
 }

@@ -7,8 +7,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 const double _radiansPerDegree = math.pi / 180;
 
-typedef double ItemAngleCalculator(int index);
-
 class RadialSakuraMenu extends HookConsumerWidget {
   const RadialSakuraMenu({
     super.key,
@@ -79,7 +77,6 @@ class RadialSakuraMenu extends HookConsumerWidget {
 }
 
 class _RadialMenuLayout extends MultiChildLayoutDelegate {
-  static const String menuButton = 'menuButton';
   static const String actionButton = 'actionButton';
 
   final int itemCount;
