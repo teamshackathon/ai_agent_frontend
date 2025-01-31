@@ -93,7 +93,7 @@ class ActivityContainerRottieIcon extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final noticeStream = ref.watch(noticeGetProvider);
+    final noticeStream = ref.watch(noticeStudentGetProvider);
 
     return noticeStream.when(data: (snapshot) {
       final notices = snapshot.docs;
