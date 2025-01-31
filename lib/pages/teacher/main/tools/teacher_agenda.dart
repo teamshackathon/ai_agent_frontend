@@ -64,7 +64,7 @@ class TeacherAgendaDisplay extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final reference = lesson.reference;
-    final agendaState = useState<Agenda>(lesson.draftAgenda);
+    final agendaState = useState<Agenda>(lesson.agendaDraft);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -79,6 +79,7 @@ class TeacherAgendaDisplay extends HookConsumerWidget {
         ElevatedButton(
           onPressed: () async {
             infoToast(log: agendaState.value.toMap());
+            await reference.update({"agenda_draft": agendaState.value.toMap()});
             await reference
                 .update({"agenda_publish": agendaState.value.toMap()});
           },

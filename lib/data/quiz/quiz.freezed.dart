@@ -24,7 +24,10 @@ mixin _$Quiz {
   bool get correct => throw _privateConstructorUsedError;
   bool get reloadFlag => throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult when<TResult extends Object?>({
+  TResult when<TResult extends Object?>(
+    TResult Function(String title, String question, String correctAnswer,
+            int score, String answer, bool correct, bool reloadFlag)
+        $default, {
     required TResult Function(
             String title,
             String question,
@@ -56,7 +59,10 @@ mixin _$Quiz {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String title, String question, String correctAnswer,
+            int score, String answer, bool correct, bool reloadFlag)?
+        $default, {
     TResult? Function(
             String title,
             String question,
@@ -76,7 +82,10 @@ mixin _$Quiz {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String title, String question, String correctAnswer,
+            int score, String answer, bool correct, bool reloadFlag)?
+        $default, {
     TResult Function(
             String title,
             String question,
@@ -97,21 +106,24 @@ mixin _$Quiz {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult map<TResult extends Object?>({
+  TResult map<TResult extends Object?>(
+    TResult Function(_Quiz value) $default, {
     required TResult Function(Sentaku value) sentaku,
     required TResult Function(Anaume value) anaume,
     required TResult Function(Kijutsu value) kijutsu,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_Quiz value)? $default, {
     TResult? Function(Sentaku value)? sentaku,
     TResult? Function(Anaume value)? anaume,
     TResult? Function(Kijutsu value)? kijutsu,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_Quiz value)? $default, {
     TResult Function(Sentaku value)? sentaku,
     TResult Function(Anaume value)? anaume,
     TResult Function(Kijutsu value)? kijutsu,
@@ -194,6 +206,324 @@ class _$QuizCopyWithImpl<$Res, $Val extends Quiz>
               as bool,
     ) as $Val);
   }
+}
+
+/// @nodoc
+abstract class _$$QuizImplCopyWith<$Res> implements $QuizCopyWith<$Res> {
+  factory _$$QuizImplCopyWith(
+          _$QuizImpl value, $Res Function(_$QuizImpl) then) =
+      __$$QuizImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String title,
+      String question,
+      String correctAnswer,
+      int score,
+      String answer,
+      bool correct,
+      bool reloadFlag});
+}
+
+/// @nodoc
+class __$$QuizImplCopyWithImpl<$Res>
+    extends _$QuizCopyWithImpl<$Res, _$QuizImpl>
+    implements _$$QuizImplCopyWith<$Res> {
+  __$$QuizImplCopyWithImpl(_$QuizImpl _value, $Res Function(_$QuizImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of Quiz
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? title = null,
+    Object? question = null,
+    Object? correctAnswer = null,
+    Object? score = null,
+    Object? answer = null,
+    Object? correct = null,
+    Object? reloadFlag = null,
+  }) {
+    return _then(_$QuizImpl(
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      question: null == question
+          ? _value.question
+          : question // ignore: cast_nullable_to_non_nullable
+              as String,
+      correctAnswer: null == correctAnswer
+          ? _value.correctAnswer
+          : correctAnswer // ignore: cast_nullable_to_non_nullable
+              as String,
+      score: null == score
+          ? _value.score
+          : score // ignore: cast_nullable_to_non_nullable
+              as int,
+      answer: null == answer
+          ? _value.answer
+          : answer // ignore: cast_nullable_to_non_nullable
+              as String,
+      correct: null == correct
+          ? _value.correct
+          : correct // ignore: cast_nullable_to_non_nullable
+              as bool,
+      reloadFlag: null == reloadFlag
+          ? _value.reloadFlag
+          : reloadFlag // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$QuizImpl extends _Quiz with DiagnosticableTreeMixin {
+  const _$QuizImpl(
+      {required this.title,
+      required this.question,
+      required this.correctAnswer,
+      required this.score,
+      this.answer = "",
+      this.correct = false,
+      this.reloadFlag = false})
+      : super._();
+
+  @override
+  final String title;
+  @override
+  final String question;
+  @override
+  final String correctAnswer;
+  @override
+  final int score;
+  @override
+  @JsonKey()
+  final String answer;
+  @override
+  @JsonKey()
+  final bool correct;
+  @override
+  @JsonKey()
+  final bool reloadFlag;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'Quiz(title: $title, question: $question, correctAnswer: $correctAnswer, score: $score, answer: $answer, correct: $correct, reloadFlag: $reloadFlag)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'Quiz'))
+      ..add(DiagnosticsProperty('title', title))
+      ..add(DiagnosticsProperty('question', question))
+      ..add(DiagnosticsProperty('correctAnswer', correctAnswer))
+      ..add(DiagnosticsProperty('score', score))
+      ..add(DiagnosticsProperty('answer', answer))
+      ..add(DiagnosticsProperty('correct', correct))
+      ..add(DiagnosticsProperty('reloadFlag', reloadFlag));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$QuizImpl &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.question, question) ||
+                other.question == question) &&
+            (identical(other.correctAnswer, correctAnswer) ||
+                other.correctAnswer == correctAnswer) &&
+            (identical(other.score, score) || other.score == score) &&
+            (identical(other.answer, answer) || other.answer == answer) &&
+            (identical(other.correct, correct) || other.correct == correct) &&
+            (identical(other.reloadFlag, reloadFlag) ||
+                other.reloadFlag == reloadFlag));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, title, question, correctAnswer,
+      score, answer, correct, reloadFlag);
+
+  /// Create a copy of Quiz
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$QuizImplCopyWith<_$QuizImpl> get copyWith =>
+      __$$QuizImplCopyWithImpl<_$QuizImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String title, String question, String correctAnswer,
+            int score, String answer, bool correct, bool reloadFlag)
+        $default, {
+    required TResult Function(
+            String title,
+            String question,
+            String correctAnswer,
+            List<Option> options,
+            int score,
+            String answer,
+            bool correct,
+            bool reloadFlag)
+        sentaku,
+    required TResult Function(
+            String title,
+            String question,
+            String correctAnswer,
+            int score,
+            String answer,
+            bool correct,
+            bool reloadFlag)
+        anaume,
+    required TResult Function(
+            String title,
+            String question,
+            String correctAnswer,
+            int score,
+            String answer,
+            bool correct,
+            bool reloadFlag)
+        kijutsu,
+  }) {
+    return $default(
+        title, question, correctAnswer, score, answer, correct, reloadFlag);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String title, String question, String correctAnswer,
+            int score, String answer, bool correct, bool reloadFlag)?
+        $default, {
+    TResult? Function(
+            String title,
+            String question,
+            String correctAnswer,
+            List<Option> options,
+            int score,
+            String answer,
+            bool correct,
+            bool reloadFlag)?
+        sentaku,
+    TResult? Function(String title, String question, String correctAnswer,
+            int score, String answer, bool correct, bool reloadFlag)?
+        anaume,
+    TResult? Function(String title, String question, String correctAnswer,
+            int score, String answer, bool correct, bool reloadFlag)?
+        kijutsu,
+  }) {
+    return $default?.call(
+        title, question, correctAnswer, score, answer, correct, reloadFlag);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String title, String question, String correctAnswer,
+            int score, String answer, bool correct, bool reloadFlag)?
+        $default, {
+    TResult Function(
+            String title,
+            String question,
+            String correctAnswer,
+            List<Option> options,
+            int score,
+            String answer,
+            bool correct,
+            bool reloadFlag)?
+        sentaku,
+    TResult Function(String title, String question, String correctAnswer,
+            int score, String answer, bool correct, bool reloadFlag)?
+        anaume,
+    TResult Function(String title, String question, String correctAnswer,
+            int score, String answer, bool correct, bool reloadFlag)?
+        kijutsu,
+    required TResult orElse(),
+  }) {
+    if ($default != null) {
+      return $default(
+          title, question, correctAnswer, score, answer, correct, reloadFlag);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_Quiz value) $default, {
+    required TResult Function(Sentaku value) sentaku,
+    required TResult Function(Anaume value) anaume,
+    required TResult Function(Kijutsu value) kijutsu,
+  }) {
+    return $default(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_Quiz value)? $default, {
+    TResult? Function(Sentaku value)? sentaku,
+    TResult? Function(Anaume value)? anaume,
+    TResult? Function(Kijutsu value)? kijutsu,
+  }) {
+    return $default?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_Quiz value)? $default, {
+    TResult Function(Sentaku value)? sentaku,
+    TResult Function(Anaume value)? anaume,
+    TResult Function(Kijutsu value)? kijutsu,
+    required TResult orElse(),
+  }) {
+    if ($default != null) {
+      return $default(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Quiz extends Quiz {
+  const factory _Quiz(
+      {required final String title,
+      required final String question,
+      required final String correctAnswer,
+      required final int score,
+      final String answer,
+      final bool correct,
+      final bool reloadFlag}) = _$QuizImpl;
+  const _Quiz._() : super._();
+
+  @override
+  String get title;
+  @override
+  String get question;
+  @override
+  String get correctAnswer;
+  @override
+  int get score;
+  @override
+  String get answer;
+  @override
+  bool get correct;
+  @override
+  bool get reloadFlag;
+
+  /// Create a copy of Quiz
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$QuizImplCopyWith<_$QuizImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -374,7 +704,10 @@ class _$SentakuImpl extends Sentaku with DiagnosticableTreeMixin {
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object?>({
+  TResult when<TResult extends Object?>(
+    TResult Function(String title, String question, String correctAnswer,
+            int score, String answer, bool correct, bool reloadFlag)
+        $default, {
     required TResult Function(
             String title,
             String question,
@@ -410,7 +743,10 @@ class _$SentakuImpl extends Sentaku with DiagnosticableTreeMixin {
 
   @override
   @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String title, String question, String correctAnswer,
+            int score, String answer, bool correct, bool reloadFlag)?
+        $default, {
     TResult? Function(
             String title,
             String question,
@@ -434,7 +770,10 @@ class _$SentakuImpl extends Sentaku with DiagnosticableTreeMixin {
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String title, String question, String correctAnswer,
+            int score, String answer, bool correct, bool reloadFlag)?
+        $default, {
     TResult Function(
             String title,
             String question,
@@ -462,7 +801,8 @@ class _$SentakuImpl extends Sentaku with DiagnosticableTreeMixin {
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object?>({
+  TResult map<TResult extends Object?>(
+    TResult Function(_Quiz value) $default, {
     required TResult Function(Sentaku value) sentaku,
     required TResult Function(Anaume value) anaume,
     required TResult Function(Kijutsu value) kijutsu,
@@ -472,7 +812,8 @@ class _$SentakuImpl extends Sentaku with DiagnosticableTreeMixin {
 
   @override
   @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_Quiz value)? $default, {
     TResult? Function(Sentaku value)? sentaku,
     TResult? Function(Anaume value)? anaume,
     TResult? Function(Kijutsu value)? kijutsu,
@@ -482,7 +823,8 @@ class _$SentakuImpl extends Sentaku with DiagnosticableTreeMixin {
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_Quiz value)? $default, {
     TResult Function(Sentaku value)? sentaku,
     TResult Function(Anaume value)? anaume,
     TResult Function(Kijutsu value)? kijutsu,
@@ -683,7 +1025,10 @@ class _$AnaumeImpl extends Anaume with DiagnosticableTreeMixin {
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object?>({
+  TResult when<TResult extends Object?>(
+    TResult Function(String title, String question, String correctAnswer,
+            int score, String answer, bool correct, bool reloadFlag)
+        $default, {
     required TResult Function(
             String title,
             String question,
@@ -719,7 +1064,10 @@ class _$AnaumeImpl extends Anaume with DiagnosticableTreeMixin {
 
   @override
   @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String title, String question, String correctAnswer,
+            int score, String answer, bool correct, bool reloadFlag)?
+        $default, {
     TResult? Function(
             String title,
             String question,
@@ -743,7 +1091,10 @@ class _$AnaumeImpl extends Anaume with DiagnosticableTreeMixin {
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String title, String question, String correctAnswer,
+            int score, String answer, bool correct, bool reloadFlag)?
+        $default, {
     TResult Function(
             String title,
             String question,
@@ -771,7 +1122,8 @@ class _$AnaumeImpl extends Anaume with DiagnosticableTreeMixin {
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object?>({
+  TResult map<TResult extends Object?>(
+    TResult Function(_Quiz value) $default, {
     required TResult Function(Sentaku value) sentaku,
     required TResult Function(Anaume value) anaume,
     required TResult Function(Kijutsu value) kijutsu,
@@ -781,7 +1133,8 @@ class _$AnaumeImpl extends Anaume with DiagnosticableTreeMixin {
 
   @override
   @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_Quiz value)? $default, {
     TResult? Function(Sentaku value)? sentaku,
     TResult? Function(Anaume value)? anaume,
     TResult? Function(Kijutsu value)? kijutsu,
@@ -791,7 +1144,8 @@ class _$AnaumeImpl extends Anaume with DiagnosticableTreeMixin {
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_Quiz value)? $default, {
     TResult Function(Sentaku value)? sentaku,
     TResult Function(Anaume value)? anaume,
     TResult Function(Kijutsu value)? kijutsu,
@@ -990,7 +1344,10 @@ class _$KijutsuImpl extends Kijutsu with DiagnosticableTreeMixin {
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object?>({
+  TResult when<TResult extends Object?>(
+    TResult Function(String title, String question, String correctAnswer,
+            int score, String answer, bool correct, bool reloadFlag)
+        $default, {
     required TResult Function(
             String title,
             String question,
@@ -1026,7 +1383,10 @@ class _$KijutsuImpl extends Kijutsu with DiagnosticableTreeMixin {
 
   @override
   @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String title, String question, String correctAnswer,
+            int score, String answer, bool correct, bool reloadFlag)?
+        $default, {
     TResult? Function(
             String title,
             String question,
@@ -1050,7 +1410,10 @@ class _$KijutsuImpl extends Kijutsu with DiagnosticableTreeMixin {
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String title, String question, String correctAnswer,
+            int score, String answer, bool correct, bool reloadFlag)?
+        $default, {
     TResult Function(
             String title,
             String question,
@@ -1078,7 +1441,8 @@ class _$KijutsuImpl extends Kijutsu with DiagnosticableTreeMixin {
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object?>({
+  TResult map<TResult extends Object?>(
+    TResult Function(_Quiz value) $default, {
     required TResult Function(Sentaku value) sentaku,
     required TResult Function(Anaume value) anaume,
     required TResult Function(Kijutsu value) kijutsu,
@@ -1088,7 +1452,8 @@ class _$KijutsuImpl extends Kijutsu with DiagnosticableTreeMixin {
 
   @override
   @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_Quiz value)? $default, {
     TResult? Function(Sentaku value)? sentaku,
     TResult? Function(Anaume value)? anaume,
     TResult? Function(Kijutsu value)? kijutsu,
@@ -1098,7 +1463,8 @@ class _$KijutsuImpl extends Kijutsu with DiagnosticableTreeMixin {
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_Quiz value)? $default, {
     TResult Function(Sentaku value)? sentaku,
     TResult Function(Anaume value)? anaume,
     TResult Function(Kijutsu value)? kijutsu,

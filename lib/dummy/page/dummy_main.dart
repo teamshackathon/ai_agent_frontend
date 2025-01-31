@@ -47,8 +47,8 @@ class DummyMain extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final dummyNot = ref.read(dummyModeProvider.notifier);
     dummyNot.state = true;
-    final quizNot = ref.read(quizNotiferProvider.notifier);
-    final quiz = ref.watch(quizNotiferProvider);
+    final quizNot = ref.read(quizNotifierProvider.notifier);
+    final quiz = ref.watch(quizNotifierProvider);
 
     return DummyBasePage(
       floatingActionButton:

@@ -10,6 +10,16 @@ part 'quiz.g.dart';
 class Quiz with _$Quiz {
   const Quiz._();
 
+  const factory Quiz({
+    required String title,
+    required String question,
+    required String correctAnswer,
+    required int score,
+    @Default("") String answer,
+    @Default(false) bool correct,
+    @Default(false) bool reloadFlag,
+  }) = _Quiz;
+
   const factory Quiz.sentaku({
     required String title,
     required String question,
@@ -106,6 +116,15 @@ class Quiz with _$Quiz {
       };
     }
   }
+
+  factory Quiz.isBlank() {
+    return Quiz(
+      title: "",
+      question: "",
+      correctAnswer: "",
+      score: -1,
+    );
+  }
 }
 
 @freezed
@@ -119,7 +138,7 @@ class Option with _$Option {
 
   factory Option.fromMap(Map<String, dynamic> map) {
     return Option(
-      number: int.parse(map["item_num"]) ?? 0,
+      number: int.parse(map["item_num"] ?? -1),
       word: map["item_word"] ?? "",
     );
   }
@@ -133,7 +152,7 @@ class Option with _$Option {
 }
 
 @Riverpod(keepAlive: true)
-class QuizNotifer extends _$QuizNotifer {
+class QuizNotifier extends _$QuizNotifier {
   // ToDo(iga)
   // build時にAPIの情報を読み込む
   @override

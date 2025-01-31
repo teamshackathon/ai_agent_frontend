@@ -9,8 +9,8 @@ class Tq001 extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final quizNot = ref.read(quizNotiferProvider.notifier);
-    final quiz = ref.watch(quizNotiferProvider);
+    final quizNot = ref.read(quizNotifierProvider.notifier);
+    final quiz = ref.watch(quizNotifierProvider);
 
     return DummyBasePage(
       floatingActionButton:
