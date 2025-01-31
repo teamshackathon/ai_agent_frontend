@@ -8,15 +8,16 @@ import '../room/room.dart';
 final currentRoomProvider = StateProvider<Room>((ref) {
   // nullにすると面倒くさいから適当なデータをいれている(危なそう)
   return Room(
-      year: "2024",
-      roomNumber: "3-1",
-      subject: "english",
-      reference: FirebaseFirestore.instance.collection("2024"),
-      teacher: "");
+    year: "2024",
+    roomNumber: "3-1",
+    subject: "english",
+    reference: FirebaseFirestore.instance.collection("2024"),
+    teacher: "",
+  );
 });
 
-// CurrentRoomRefProviderで指定したcollectionを監視するプロバイダー
-final lessonStreamProvider = StreamProvider(
+// CurrentRoomProviderで指定したcollectionを監視するプロバイダー
+final lessonsStreamProvider = StreamProvider(
   (ref) {
     final reference = ref.watch(currentRoomProvider).reference;
     return reference
@@ -28,3 +29,8 @@ final lessonStreamProvider = StreamProvider(
         .snapshots();
   },
 );
+
+// 選択した授業内容を監視するプロバイダー
+// lessonsStreamProviderの支流を作るイメージ
+final currentLessonProvider =
+    StateProvider<QueryDocumentSnapshot<Lesson>?>((ref) => null);

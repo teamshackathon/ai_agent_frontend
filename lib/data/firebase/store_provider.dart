@@ -12,7 +12,7 @@ final firestoreProvider =
 /// noticeコレクションへの参照を持つset専用プロバイダー
 ///
 /// 色々改良の余地がありそうだけど、一旦はこれで
-final noticeSetReferenceProvider = Provider((ref) {
+final noticeSetReferenceProvider = Provider.autoDispose((ref) {
   final store = ref.watch(firestoreProvider);
 
   // noticeコレクションにまとめて入れるため、set,getで参照元が異なる
@@ -23,7 +23,7 @@ final noticeSetReferenceProvider = Provider((ref) {
 });
 
 /// Claudeを崇拝せよ
-final noticeGetProvider = StreamProvider((ref) async* {
+final noticeStudentGetProvider = StreamProvider.autoDispose((ref) async* {
   final store = ref.watch(firestoreProvider);
   final student = await ref.watch(personStatusProvider.future) as Student;
 
@@ -41,7 +41,7 @@ final noticeGetProvider = StreamProvider((ref) async* {
       .snapshots();
 });
 
-final noticeTeacherGetProvider = StreamProvider((ref) async* {
+final noticeTeacherGetProvider = StreamProvider.autoDispose((ref) async* {
   final store = ref.watch(firestoreProvider);
   final teacher = await ref.watch(personStatusProvider.future) as Teacher;
 

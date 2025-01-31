@@ -38,7 +38,7 @@ class TeacherBottomBar extends HookConsumerWidget {
 
     return Scaffold(
       body: navigationShell,
-      floatingActionButton: FloatingActionButton(onPressed: () {}),
+      floatingActionButton: null,
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
         destinations: [
