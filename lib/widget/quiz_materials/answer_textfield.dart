@@ -20,5 +20,3 @@ class AnswerTextbox extends StatelessWidget {
     );
   }
 }
-
-

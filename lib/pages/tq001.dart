@@ -11,7 +11,7 @@ class Tq001 extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final quizNot = ref.read(quizNotiferProvider.notifier);
     final quiz = ref.watch(quizNotiferProvider);
-  
+
     return DummyBasePage(
       floatingActionButton:
           FloatingActionButton(onPressed: () => quizNot.init(readQuiz("mock"))),

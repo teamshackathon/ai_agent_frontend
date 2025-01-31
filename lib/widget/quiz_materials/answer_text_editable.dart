@@ -23,4 +23,3 @@ class AnswerTextEditable extends StatelessWidget {
     );
   }
 }
-

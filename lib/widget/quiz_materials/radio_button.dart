@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class RadioButton extends StatelessWidget {
-
   const RadioButton({
     super.key,
     required this.texts,
@@ -36,4 +35,3 @@ class RadioButton extends StatelessWidget {
     );
   }
 }
-

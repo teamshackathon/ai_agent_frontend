@@ -49,4 +49,3 @@ class AnswerWidget extends HookConsumerWidget {
     }
   }
 }
-
