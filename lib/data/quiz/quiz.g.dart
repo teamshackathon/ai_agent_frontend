@@ -3,95 +3,10 @@
 part of 'quiz.dart';
 
 // **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
-_$SentakuImpl _$$SentakuImplFromJson(Map<String, dynamic> json) =>
-    _$SentakuImpl(
-      title: json['title'] as String,
-      format: json['format'] as String,
-      question: json['question'] as String,
-      correctAnswer: json['correctAnswer'] as String,
-      options: (json['options'] as List<dynamic>)
-          .map((e) => e as Map<String, dynamic>)
-          .toList(),
-      score: (json['score'] as num).toInt(),
-      answer: json['answer'] as String? ?? "",
-      correct: json['correct'] as bool? ?? false,
-      reloadFlag: json['reloadFlag'] as bool? ?? false,
-      $type: json['runtimeType'] as String?,
-    );
-
-Map<String, dynamic> _$$SentakuImplToJson(_$SentakuImpl instance) =>
-    <String, dynamic>{
-      'title': instance.title,
-      'format': instance.format,
-      'question': instance.question,
-      'correctAnswer': instance.correctAnswer,
-      'options': instance.options,
-      'score': instance.score,
-      'answer': instance.answer,
-      'correct': instance.correct,
-      'reloadFlag': instance.reloadFlag,
-      'runtimeType': instance.$type,
-    };
-
-_$AnaumeImpl _$$AnaumeImplFromJson(Map<String, dynamic> json) => _$AnaumeImpl(
-      title: json['title'] as String,
-      format: json['format'] as String,
-      question: json['question'] as String,
-      correctAnswer: json['correctAnswer'] as String,
-      score: (json['score'] as num).toInt(),
-      answer: json['answer'] as String? ?? "",
-      correctF: json['correctF'] as bool? ?? false,
-      reloadFlag: json['reloadFlag'] as bool? ?? false,
-      $type: json['runtimeType'] as String?,
-    );
-
-Map<String, dynamic> _$$AnaumeImplToJson(_$AnaumeImpl instance) =>
-    <String, dynamic>{
-      'title': instance.title,
-      'format': instance.format,
-      'question': instance.question,
-      'correctAnswer': instance.correctAnswer,
-      'score': instance.score,
-      'answer': instance.answer,
-      'correctF': instance.correctF,
-      'reloadFlag': instance.reloadFlag,
-      'runtimeType': instance.$type,
-    };
-
-_$KijutsuImpl _$$KijutsuImplFromJson(Map<String, dynamic> json) =>
-    _$KijutsuImpl(
-      title: json['title'] as String,
-      format: json['format'] as String,
-      question: json['question'] as String,
-      correctAnswer: json['correctAnswer'] as String,
-      score: (json['score'] as num).toInt(),
-      answer: json['answer'] as String? ?? "",
-      correct: json['correct'] as bool? ?? false,
-      reloadFlag: json['reloadFlag'] as bool? ?? false,
-      $type: json['runtimeType'] as String?,
-    );
-
-Map<String, dynamic> _$$KijutsuImplToJson(_$KijutsuImpl instance) =>
-    <String, dynamic>{
-      'title': instance.title,
-      'format': instance.format,
-      'question': instance.question,
-      'correctAnswer': instance.correctAnswer,
-      'score': instance.score,
-      'answer': instance.answer,
-      'correct': instance.correct,
-      'reloadFlag': instance.reloadFlag,
-      'runtimeType': instance.$type,
-    };
-
-// **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$quizNotiferHash() => r'df6af1c2c3e99b05b97d03773dc28cd65681484a';
+String _$quizNotiferHash() => r'4d8813fdcb782624347e7921285f6f97718021de';
 
 /// See also [QuizNotifer].
 @ProviderFor(QuizNotifer)

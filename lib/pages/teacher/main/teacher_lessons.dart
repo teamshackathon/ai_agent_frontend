@@ -63,8 +63,8 @@ class TeacherLessonsDisplay extends HookConsumerWidget {
               await currentRoom.reference.add(
                 Lesson(
                   count: lessons.length + 1,
-                  publishAgenda: Agenda(title: "", sentences: []),
-                  draftAgenda: Agenda(title: "", sentences: []),
+                  publishAgenda: Agenda.isBlank(),
+                  draftAgenda: Agenda.isBlank(),
                   reference: currentRoom.reference.doc(),
                 ).toMap(),
               );

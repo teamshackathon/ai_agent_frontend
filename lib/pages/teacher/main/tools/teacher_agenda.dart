@@ -111,10 +111,9 @@ class TeacherAgendaDisplay extends HookConsumerWidget {
                 sentence: agendaState.value.sentences[index],
                 onChanged: (sentence) {
                   infoToast(log: "before : ${agendaState.value}");
-                  var list = agendaState.value.sentences;
-                  list = [
-                    for (var i = 0; i < list.length; i++)
-                      i == index ? sentence : list[i]
+                  var list = [
+                    for (var i = 0; i < agendaState.value.sentences.length; i++)
+                      i == index ? sentence : agendaState.value.sentences[i]
                   ];
                   agendaState.value =
                       agendaState.value.copyWith(sentences: list);

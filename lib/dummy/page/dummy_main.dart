@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../data/quiz/quiz.dart';
+import '../../widget/quiz/answer_widget.dart';
 import '../data/dummy_provider.dart';
 import '../widget/dummy_base_page.dart';
 
@@ -55,10 +56,11 @@ class DummyMain extends ConsumerWidget {
       pageTitle: "ダミーメイン",
       body: ListView.builder(
         itemCount: quiz.length,
-        itemBuilder: (context, index) => QuizEditWidget(
+        itemBuilder: (context, index) => AnswerWidget(
           quiz: quiz[index],
-          onChanged: (value) => quizNot.replaceQuiz(value),
-          editable: true,
+          onChanged: (str) {
+            quizNot.writeAnswer(quiz[index].title, str);
+          },
         ),
       ),
     );

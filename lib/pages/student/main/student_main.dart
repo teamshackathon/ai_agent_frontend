@@ -55,33 +55,35 @@ class StudentMainDisplay extends ConsumerWidget {
         : Column(
             children: [
               Padding(
-                  padding: EdgeInsets.only(top: 0),
-                  child: Text(
-                    "${rooms[0].year}年度 ${rooms[0].roomNumber}",
-                    style: TextStyle(fontSize: 20),
-                  )),
+                padding: EdgeInsets.only(top: 0),
+                child: Text(
+                  "${rooms[0].year}年度 ${rooms[0].roomNumber}",
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
               Padding(
-                  padding: EdgeInsets.only(top: 0),
-                  child: Text(
-                    "授業を選んでください",
-                    style: TextStyle(fontSize: 15),
-                  )),
+                padding: EdgeInsets.only(top: 0),
+                child: Text(
+                  "授業を選んでください",
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
               Spacer(),
               Expanded(
                 child: RadialSakuraMenu(
                   items: rooms
-                      .map((room) => RadialSakuraMenuItem(
-                            key: UniqueKey(),
-                            subject: getOptionFromIndex(room.subject),
-                            angle: 2 *
-                                math.pi /
-                                rooms.length *
-                                rooms.indexOf(room),
-                            onTap: () {
-                              currentRoomNot.state = room;
-                              GoRouter.of(context).push(Routes.studentLessons);
-                            },
-                          ))
+                      .map(
+                        (room) => RadialSakuraMenuItem(
+                          key: UniqueKey(),
+                          subject: getOptionFromIndex(room.subject),
+                          angle:
+                              2 * math.pi / rooms.length * rooms.indexOf(room),
+                          onTap: () {
+                            currentRoomNot.state = room;
+                            GoRouter.of(context).push(Routes.studentLessons);
+                          },
+                        ),
+                      )
                       .toList(),
                 ),
               ),

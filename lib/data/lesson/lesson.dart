@@ -9,7 +9,6 @@ part 'lesson.freezed.dart';
 class Lesson with _$Lesson {
   const Lesson._();
 
-  // とりあえずidと回数だけ持ってる
   const factory Lesson({
     required int count,
     required Agenda publishAgenda,
