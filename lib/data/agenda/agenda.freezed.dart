@@ -17,8 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Agenda {
   String get title => throw _privateConstructorUsedError;
-  String get time => throw _privateConstructorUsedError;
-  String get steps => throw _privateConstructorUsedError;
+  List<Sentence> get agenda => throw _privateConstructorUsedError;
 
   /// Create a copy of Agenda
   /// with the given fields replaced by the non-null parameter values.
@@ -31,7 +30,7 @@ abstract class $AgendaCopyWith<$Res> {
   factory $AgendaCopyWith(Agenda value, $Res Function(Agenda) then) =
       _$AgendaCopyWithImpl<$Res, Agenda>;
   @useResult
-  $Res call({String title, String time, String steps});
+  $Res call({String title, List<Sentence> agenda});
 }
 
 /// @nodoc
@@ -50,22 +49,17 @@ class _$AgendaCopyWithImpl<$Res, $Val extends Agenda>
   @override
   $Res call({
     Object? title = null,
-    Object? time = null,
-    Object? steps = null,
+    Object? agenda = null,
   }) {
     return _then(_value.copyWith(
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      time: null == time
-          ? _value.time
-          : time // ignore: cast_nullable_to_non_nullable
-              as String,
-      steps: null == steps
-          ? _value.steps
-          : steps // ignore: cast_nullable_to_non_nullable
-              as String,
+      agenda: null == agenda
+          ? _value.agenda
+          : agenda // ignore: cast_nullable_to_non_nullable
+              as List<Sentence>,
     ) as $Val);
   }
 }
@@ -77,7 +71,7 @@ abstract class _$$AgendaImplCopyWith<$Res> implements $AgendaCopyWith<$Res> {
       __$$AgendaImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String title, String time, String steps});
+  $Res call({String title, List<Sentence> agenda});
 }
 
 /// @nodoc
@@ -94,22 +88,17 @@ class __$$AgendaImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? title = null,
-    Object? time = null,
-    Object? steps = null,
+    Object? agenda = null,
   }) {
     return _then(_$AgendaImpl(
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      time: null == time
-          ? _value.time
-          : time // ignore: cast_nullable_to_non_nullable
-              as String,
-      steps: null == steps
-          ? _value.steps
-          : steps // ignore: cast_nullable_to_non_nullable
-              as String,
+      agenda: null == agenda
+          ? _value._agenda
+          : agenda // ignore: cast_nullable_to_non_nullable
+              as List<Sentence>,
     ));
   }
 }
@@ -118,19 +107,23 @@ class __$$AgendaImplCopyWithImpl<$Res>
 
 class _$AgendaImpl extends _Agenda {
   const _$AgendaImpl(
-      {required this.title, required this.time, required this.steps})
-      : super._();
+      {required this.title, required final List<Sentence> agenda})
+      : _agenda = agenda,
+        super._();
 
   @override
   final String title;
+  final List<Sentence> _agenda;
   @override
-  final String time;
-  @override
-  final String steps;
+  List<Sentence> get agenda {
+    if (_agenda is EqualUnmodifiableListView) return _agenda;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_agenda);
+  }
 
   @override
   String toString() {
-    return 'Agenda(title: $title, time: $time, steps: $steps)';
+    return 'Agenda(title: $title, agenda: $agenda)';
   }
 
   @override
@@ -139,12 +132,12 @@ class _$AgendaImpl extends _Agenda {
         (other.runtimeType == runtimeType &&
             other is _$AgendaImpl &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.time, time) || other.time == time) &&
-            (identical(other.steps, steps) || other.steps == steps));
+            const DeepCollectionEquality().equals(other._agenda, _agenda));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, title, time, steps);
+  int get hashCode => Object.hash(
+      runtimeType, title, const DeepCollectionEquality().hash(_agenda));
 
   /// Create a copy of Agenda
   /// with the given fields replaced by the non-null parameter values.
@@ -158,21 +151,185 @@ class _$AgendaImpl extends _Agenda {
 abstract class _Agenda extends Agenda {
   const factory _Agenda(
       {required final String title,
-      required final String time,
-      required final String steps}) = _$AgendaImpl;
+      required final List<Sentence> agenda}) = _$AgendaImpl;
   const _Agenda._() : super._();
 
   @override
   String get title;
   @override
-  String get time;
-  @override
-  String get steps;
+  List<Sentence> get agenda;
 
   /// Create a copy of Agenda
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AgendaImplCopyWith<_$AgendaImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$Sentence {
+  String get subtitle => throw _privateConstructorUsedError;
+  int get time => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+
+  /// Create a copy of Sentence
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $SentenceCopyWith<Sentence> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SentenceCopyWith<$Res> {
+  factory $SentenceCopyWith(Sentence value, $Res Function(Sentence) then) =
+      _$SentenceCopyWithImpl<$Res, Sentence>;
+  @useResult
+  $Res call({String subtitle, int time, String description});
+}
+
+/// @nodoc
+class _$SentenceCopyWithImpl<$Res, $Val extends Sentence>
+    implements $SentenceCopyWith<$Res> {
+  _$SentenceCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of Sentence
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? subtitle = null,
+    Object? time = null,
+    Object? description = null,
+  }) {
+    return _then(_value.copyWith(
+      subtitle: null == subtitle
+          ? _value.subtitle
+          : subtitle // ignore: cast_nullable_to_non_nullable
+              as String,
+      time: null == time
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as int,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$SentenceImplCopyWith<$Res>
+    implements $SentenceCopyWith<$Res> {
+  factory _$$SentenceImplCopyWith(
+          _$SentenceImpl value, $Res Function(_$SentenceImpl) then) =
+      __$$SentenceImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String subtitle, int time, String description});
+}
+
+/// @nodoc
+class __$$SentenceImplCopyWithImpl<$Res>
+    extends _$SentenceCopyWithImpl<$Res, _$SentenceImpl>
+    implements _$$SentenceImplCopyWith<$Res> {
+  __$$SentenceImplCopyWithImpl(
+      _$SentenceImpl _value, $Res Function(_$SentenceImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of Sentence
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? subtitle = null,
+    Object? time = null,
+    Object? description = null,
+  }) {
+    return _then(_$SentenceImpl(
+      subtitle: null == subtitle
+          ? _value.subtitle
+          : subtitle // ignore: cast_nullable_to_non_nullable
+              as String,
+      time: null == time
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as int,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SentenceImpl extends _Sentence {
+  const _$SentenceImpl(
+      {required this.subtitle, required this.time, required this.description})
+      : super._();
+
+  @override
+  final String subtitle;
+  @override
+  final int time;
+  @override
+  final String description;
+
+  @override
+  String toString() {
+    return 'Sentence(subtitle: $subtitle, time: $time, description: $description)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SentenceImpl &&
+            (identical(other.subtitle, subtitle) ||
+                other.subtitle == subtitle) &&
+            (identical(other.time, time) || other.time == time) &&
+            (identical(other.description, description) ||
+                other.description == description));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, subtitle, time, description);
+
+  /// Create a copy of Sentence
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SentenceImplCopyWith<_$SentenceImpl> get copyWith =>
+      __$$SentenceImplCopyWithImpl<_$SentenceImpl>(this, _$identity);
+}
+
+abstract class _Sentence extends Sentence {
+  const factory _Sentence(
+      {required final String subtitle,
+      required final int time,
+      required final String description}) = _$SentenceImpl;
+  const _Sentence._() : super._();
+
+  @override
+  String get subtitle;
+  @override
+  int get time;
+  @override
+  String get description;
+
+  /// Create a copy of Sentence
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SentenceImplCopyWith<_$SentenceImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

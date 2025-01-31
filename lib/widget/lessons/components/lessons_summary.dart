@@ -1,38 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../../../data/room/room.dart';
+import 'lesson_badge_icon.dart';
 
 class LessonsSummary extends HookConsumerWidget {
-  const LessonsSummary({super.key, this.reference});
+  const LessonsSummary({super.key, required this.room});
 
-  final CollectionReference? reference;
-
-  String getSubject() {
-    final String path = reference?.path ?? "";
-    final List<String> pathList = path.split("/");
-    final subject = "";
-    switch (subject) {
-      case "math":
-        return "数学";
-      case "english":
-        return "英語";
-      case "japanese":
-        return "国語";
-      case "science":
-        return "理科";
-      case "social":
-        return "社会";
-      default:
-        return "その他";
-    }
-  }
+  final Room room;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // 先生の情報を取得
-    // final teacher = ref.watch(personStatusProvider);
-    final teacher = "先生の名前";
-
     return SizedBox(
         width: double.infinity,
         child: Column(
@@ -46,8 +24,8 @@ class LessonsSummary extends HookConsumerWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text("教科：${getSubject()}"),
-              Text("先生：$teacher"),
+              Text("教科：${room.displaySubject}"),
+              Text("先生：${room.teacher}"),
               Text("教室：教室A"),
               Row(children: [
                 Expanded(
@@ -58,27 +36,19 @@ class LessonsSummary extends HookConsumerWidget {
                   ],
                 )),
                 Expanded(
-                    child: Column(
-                  children: [
-                    IconButton(onPressed: () {}, icon: Icon(Icons.chat)),
-                    Text("先生に聞く"),
-                  ],
-                )),
+                  child: ChatToTeacherBadgeIcon(onPressed: () {}),
+                ),
                 Expanded(
-                    child: Column(
-                  children: [
-                    IconButton(onPressed: () {}, icon: Icon(Icons.smart_toy)),
-                    Text("AIに聞く"),
-                  ],
-                )),
+                  child: ChatToAIBadgeIcon(onPressed: () {}),
+                ),
                 Expanded(
-                    child: Column(
-                  children: [
-                    IconButton(onPressed: () {}, icon: Icon(Icons.analytics)),
-                    Text("自己分析"),
-                  ],
-                )),
-              ])
+                  child: AnalyticsBadgeIcon(onPressed: () {}),
+                ),
+              ]),
+              Divider(),
+              Container(
+                height: 15,
+              ),
             ]));
   }
 }

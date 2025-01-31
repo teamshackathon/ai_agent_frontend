@@ -1,218 +1,84 @@
-import 'package:code/data/firebase/store_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lottie/lottie.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class StudentBottomBar extends StatefulWidget {
+import 'bottom_bar_widget.dart';
+
+class StudentBottomBar extends HookConsumerWidget {
   const StudentBottomBar({
     super.key,
     required this.navigationShell,
+    this.name,
   });
 
+  final String? name;
   final StatefulNavigationShell navigationShell;
 
   @override
-  _StudentBottomBarState createState() => _StudentBottomBarState();
-}
-
-class _StudentBottomBarState extends State<StudentBottomBar>
-    with TickerProviderStateMixin {
-  int _selectedIndex = 1; // 現在選択されているインデックス
-  late List<AnimationController> _controllers; // late で初期化を遅らせる
-
-  @override
-  void initState() {
-    super.initState();
-
-    // 必ず navigationShell のタブ数に合わせたコントローラを初期化
-    _controllers = List.generate(
-      3, // タブの数
-      (_) => AnimationController(
-        vsync: this,
-        duration: const Duration(milliseconds: 500), // アニメーションの時間
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controllers = useState<List<AnimationController>>(
+      List.generate(
+        3,
+        (_) => useAnimationController(
+          duration: const Duration(milliseconds: 500),
+        ),
       ),
     );
-  }
 
-  @override
-  void dispose() {
-    // AnimationController を解放
-    for (final controller in _controllers) {
-      controller.dispose();
-    }
-    super.dispose();
-  }
+    final selectedIndex = useState<int>(1);
 
-  @override
-  Widget build(BuildContext context) {
+    // 初回描画時にアニメーションを開始
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      for (final controller in controllers.value) {
+        controller.forward();
+      }
+    });
+
     return Scaffold(
-      body: widget.navigationShell,
+      body: navigationShell,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.white, // 背景色
+          color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.4), // 桜色の影
-              blurRadius: 15, // ぼかし半径
-              offset: const Offset(0, -5), // 少し上に浮かせる影
+              color: Colors.grey.withOpacity(0.4),
+              blurRadius: 15,
+              offset: const Offset(0, -5),
             ),
           ],
         ),
         child: NavigationBar(
-          selectedIndex: _selectedIndex,
+          selectedIndex: navigationShell.currentIndex,
           destinations: [
-            _buildLottieNavigationDestination(
+            RottieNavigationDestination(
               label: 'プロフィール',
               iconPath: 'assets/profile.json',
-              index: 0,
+              animationController: controllers.value[0],
             ),
-            _buildLottieNavigationDestination(
+            RottieNavigationDestination(
               label: 'ホーム',
               iconPath: 'assets/home.json',
-              index: 1,
+              animationController: controllers.value[1],
             ),
-            _buildActivityLottieNavigationDestination(
+            ActivityLottieNavigationDestination(
               label: '通知',
               iconPath: 'assets/activity.json',
-              index: 2,
-              width: 30,
-              height: 30, // 通知アイコンは大きめに
+              animationController: controllers.value[2],
             ),
           ],
           onDestinationSelected: (index) {
-            // アニメーションの更新
-            setState(() {
-              _controllers[_selectedIndex].reset(); // 現在選択されているアイコンをリセット
-              _selectedIndex = index; // 新しいインデックスを設定
-              _controllers[_selectedIndex].forward(); // 新しいインデックスでアニメーションを再生
-            });
+            controllers.value[index].reset();
+            selectedIndex.value = index;
+            controllers.value[index].forward();
 
-            widget.navigationShell.goBranch(
+            navigationShell.goBranch(
               index,
-              initialLocation: index == widget.navigationShell.currentIndex,
+              initialLocation: index == navigationShell.currentIndex,
             );
           },
         ),
       ),
     );
-  }
-
-  /// Lottieアニメーション付きのNavigationDestinationを構築
-  NavigationDestination _buildLottieNavigationDestination({
-    required String label,
-    required String iconPath,
-    required int index,
-    double width = 30,
-    double height = 30,
-  }) {
-    return NavigationDestination(
-      label: label,
-      icon: Container(
-        child: Lottie.asset(
-          iconPath,
-          controller: _controllers[index], // 対応するコントローラを指定
-          onLoaded: (composition) {
-            // LottieComposition の時間を AnimationController に反映
-            _controllers[index].duration = composition.duration;
-          },
-          width: width,
-          height: height,
-          repeat: false, // アニメーションを一度だけ再生
-        ),
-      ),
-    );
-  }
-
-  NavigationDestination _buildActivityLottieNavigationDestination({
-    required String label,
-    required String iconPath,
-    required int index,
-    double width = 30,
-    double height = 30,
-  }) {
-    return NavigationDestination(
-      label: label,
-      icon: ActivityContainerRottieIcon(
-        iconPath: iconPath,
-        controller: _controllers[index], // 対応するコントローラを指定
-        onLoaded: (composition) {
-          // LottieComposition の時間を AnimationController に反映
-          _controllers[index].duration = composition.duration;
-        },
-        width: width,
-        height: height,
-        repeat: false, // アニメーションを一度だけ再生
-      ),
-    );
-  }
-}
-
-class ActivityContainerRottieIcon extends ConsumerWidget {
-  const ActivityContainerRottieIcon({
-    super.key,
-    required this.iconPath,
-    required this.controller,
-    required this.onLoaded,
-    required this.width,
-    required this.height,
-    required this.repeat,
-  });
-
-  final String iconPath;
-  final AnimationController controller;
-  final void Function(LottieComposition) onLoaded;
-  final double width;
-  final double height;
-  final bool repeat;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final noticeStream = ref.watch(noticeGetProvider);
-
-    return noticeStream.when(data: (snapshot) {
-      final notices = snapshot.docs;
-      final unreadNotices = notices.where((notice) => !notice.data().read);
-      if (unreadNotices.isEmpty) {
-        return Lottie.asset(
-          iconPath,
-          controller: controller, // 対応するコントローラを指定
-          onLoaded: onLoaded,
-          width: width,
-          height: height,
-          repeat: false,
-        );
-      } else {
-        return Badge.count(
-          count: unreadNotices.length,
-          child: Lottie.asset(
-            iconPath,
-            controller: controller, // 対応するコントローラを指定
-            onLoaded: onLoaded,
-            width: width,
-            height: height,
-            repeat: false, // アニメーションを一度だけ再生
-          ),
-        );
-      }
-    }, error: (_, __) {
-      return Lottie.asset(
-        iconPath,
-        controller: controller, // 対応するコントローラを指定
-        onLoaded: onLoaded,
-        width: width,
-        height: height,
-        repeat: false,
-      );
-    }, loading: () {
-      return Lottie.asset(
-        iconPath,
-        controller: controller, // 対応するコントローラを指定
-        onLoaded: onLoaded,
-        width: width,
-        height: height,
-        repeat: false,
-      );
-    });
   }
 }

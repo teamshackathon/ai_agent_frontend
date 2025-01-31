@@ -48,7 +48,7 @@ class StudentMainDisplay extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentRefNot = ref.read(currentRoomRefProvider.notifier);
+    final currentRoomNot = ref.read(currentRoomProvider.notifier);
 
     return rooms.isEmpty
         ? Center(child: Text("授業がありません"))
@@ -69,22 +69,22 @@ class StudentMainDisplay extends ConsumerWidget {
               Spacer(),
               Expanded(
                 child: RadialSakuraMenu(
-                    items: rooms
-                        .map((room) => RadialSakuraMenuItem(
-                              key: UniqueKey(),
-                              subject: getOptionFromIndex(room.subject),
-                              angle: 2 *
-                                  math.pi /
-                                  rooms.length *
-                                  rooms.indexOf(room),
-                              onTap: () {
-                                currentRefNot.state = room.reference;
-                                GoRouter.of(context)
-                                    .push(Routes.studentLessons);
-                              },
-                            ))
-                        .toList()),
-              )
+                  items: rooms
+                      .map((room) => RadialSakuraMenuItem(
+                            key: UniqueKey(),
+                            subject: getOptionFromIndex(room.subject),
+                            angle: 2 *
+                                math.pi /
+                                rooms.length *
+                                rooms.indexOf(room),
+                            onTap: () {
+                              currentRoomNot.state = room;
+                              GoRouter.of(context).push(Routes.studentLessons);
+                            },
+                          ))
+                      .toList(),
+                ),
+              ),
             ],
           );
   }
