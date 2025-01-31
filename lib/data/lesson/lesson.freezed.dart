@@ -17,6 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Lesson {
   int get count => throw _privateConstructorUsedError;
+  Agenda get publishAgenda => throw _privateConstructorUsedError;
+  Agenda get draftAgenda => throw _privateConstructorUsedError;
   DocumentReference<Object?> get reference =>
       throw _privateConstructorUsedError;
 
@@ -31,7 +33,14 @@ abstract class $LessonCopyWith<$Res> {
   factory $LessonCopyWith(Lesson value, $Res Function(Lesson) then) =
       _$LessonCopyWithImpl<$Res, Lesson>;
   @useResult
-  $Res call({int count, DocumentReference<Object?> reference});
+  $Res call(
+      {int count,
+      Agenda publishAgenda,
+      Agenda draftAgenda,
+      DocumentReference<Object?> reference});
+
+  $AgendaCopyWith<$Res> get publishAgenda;
+  $AgendaCopyWith<$Res> get draftAgenda;
 }
 
 /// @nodoc
@@ -50,6 +59,8 @@ class _$LessonCopyWithImpl<$Res, $Val extends Lesson>
   @override
   $Res call({
     Object? count = null,
+    Object? publishAgenda = null,
+    Object? draftAgenda = null,
     Object? reference = null,
   }) {
     return _then(_value.copyWith(
@@ -57,11 +68,39 @@ class _$LessonCopyWithImpl<$Res, $Val extends Lesson>
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
               as int,
+      publishAgenda: null == publishAgenda
+          ? _value.publishAgenda
+          : publishAgenda // ignore: cast_nullable_to_non_nullable
+              as Agenda,
+      draftAgenda: null == draftAgenda
+          ? _value.draftAgenda
+          : draftAgenda // ignore: cast_nullable_to_non_nullable
+              as Agenda,
       reference: null == reference
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
               as DocumentReference<Object?>,
     ) as $Val);
+  }
+
+  /// Create a copy of Lesson
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AgendaCopyWith<$Res> get publishAgenda {
+    return $AgendaCopyWith<$Res>(_value.publishAgenda, (value) {
+      return _then(_value.copyWith(publishAgenda: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Lesson
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AgendaCopyWith<$Res> get draftAgenda {
+    return $AgendaCopyWith<$Res>(_value.draftAgenda, (value) {
+      return _then(_value.copyWith(draftAgenda: value) as $Val);
+    });
   }
 }
 
@@ -72,7 +111,16 @@ abstract class _$$LessonImplCopyWith<$Res> implements $LessonCopyWith<$Res> {
       __$$LessonImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int count, DocumentReference<Object?> reference});
+  $Res call(
+      {int count,
+      Agenda publishAgenda,
+      Agenda draftAgenda,
+      DocumentReference<Object?> reference});
+
+  @override
+  $AgendaCopyWith<$Res> get publishAgenda;
+  @override
+  $AgendaCopyWith<$Res> get draftAgenda;
 }
 
 /// @nodoc
@@ -89,6 +137,8 @@ class __$$LessonImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? count = null,
+    Object? publishAgenda = null,
+    Object? draftAgenda = null,
     Object? reference = null,
   }) {
     return _then(_$LessonImpl(
@@ -96,6 +146,14 @@ class __$$LessonImplCopyWithImpl<$Res>
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
               as int,
+      publishAgenda: null == publishAgenda
+          ? _value.publishAgenda
+          : publishAgenda // ignore: cast_nullable_to_non_nullable
+              as Agenda,
+      draftAgenda: null == draftAgenda
+          ? _value.draftAgenda
+          : draftAgenda // ignore: cast_nullable_to_non_nullable
+              as Agenda,
       reference: null == reference
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
@@ -107,17 +165,25 @@ class __$$LessonImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LessonImpl extends _Lesson {
-  const _$LessonImpl({required this.count, required this.reference})
+  const _$LessonImpl(
+      {required this.count,
+      required this.publishAgenda,
+      required this.draftAgenda,
+      required this.reference})
       : super._();
 
   @override
   final int count;
   @override
+  final Agenda publishAgenda;
+  @override
+  final Agenda draftAgenda;
+  @override
   final DocumentReference<Object?> reference;
 
   @override
   String toString() {
-    return 'Lesson(count: $count, reference: $reference)';
+    return 'Lesson(count: $count, publishAgenda: $publishAgenda, draftAgenda: $draftAgenda, reference: $reference)';
   }
 
   @override
@@ -126,12 +192,17 @@ class _$LessonImpl extends _Lesson {
         (other.runtimeType == runtimeType &&
             other is _$LessonImpl &&
             (identical(other.count, count) || other.count == count) &&
+            (identical(other.publishAgenda, publishAgenda) ||
+                other.publishAgenda == publishAgenda) &&
+            (identical(other.draftAgenda, draftAgenda) ||
+                other.draftAgenda == draftAgenda) &&
             (identical(other.reference, reference) ||
                 other.reference == reference));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, count, reference);
+  int get hashCode =>
+      Object.hash(runtimeType, count, publishAgenda, draftAgenda, reference);
 
   /// Create a copy of Lesson
   /// with the given fields replaced by the non-null parameter values.
@@ -145,11 +216,17 @@ class _$LessonImpl extends _Lesson {
 abstract class _Lesson extends Lesson {
   const factory _Lesson(
       {required final int count,
+      required final Agenda publishAgenda,
+      required final Agenda draftAgenda,
       required final DocumentReference<Object?> reference}) = _$LessonImpl;
   const _Lesson._() : super._();
 
   @override
   int get count;
+  @override
+  Agenda get publishAgenda;
+  @override
+  Agenda get draftAgenda;
   @override
   DocumentReference<Object?> get reference;
 

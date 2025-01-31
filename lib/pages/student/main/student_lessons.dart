@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code/data/firebase/tool_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,7 +15,7 @@ class StudentLessons extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final lessonStream = ref.watch(lessonStreamProvider);
+    final lessonsStream = ref.watch(lessonsStreamProvider);
 
     return BasePage(
       pageTitle: "生徒コマ選択",
@@ -24,7 +23,7 @@ class StudentLessons extends ConsumerWidget {
         child: FractionallySizedBox(
           widthFactor: 0.95,
           heightFactor: 0.95,
-          child: lessonStream.when(
+          child: lessonsStream.when(
             data: (snapshot) => StudentLessonsDisplay(lessons: snapshot.docs),
             // エラー時の表示
             error: (_, __) => const Center(child: Text("読み込み失敗")),
@@ -45,7 +44,7 @@ class StudentLessonsDisplay extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentRoomNot = ref.read(currentRoomProvider);
-    final currentLessonRefNot = ref.read(currentLessonRefProvider.notifier);
+    final currentLessonNot = ref.read(currentLessonProvider.notifier);
 
     return lessons.isEmpty
         ? Center(child: Text("授業がありません"))
@@ -63,7 +62,7 @@ class StudentLessonsDisplay extends ConsumerWidget {
                     return LessonCard(
                       lesson: lesson,
                       onTap: () {
-                        currentLessonRefNot.state = lesson.reference;
+                        currentLessonNot.state = lessons[index];
                         GoRouter.of(context).push(Routes.studentTools);
                       },
                     );
