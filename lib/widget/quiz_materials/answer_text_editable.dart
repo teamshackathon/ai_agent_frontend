@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
-class AnswerTextbox extends StatelessWidget {
-  const AnswerTextbox({
+class AnswerTextEditable extends StatelessWidget {
+  const AnswerTextEditable({
     super.key,
-    required this.answer,
+    required this.correctAnswer,
     required this.onChanged,
+    required this.editable,
   });
-  final String answer;
+  final String correctAnswer;
+  final bool editable;
   final ValueChanged<String> onChanged;
   @override
   Widget build(BuildContext context) {
@@ -14,11 +16,11 @@ class AnswerTextbox extends StatelessWidget {
       height: 200,
       width: MediaQuery.of(context).size.width * 0.8,
       child: TextFormField(
-        initialValue: answer,
+        initialValue: correctAnswer,
         onChanged: onChanged,
+        enabled: editable,
       ),
     );
   }
 }
-
 

@@ -21,7 +21,7 @@ Map<String, dynamic> _$$ScoreImplToJson(_$ScoreImpl instance) =>
 // RiverpodGenerator
 // **************************************************************************
 
-String _$scoreNotiferHash() => r'a5e0db80c132f669dd07e8f45a1d521ffebbb647';
+String _$scoreNotiferHash() => r'950e6ee2803eb4b9d2791b311f499b8e02d0ebcf';
 
 /// See also [ScoreNotifer].
 @ProviderFor(ScoreNotifer)

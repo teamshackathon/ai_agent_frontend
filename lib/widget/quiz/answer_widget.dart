@@ -1,4 +1,5 @@
 import 'package:code/data/quiz/quiz.dart';
+import 'package:code/widget/quiz_materials/answer_textfield.dart';
 import 'package:code/widget/quiz_materials/quiz_text.dart';
 import 'package:code/widget/quiz_materials/radio_button.dart';
 import 'package:flutter/material.dart';
@@ -28,18 +29,18 @@ class AnswerWidget extends HookConsumerWidget {
 
   Widget formatAnswer(Quiz quiz, TextEditingController controller) {
     if (quiz is Kijutsu) {
-      return TextField(
-        controller: controller,
+      return AnswerTextbox(
+        answer: controller.text,
         onChanged: onChanged,
       );
     } else if (quiz is Anaume) {
-      return TextField(
-        controller: controller,
+      return AnswerTextbox(
+        answer: controller.text,
         onChanged: onChanged,
       );
     } else if (quiz is Sentaku) {
       return RadioButton(
-        text: quiz.options.map((e) => (e["item_word"]).toString()).toList(),
+        texts: quiz.options.map((e) => (e["item_word"]).toString()).toList(),
         onChanged: (value) => onChanged(value ?? ""),
         stateText: quiz.answer,
       );
@@ -48,3 +49,4 @@ class AnswerWidget extends HookConsumerWidget {
     }
   }
 }
+

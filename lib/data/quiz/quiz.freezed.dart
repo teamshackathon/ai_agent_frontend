@@ -45,7 +45,7 @@ mixin _$Quiz {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
             int score,
             String answer,
             bool correct,
@@ -80,7 +80,7 @@ mixin _$Quiz {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
             int score,
             String answer,
             bool correct,
@@ -115,7 +115,7 @@ mixin _$Quiz {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
             int score,
             String answer,
             bool correct,
@@ -259,7 +259,7 @@ abstract class _$$SentakuImplCopyWith<$Res> implements $QuizCopyWith<$Res> {
       String format,
       String question,
       String correctAnswer,
-      List<Map<String, Object>> options,
+      List<Map<String, dynamic>> options,
       int score,
       String answer,
       bool correct,
@@ -309,7 +309,7 @@ class __$$SentakuImplCopyWithImpl<$Res>
       options: null == options
           ? _value._options
           : options // ignore: cast_nullable_to_non_nullable
-              as List<Map<String, Object>>,
+              as List<Map<String, dynamic>>,
       score: null == score
           ? _value.score
           : score // ignore: cast_nullable_to_non_nullable
@@ -338,7 +338,7 @@ class _$SentakuImpl extends Sentaku with DiagnosticableTreeMixin {
       required this.format,
       required this.question,
       required this.correctAnswer,
-      required final List<Map<String, Object>> options,
+      required final List<Map<String, dynamic>> options,
       required this.score,
       this.answer = "",
       this.correct = false,
@@ -359,9 +359,9 @@ class _$SentakuImpl extends Sentaku with DiagnosticableTreeMixin {
   final String question;
   @override
   final String correctAnswer;
-  final List<Map<String, Object>> _options;
+  final List<Map<String, dynamic>> _options;
   @override
-  List<Map<String, Object>> get options {
+  List<Map<String, dynamic>> get options {
     if (_options is EqualUnmodifiableListView) return _options;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_options);
@@ -452,7 +452,7 @@ class _$SentakuImpl extends Sentaku with DiagnosticableTreeMixin {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
             int score,
             String answer,
             bool correct,
@@ -491,7 +491,7 @@ class _$SentakuImpl extends Sentaku with DiagnosticableTreeMixin {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
             int score,
             String answer,
             bool correct,
@@ -530,7 +530,7 @@ class _$SentakuImpl extends Sentaku with DiagnosticableTreeMixin {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
             int score,
             String answer,
             bool correct,
@@ -613,7 +613,7 @@ abstract class Sentaku extends Quiz {
       required final String format,
       required final String question,
       required final String correctAnswer,
-      required final List<Map<String, Object>> options,
+      required final List<Map<String, dynamic>> options,
       required final int score,
       final String answer,
       final bool correct,
@@ -630,7 +630,7 @@ abstract class Sentaku extends Quiz {
   String get question;
   @override
   String get correctAnswer;
-  List<Map<String, Object>> get options;
+  List<Map<String, dynamic>> get options;
   @override
   int get score;
   @override
@@ -826,7 +826,7 @@ class _$AnaumeImpl extends Anaume with DiagnosticableTreeMixin {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
             int score,
             String answer,
             bool correct,
@@ -865,7 +865,7 @@ class _$AnaumeImpl extends Anaume with DiagnosticableTreeMixin {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
             int score,
             String answer,
             bool correct,
@@ -904,7 +904,7 @@ class _$AnaumeImpl extends Anaume with DiagnosticableTreeMixin {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
             int score,
             String answer,
             bool correct,
@@ -1197,7 +1197,7 @@ class _$KijutsuImpl extends Kijutsu with DiagnosticableTreeMixin {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
             int score,
             String answer,
             bool correct,
@@ -1236,7 +1236,7 @@ class _$KijutsuImpl extends Kijutsu with DiagnosticableTreeMixin {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
             int score,
             String answer,
             bool correct,
@@ -1275,7 +1275,7 @@ class _$KijutsuImpl extends Kijutsu with DiagnosticableTreeMixin {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
             int score,
             String answer,
             bool correct,

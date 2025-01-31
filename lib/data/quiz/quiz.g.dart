@@ -13,9 +13,7 @@ _$SentakuImpl _$$SentakuImplFromJson(Map<String, dynamic> json) =>
       question: json['question'] as String,
       correctAnswer: json['correctAnswer'] as String,
       options: (json['options'] as List<dynamic>)
-          .map((e) => (e as Map<String, dynamic>).map(
-                (k, e) => MapEntry(k, e as Object),
-              ))
+          .map((e) => e as Map<String, dynamic>)
           .toList(),
       score: (json['score'] as num).toInt(),
       answer: json['answer'] as String? ?? "",
@@ -93,7 +91,7 @@ Map<String, dynamic> _$$KijutsuImplToJson(_$KijutsuImpl instance) =>
 // RiverpodGenerator
 // **************************************************************************
 
-String _$quizNotiferHash() => r'd305abacc74a9247af4466cb1399ab03e6c25614';
+String _$quizNotiferHash() => r'df6af1c2c3e99b05b97d03773dc28cd65681484a';
 
 /// See also [QuizNotifer].
 @ProviderFor(QuizNotifer)
