@@ -41,6 +41,23 @@ final noticeGetProvider = StreamProvider((ref) async* {
       .snapshots();
 });
 
+final noticeTeacherGetProvider = StreamProvider((ref) async* {
+  final store = ref.watch(firestoreProvider);
+  final teacher = await ref.watch(personStatusProvider.future) as Teacher;
+
+  // QueryをStreamとして直接返す
+  yield* store
+      .collection("notice")
+      .where("folderName", isEqualTo: teacher.folderName)
+      .limit(20)
+      .withConverter<Notice>(
+        fromFirestore: ((snapshot, _) => Notice.fromFirestore(snapshot)),
+        toFirestore: ((notice, _) => notice.toMap()),
+      )
+      .orderBy("timeStamp", descending: true)
+      .snapshots();
+});
+
 // final hackedProvider = StreamProvider((ref) {
 //   final store = ref.watch(firestoreProvider);
 //   final student = ref.watch(personStatusProvider) as Student;
