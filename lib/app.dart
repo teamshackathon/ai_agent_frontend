@@ -16,6 +16,7 @@ class MyApp extends HookConsumerWidget {
         primaryColor: Colors.lightBlue,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlueAccent),
         useMaterial3: true,
+        fontFamily: 'UDDigiKyokashoN',
       ),
       routerConfig: goRouter,
     );
