@@ -41,8 +41,8 @@ class Lesson with _$Lesson {
       "count": this.count,
       "agenda_publish": agendaPublish.toMap(),
       "agenda_draft": agendaDraft.toMap(),
-      "questions_publish":questionsPublish.toMap(),
-      "questions_draft":questionsDraft.toMap(),
+      "questions_publish": questionsPublish.toMap(),
+      "questions_draft": questionsDraft.toMap(),
     };
   }
 
