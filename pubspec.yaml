@@ -49,6 +49,13 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+  fonts:
+    - family: UDDigiKyokashoN
+      fonts:
+        - asset: assets/fonts/UDDigiKyokashoN-R003.ttf
+          weight: 400
+        - asset: assets/fonts/UDDigiKyokashoN-B003.ttf
+          weight: 700
   assets:
     - .env.development
     - .env.staging

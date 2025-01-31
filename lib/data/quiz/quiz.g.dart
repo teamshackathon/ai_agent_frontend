@@ -13,13 +13,12 @@ _$SentakuImpl _$$SentakuImplFromJson(Map<String, dynamic> json) =>
       question: json['question'] as String,
       correctAnswer: json['correctAnswer'] as String,
       options: (json['options'] as List<dynamic>)
-          .map((e) => (e as Map<String, dynamic>).map(
-                (k, e) => MapEntry(k, e as Object),
-              ))
+          .map((e) => e as Map<String, dynamic>)
           .toList(),
+      score: (json['score'] as num).toInt(),
       answer: json['answer'] as String? ?? "",
-      correctFlag: json['correctFlag'] as bool? ?? false,
-      comment: json['comment'] as String?,
+      correct: json['correct'] as bool? ?? false,
+      reloadFlag: json['reloadFlag'] as bool? ?? false,
       $type: json['runtimeType'] as String?,
     );
 
@@ -30,9 +29,10 @@ Map<String, dynamic> _$$SentakuImplToJson(_$SentakuImpl instance) =>
       'question': instance.question,
       'correctAnswer': instance.correctAnswer,
       'options': instance.options,
+      'score': instance.score,
       'answer': instance.answer,
-      'correctFlag': instance.correctFlag,
-      'comment': instance.comment,
+      'correct': instance.correct,
+      'reloadFlag': instance.reloadFlag,
       'runtimeType': instance.$type,
     };
 
@@ -41,9 +41,10 @@ _$AnaumeImpl _$$AnaumeImplFromJson(Map<String, dynamic> json) => _$AnaumeImpl(
       format: json['format'] as String,
       question: json['question'] as String,
       correctAnswer: json['correctAnswer'] as String,
-      answer: json['answer'] as String?,
-      correctFlag: json['correctFlag'] as bool? ?? false,
-      comment: json['comment'] as String?,
+      score: (json['score'] as num).toInt(),
+      answer: json['answer'] as String? ?? "",
+      correctF: json['correctF'] as bool? ?? false,
+      reloadFlag: json['reloadFlag'] as bool? ?? false,
       $type: json['runtimeType'] as String?,
     );
 
@@ -53,9 +54,10 @@ Map<String, dynamic> _$$AnaumeImplToJson(_$AnaumeImpl instance) =>
       'format': instance.format,
       'question': instance.question,
       'correctAnswer': instance.correctAnswer,
+      'score': instance.score,
       'answer': instance.answer,
-      'correctFlag': instance.correctFlag,
-      'comment': instance.comment,
+      'correctF': instance.correctF,
+      'reloadFlag': instance.reloadFlag,
       'runtimeType': instance.$type,
     };
 
@@ -65,9 +67,10 @@ _$KijutsuImpl _$$KijutsuImplFromJson(Map<String, dynamic> json) =>
       format: json['format'] as String,
       question: json['question'] as String,
       correctAnswer: json['correctAnswer'] as String,
-      answer: json['answer'] as String?,
-      correctFlag: json['correctFlag'] as bool? ?? false,
-      comment: json['comment'] as String?,
+      score: (json['score'] as num).toInt(),
+      answer: json['answer'] as String? ?? "",
+      correct: json['correct'] as bool? ?? false,
+      reloadFlag: json['reloadFlag'] as bool? ?? false,
       $type: json['runtimeType'] as String?,
     );
 
@@ -77,9 +80,10 @@ Map<String, dynamic> _$$KijutsuImplToJson(_$KijutsuImpl instance) =>
       'format': instance.format,
       'question': instance.question,
       'correctAnswer': instance.correctAnswer,
+      'score': instance.score,
       'answer': instance.answer,
-      'correctFlag': instance.correctFlag,
-      'comment': instance.comment,
+      'correct': instance.correct,
+      'reloadFlag': instance.reloadFlag,
       'runtimeType': instance.$type,
     };
 
@@ -87,7 +91,7 @@ Map<String, dynamic> _$$KijutsuImplToJson(_$KijutsuImpl instance) =>
 // RiverpodGenerator
 // **************************************************************************
 
-String _$quizNotiferHash() => r'd305abacc74a9247af4466cb1399ab03e6c25614';
+String _$quizNotiferHash() => r'df6af1c2c3e99b05b97d03773dc28cd65681484a';
 
 /// See also [QuizNotifer].
 @ProviderFor(QuizNotifer)

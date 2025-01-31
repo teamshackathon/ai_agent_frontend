@@ -35,9 +35,9 @@ mixin _$Quiz {
   String get format => throw _privateConstructorUsedError;
   String get question => throw _privateConstructorUsedError;
   String get correctAnswer => throw _privateConstructorUsedError;
-  String? get answer => throw _privateConstructorUsedError; // int? answerNo,
-  bool get correctFlag => throw _privateConstructorUsedError;
-  String? get comment => throw _privateConstructorUsedError;
+  int get score => throw _privateConstructorUsedError;
+  String get answer => throw _privateConstructorUsedError;
+  bool get reloadFlag => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
@@ -45,28 +45,31 @@ mixin _$Quiz {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
+            int score,
             String answer,
-            bool correctFlag,
-            String? comment)
+            bool correct,
+            bool reloadFlag)
         sentaku,
     required TResult Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)
+            int score,
+            String answer,
+            bool correctF,
+            bool reloadFlag)
         anaume,
     required TResult Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)
+            int score,
+            String answer,
+            bool correct,
+            bool reloadFlag)
         kijutsu,
   }) =>
       throw _privateConstructorUsedError;
@@ -77,28 +80,31 @@ mixin _$Quiz {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
+            int score,
             String answer,
-            bool correctFlag,
-            String? comment)?
+            bool correct,
+            bool reloadFlag)?
         sentaku,
     TResult? Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)?
+            int score,
+            String answer,
+            bool correctF,
+            bool reloadFlag)?
         anaume,
     TResult? Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)?
+            int score,
+            String answer,
+            bool correct,
+            bool reloadFlag)?
         kijutsu,
   }) =>
       throw _privateConstructorUsedError;
@@ -109,28 +115,31 @@ mixin _$Quiz {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
+            int score,
             String answer,
-            bool correctFlag,
-            String? comment)?
+            bool correct,
+            bool reloadFlag)?
         sentaku,
     TResult Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)?
+            int score,
+            String answer,
+            bool correctF,
+            bool reloadFlag)?
         anaume,
     TResult Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)?
+            int score,
+            String answer,
+            bool correct,
+            bool reloadFlag)?
         kijutsu,
     required TResult orElse(),
   }) =>
@@ -177,9 +186,9 @@ abstract class $QuizCopyWith<$Res> {
       String format,
       String question,
       String correctAnswer,
+      int score,
       String answer,
-      bool correctFlag,
-      String? comment});
+      bool reloadFlag});
 }
 
 /// @nodoc
@@ -201,9 +210,9 @@ class _$QuizCopyWithImpl<$Res, $Val extends Quiz>
     Object? format = null,
     Object? question = null,
     Object? correctAnswer = null,
+    Object? score = null,
     Object? answer = null,
-    Object? correctFlag = null,
-    Object? comment = freezed,
+    Object? reloadFlag = null,
   }) {
     return _then(_value.copyWith(
       title: null == title
@@ -222,18 +231,18 @@ class _$QuizCopyWithImpl<$Res, $Val extends Quiz>
           ? _value.correctAnswer
           : correctAnswer // ignore: cast_nullable_to_non_nullable
               as String,
+      score: null == score
+          ? _value.score
+          : score // ignore: cast_nullable_to_non_nullable
+              as int,
       answer: null == answer
-          ? _value.answer!
+          ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
               as String,
-      correctFlag: null == correctFlag
-          ? _value.correctFlag
-          : correctFlag // ignore: cast_nullable_to_non_nullable
+      reloadFlag: null == reloadFlag
+          ? _value.reloadFlag
+          : reloadFlag // ignore: cast_nullable_to_non_nullable
               as bool,
-      comment: freezed == comment
-          ? _value.comment
-          : comment // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
   }
 }
@@ -250,10 +259,11 @@ abstract class _$$SentakuImplCopyWith<$Res> implements $QuizCopyWith<$Res> {
       String format,
       String question,
       String correctAnswer,
-      List<Map<String, Object>> options,
+      List<Map<String, dynamic>> options,
+      int score,
       String answer,
-      bool correctFlag,
-      String? comment});
+      bool correct,
+      bool reloadFlag});
 }
 
 /// @nodoc
@@ -274,9 +284,10 @@ class __$$SentakuImplCopyWithImpl<$Res>
     Object? question = null,
     Object? correctAnswer = null,
     Object? options = null,
+    Object? score = null,
     Object? answer = null,
-    Object? correctFlag = null,
-    Object? comment = freezed,
+    Object? correct = null,
+    Object? reloadFlag = null,
   }) {
     return _then(_$SentakuImpl(
       title: null == title
@@ -298,19 +309,23 @@ class __$$SentakuImplCopyWithImpl<$Res>
       options: null == options
           ? _value._options
           : options // ignore: cast_nullable_to_non_nullable
-              as List<Map<String, Object>>,
+              as List<Map<String, dynamic>>,
+      score: null == score
+          ? _value.score
+          : score // ignore: cast_nullable_to_non_nullable
+              as int,
       answer: null == answer
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
               as String,
-      correctFlag: null == correctFlag
-          ? _value.correctFlag
-          : correctFlag // ignore: cast_nullable_to_non_nullable
+      correct: null == correct
+          ? _value.correct
+          : correct // ignore: cast_nullable_to_non_nullable
               as bool,
-      comment: freezed == comment
-          ? _value.comment
-          : comment // ignore: cast_nullable_to_non_nullable
-              as String?,
+      reloadFlag: null == reloadFlag
+          ? _value.reloadFlag
+          : reloadFlag // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -323,10 +338,11 @@ class _$SentakuImpl extends Sentaku with DiagnosticableTreeMixin {
       required this.format,
       required this.question,
       required this.correctAnswer,
-      required final List<Map<String, Object>> options,
+      required final List<Map<String, dynamic>> options,
+      required this.score,
       this.answer = "",
-      this.correctFlag = false,
-      this.comment,
+      this.correct = false,
+      this.reloadFlag = false,
       final String? $type})
       : _options = options,
         $type = $type ?? 'sentaku',
@@ -343,30 +359,32 @@ class _$SentakuImpl extends Sentaku with DiagnosticableTreeMixin {
   final String question;
   @override
   final String correctAnswer;
-  final List<Map<String, Object>> _options;
+  final List<Map<String, dynamic>> _options;
   @override
-  List<Map<String, Object>> get options {
+  List<Map<String, dynamic>> get options {
     if (_options is EqualUnmodifiableListView) return _options;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_options);
   }
 
   @override
+  final int score;
+  @override
   @JsonKey()
   final String answer;
-// int? answerNo,
   @override
   @JsonKey()
-  final bool correctFlag;
+  final bool correct;
   @override
-  final String? comment;
+  @JsonKey()
+  final bool reloadFlag;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Quiz.sentaku(title: $title, format: $format, question: $question, correctAnswer: $correctAnswer, options: $options, answer: $answer, correctFlag: $correctFlag, comment: $comment)';
+    return 'Quiz.sentaku(title: $title, format: $format, question: $question, correctAnswer: $correctAnswer, options: $options, score: $score, answer: $answer, correct: $correct, reloadFlag: $reloadFlag)';
   }
 
   @override
@@ -379,9 +397,10 @@ class _$SentakuImpl extends Sentaku with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('question', question))
       ..add(DiagnosticsProperty('correctAnswer', correctAnswer))
       ..add(DiagnosticsProperty('options', options))
+      ..add(DiagnosticsProperty('score', score))
       ..add(DiagnosticsProperty('answer', answer))
-      ..add(DiagnosticsProperty('correctFlag', correctFlag))
-      ..add(DiagnosticsProperty('comment', comment));
+      ..add(DiagnosticsProperty('correct', correct))
+      ..add(DiagnosticsProperty('reloadFlag', reloadFlag));
   }
 
   @override
@@ -396,10 +415,11 @@ class _$SentakuImpl extends Sentaku with DiagnosticableTreeMixin {
             (identical(other.correctAnswer, correctAnswer) ||
                 other.correctAnswer == correctAnswer) &&
             const DeepCollectionEquality().equals(other._options, _options) &&
+            (identical(other.score, score) || other.score == score) &&
             (identical(other.answer, answer) || other.answer == answer) &&
-            (identical(other.correctFlag, correctFlag) ||
-                other.correctFlag == correctFlag) &&
-            (identical(other.comment, comment) || other.comment == comment));
+            (identical(other.correct, correct) || other.correct == correct) &&
+            (identical(other.reloadFlag, reloadFlag) ||
+                other.reloadFlag == reloadFlag));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -411,9 +431,10 @@ class _$SentakuImpl extends Sentaku with DiagnosticableTreeMixin {
       question,
       correctAnswer,
       const DeepCollectionEquality().hash(_options),
+      score,
       answer,
-      correctFlag,
-      comment);
+      correct,
+      reloadFlag);
 
   /// Create a copy of Quiz
   /// with the given fields replaced by the non-null parameter values.
@@ -431,32 +452,35 @@ class _$SentakuImpl extends Sentaku with DiagnosticableTreeMixin {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
+            int score,
             String answer,
-            bool correctFlag,
-            String? comment)
+            bool correct,
+            bool reloadFlag)
         sentaku,
     required TResult Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)
+            int score,
+            String answer,
+            bool correctF,
+            bool reloadFlag)
         anaume,
     required TResult Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)
+            int score,
+            String answer,
+            bool correct,
+            bool reloadFlag)
         kijutsu,
   }) {
-    return sentaku(title, format, question, correctAnswer, options, answer,
-        correctFlag, comment);
+    return sentaku(title, format, question, correctAnswer, options, score,
+        answer, correct, reloadFlag);
   }
 
   @override
@@ -467,32 +491,35 @@ class _$SentakuImpl extends Sentaku with DiagnosticableTreeMixin {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
+            int score,
             String answer,
-            bool correctFlag,
-            String? comment)?
+            bool correct,
+            bool reloadFlag)?
         sentaku,
     TResult? Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)?
+            int score,
+            String answer,
+            bool correctF,
+            bool reloadFlag)?
         anaume,
     TResult? Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)?
+            int score,
+            String answer,
+            bool correct,
+            bool reloadFlag)?
         kijutsu,
   }) {
-    return sentaku?.call(title, format, question, correctAnswer, options,
-        answer, correctFlag, comment);
+    return sentaku?.call(title, format, question, correctAnswer, options, score,
+        answer, correct, reloadFlag);
   }
 
   @override
@@ -503,34 +530,37 @@ class _$SentakuImpl extends Sentaku with DiagnosticableTreeMixin {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
+            int score,
             String answer,
-            bool correctFlag,
-            String? comment)?
+            bool correct,
+            bool reloadFlag)?
         sentaku,
     TResult Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)?
+            int score,
+            String answer,
+            bool correctF,
+            bool reloadFlag)?
         anaume,
     TResult Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)?
+            int score,
+            String answer,
+            bool correct,
+            bool reloadFlag)?
         kijutsu,
     required TResult orElse(),
   }) {
     if (sentaku != null) {
-      return sentaku(title, format, question, correctAnswer, options, answer,
-          correctFlag, comment);
+      return sentaku(title, format, question, correctAnswer, options, score,
+          answer, correct, reloadFlag);
     }
     return orElse();
   }
@@ -583,10 +613,11 @@ abstract class Sentaku extends Quiz {
       required final String format,
       required final String question,
       required final String correctAnswer,
-      required final List<Map<String, Object>> options,
+      required final List<Map<String, dynamic>> options,
+      required final int score,
       final String answer,
-      final bool correctFlag,
-      final String? comment}) = _$SentakuImpl;
+      final bool correct,
+      final bool reloadFlag}) = _$SentakuImpl;
   const Sentaku._() : super._();
 
   factory Sentaku.fromJson(Map<String, dynamic> json) = _$SentakuImpl.fromJson;
@@ -599,13 +630,14 @@ abstract class Sentaku extends Quiz {
   String get question;
   @override
   String get correctAnswer;
-  List<Map<String, Object>> get options;
+  List<Map<String, dynamic>> get options;
   @override
-  String get answer; // int? answerNo,
+  int get score;
   @override
-  bool get correctFlag;
+  String get answer;
+  bool get correct;
   @override
-  String? get comment;
+  bool get reloadFlag;
 
   /// Create a copy of Quiz
   /// with the given fields replaced by the non-null parameter values.
@@ -627,9 +659,10 @@ abstract class _$$AnaumeImplCopyWith<$Res> implements $QuizCopyWith<$Res> {
       String format,
       String question,
       String correctAnswer,
-      String? answer,
-      bool correctFlag,
-      String? comment});
+      int score,
+      String answer,
+      bool correctF,
+      bool reloadFlag});
 }
 
 /// @nodoc
@@ -649,9 +682,10 @@ class __$$AnaumeImplCopyWithImpl<$Res>
     Object? format = null,
     Object? question = null,
     Object? correctAnswer = null,
-    Object? answer = freezed,
-    Object? correctFlag = null,
-    Object? comment = freezed,
+    Object? score = null,
+    Object? answer = null,
+    Object? correctF = null,
+    Object? reloadFlag = null,
   }) {
     return _then(_$AnaumeImpl(
       title: null == title
@@ -670,18 +704,22 @@ class __$$AnaumeImplCopyWithImpl<$Res>
           ? _value.correctAnswer
           : correctAnswer // ignore: cast_nullable_to_non_nullable
               as String,
-      answer: freezed == answer
+      score: null == score
+          ? _value.score
+          : score // ignore: cast_nullable_to_non_nullable
+              as int,
+      answer: null == answer
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
-              as String?,
-      correctFlag: null == correctFlag
-          ? _value.correctFlag
-          : correctFlag // ignore: cast_nullable_to_non_nullable
+              as String,
+      correctF: null == correctF
+          ? _value.correctF
+          : correctF // ignore: cast_nullable_to_non_nullable
               as bool,
-      comment: freezed == comment
-          ? _value.comment
-          : comment // ignore: cast_nullable_to_non_nullable
-              as String?,
+      reloadFlag: null == reloadFlag
+          ? _value.reloadFlag
+          : reloadFlag // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -694,9 +732,10 @@ class _$AnaumeImpl extends Anaume with DiagnosticableTreeMixin {
       required this.format,
       required this.question,
       required this.correctAnswer,
-      this.answer,
-      this.correctFlag = false,
-      this.comment,
+      required this.score,
+      this.answer = "",
+      this.correctF = false,
+      this.reloadFlag = false,
       final String? $type})
       : $type = $type ?? 'anaume',
         super._();
@@ -713,19 +752,23 @@ class _$AnaumeImpl extends Anaume with DiagnosticableTreeMixin {
   @override
   final String correctAnswer;
   @override
-  final String? answer;
+  final int score;
   @override
   @JsonKey()
-  final bool correctFlag;
+  final String answer;
   @override
-  final String? comment;
+  @JsonKey()
+  final bool correctF;
+  @override
+  @JsonKey()
+  final bool reloadFlag;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Quiz.anaume(title: $title, format: $format, question: $question, correctAnswer: $correctAnswer, answer: $answer, correctFlag: $correctFlag, comment: $comment)';
+    return 'Quiz.anaume(title: $title, format: $format, question: $question, correctAnswer: $correctAnswer, score: $score, answer: $answer, correctF: $correctF, reloadFlag: $reloadFlag)';
   }
 
   @override
@@ -737,9 +780,10 @@ class _$AnaumeImpl extends Anaume with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('format', format))
       ..add(DiagnosticsProperty('question', question))
       ..add(DiagnosticsProperty('correctAnswer', correctAnswer))
+      ..add(DiagnosticsProperty('score', score))
       ..add(DiagnosticsProperty('answer', answer))
-      ..add(DiagnosticsProperty('correctFlag', correctFlag))
-      ..add(DiagnosticsProperty('comment', comment));
+      ..add(DiagnosticsProperty('correctF', correctF))
+      ..add(DiagnosticsProperty('reloadFlag', reloadFlag));
   }
 
   @override
@@ -753,16 +797,18 @@ class _$AnaumeImpl extends Anaume with DiagnosticableTreeMixin {
                 other.question == question) &&
             (identical(other.correctAnswer, correctAnswer) ||
                 other.correctAnswer == correctAnswer) &&
+            (identical(other.score, score) || other.score == score) &&
             (identical(other.answer, answer) || other.answer == answer) &&
-            (identical(other.correctFlag, correctFlag) ||
-                other.correctFlag == correctFlag) &&
-            (identical(other.comment, comment) || other.comment == comment));
+            (identical(other.correctF, correctF) ||
+                other.correctF == correctF) &&
+            (identical(other.reloadFlag, reloadFlag) ||
+                other.reloadFlag == reloadFlag));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, title, format, question,
-      correctAnswer, answer, correctFlag, comment);
+      correctAnswer, score, answer, correctF, reloadFlag);
 
   /// Create a copy of Quiz
   /// with the given fields replaced by the non-null parameter values.
@@ -780,32 +826,35 @@ class _$AnaumeImpl extends Anaume with DiagnosticableTreeMixin {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
+            int score,
             String answer,
-            bool correctFlag,
-            String? comment)
+            bool correct,
+            bool reloadFlag)
         sentaku,
     required TResult Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)
+            int score,
+            String answer,
+            bool correctF,
+            bool reloadFlag)
         anaume,
     required TResult Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)
+            int score,
+            String answer,
+            bool correct,
+            bool reloadFlag)
         kijutsu,
   }) {
-    return anaume(
-        title, format, question, correctAnswer, answer, correctFlag, comment);
+    return anaume(title, format, question, correctAnswer, score, answer,
+        correctF, reloadFlag);
   }
 
   @override
@@ -816,32 +865,35 @@ class _$AnaumeImpl extends Anaume with DiagnosticableTreeMixin {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
+            int score,
             String answer,
-            bool correctFlag,
-            String? comment)?
+            bool correct,
+            bool reloadFlag)?
         sentaku,
     TResult? Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)?
+            int score,
+            String answer,
+            bool correctF,
+            bool reloadFlag)?
         anaume,
     TResult? Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)?
+            int score,
+            String answer,
+            bool correct,
+            bool reloadFlag)?
         kijutsu,
   }) {
-    return anaume?.call(
-        title, format, question, correctAnswer, answer, correctFlag, comment);
+    return anaume?.call(title, format, question, correctAnswer, score, answer,
+        correctF, reloadFlag);
   }
 
   @override
@@ -852,34 +904,37 @@ class _$AnaumeImpl extends Anaume with DiagnosticableTreeMixin {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
+            int score,
             String answer,
-            bool correctFlag,
-            String? comment)?
+            bool correct,
+            bool reloadFlag)?
         sentaku,
     TResult Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)?
+            int score,
+            String answer,
+            bool correctF,
+            bool reloadFlag)?
         anaume,
     TResult Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)?
+            int score,
+            String answer,
+            bool correct,
+            bool reloadFlag)?
         kijutsu,
     required TResult orElse(),
   }) {
     if (anaume != null) {
-      return anaume(
-          title, format, question, correctAnswer, answer, correctFlag, comment);
+      return anaume(title, format, question, correctAnswer, score, answer,
+          correctF, reloadFlag);
     }
     return orElse();
   }
@@ -932,9 +987,10 @@ abstract class Anaume extends Quiz {
       required final String format,
       required final String question,
       required final String correctAnswer,
-      final String? answer,
-      final bool correctFlag,
-      final String? comment}) = _$AnaumeImpl;
+      required final int score,
+      final String answer,
+      final bool correctF,
+      final bool reloadFlag}) = _$AnaumeImpl;
   const Anaume._() : super._();
 
   factory Anaume.fromJson(Map<String, dynamic> json) = _$AnaumeImpl.fromJson;
@@ -948,11 +1004,12 @@ abstract class Anaume extends Quiz {
   @override
   String get correctAnswer;
   @override
-  String? get answer;
+  int get score;
   @override
-  bool get correctFlag;
+  String get answer;
+  bool get correctF;
   @override
-  String? get comment;
+  bool get reloadFlag;
 
   /// Create a copy of Quiz
   /// with the given fields replaced by the non-null parameter values.
@@ -974,9 +1031,10 @@ abstract class _$$KijutsuImplCopyWith<$Res> implements $QuizCopyWith<$Res> {
       String format,
       String question,
       String correctAnswer,
-      String? answer,
-      bool correctFlag,
-      String? comment});
+      int score,
+      String answer,
+      bool correct,
+      bool reloadFlag});
 }
 
 /// @nodoc
@@ -996,9 +1054,10 @@ class __$$KijutsuImplCopyWithImpl<$Res>
     Object? format = null,
     Object? question = null,
     Object? correctAnswer = null,
-    Object? answer = freezed,
-    Object? correctFlag = null,
-    Object? comment = freezed,
+    Object? score = null,
+    Object? answer = null,
+    Object? correct = null,
+    Object? reloadFlag = null,
   }) {
     return _then(_$KijutsuImpl(
       title: null == title
@@ -1017,18 +1076,22 @@ class __$$KijutsuImplCopyWithImpl<$Res>
           ? _value.correctAnswer
           : correctAnswer // ignore: cast_nullable_to_non_nullable
               as String,
-      answer: freezed == answer
+      score: null == score
+          ? _value.score
+          : score // ignore: cast_nullable_to_non_nullable
+              as int,
+      answer: null == answer
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
-              as String?,
-      correctFlag: null == correctFlag
-          ? _value.correctFlag
-          : correctFlag // ignore: cast_nullable_to_non_nullable
+              as String,
+      correct: null == correct
+          ? _value.correct
+          : correct // ignore: cast_nullable_to_non_nullable
               as bool,
-      comment: freezed == comment
-          ? _value.comment
-          : comment // ignore: cast_nullable_to_non_nullable
-              as String?,
+      reloadFlag: null == reloadFlag
+          ? _value.reloadFlag
+          : reloadFlag // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -1041,9 +1104,10 @@ class _$KijutsuImpl extends Kijutsu with DiagnosticableTreeMixin {
       required this.format,
       required this.question,
       required this.correctAnswer,
-      this.answer,
-      this.correctFlag = false,
-      this.comment,
+      required this.score,
+      this.answer = "",
+      this.correct = false,
+      this.reloadFlag = false,
       final String? $type})
       : $type = $type ?? 'kijutsu',
         super._();
@@ -1060,19 +1124,23 @@ class _$KijutsuImpl extends Kijutsu with DiagnosticableTreeMixin {
   @override
   final String correctAnswer;
   @override
-  final String? answer;
+  final int score;
   @override
   @JsonKey()
-  final bool correctFlag;
+  final String answer;
   @override
-  final String? comment;
+  @JsonKey()
+  final bool correct;
+  @override
+  @JsonKey()
+  final bool reloadFlag;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Quiz.kijutsu(title: $title, format: $format, question: $question, correctAnswer: $correctAnswer, answer: $answer, correctFlag: $correctFlag, comment: $comment)';
+    return 'Quiz.kijutsu(title: $title, format: $format, question: $question, correctAnswer: $correctAnswer, score: $score, answer: $answer, correct: $correct, reloadFlag: $reloadFlag)';
   }
 
   @override
@@ -1084,9 +1152,10 @@ class _$KijutsuImpl extends Kijutsu with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('format', format))
       ..add(DiagnosticsProperty('question', question))
       ..add(DiagnosticsProperty('correctAnswer', correctAnswer))
+      ..add(DiagnosticsProperty('score', score))
       ..add(DiagnosticsProperty('answer', answer))
-      ..add(DiagnosticsProperty('correctFlag', correctFlag))
-      ..add(DiagnosticsProperty('comment', comment));
+      ..add(DiagnosticsProperty('correct', correct))
+      ..add(DiagnosticsProperty('reloadFlag', reloadFlag));
   }
 
   @override
@@ -1100,16 +1169,17 @@ class _$KijutsuImpl extends Kijutsu with DiagnosticableTreeMixin {
                 other.question == question) &&
             (identical(other.correctAnswer, correctAnswer) ||
                 other.correctAnswer == correctAnswer) &&
+            (identical(other.score, score) || other.score == score) &&
             (identical(other.answer, answer) || other.answer == answer) &&
-            (identical(other.correctFlag, correctFlag) ||
-                other.correctFlag == correctFlag) &&
-            (identical(other.comment, comment) || other.comment == comment));
+            (identical(other.correct, correct) || other.correct == correct) &&
+            (identical(other.reloadFlag, reloadFlag) ||
+                other.reloadFlag == reloadFlag));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, title, format, question,
-      correctAnswer, answer, correctFlag, comment);
+      correctAnswer, score, answer, correct, reloadFlag);
 
   /// Create a copy of Quiz
   /// with the given fields replaced by the non-null parameter values.
@@ -1127,32 +1197,35 @@ class _$KijutsuImpl extends Kijutsu with DiagnosticableTreeMixin {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
+            int score,
             String answer,
-            bool correctFlag,
-            String? comment)
+            bool correct,
+            bool reloadFlag)
         sentaku,
     required TResult Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)
+            int score,
+            String answer,
+            bool correctF,
+            bool reloadFlag)
         anaume,
     required TResult Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)
+            int score,
+            String answer,
+            bool correct,
+            bool reloadFlag)
         kijutsu,
   }) {
-    return kijutsu(
-        title, format, question, correctAnswer, answer, correctFlag, comment);
+    return kijutsu(title, format, question, correctAnswer, score, answer,
+        correct, reloadFlag);
   }
 
   @override
@@ -1163,32 +1236,35 @@ class _$KijutsuImpl extends Kijutsu with DiagnosticableTreeMixin {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
+            int score,
             String answer,
-            bool correctFlag,
-            String? comment)?
+            bool correct,
+            bool reloadFlag)?
         sentaku,
     TResult? Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)?
+            int score,
+            String answer,
+            bool correctF,
+            bool reloadFlag)?
         anaume,
     TResult? Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)?
+            int score,
+            String answer,
+            bool correct,
+            bool reloadFlag)?
         kijutsu,
   }) {
-    return kijutsu?.call(
-        title, format, question, correctAnswer, answer, correctFlag, comment);
+    return kijutsu?.call(title, format, question, correctAnswer, score, answer,
+        correct, reloadFlag);
   }
 
   @override
@@ -1199,34 +1275,37 @@ class _$KijutsuImpl extends Kijutsu with DiagnosticableTreeMixin {
             String format,
             String question,
             String correctAnswer,
-            List<Map<String, Object>> options,
+            List<Map<String, dynamic>> options,
+            int score,
             String answer,
-            bool correctFlag,
-            String? comment)?
+            bool correct,
+            bool reloadFlag)?
         sentaku,
     TResult Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)?
+            int score,
+            String answer,
+            bool correctF,
+            bool reloadFlag)?
         anaume,
     TResult Function(
             String title,
             String format,
             String question,
             String correctAnswer,
-            String? answer,
-            bool correctFlag,
-            String? comment)?
+            int score,
+            String answer,
+            bool correct,
+            bool reloadFlag)?
         kijutsu,
     required TResult orElse(),
   }) {
     if (kijutsu != null) {
-      return kijutsu(
-          title, format, question, correctAnswer, answer, correctFlag, comment);
+      return kijutsu(title, format, question, correctAnswer, score, answer,
+          correct, reloadFlag);
     }
     return orElse();
   }
@@ -1279,9 +1358,10 @@ abstract class Kijutsu extends Quiz {
       required final String format,
       required final String question,
       required final String correctAnswer,
-      final String? answer,
-      final bool correctFlag,
-      final String? comment}) = _$KijutsuImpl;
+      required final int score,
+      final String answer,
+      final bool correct,
+      final bool reloadFlag}) = _$KijutsuImpl;
   const Kijutsu._() : super._();
 
   factory Kijutsu.fromJson(Map<String, dynamic> json) = _$KijutsuImpl.fromJson;
@@ -1295,11 +1375,12 @@ abstract class Kijutsu extends Quiz {
   @override
   String get correctAnswer;
   @override
-  String? get answer;
+  int get score;
   @override
-  bool get correctFlag;
+  String get answer;
+  bool get correct;
   @override
-  String? get comment;
+  bool get reloadFlag;
 
   /// Create a copy of Quiz
   /// with the given fields replaced by the non-null parameter values.
