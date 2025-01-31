@@ -15,3 +15,28 @@ class QuizText extends StatelessWidget {
     );
   }
 }
+
+class QuizTextEditable extends StatelessWidget {
+  const QuizTextEditable({
+    super.key,
+    required this.editable,
+    required this.onChanged,
+    required this.quizText,
+  });
+  final String quizText;
+  final bool editable;
+  final ValueChanged<String> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.8,
+      height: 150,
+      child: TextFormField(
+        initialValue: quizText,
+        onChanged: onChanged,
+        enabled: editable,
+      ),
+    );
+  }
+}
