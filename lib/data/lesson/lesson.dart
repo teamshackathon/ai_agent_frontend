@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code/data/agenda/agenda.dart';
-import 'package:code/data/person/person.dart';
-import 'package:code/toast.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../agenda/agenda.dart';
 
 part 'lesson.freezed.dart';
 
@@ -39,5 +38,14 @@ class Lesson with _$Lesson {
       "agenda_publish": publishAgenda.toMap(),
       "agenda_draft": draftAgenda.toMap(),
     };
+  }
+
+  factory Lesson.isBlank() {
+    return Lesson(
+      count: 0,
+      publishAgenda: Agenda.isBlank(),
+      draftAgenda: Agenda.isBlank(),
+      reference: FirebaseFirestore.instance.collection("2024").doc(),
+    );
   }
 }
