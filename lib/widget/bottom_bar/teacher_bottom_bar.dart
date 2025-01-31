@@ -42,19 +42,25 @@ class TeacherBottomBar extends HookConsumerWidget {
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
         destinations: [
-          RottieNavigationDestination(
+          ProfileLottieNavigationDestination(
             label: 'プロフィール',
             iconPath: 'assets/profile.json',
+            index: 0,
+            selectedIndex: selectedIndex.value,
             animationController: controllers.value[0],
           ),
           RottieNavigationDestination(
             label: 'ホーム',
             iconPath: 'assets/home.json',
+            index: 1,
+            selectedIndex: selectedIndex.value,
             animationController: controllers.value[1],
           ),
           ActivityLottieNavigationDestination(
             label: '通知',
             iconPath: 'assets/activity.json',
+            index: 2,
+            selectedIndex: selectedIndex.value,
             animationController: controllers.value[2],
           ),
         ],
