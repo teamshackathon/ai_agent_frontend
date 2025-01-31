@@ -13,7 +13,7 @@ class StudentActivityPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final noticeStream = ref.watch(noticeGetProvider);
+    final noticeStream = ref.watch(noticeStudentGetProvider);
 
     final filter = useState("all");
 

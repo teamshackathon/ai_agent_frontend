@@ -12,6 +12,14 @@ part 'room.g.dart';
 // これダサいね
 const latestYear = "2024";
 
+const Map<String, String> subjects = {
+  "japanese": "国語",
+  "math": "数学",
+  "science": "理科",
+  "social": "社会",
+  "english": "英語",
+};
+
 @freezed
 class Room with _$Room {
   const Room._();
@@ -24,7 +32,10 @@ class Room with _$Room {
     required String subject,
     // 各授業のlessonsまでのpathを保持しておく
     required CollectionReference reference,
+    required String teacher,
   }) = _Room;
+
+  String get displaySubject => subjects[subject] ?? "";
 }
 
 @riverpod
@@ -45,6 +56,7 @@ Future<List<Room>> activeRooms(ref) async {
                 roomNumber: r["room"]!,
                 subject: doc.id,
                 reference: docRef.doc(doc.id).collection("lessons"),
+                teacher: doc.data()["teacher"] ?? "",
               ),
             );
           }
@@ -69,16 +81,16 @@ Future<List<Room>> activeRooms(ref) async {
       if (r["year"] == latestYear) {
         list.add(
           Room(
-            year: r["year"]!,
-            roomNumber: r["room"]!,
-            subject: r["subject"]!,
-            reference: store
-                .collection(r["year"]!)
-                .doc(r["room"]!)
-                .collection("common")
-                .doc(r["subject"]!)
-                .collection("lessons"),
-          ),
+              year: r["year"]!,
+              roomNumber: r["room"]!,
+              subject: r["subject"]!,
+              reference: store
+                  .collection(r["year"]!)
+                  .doc(r["room"]!)
+                  .collection("common")
+                  .doc(r["subject"]!)
+                  .collection("lessons"),
+              teacher: teacher.name),
         );
       }
     }
@@ -125,6 +137,7 @@ Future<List<Room>> archiveRooms(ref) async {
                 roomNumber: r["room"]!,
                 subject: doc.id,
                 reference: docRef.doc(doc.id).collection("lessons"),
+                teacher: doc.data()["teacher"] ?? "",
               ),
             );
           }
@@ -158,6 +171,7 @@ Future<List<Room>> archiveRooms(ref) async {
                 .collection("common")
                 .doc(r["subject"]!)
                 .collection("lessons"),
+            teacher: teacher.name,
           ),
         );
       }

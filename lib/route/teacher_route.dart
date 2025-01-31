@@ -1,5 +1,6 @@
 // 長くなりそうなのでファイル分け
 
+import 'package:code/pages/teacher/main/tools/teacher_agenda.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -55,6 +56,13 @@ final teacherBranch = StatefulShellRoute.indexedStack(
                   parentNavigatorKey: _teacherMainKey,
                   path: "tools",
                   builder: (context, state) => TeacherTools(),
+                  routes: [
+                    GoRoute(
+                      parentNavigatorKey: _teacherMainKey,
+                      path: "agenda",
+                      builder: (context, state) => TeacherAgenda(),
+                    ),
+                  ],
                 ),
               ],
             ),

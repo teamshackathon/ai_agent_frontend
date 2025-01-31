@@ -1,4 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:code/data/agenda/agenda.dart';
+import 'package:code/data/person/person.dart';
+import 'package:code/toast.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'lesson.freezed.dart';
@@ -10,21 +13,31 @@ class Lesson with _$Lesson {
   // とりあえずidと回数だけ持ってる
   const factory Lesson({
     required int count,
+    required Agenda publishAgenda,
+    required Agenda draftAgenda,
     required DocumentReference reference,
   }) = _Lesson;
 
   factory Lesson.fromFirestore(
-      DocumentSnapshot<Map<String, dynamic>> snapshot) {
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+  ) {
     final map = snapshot.data();
     return Lesson(
       reference: snapshot.reference,
+      publishAgenda: Agenda.fromMap(map?["agenda_publish"] ?? {}),
+      draftAgenda: Agenda.fromMap(map?["agenda_draft"] ?? {}),
       count: map?["count"] ?? 0,
     );
   }
 
+  // 基本使わない
   Map<String, dynamic> toMap() {
     return {
+      // countに関してはfirestore packageに同名のクラス？メソッド？があるっぽいので
+      // thisをつけることで、このクラスの引数であることを示す必要がある
       "count": this.count,
+      "agenda_publish": publishAgenda.toMap(),
+      "agenda_draft": draftAgenda.toMap(),
     };
   }
 }

@@ -22,6 +22,7 @@ mixin _$Room {
       throw _privateConstructorUsedError; // 各授業のlessonsまでのpathを保持しておく
   CollectionReference<Object?> get reference =>
       throw _privateConstructorUsedError;
+  String get teacher => throw _privateConstructorUsedError;
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
@@ -38,7 +39,8 @@ abstract class $RoomCopyWith<$Res> {
       {String year,
       String roomNumber,
       String subject,
-      CollectionReference<Object?> reference});
+      CollectionReference<Object?> reference,
+      String teacher});
 }
 
 /// @nodoc
@@ -60,6 +62,7 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
     Object? roomNumber = null,
     Object? subject = null,
     Object? reference = null,
+    Object? teacher = null,
   }) {
     return _then(_value.copyWith(
       year: null == year
@@ -78,6 +81,10 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
               as CollectionReference<Object?>,
+      teacher: null == teacher
+          ? _value.teacher
+          : teacher // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -93,7 +100,8 @@ abstract class _$$RoomImplCopyWith<$Res> implements $RoomCopyWith<$Res> {
       {String year,
       String roomNumber,
       String subject,
-      CollectionReference<Object?> reference});
+      CollectionReference<Object?> reference,
+      String teacher});
 }
 
 /// @nodoc
@@ -112,6 +120,7 @@ class __$$RoomImplCopyWithImpl<$Res>
     Object? roomNumber = null,
     Object? subject = null,
     Object? reference = null,
+    Object? teacher = null,
   }) {
     return _then(_$RoomImpl(
       year: null == year
@@ -130,6 +139,10 @@ class __$$RoomImplCopyWithImpl<$Res>
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
               as CollectionReference<Object?>,
+      teacher: null == teacher
+          ? _value.teacher
+          : teacher // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -141,7 +154,8 @@ class _$RoomImpl extends _Room {
       {required this.year,
       required this.roomNumber,
       required this.subject,
-      required this.reference})
+      required this.reference,
+      required this.teacher})
       : super._();
 
   @override
@@ -153,10 +167,12 @@ class _$RoomImpl extends _Room {
 // 各授業のlessonsまでのpathを保持しておく
   @override
   final CollectionReference<Object?> reference;
+  @override
+  final String teacher;
 
   @override
   String toString() {
-    return 'Room(year: $year, roomNumber: $roomNumber, subject: $subject, reference: $reference)';
+    return 'Room(year: $year, roomNumber: $roomNumber, subject: $subject, reference: $reference, teacher: $teacher)';
   }
 
   @override
@@ -169,12 +185,13 @@ class _$RoomImpl extends _Room {
                 other.roomNumber == roomNumber) &&
             (identical(other.subject, subject) || other.subject == subject) &&
             (identical(other.reference, reference) ||
-                other.reference == reference));
+                other.reference == reference) &&
+            (identical(other.teacher, teacher) || other.teacher == teacher));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, year, roomNumber, subject, reference);
+      Object.hash(runtimeType, year, roomNumber, subject, reference, teacher);
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
@@ -190,7 +207,8 @@ abstract class _Room extends Room {
       {required final String year,
       required final String roomNumber,
       required final String subject,
-      required final CollectionReference<Object?> reference}) = _$RoomImpl;
+      required final CollectionReference<Object?> reference,
+      required final String teacher}) = _$RoomImpl;
   const _Room._() : super._();
 
   @override
@@ -201,6 +219,8 @@ abstract class _Room extends Room {
   String get subject; // 各授業のlessonsまでのpathを保持しておく
   @override
   CollectionReference<Object?> get reference;
+  @override
+  String get teacher;
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
