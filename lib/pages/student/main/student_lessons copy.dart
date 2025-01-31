@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:code/data/firebase/tool_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'dart:math' as math;
 
 import '../../../data/firebase/lesson_stream.dart';
 import '../../../data/lesson/lesson.dart';
@@ -15,7 +17,7 @@ class StudentLessons extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final lessonsStream = ref.watch(lessonsStreamProvider);
+    final lessonStream = ref.watch(lessonStreamProvider);
 
     return BasePage(
       pageTitle: "生徒コマ選択",
@@ -23,7 +25,7 @@ class StudentLessons extends ConsumerWidget {
         child: FractionallySizedBox(
           widthFactor: 0.95,
           heightFactor: 0.95,
-          child: lessonsStream.when(
+          child: lessonStream.when(
             data: (snapshot) => StudentLessonsDisplay(lessons: snapshot.docs),
             // エラー時の表示
             error: (_, __) => const Center(child: Text("読み込み失敗")),
@@ -43,8 +45,7 @@ class StudentLessonsDisplay extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentRoomNot = ref.read(currentRoomProvider);
-    final currentLessonNot = ref.read(currentLessonProvider.notifier);
+    final currentLessonRefNot = ref.read(currentLessonRefProvider.notifier);
 
     return lessons.isEmpty
         ? Center(child: Text("授業がありません"))
@@ -52,23 +53,23 @@ class StudentLessonsDisplay extends ConsumerWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: LessonsSummary(room: currentRoomNot),
+                child: LessonsSummary(reference: lessons[0].reference.parent),
               ),
               Expanded(
-                child: ListView.builder(
-                  itemCount: lessons.length,
-                  itemBuilder: (context, index) {
-                    final lesson = lessons[index].data();
-                    return LessonCard(
-                      lesson: lesson,
-                      onTap: () {
-                        currentLessonNot.state = lessons[index];
-                        GoRouter.of(context).push(Routes.studentTools);
-                      },
-                    );
-                  },
-                ),
-              ),
+                  child: ListView.builder(
+                itemCount: lessons.length,
+                itemBuilder: (context, index) {
+                  final lesson = lessons[index].data();
+                  return LessonCard(
+                    lesson: lesson,
+                    angle: math.pi * (index % 2 == 0 ? 0 : 1),
+                    onTap: () {
+                      currentLessonRefNot.state = lesson.reference;
+                      GoRouter.of(context).push(Routes.studentTools);
+                    },
+                  );
+                },
+              ))
             ],
           );
   }

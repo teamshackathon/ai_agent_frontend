@@ -1,64 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'lesson_badge_icon.dart';
-
-class IconText extends StatelessWidget {
-  const IconText({
-    super.key,
-    required this.icon,
-    required this.text,
-  });
-
-  final IconData icon;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 5),
-      child: Row(
-        children: [
-          Icon(icon),
-          Text(text),
-        ],
-      ),
-    );
-  }
-}
+import '../../../data/room/room.dart';
 
 class LessonsSummary extends HookConsumerWidget {
-  const LessonsSummary({super.key, required this.reference});
+  const LessonsSummary({super.key, required this.room});
 
-  final CollectionReference reference;
-
-  String getSubject() {
-    final String path = reference.path;
-    final List<String> pathList = path.split("/");
-    final String subject = pathList[pathList.length - 2];
-    switch (subject) {
-      case "math":
-        return "数学";
-      case "english":
-        return "英語";
-      case "japanese":
-        return "国語";
-      case "science":
-        return "理科";
-      case "social":
-        return "社会";
-      default:
-        return "その他";
-    }
-  }
+  final Room room;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // 先生の情報を取得
-    // final teacher = ref.watch(personStatusProvider);
-    final teacher = "先生の名前";
-
     return SizedBox(
         width: double.infinity,
         child: Column(
@@ -66,37 +17,45 @@ class LessonsSummary extends HookConsumerWidget {
             textDirection: TextDirection.ltr,
             children: [
               Text(
-                getSubject(),
+                "授業の概要",
                 style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              IconText(icon: Icons.person_2, text: "先生：$teacher"),
-              IconText(icon: Icons.meeting_room, text: "教室：教室A"),
-              IconText(icon: Icons.schedule, text: "時間：火曜日 2限目"),
+              Text("教科：${room.displaySubject}"),
+              Text("先生：${room.teacher}"),
+              Text("教室：教室A"),
               Row(children: [
                 Expanded(
                     child: Column(
                   children: [
                     IconButton(onPressed: () {}, icon: Icon(Icons.book)),
-                    Text("教科書をみる"),
+                    Text("教科書"),
                   ],
                 )),
                 Expanded(
-                  child: ChatToTeacherBadgeIcon(onPressed: () {}),
-                ),
+                    child: Column(
+                  children: [
+                    IconButton(onPressed: () {}, icon: Icon(Icons.chat)),
+                    Text("先生に聞く"),
+                  ],
+                )),
                 Expanded(
-                  child: ChatToAIBadgeIcon(onPressed: () {}),
-                ),
+                    child: Column(
+                  children: [
+                    IconButton(onPressed: () {}, icon: Icon(Icons.smart_toy)),
+                    Text("AIに聞く"),
+                  ],
+                )),
                 Expanded(
-                  child: AnalyticsBadgeIcon(onPressed: () {}),
-                )
-              ]),
-              Divider(),
-              Container(
-                height: 15,
-              ),
+                    child: Column(
+                  children: [
+                    IconButton(onPressed: () {}, icon: Icon(Icons.analytics)),
+                    Text("自己分析"),
+                  ],
+                )),
+              ])
             ]));
   }
 }
