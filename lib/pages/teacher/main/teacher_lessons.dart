@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:code/data/agenda/agenda.dart';
 import 'package:code/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -6,7 +7,6 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../data/firebase/lesson_stream.dart';
-import '../../../data/firebase/tool_stream.dart';
 import '../../../data/lesson/lesson.dart';
 import '../../../route/route.dart';
 import '../../../widget/base_page/base_page.dart';
@@ -16,7 +16,7 @@ class TeacherLessons extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final lessonStream = ref.watch(lessonStreamProvider);
+    final lessonsStream = ref.watch(lessonsStreamProvider);
 
     return BasePage(
       pageTitle: "教師コマ選択",
@@ -24,7 +24,7 @@ class TeacherLessons extends ConsumerWidget {
         child: FractionallySizedBox(
           widthFactor: 0.95,
           heightFactor: 0.95,
-          child: lessonStream.when(
+          child: lessonsStream.when(
             data: (snapshot) => TeacherLessonsDisplay(lessons: snapshot.docs),
             // エラー時の表示
             error: (_, __) => const Center(
@@ -48,8 +48,8 @@ class TeacherLessonsDisplay extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentLessonRefNot = ref.read(currentLessonRefProvider.notifier);
-    final currentRoomRef = ref.watch(currentRoomRefProvider);
+    final currentLessonNot = ref.read(currentLessonProvider.notifier);
+    final currentRoom = ref.watch(currentRoomProvider);
     final disable = useState<bool>(false);
 
     return Column(
@@ -59,11 +59,13 @@ class TeacherLessonsDisplay extends HookConsumerWidget {
           child: InkWell(
             onTap: () async {
               disable.value = true;
-              infoToast(log: currentRoomRef.toString());
-              await currentRoomRef.add(
+              infoToast(log: currentRoom.toString());
+              await currentRoom.reference.add(
                 Lesson(
                   count: lessons.length + 1,
-                  reference: currentRoomRef.doc(),
+                  publishAgenda: Agenda(title: "", agenda: []),
+                  draftAgenda: Agenda(title: "", agenda: []),
+                  reference: currentRoom.reference.doc(),
                 ).toMap(),
               );
               disable.value = false;
@@ -89,7 +91,7 @@ class TeacherLessonsDisplay extends HookConsumerWidget {
                     final lesson = lessons[index].data();
                     return InkWell(
                       onTap: () async {
-                        currentLessonRefNot.state = lesson.reference;
+                        currentLessonNot.state = lessons[index];
                         GoRouter.of(context).push(Routes.teacherTools);
                       },
                       child: Card(

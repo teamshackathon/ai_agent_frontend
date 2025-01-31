@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part "agenda.freezed.dart";
@@ -9,25 +8,55 @@ class Agenda with _$Agenda {
 
   const factory Agenda({
     required String title,
-    required String time,
-    required String steps,
+    required List<Sentence> agenda,
   }) = _Agenda;
 
-  factory Agenda.fromFirestore(
-      DocumentSnapshot<Map<String, dynamic>> snapshot) {
-    final map = snapshot.data();
+  factory Agenda.fromMap(Map<String, dynamic> map) {
+    final List<Sentence> list = [];
+    for (var d in map["agenda"] ?? []) {
+      list.add(Sentence.fromMap(d));
+    }
     return Agenda(
-      title: map?["title"] ?? "",
-      time: map?["time"] ?? "",
-      steps: map?["steps"] ?? "",
+      title: map["title"] ?? "",
+      agenda: list,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    final List<Map<String, dynamic>> list = [];
+    for (var d in agenda) {
+      list.add(d.toMap());
+    }
+    return {
+      "title": title,
+      "agenda": list,
+    };
+  }
+}
+
+@freezed
+class Sentence with _$Sentence {
+  const Sentence._();
+
+  const factory Sentence({
+    required String subtitle,
+    required int time,
+    required String description,
+  }) = _Sentence;
+
+  factory Sentence.fromMap(Map<String, dynamic> map) {
+    return Sentence(
+      subtitle: map["subtitle"] ?? "",
+      time: map["time"] ?? 0,
+      description: map["description"] ?? "",
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      "title": title,
+      "subtitle": subtitle,
       "time": time,
-      "steps": steps,
+      "description": description,
     };
   }
 }
