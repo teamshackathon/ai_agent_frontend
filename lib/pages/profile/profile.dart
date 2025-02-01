@@ -1,3 +1,4 @@
+import 'package:code/widget/utils/sakura_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -17,7 +18,7 @@ class ProfilePage extends ConsumerWidget {
         future: user,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Center(child: SakuraProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text("読み込みエラー"));
           } else {

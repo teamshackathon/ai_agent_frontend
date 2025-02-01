@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code/data/agenda/agenda.dart';
 import 'package:code/toast.dart';
+import 'package:code/widget/utils/sakura_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
@@ -33,7 +34,7 @@ class TeacherLessons extends ConsumerWidget {
             ),
             // 読込中の表示
             loading: () => const Center(
-              child: CircularProgressIndicator(),
+              child: SakuraProgressIndicator(),
             ),
           ),
         ),
