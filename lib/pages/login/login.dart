@@ -7,7 +7,7 @@ import 'package:lottie/lottie.dart';
 import '../../firebase/auth/login/login_firebase.dart';
 import '../../firebase/firestore/get_data/get_rooms.dart';
 import '../../firebase/firestore/get_data/get_teachers.dart';
-import '../../widget/loading_button.dart';
+import '../../widget/utils/loading_button.dart';
 
 class LoginPage extends HookWidget {
   const LoginPage({super.key});
