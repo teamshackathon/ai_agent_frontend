@@ -70,7 +70,8 @@ Future<List<Room>> activeRooms(ref) async {
             .collection(student.folderName);
         await ownDocRef.get().then((querySnapshot) {
           for (var doc in querySnapshot.docs) {
-            chatIds[doc.id] = doc.data()["chatId"] ?? "${r["year"]}-${r["room"]}-${student.folderName}-${doc.id}";
+            chatIds[doc.id] = doc.data()["chatId"] ??
+                "${r["year"]}-${r["room"]}-${student.folderName}-${doc.id}";
           }
         }, onError: (e) => throw Exception(e));
         await docRef.get().then((querySnapshot) {
@@ -80,7 +81,8 @@ Future<List<Room>> activeRooms(ref) async {
                 year: r["year"]!,
                 roomNumber: r["room"]!,
                 subject: doc.id,
-                chatId: chatIds[doc.id] ?? "${r["year"]}-${r["room"]}-${student.folderName}-${doc.id}",
+                chatId: chatIds[doc.id] ??
+                    "${r["year"]}-${r["room"]}-${student.folderName}-${doc.id}",
                 ownReference: ownDocRef.doc(doc.id).collection("lessons"),
                 reference: docRef.doc(doc.id).collection("lessons"),
                 teacher: doc.data()["teacher"] ?? "",
@@ -165,7 +167,8 @@ Future<List<Room>> archiveRooms(ref) async {
             .collection(student.folderName);
         await ownDocRef.get().then((querySnapshot) {
           for (var doc in querySnapshot.docs) {
-            chatIds[doc.id] = doc.data()["chatId"] ?? "${r["year"]}-${r["room"]}-${student.folderName}-${doc.id}";
+            chatIds[doc.id] = doc.data()["chatId"] ??
+                "${r["year"]}-${r["room"]}-${student.folderName}-${doc.id}";
           }
         }, onError: (e) => throw Exception(e));
         await docRef.get().then((querySnapshot) {
@@ -175,7 +178,8 @@ Future<List<Room>> archiveRooms(ref) async {
                 year: r["year"]!,
                 roomNumber: r["room"]!,
                 subject: doc.id,
-                chatId: chatIds[doc.id] ?? "${r["year"]}-${r["room"]}-${student.folderName}-${doc.id}",
+                chatId: chatIds[doc.id] ??
+                    "${r["year"]}-${r["room"]}-${student.folderName}-${doc.id}",
                 ownReference: ownDocRef.doc(doc.id).collection("lessons"),
                 reference: docRef.doc(doc.id).collection("lessons"),
                 teacher: doc.data()["teacher"] ?? "",
