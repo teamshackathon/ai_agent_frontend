@@ -30,7 +30,7 @@ class AnswerTextboxResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
+      height: 50,
       width: MediaQuery.of(context).size.width * 0.8,
       child: Text(
         answer,
