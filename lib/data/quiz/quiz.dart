@@ -225,7 +225,8 @@ List<Map<String, dynamic>> readQuiz(String lessonId) {
       "format": "Anaume",
       "score": 25,
       "question": "英語の文で「I _ a book.」と書く場合、空欄にはどの動詞を入れますか？",
-      "correctAnswer": "read"
+      "correctAnswer": "read",
+      "answer": "read"
     },
     {
       "title": "疑問文の作り方",
@@ -238,21 +239,24 @@ List<Map<String, dynamic>> readQuiz(String lessonId) {
         {"item_num": "3", "item_word": "A teacher is he?"}
       ],
       "correctAnswer": "Is he a teacher?",
-      "correctNum": 1
+      "correctNum": 1,
+      "answer": "He is a teacher?"
     },
     {
       "title": "名詞の複数形",
       "format": "Kijutsu",
       "score": 25,
       "question": "「cat」の複数形は何ですか？",
-      "correctAnswer": "cats"
+      "correctAnswer": "cats",
+      "answer": "cas?"
     },
     {
       "title": "時間の表現",
       "format": "Anaume",
       "score": 25,
       "question": "英語で「今は3時です」と言いたい場合、空欄には何が入りますか？「It is _ o'clock.」",
-      "correctAnswer": "three"
+      "correctAnswer": "three",
+      "answer": "san?"
     },
   ];
 }
