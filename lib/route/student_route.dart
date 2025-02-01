@@ -1,6 +1,4 @@
 // 長くなりそうなのでファイル分け
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,8 +6,11 @@ import '../pages/profile/profile.dart';
 import '../pages/student/activity/student_activity.dart';
 import '../pages/student/main/student_lessons.dart';
 import '../pages/student/main/student_main.dart';
-import '../pages/student/main/student_reading.dart';
+import '../pages/student/main/tools/student_agenda.dart';
+import '../pages/student/main/tools/student_quiz.dart';
+import '../pages/student/main/tools/student_reading.dart';
 import '../pages/student/main/student_tools.dart';
+import '../pages/chat/chat.dart';
 import '../widget/bottom_bar/student_bottom_bar.dart';
 import 'route.dart';
 
@@ -64,8 +65,23 @@ final studentBranch = StatefulShellRoute.indexedStack(
                       path: "reading",
                       builder: (context, state) => StudentReading(),
                     ),
+                    GoRoute(
+                      parentNavigatorKey: _studentMainKey,
+                      path: "agenda",
+                      builder: (context, state) => StudentAgenda(),
+                    ),
+                    GoRoute(
+                      parentNavigatorKey: _studentMainKey,
+                      path: "quiz",
+                      builder: (context, state) => StudentQuiz(),
+                    ),
                   ],
                 ),
+                GoRoute(
+                  parentNavigatorKey: _studentMainKey,
+                  path: "chatroom",
+                  builder: (context, state) => ChatRoomScreen(),
+                )
               ],
             ),
           ],

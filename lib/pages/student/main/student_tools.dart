@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code/firebase/storage/get_text.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -13,13 +11,20 @@ class StudentTools extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final size = MediaQuery.of(context).size;
+    const widthFactor = 0.95;
+    const heightFactor = 0.95;
+
     return BasePage(
       pageTitle: "生徒機能選択",
       body: Center(
         child: FractionallySizedBox(
-          widthFactor: 0.95,
-          heightFactor: 0.95,
-          child: StudentToolsDisplay(),
+          widthFactor: widthFactor,
+          heightFactor: heightFactor,
+          child: StudentToolsDisplay(
+            displayWidth: size.width * widthFactor,
+            displayHeight: size.height * widthFactor,
+          ),
         ),
       ),
     );
@@ -27,31 +32,42 @@ class StudentTools extends ConsumerWidget {
 }
 
 class StudentToolsDisplay extends ConsumerWidget {
-  const StudentToolsDisplay({super.key});
+  const StudentToolsDisplay({
+    super.key,
+    required this.displayWidth,
+    required this.displayHeight,
+  });
+
+  final double displayWidth, displayHeight;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
         InkWell(
-          onTap: () async {
-            await getText(ref: ref);
-            if (context.mounted) {
-              GoRouter.of(context).push(Routes.studentReading);
-            }
+          // onTap: () async {
+          //   await getText(ref: ref);
+          //   if (context.mounted) {
+          //     GoRouter.of(context).push(Routes.studentReading);
+          //   }
+          // },
+          onTap: () {
+            GoRouter.of(context).push(Routes.studentAgenda);
           },
           child: Card(
             child: Column(
               children: [
                 Text(""),
-                Text("教科書を見る"),
+                Text("授業内容"),
                 Text(""),
               ],
             ),
           ),
         ),
         InkWell(
-          onTap: () {},
+          onTap: () {
+            GoRouter.of(context).push(Routes.studentQuiz);
+          },
           child: Card(
             child: Column(
               children: [

@@ -1,4 +1,5 @@
 import 'package:code/data/lesson/lesson.dart';
+import 'package:code/widget/utils/sakura_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -128,7 +129,7 @@ class PencilSvg extends HookWidget {
 
     return Center(
       child: svgString.value == null
-          ? const CircularProgressIndicator()
+          ? const SakuraProgressIndicator()
           : SvgPicture.string(svgString.value!),
     );
   }
