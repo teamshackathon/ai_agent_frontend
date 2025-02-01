@@ -16,8 +16,7 @@ class LessonStartSlide extends ConsumerWidget {
 
   final double width, height;
 
-  void addLessonStart(String roomNumber) async{
-
+  void addLessonStart(String roomNumber) async {
     FirebaseFirestore.instance.collection("during").add({});
   }
 
