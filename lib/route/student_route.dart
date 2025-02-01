@@ -7,6 +7,7 @@ import '../pages/student/activity/student_activity.dart';
 import '../pages/student/main/student_lessons.dart';
 import '../pages/student/main/student_main.dart';
 import '../pages/student/main/tools/student_agenda.dart';
+import '../pages/student/main/tools/student_quiz.dart';
 import '../pages/student/main/tools/student_reading.dart';
 import '../pages/student/main/student_tools.dart';
 import '../widget/bottom_bar/student_bottom_bar.dart';
@@ -67,6 +68,11 @@ final studentBranch = StatefulShellRoute.indexedStack(
                       parentNavigatorKey: _studentMainKey,
                       path: "agenda",
                       builder: (context, state) => StudentAgenda(),
+                    ),
+                    GoRoute(
+                      parentNavigatorKey: _studentMainKey,
+                      path: "quiz",
+                      builder: (context, state) => StudentQuiz(),
                     ),
                   ],
                 ),

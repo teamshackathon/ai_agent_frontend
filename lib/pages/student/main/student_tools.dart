@@ -65,7 +65,9 @@ class StudentToolsDisplay extends ConsumerWidget {
           ),
         ),
         InkWell(
-          onTap: () {},
+          onTap: () {
+            GoRouter.of(context).push(Routes.studentQuiz);
+          },
           child: Card(
             child: Column(
               children: [
