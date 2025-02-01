@@ -1,3 +1,4 @@
+import 'package:code/test/audio_recorder_test.dart';
 import 'package:code/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -17,18 +18,6 @@ class DummyMain extends ConsumerWidget {
     final quizNot = ref.read(quizNotifierProvider.notifier);
     final quiz = ref.watch(quizNotifierProvider);
 
-    return DummyBasePage(
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        quizNot.init(readQuiz("mock"));
-        infoToast(log: quiz.toString());
-      }),
-      pageTitle: "ダミーメイン",
-      body: ListView.builder(
-        itemCount: quiz.length,
-        itemBuilder: (context, index) => AnswerResultWidget(
-          quiz: quiz[index],
-        ),
-      ),
-    );
+    return AudioRecorderTest();
   }
 }
