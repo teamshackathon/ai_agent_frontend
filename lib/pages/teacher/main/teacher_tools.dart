@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code/data/firebase/lesson_stream.dart';
-import 'package:code/firebase/storage/get_text.dart';
+// import 'package:code/data/firebase/lesson_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swipe_button/flutter_swipe_button.dart';
 import 'package:go_router/go_router.dart';
@@ -48,7 +46,7 @@ class TeacherToolsDisplay extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentLesson = ref.watch(currentLessonProvider);
+    // final currentLesson = ref.watch(currentLessonProvider);
 
     return Stack(
       children: [
