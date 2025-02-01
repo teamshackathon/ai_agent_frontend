@@ -8,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../data/firebase/lesson_stream.dart';
 import '../../../data/lesson/lesson.dart';
+import '../../../data/quiz/quiz.dart';
 import '../../../route/route.dart';
 import '../../../widget/base_page/base_page.dart';
 
@@ -63,8 +64,10 @@ class TeacherLessonsDisplay extends HookConsumerWidget {
               await currentRoom.reference.add(
                 Lesson(
                   count: lessons.length + 1,
-                  publishAgenda: Agenda(title: "", agenda: []),
-                  draftAgenda: Agenda(title: "", agenda: []),
+                  agendaPublish: Agenda.isBlank(),
+                  agendaDraft: Agenda.isBlank(),
+                  questionsPublish: Quiz.isBlank(),
+                  questionsDraft: Quiz.isBlank(),
                   reference: currentRoom.reference.doc(),
                 ).toMap(),
               );

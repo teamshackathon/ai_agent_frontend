@@ -40,8 +40,8 @@ class AnswerWidget extends HookConsumerWidget {
       );
     } else if (quiz is Sentaku) {
       return RadioButton(
-        texts: quiz.options.map((e) => (e["item_word"]).toString()).toList(),
-        onChanged: (value) => onChanged(value ?? ""),
+        options: quiz.options,
+        onChanged: (str) => onChanged(str ?? ""),
         stateText: quiz.answer,
       );
     } else {

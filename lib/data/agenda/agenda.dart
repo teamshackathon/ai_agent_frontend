@@ -8,7 +8,7 @@ class Agenda with _$Agenda {
 
   const factory Agenda({
     required String title,
-    required List<Sentence> agenda,
+    required List<Sentence> sentences,
   }) = _Agenda;
 
   factory Agenda.fromMap(Map<String, dynamic> map) {
@@ -18,13 +18,13 @@ class Agenda with _$Agenda {
     }
     return Agenda(
       title: map["title"] ?? "",
-      agenda: list,
+      sentences: list,
     );
   }
 
   Map<String, dynamic> toMap() {
     final List<Map<String, dynamic>> list = [];
-    for (var d in agenda) {
+    for (var d in sentences) {
       list.add(d.toMap());
     }
     return {
@@ -32,6 +32,8 @@ class Agenda with _$Agenda {
       "agenda": list,
     };
   }
+
+  factory Agenda.isBlank() => Agenda(title: "", sentences: []);
 }
 
 @freezed

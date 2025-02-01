@@ -17,8 +17,10 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Lesson {
   int get count => throw _privateConstructorUsedError;
-  Agenda get publishAgenda => throw _privateConstructorUsedError;
-  Agenda get draftAgenda => throw _privateConstructorUsedError;
+  Agenda get agendaPublish => throw _privateConstructorUsedError;
+  Agenda get agendaDraft => throw _privateConstructorUsedError;
+  Quiz get questionsPublish => throw _privateConstructorUsedError;
+  Quiz get questionsDraft => throw _privateConstructorUsedError;
   DocumentReference<Object?> get reference =>
       throw _privateConstructorUsedError;
 
@@ -35,12 +37,16 @@ abstract class $LessonCopyWith<$Res> {
   @useResult
   $Res call(
       {int count,
-      Agenda publishAgenda,
-      Agenda draftAgenda,
+      Agenda agendaPublish,
+      Agenda agendaDraft,
+      Quiz questionsPublish,
+      Quiz questionsDraft,
       DocumentReference<Object?> reference});
 
-  $AgendaCopyWith<$Res> get publishAgenda;
-  $AgendaCopyWith<$Res> get draftAgenda;
+  $AgendaCopyWith<$Res> get agendaPublish;
+  $AgendaCopyWith<$Res> get agendaDraft;
+  $QuizCopyWith<$Res> get questionsPublish;
+  $QuizCopyWith<$Res> get questionsDraft;
 }
 
 /// @nodoc
@@ -59,8 +65,10 @@ class _$LessonCopyWithImpl<$Res, $Val extends Lesson>
   @override
   $Res call({
     Object? count = null,
-    Object? publishAgenda = null,
-    Object? draftAgenda = null,
+    Object? agendaPublish = null,
+    Object? agendaDraft = null,
+    Object? questionsPublish = null,
+    Object? questionsDraft = null,
     Object? reference = null,
   }) {
     return _then(_value.copyWith(
@@ -68,14 +76,22 @@ class _$LessonCopyWithImpl<$Res, $Val extends Lesson>
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
               as int,
-      publishAgenda: null == publishAgenda
-          ? _value.publishAgenda
-          : publishAgenda // ignore: cast_nullable_to_non_nullable
+      agendaPublish: null == agendaPublish
+          ? _value.agendaPublish
+          : agendaPublish // ignore: cast_nullable_to_non_nullable
               as Agenda,
-      draftAgenda: null == draftAgenda
-          ? _value.draftAgenda
-          : draftAgenda // ignore: cast_nullable_to_non_nullable
+      agendaDraft: null == agendaDraft
+          ? _value.agendaDraft
+          : agendaDraft // ignore: cast_nullable_to_non_nullable
               as Agenda,
+      questionsPublish: null == questionsPublish
+          ? _value.questionsPublish
+          : questionsPublish // ignore: cast_nullable_to_non_nullable
+              as Quiz,
+      questionsDraft: null == questionsDraft
+          ? _value.questionsDraft
+          : questionsDraft // ignore: cast_nullable_to_non_nullable
+              as Quiz,
       reference: null == reference
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
@@ -87,9 +103,9 @@ class _$LessonCopyWithImpl<$Res, $Val extends Lesson>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $AgendaCopyWith<$Res> get publishAgenda {
-    return $AgendaCopyWith<$Res>(_value.publishAgenda, (value) {
-      return _then(_value.copyWith(publishAgenda: value) as $Val);
+  $AgendaCopyWith<$Res> get agendaPublish {
+    return $AgendaCopyWith<$Res>(_value.agendaPublish, (value) {
+      return _then(_value.copyWith(agendaPublish: value) as $Val);
     });
   }
 
@@ -97,9 +113,29 @@ class _$LessonCopyWithImpl<$Res, $Val extends Lesson>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $AgendaCopyWith<$Res> get draftAgenda {
-    return $AgendaCopyWith<$Res>(_value.draftAgenda, (value) {
-      return _then(_value.copyWith(draftAgenda: value) as $Val);
+  $AgendaCopyWith<$Res> get agendaDraft {
+    return $AgendaCopyWith<$Res>(_value.agendaDraft, (value) {
+      return _then(_value.copyWith(agendaDraft: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Lesson
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $QuizCopyWith<$Res> get questionsPublish {
+    return $QuizCopyWith<$Res>(_value.questionsPublish, (value) {
+      return _then(_value.copyWith(questionsPublish: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Lesson
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $QuizCopyWith<$Res> get questionsDraft {
+    return $QuizCopyWith<$Res>(_value.questionsDraft, (value) {
+      return _then(_value.copyWith(questionsDraft: value) as $Val);
     });
   }
 }
@@ -113,14 +149,20 @@ abstract class _$$LessonImplCopyWith<$Res> implements $LessonCopyWith<$Res> {
   @useResult
   $Res call(
       {int count,
-      Agenda publishAgenda,
-      Agenda draftAgenda,
+      Agenda agendaPublish,
+      Agenda agendaDraft,
+      Quiz questionsPublish,
+      Quiz questionsDraft,
       DocumentReference<Object?> reference});
 
   @override
-  $AgendaCopyWith<$Res> get publishAgenda;
+  $AgendaCopyWith<$Res> get agendaPublish;
   @override
-  $AgendaCopyWith<$Res> get draftAgenda;
+  $AgendaCopyWith<$Res> get agendaDraft;
+  @override
+  $QuizCopyWith<$Res> get questionsPublish;
+  @override
+  $QuizCopyWith<$Res> get questionsDraft;
 }
 
 /// @nodoc
@@ -137,8 +179,10 @@ class __$$LessonImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? count = null,
-    Object? publishAgenda = null,
-    Object? draftAgenda = null,
+    Object? agendaPublish = null,
+    Object? agendaDraft = null,
+    Object? questionsPublish = null,
+    Object? questionsDraft = null,
     Object? reference = null,
   }) {
     return _then(_$LessonImpl(
@@ -146,14 +190,22 @@ class __$$LessonImplCopyWithImpl<$Res>
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
               as int,
-      publishAgenda: null == publishAgenda
-          ? _value.publishAgenda
-          : publishAgenda // ignore: cast_nullable_to_non_nullable
+      agendaPublish: null == agendaPublish
+          ? _value.agendaPublish
+          : agendaPublish // ignore: cast_nullable_to_non_nullable
               as Agenda,
-      draftAgenda: null == draftAgenda
-          ? _value.draftAgenda
-          : draftAgenda // ignore: cast_nullable_to_non_nullable
+      agendaDraft: null == agendaDraft
+          ? _value.agendaDraft
+          : agendaDraft // ignore: cast_nullable_to_non_nullable
               as Agenda,
+      questionsPublish: null == questionsPublish
+          ? _value.questionsPublish
+          : questionsPublish // ignore: cast_nullable_to_non_nullable
+              as Quiz,
+      questionsDraft: null == questionsDraft
+          ? _value.questionsDraft
+          : questionsDraft // ignore: cast_nullable_to_non_nullable
+              as Quiz,
       reference: null == reference
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
@@ -167,23 +219,29 @@ class __$$LessonImplCopyWithImpl<$Res>
 class _$LessonImpl extends _Lesson {
   const _$LessonImpl(
       {required this.count,
-      required this.publishAgenda,
-      required this.draftAgenda,
+      required this.agendaPublish,
+      required this.agendaDraft,
+      required this.questionsPublish,
+      required this.questionsDraft,
       required this.reference})
       : super._();
 
   @override
   final int count;
   @override
-  final Agenda publishAgenda;
+  final Agenda agendaPublish;
   @override
-  final Agenda draftAgenda;
+  final Agenda agendaDraft;
+  @override
+  final Quiz questionsPublish;
+  @override
+  final Quiz questionsDraft;
   @override
   final DocumentReference<Object?> reference;
 
   @override
   String toString() {
-    return 'Lesson(count: $count, publishAgenda: $publishAgenda, draftAgenda: $draftAgenda, reference: $reference)';
+    return 'Lesson(count: $count, agendaPublish: $agendaPublish, agendaDraft: $agendaDraft, questionsPublish: $questionsPublish, questionsDraft: $questionsDraft, reference: $reference)';
   }
 
   @override
@@ -192,17 +250,21 @@ class _$LessonImpl extends _Lesson {
         (other.runtimeType == runtimeType &&
             other is _$LessonImpl &&
             (identical(other.count, count) || other.count == count) &&
-            (identical(other.publishAgenda, publishAgenda) ||
-                other.publishAgenda == publishAgenda) &&
-            (identical(other.draftAgenda, draftAgenda) ||
-                other.draftAgenda == draftAgenda) &&
+            (identical(other.agendaPublish, agendaPublish) ||
+                other.agendaPublish == agendaPublish) &&
+            (identical(other.agendaDraft, agendaDraft) ||
+                other.agendaDraft == agendaDraft) &&
+            (identical(other.questionsPublish, questionsPublish) ||
+                other.questionsPublish == questionsPublish) &&
+            (identical(other.questionsDraft, questionsDraft) ||
+                other.questionsDraft == questionsDraft) &&
             (identical(other.reference, reference) ||
                 other.reference == reference));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, count, publishAgenda, draftAgenda, reference);
+  int get hashCode => Object.hash(runtimeType, count, agendaPublish,
+      agendaDraft, questionsPublish, questionsDraft, reference);
 
   /// Create a copy of Lesson
   /// with the given fields replaced by the non-null parameter values.
@@ -216,17 +278,23 @@ class _$LessonImpl extends _Lesson {
 abstract class _Lesson extends Lesson {
   const factory _Lesson(
       {required final int count,
-      required final Agenda publishAgenda,
-      required final Agenda draftAgenda,
+      required final Agenda agendaPublish,
+      required final Agenda agendaDraft,
+      required final Quiz questionsPublish,
+      required final Quiz questionsDraft,
       required final DocumentReference<Object?> reference}) = _$LessonImpl;
   const _Lesson._() : super._();
 
   @override
   int get count;
   @override
-  Agenda get publishAgenda;
+  Agenda get agendaPublish;
   @override
-  Agenda get draftAgenda;
+  Agenda get agendaDraft;
+  @override
+  Quiz get questionsPublish;
+  @override
+  Quiz get questionsDraft;
   @override
   DocumentReference<Object?> get reference;
 

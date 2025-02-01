@@ -36,6 +36,16 @@ class Room with _$Room {
   }) = _Room;
 
   String get displaySubject => subjects[subject] ?? "";
+
+  factory Room.isBlank() {
+    return Room(
+      year: "",
+      roomNumber: "",
+      subject: "",
+      reference: FirebaseFirestore.instance.collection("2024"),
+      teacher: "",
+    );
+  }
 }
 
 @riverpod

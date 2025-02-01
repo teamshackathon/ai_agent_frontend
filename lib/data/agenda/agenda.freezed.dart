@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Agenda {
   String get title => throw _privateConstructorUsedError;
-  List<Sentence> get agenda => throw _privateConstructorUsedError;
+  List<Sentence> get sentences => throw _privateConstructorUsedError;
 
   /// Create a copy of Agenda
   /// with the given fields replaced by the non-null parameter values.
@@ -30,7 +30,7 @@ abstract class $AgendaCopyWith<$Res> {
   factory $AgendaCopyWith(Agenda value, $Res Function(Agenda) then) =
       _$AgendaCopyWithImpl<$Res, Agenda>;
   @useResult
-  $Res call({String title, List<Sentence> agenda});
+  $Res call({String title, List<Sentence> sentences});
 }
 
 /// @nodoc
@@ -49,16 +49,16 @@ class _$AgendaCopyWithImpl<$Res, $Val extends Agenda>
   @override
   $Res call({
     Object? title = null,
-    Object? agenda = null,
+    Object? sentences = null,
   }) {
     return _then(_value.copyWith(
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      agenda: null == agenda
-          ? _value.agenda
-          : agenda // ignore: cast_nullable_to_non_nullable
+      sentences: null == sentences
+          ? _value.sentences
+          : sentences // ignore: cast_nullable_to_non_nullable
               as List<Sentence>,
     ) as $Val);
   }
@@ -71,7 +71,7 @@ abstract class _$$AgendaImplCopyWith<$Res> implements $AgendaCopyWith<$Res> {
       __$$AgendaImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String title, List<Sentence> agenda});
+  $Res call({String title, List<Sentence> sentences});
 }
 
 /// @nodoc
@@ -88,16 +88,16 @@ class __$$AgendaImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? title = null,
-    Object? agenda = null,
+    Object? sentences = null,
   }) {
     return _then(_$AgendaImpl(
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      agenda: null == agenda
-          ? _value._agenda
-          : agenda // ignore: cast_nullable_to_non_nullable
+      sentences: null == sentences
+          ? _value._sentences
+          : sentences // ignore: cast_nullable_to_non_nullable
               as List<Sentence>,
     ));
   }
@@ -107,23 +107,23 @@ class __$$AgendaImplCopyWithImpl<$Res>
 
 class _$AgendaImpl extends _Agenda {
   const _$AgendaImpl(
-      {required this.title, required final List<Sentence> agenda})
-      : _agenda = agenda,
+      {required this.title, required final List<Sentence> sentences})
+      : _sentences = sentences,
         super._();
 
   @override
   final String title;
-  final List<Sentence> _agenda;
+  final List<Sentence> _sentences;
   @override
-  List<Sentence> get agenda {
-    if (_agenda is EqualUnmodifiableListView) return _agenda;
+  List<Sentence> get sentences {
+    if (_sentences is EqualUnmodifiableListView) return _sentences;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_agenda);
+    return EqualUnmodifiableListView(_sentences);
   }
 
   @override
   String toString() {
-    return 'Agenda(title: $title, agenda: $agenda)';
+    return 'Agenda(title: $title, sentences: $sentences)';
   }
 
   @override
@@ -132,12 +132,13 @@ class _$AgendaImpl extends _Agenda {
         (other.runtimeType == runtimeType &&
             other is _$AgendaImpl &&
             (identical(other.title, title) || other.title == title) &&
-            const DeepCollectionEquality().equals(other._agenda, _agenda));
+            const DeepCollectionEquality()
+                .equals(other._sentences, _sentences));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, title, const DeepCollectionEquality().hash(_agenda));
+      runtimeType, title, const DeepCollectionEquality().hash(_sentences));
 
   /// Create a copy of Agenda
   /// with the given fields replaced by the non-null parameter values.
@@ -151,13 +152,13 @@ class _$AgendaImpl extends _Agenda {
 abstract class _Agenda extends Agenda {
   const factory _Agenda(
       {required final String title,
-      required final List<Sentence> agenda}) = _$AgendaImpl;
+      required final List<Sentence> sentences}) = _$AgendaImpl;
   const _Agenda._() : super._();
 
   @override
   String get title;
   @override
-  List<Sentence> get agenda;
+  List<Sentence> get sentences;
 
   /// Create a copy of Agenda
   /// with the given fields replaced by the non-null parameter values.
