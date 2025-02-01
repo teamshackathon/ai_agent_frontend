@@ -2,8 +2,10 @@ import 'package:code/widget/agenda/teacher_agenda_display.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../data/agenda/agenda.dart';
 import '../../../../data/firebase/lesson_stream.dart';
 import '../../../../data/lesson/lesson.dart';
+import '../../../../toast.dart';
 import '../../../../widget/base_page/base_page.dart';
 
 class TeacherAgenda extends ConsumerWidget {

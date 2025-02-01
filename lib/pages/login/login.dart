@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../firebase/auth/login/login_firebase.dart';
-import '../../firebase/firestore/get_data/get_rooms.dart';
-import '../../firebase/firestore/get_data/get_teachers.dart';
 import '../../widget/utils/loading_button.dart';
 
 class LoginPage extends HookWidget {
@@ -15,8 +12,8 @@ class LoginPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final displaySize = MediaQuery.of(context).size;
-    final mail = useState<String>("asuka.morita@manabiya.ai.com");
-    final pass = useState<String>("Manab1yaa1asuka.morita");
+    final mail = useState<String>("daisuke.suzuki@manabiya.ai.com");
+    final pass = useState<String>("Manab1yaa1daisuke.suzuki");
     final registerLoad = useState<bool>(false);
     final loginLoad = useState<bool>(false);
 

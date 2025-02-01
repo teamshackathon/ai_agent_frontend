@@ -46,8 +46,6 @@ class TeacherToolsDisplay extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final currentLesson = ref.watch(currentLessonProvider);
-
     return Stack(
       children: [
         Align(
@@ -80,7 +78,9 @@ class TeacherToolsDisplay extends ConsumerWidget {
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                GoRouter.of(context).push(Routes.teacherQuiz);
+              },
               child: ListTile(
                 title: Card(
                   child: Column(

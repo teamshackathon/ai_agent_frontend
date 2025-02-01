@@ -7,10 +7,10 @@ import '../../../../data/lesson/lesson.dart';
 import '../../../../data/quiz/quiz.dart';
 import '../../../../toast.dart';
 import '../../../../widget/base_page/base_page.dart';
-import '../../../../widget/quiz/quiz_edit_widget.dart';
+import '../../../../widget/quiz/answer_widget.dart';
 
-class TeacherQuiz extends ConsumerWidget {
-  const TeacherQuiz({super.key});
+class StudentQuiz extends ConsumerWidget {
+  const StudentQuiz({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,7 +28,7 @@ class TeacherQuiz extends ConsumerWidget {
         child: FractionallySizedBox(
           widthFactor: widthFactor,
           heightFactor: heightFactor,
-          child: TeacherQuizDisplay(
+          child: StudentQuizDisplay(
             lesson: lesson,
             displayWidth: size.width * widthFactor,
             displayHeight: size.height * widthFactor,
@@ -39,8 +39,8 @@ class TeacherQuiz extends ConsumerWidget {
   }
 }
 
-class TeacherQuizDisplay extends HookConsumerWidget {
-  const TeacherQuizDisplay(
+class StudentQuizDisplay extends HookConsumerWidget {
+  const StudentQuizDisplay(
       {super.key,
       required this.displayWidth,
       required this.displayHeight,
@@ -52,46 +52,26 @@ class TeacherQuizDisplay extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final reference = lesson.reference;
-    final quizzes = useState<List<Quiz>>(lesson.questionsDraft);
+    final quizzes = useState<List<Quiz>>(lesson.questionsPublish);
 
     return Column(
       children: [
-        ElevatedButton(
-          onPressed: () async {
-            infoToast(log: quizzes.value.toString());
-            await reference.update({
-              "questions_draft": [for (var q in quizzes.value) q.toMap()]
-            });
-          },
-          child: Text("下書き保存"),
-        ),
-        ElevatedButton(
-          onPressed: () async {
-            infoToast(log: quizzes.value.toString());
-            await reference.update({
-              "questions_draft": [for (var q in quizzes.value) q.toMap()]
-            });
-            await reference.update({
-              "questions_publish": [for (var q in quizzes.value) q.toMap()]
-            });
-          },
-          child: Text("公開"),
-        ),
         Flexible(
           child: ListView.builder(
             itemCount: quizzes.value.length,
-            itemBuilder: (context, index) => QuizEditWidget(
+            itemBuilder: (context, index) => AnswerWidget(
               quiz: quizzes.value[index],
-              onChanged: (quiz) {
+              onChanged: (str) {
                 infoToast(log: "before : ${quizzes.value}");
-                var list = [
+                final list = [
                   for (var i = 0; i < quizzes.value.length; i++)
-                    i == index ? quiz : quizzes.value[i]
+                    i == index
+                        ? quizzes.value[i].copyWith(answer: str)
+                        : quizzes.value[i],
                 ];
                 quizzes.value = list;
                 infoToast(log: "after : ${quizzes.value}");
               },
-              editable: true,
             ),
           ),
         ),

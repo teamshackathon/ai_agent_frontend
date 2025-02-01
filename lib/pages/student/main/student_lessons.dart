@@ -45,7 +45,7 @@ class StudentLessonsDisplay extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentRoomNot = ref.read(currentRoomProvider);
+    final currentRoom = ref.watch(currentRoomProvider);
     final currentLessonNot = ref.read(currentLessonProvider.notifier);
 
     return lessons.isEmpty
@@ -54,7 +54,7 @@ class StudentLessonsDisplay extends ConsumerWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: LessonsSummary(room: currentRoomNot),
+                child: LessonsSummary(room: currentRoom),
               ),
               Expanded(
                 child: ListView.builder(
