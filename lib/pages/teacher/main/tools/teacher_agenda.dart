@@ -51,11 +51,12 @@ class TeacherAgenda extends ConsumerWidget {
 }
 
 class TeacherAgendaDisplay extends HookConsumerWidget {
-  const TeacherAgendaDisplay(
-      {super.key,
-      required this.displayWidth,
-      required this.displayHeight,
-      required this.lesson});
+  const TeacherAgendaDisplay({
+    super.key,
+    required this.displayWidth,
+    required this.displayHeight,
+    required this.lesson,
+  });
 
   final double displayWidth, displayHeight;
   final Lesson lesson;
@@ -105,7 +106,7 @@ class TeacherAgendaDisplay extends HookConsumerWidget {
           child: ListView.builder(
             itemCount: agendaState.value.sentences.length,
             itemBuilder: (context, index) {
-              return SentenceCard(
+              return EditableSentenceCard(
                 displayWidth: displayWidth,
                 displayHeight: displayHeight,
                 sentence: agendaState.value.sentences[index],
@@ -128,8 +129,8 @@ class TeacherAgendaDisplay extends HookConsumerWidget {
   }
 }
 
-class SentenceCard extends ConsumerWidget {
-  const SentenceCard({
+class EditableSentenceCard extends ConsumerWidget {
+  const EditableSentenceCard({
     super.key,
     required this.displayWidth,
     required this.displayHeight,
