@@ -67,8 +67,8 @@ class TeacherLessonsDisplay extends HookConsumerWidget {
                   count: lessons.length + 1,
                   agendaPublish: Agenda.isBlank(),
                   agendaDraft: Agenda.isBlank(),
-                  questionsPublish: Quiz.isBlank(),
-                  questionsDraft: Quiz.isBlank(),
+                  questionsPublish: [],
+                  questionsDraft: [],
                   reference: currentRoom.reference.doc(),
                 ).toMap(),
               );

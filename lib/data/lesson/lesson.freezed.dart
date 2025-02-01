@@ -19,8 +19,8 @@ mixin _$Lesson {
   int get count => throw _privateConstructorUsedError;
   Agenda get agendaPublish => throw _privateConstructorUsedError;
   Agenda get agendaDraft => throw _privateConstructorUsedError;
-  Quiz get questionsPublish => throw _privateConstructorUsedError;
-  Quiz get questionsDraft => throw _privateConstructorUsedError;
+  List<Quiz> get questionsPublish => throw _privateConstructorUsedError;
+  List<Quiz> get questionsDraft => throw _privateConstructorUsedError;
   DocumentReference<Object?> get reference =>
       throw _privateConstructorUsedError;
 
@@ -39,14 +39,12 @@ abstract class $LessonCopyWith<$Res> {
       {int count,
       Agenda agendaPublish,
       Agenda agendaDraft,
-      Quiz questionsPublish,
-      Quiz questionsDraft,
+      List<Quiz> questionsPublish,
+      List<Quiz> questionsDraft,
       DocumentReference<Object?> reference});
 
   $AgendaCopyWith<$Res> get agendaPublish;
   $AgendaCopyWith<$Res> get agendaDraft;
-  $QuizCopyWith<$Res> get questionsPublish;
-  $QuizCopyWith<$Res> get questionsDraft;
 }
 
 /// @nodoc
@@ -87,11 +85,11 @@ class _$LessonCopyWithImpl<$Res, $Val extends Lesson>
       questionsPublish: null == questionsPublish
           ? _value.questionsPublish
           : questionsPublish // ignore: cast_nullable_to_non_nullable
-              as Quiz,
+              as List<Quiz>,
       questionsDraft: null == questionsDraft
           ? _value.questionsDraft
           : questionsDraft // ignore: cast_nullable_to_non_nullable
-              as Quiz,
+              as List<Quiz>,
       reference: null == reference
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
@@ -118,26 +116,6 @@ class _$LessonCopyWithImpl<$Res, $Val extends Lesson>
       return _then(_value.copyWith(agendaDraft: value) as $Val);
     });
   }
-
-  /// Create a copy of Lesson
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $QuizCopyWith<$Res> get questionsPublish {
-    return $QuizCopyWith<$Res>(_value.questionsPublish, (value) {
-      return _then(_value.copyWith(questionsPublish: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Lesson
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $QuizCopyWith<$Res> get questionsDraft {
-    return $QuizCopyWith<$Res>(_value.questionsDraft, (value) {
-      return _then(_value.copyWith(questionsDraft: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -151,18 +129,14 @@ abstract class _$$LessonImplCopyWith<$Res> implements $LessonCopyWith<$Res> {
       {int count,
       Agenda agendaPublish,
       Agenda agendaDraft,
-      Quiz questionsPublish,
-      Quiz questionsDraft,
+      List<Quiz> questionsPublish,
+      List<Quiz> questionsDraft,
       DocumentReference<Object?> reference});
 
   @override
   $AgendaCopyWith<$Res> get agendaPublish;
   @override
   $AgendaCopyWith<$Res> get agendaDraft;
-  @override
-  $QuizCopyWith<$Res> get questionsPublish;
-  @override
-  $QuizCopyWith<$Res> get questionsDraft;
 }
 
 /// @nodoc
@@ -199,13 +173,13 @@ class __$$LessonImplCopyWithImpl<$Res>
           : agendaDraft // ignore: cast_nullable_to_non_nullable
               as Agenda,
       questionsPublish: null == questionsPublish
-          ? _value.questionsPublish
+          ? _value._questionsPublish
           : questionsPublish // ignore: cast_nullable_to_non_nullable
-              as Quiz,
+              as List<Quiz>,
       questionsDraft: null == questionsDraft
-          ? _value.questionsDraft
+          ? _value._questionsDraft
           : questionsDraft // ignore: cast_nullable_to_non_nullable
-              as Quiz,
+              as List<Quiz>,
       reference: null == reference
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
@@ -221,10 +195,12 @@ class _$LessonImpl extends _Lesson {
       {required this.count,
       required this.agendaPublish,
       required this.agendaDraft,
-      required this.questionsPublish,
-      required this.questionsDraft,
+      required final List<Quiz> questionsPublish,
+      required final List<Quiz> questionsDraft,
       required this.reference})
-      : super._();
+      : _questionsPublish = questionsPublish,
+        _questionsDraft = questionsDraft,
+        super._();
 
   @override
   final int count;
@@ -232,10 +208,23 @@ class _$LessonImpl extends _Lesson {
   final Agenda agendaPublish;
   @override
   final Agenda agendaDraft;
+  final List<Quiz> _questionsPublish;
   @override
-  final Quiz questionsPublish;
+  List<Quiz> get questionsPublish {
+    if (_questionsPublish is EqualUnmodifiableListView)
+      return _questionsPublish;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_questionsPublish);
+  }
+
+  final List<Quiz> _questionsDraft;
   @override
-  final Quiz questionsDraft;
+  List<Quiz> get questionsDraft {
+    if (_questionsDraft is EqualUnmodifiableListView) return _questionsDraft;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_questionsDraft);
+  }
+
   @override
   final DocumentReference<Object?> reference;
 
@@ -254,17 +243,23 @@ class _$LessonImpl extends _Lesson {
                 other.agendaPublish == agendaPublish) &&
             (identical(other.agendaDraft, agendaDraft) ||
                 other.agendaDraft == agendaDraft) &&
-            (identical(other.questionsPublish, questionsPublish) ||
-                other.questionsPublish == questionsPublish) &&
-            (identical(other.questionsDraft, questionsDraft) ||
-                other.questionsDraft == questionsDraft) &&
+            const DeepCollectionEquality()
+                .equals(other._questionsPublish, _questionsPublish) &&
+            const DeepCollectionEquality()
+                .equals(other._questionsDraft, _questionsDraft) &&
             (identical(other.reference, reference) ||
                 other.reference == reference));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, count, agendaPublish,
-      agendaDraft, questionsPublish, questionsDraft, reference);
+  int get hashCode => Object.hash(
+      runtimeType,
+      count,
+      agendaPublish,
+      agendaDraft,
+      const DeepCollectionEquality().hash(_questionsPublish),
+      const DeepCollectionEquality().hash(_questionsDraft),
+      reference);
 
   /// Create a copy of Lesson
   /// with the given fields replaced by the non-null parameter values.
@@ -280,8 +275,8 @@ abstract class _Lesson extends Lesson {
       {required final int count,
       required final Agenda agendaPublish,
       required final Agenda agendaDraft,
-      required final Quiz questionsPublish,
-      required final Quiz questionsDraft,
+      required final List<Quiz> questionsPublish,
+      required final List<Quiz> questionsDraft,
       required final DocumentReference<Object?> reference}) = _$LessonImpl;
   const _Lesson._() : super._();
 
@@ -292,9 +287,9 @@ abstract class _Lesson extends Lesson {
   @override
   Agenda get agendaDraft;
   @override
-  Quiz get questionsPublish;
+  List<Quiz> get questionsPublish;
   @override
-  Quiz get questionsDraft;
+  List<Quiz> get questionsDraft;
   @override
   DocumentReference<Object?> get reference;
 
