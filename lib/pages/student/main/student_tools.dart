@@ -51,7 +51,7 @@ class StudentToolsDisplay extends ConsumerWidget {
           //     GoRouter.of(context).push(Routes.studentReading);
           //   }
           // },
-          onTap: (){
+          onTap: () {
             GoRouter.of(context).push(Routes.studentAgenda);
           },
           child: Card(
