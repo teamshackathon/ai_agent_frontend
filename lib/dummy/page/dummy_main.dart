@@ -1,4 +1,3 @@
-import 'package:code/widget/quiz/quiz_edit_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -9,39 +8,6 @@ import '../widget/dummy_base_page.dart';
 
 class DummyMain extends ConsumerWidget {
   const DummyMain({super.key});
-
-  // final List<RadialSakuraMenuItem> items = <RadialSakuraMenuItem>[
-  //   RadialSakuraMenuItem(
-  //     key: UniqueKey(),
-  //     value: MenuOptions.japanese,
-  //     angle: 0.0,
-  //     onPressed: () => onItemSelected("japanese"),
-  //   ),
-  //   RadialSakuraMenuItem(
-  //     key: UniqueKey(),
-  //     value: MenuOptions.english,
-  //     angle: 2 * math.pi / 5 * 1,
-  //     onPressed: () => onItemSelected("english"),
-  //   ),
-  //   RadialSakuraMenuItem(
-  //     key: UniqueKey(),
-  //     value: MenuOptions.social,
-  //     angle: 2 * math.pi / 5 * 2,
-  //     onPressed: () => onItemSelected("social"),
-  //   ),
-  //   RadialSakuraMenuItem(
-  //     key: UniqueKey(),
-  //     value: MenuOptions.science,
-  //     angle: 2 * math.pi / 5 * 3,
-  //     onPressed: () => onItemSelected("science"),
-  //   ),
-  //   RadialSakuraMenuItem(
-  //     key: UniqueKey(),
-  //     value: MenuOptions.math,
-  //     angle: 2 * math.pi / 5 * 4,
-  //     onPressed: () => onItemSelected("math"),
-  //   ),
-  // ];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -56,11 +22,9 @@ class DummyMain extends ConsumerWidget {
       pageTitle: "ダミーメイン",
       body: ListView.builder(
         itemCount: quiz.length,
-        itemBuilder: (context, index) => AnswerWidget(
+        itemBuilder: (context, index) => AnswerResultWidget(
           quiz: quiz[index],
-          onChanged: (str) {
-            quizNot.writeAnswer(quiz[index].title, str);
-          },
+          onChanged: (value) => quizNot.writeAnswer(quiz[index].title, value),
         ),
       ),
     );

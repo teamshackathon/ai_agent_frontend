@@ -30,6 +30,7 @@ class RadioButton extends StatelessWidget {
               value: options[index].word,
               groupValue: stateText,
               onChanged: onChanged,
+              
             ));
       },
     );
