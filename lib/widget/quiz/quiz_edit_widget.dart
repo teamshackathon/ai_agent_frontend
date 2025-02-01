@@ -22,7 +22,7 @@ class QuizEditWidget extends StatelessWidget {
         QuizTextEditable(
           quizText: quiz.question,
           editable: editable,
-          onChanged: (value) => onChanged(quiz.copyWith(question: value)),
+          onChanged: (str) => onChanged(quiz.copyWith(question: str)),
         ),
         FormatAnswerEditable(
           quiz: quiz,
@@ -51,20 +51,20 @@ class FormatAnswerEditable extends StatelessWidget {
     if (quiz is Kijutsu) {
       return AnswerTextEditable(
         correctAnswer: quiz.correctAnswer,
-        onChanged: (value) => onChanged(quiz.copyWith(correctAnswer: value)),
+        onChanged: (str) => onChanged(quiz.copyWith(correctAnswer: str)),
         editable: editable,
       );
     } else if (quiz is Anaume) {
       return AnswerTextEditable(
         correctAnswer: quiz.correctAnswer,
-        onChanged: (value) => onChanged(quiz.copyWith(correctAnswer: value)),
+        onChanged: (str) => onChanged(quiz.copyWith(correctAnswer: str)),
         editable: editable,
       );
     } else if (quiz is Sentaku) {
       return SelectListEditable(
-        texts: (quiz as Sentaku).options.cast<Map<String, String>>(),
-        onChanged: (value) =>
-            onChanged((quiz as Sentaku).copyWith(options: value)),
+        options: (quiz as Sentaku).options,
+        onChanged: (options) =>
+            onChanged((quiz as Sentaku).copyWith(options: options)),
         editable: editable,
       );
     } else {

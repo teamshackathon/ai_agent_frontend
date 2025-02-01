@@ -64,7 +64,7 @@ class TeacherAgendaDisplay extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final reference = lesson.reference;
-    final agendaState = useState<Agenda>(lesson.draftAgenda);
+    final agendaState = useState<Agenda>(lesson.agendaDraft);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -79,6 +79,7 @@ class TeacherAgendaDisplay extends HookConsumerWidget {
         ElevatedButton(
           onPressed: () async {
             infoToast(log: agendaState.value.toMap());
+            await reference.update({"agenda_draft": agendaState.value.toMap()});
             await reference
                 .update({"agenda_publish": agendaState.value.toMap()});
           },
@@ -111,10 +112,9 @@ class TeacherAgendaDisplay extends HookConsumerWidget {
                 sentence: agendaState.value.sentences[index],
                 onChanged: (sentence) {
                   infoToast(log: "before : ${agendaState.value}");
-                  var list = agendaState.value.sentences;
-                  list = [
-                    for (var i = 0; i < list.length; i++)
-                      i == index ? sentence : list[i]
+                  var list = [
+                    for (var i = 0; i < agendaState.value.sentences.length; i++)
+                      i == index ? sentence : agendaState.value.sentences[i]
                   ];
                   agendaState.value =
                       agendaState.value.copyWith(sentences: list);

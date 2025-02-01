@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../agenda/agenda.dart';
+import '../quiz/quiz.dart';
 
 part 'lesson.freezed.dart';
 
@@ -9,11 +10,12 @@ part 'lesson.freezed.dart';
 class Lesson with _$Lesson {
   const Lesson._();
 
-  // とりあえずidと回数だけ持ってる
   const factory Lesson({
     required int count,
-    required Agenda publishAgenda,
-    required Agenda draftAgenda,
+    required Agenda agendaPublish,
+    required Agenda agendaDraft,
+    required Quiz questionsPublish,
+    required Quiz questionsDraft,
     required DocumentReference reference,
   }) = _Lesson;
 
@@ -23,9 +25,11 @@ class Lesson with _$Lesson {
     final map = snapshot.data();
     return Lesson(
       reference: snapshot.reference,
-      publishAgenda: Agenda.fromMap(map?["agenda_publish"] ?? {}),
-      draftAgenda: Agenda.fromMap(map?["agenda_draft"] ?? {}),
-      count: map?["count"] ?? 0,
+      agendaPublish: Agenda.fromMap(map?["agenda_publish"] ?? {}),
+      agendaDraft: Agenda.fromMap(map?["agenda_draft"] ?? {}),
+      questionsPublish: Quiz.fromMap(map?["questions_publish"] ?? {}),
+      questionsDraft: Quiz.fromMap(map?["questions_draft"] ?? {}),
+      count: map?["count"] ?? -1,
     );
   }
 
@@ -35,16 +39,20 @@ class Lesson with _$Lesson {
       // countに関してはfirestore packageに同名のクラス？メソッド？があるっぽいので
       // thisをつけることで、このクラスの引数であることを示す必要がある
       "count": this.count,
-      "agenda_publish": publishAgenda.toMap(),
-      "agenda_draft": draftAgenda.toMap(),
+      "agenda_publish": agendaPublish.toMap(),
+      "agenda_draft": agendaDraft.toMap(),
+      "questions_publish": questionsPublish.toMap(),
+      "questions_draft": questionsDraft.toMap(),
     };
   }
 
   factory Lesson.isBlank() {
     return Lesson(
       count: 0,
-      publishAgenda: Agenda.isBlank(),
-      draftAgenda: Agenda.isBlank(),
+      agendaPublish: Agenda.isBlank(),
+      agendaDraft: Agenda.isBlank(),
+      questionsPublish: Quiz.isBlank(),
+      questionsDraft: Quiz.isBlank(),
       reference: FirebaseFirestore.instance.collection("2024").doc(),
     );
   }
