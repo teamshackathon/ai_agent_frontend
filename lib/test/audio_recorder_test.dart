@@ -8,8 +8,8 @@ class AudioRecorderTest extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final record = AudioRecorder();
-    final audioRecorder = useMemoized(valueBuilder);
+    final audioRecorder = useMemoized(()=>AudioRecorder());
+    final recordingState = useState(false);
 
     return Placeholder();
   }
