@@ -10,6 +10,7 @@ import '../pages/student/main/student_lessons.dart';
 import '../pages/student/main/student_main.dart';
 import '../pages/student/main/student_reading.dart';
 import '../pages/student/main/student_tools.dart';
+import '../pages/chat/chat.dart';
 import '../widget/bottom_bar/student_bottom_bar.dart';
 import 'route.dart';
 
@@ -66,6 +67,11 @@ final studentBranch = StatefulShellRoute.indexedStack(
                     ),
                   ],
                 ),
+                GoRoute(
+                  parentNavigatorKey: _studentMainKey,
+                  path: "chatroom",
+                  builder: (context, state) => ChatRoomScreen(),
+                )
               ],
             ),
           ],

@@ -13,7 +13,7 @@ class ChatToTeacherBadgeIcon extends HookConsumerWidget {
       Badge.count(
           count: 3,
           backgroundColor: Colors.lightBlue,
-          child: IconButton(onPressed: () {}, icon: Icon(Icons.chat))),
+          child: IconButton(onPressed: onPressed, icon: Icon(Icons.chat))),
       Text("先生に聞く"),
     ]);
   }
