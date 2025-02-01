@@ -50,7 +50,6 @@ class StudentMainDisplay extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentRoomNot = ref.read(currentRoomProvider.notifier);
-
     return rooms.isEmpty
         ? Center(child: Text("授業がありません"))
         : Column(

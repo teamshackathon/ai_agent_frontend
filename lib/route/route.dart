@@ -20,6 +20,7 @@ class Routes {
   static const String login = "/";
   static const String studentMain = "/student";
   static const String studentLessons = "/student/lessons";
+  static const String chatroom = "/student/lessons/chatroom";
   static const String studentTools = "/student/lessons/tools";
   static const String studentReading = "/student/lessons/tools/reading";
   static const String studentAgenda = "/student/lessons/tools/agenda";
