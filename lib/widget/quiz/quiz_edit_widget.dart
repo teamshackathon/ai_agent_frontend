@@ -64,8 +64,8 @@ class FormatAnswerEditable extends StatelessWidget {
       return SelectListEditable(
         correctAnswer: quiz.correctAnswer,
         options: (quiz as Sentaku).options,
-        onChanged: (options,correct) =>
-            onChanged((quiz as Sentaku).copyWith(options: options,correctAnswer: correct)),
+        onChanged: (options, correct) => onChanged((quiz as Sentaku)
+            .copyWith(options: options, correctAnswer: correct)),
         editable: editable,
       );
     } else {

@@ -43,12 +43,11 @@ class SelectListEditable extends StatelessWidget {
                       for (var i = 0; i < options.length; i++)
                         i == index ? options[i].copyWith(word: str) : options[i]
                     ];
-                    if(list[index].word == options[index].word){
+                    if (list[index].word == options[index].word) {
                       onChanged(list, correctAnswer);
-                    }else{
+                    } else {
                       onChanged(list, str);
                     }
-                    
                   },
                   enabled: editable,
                 ),
