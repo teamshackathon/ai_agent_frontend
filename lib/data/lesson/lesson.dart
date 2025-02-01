@@ -14,8 +14,8 @@ class Lesson with _$Lesson {
     required int count,
     required Agenda agendaPublish,
     required Agenda agendaDraft,
-    required Quiz questionsPublish,
-    required Quiz questionsDraft,
+    required List<Quiz> questionsPublish,
+    required List<Quiz> questionsDraft,
     required DocumentReference reference,
   }) = _Lesson;
 
@@ -23,26 +23,35 @@ class Lesson with _$Lesson {
     DocumentSnapshot<Map<String, dynamic>> snapshot,
   ) {
     final map = snapshot.data();
+    final List<Quiz> publish = [
+      for (var m in map?["questions_publish"] ?? []) Quiz.fromMap(m)
+    ];
+    final List<Quiz> draft = [
+      for (var m in map?["questions_draft"] ?? []) Quiz.fromMap(m)
+    ];
+
     return Lesson(
       reference: snapshot.reference,
       agendaPublish: Agenda.fromMap(map?["agenda_publish"] ?? {}),
       agendaDraft: Agenda.fromMap(map?["agenda_draft"] ?? {}),
-      questionsPublish: Quiz.fromMap(map?["questions_publish"] ?? {}),
-      questionsDraft: Quiz.fromMap(map?["questions_draft"] ?? {}),
+      questionsPublish: publish,
+      questionsDraft: draft,
       count: map?["count"] ?? -1,
     );
   }
 
   // 基本使わない
   Map<String, dynamic> toMap() {
+    final publish = [for (var q in questionsPublish) q.toMap()];
+    final draft = [for (var q in questionsDraft) q.toMap()];
     return {
       // countに関してはfirestore packageに同名のクラス？メソッド？があるっぽいので
       // thisをつけることで、このクラスの引数であることを示す必要がある
       "count": this.count,
       "agenda_publish": agendaPublish.toMap(),
       "agenda_draft": agendaDraft.toMap(),
-      "questions_publish": questionsPublish.toMap(),
-      "questions_draft": questionsDraft.toMap(),
+      "questions_publish": publish,
+      "questions_draft": draft,
     };
   }
 
@@ -51,8 +60,8 @@ class Lesson with _$Lesson {
       count: 0,
       agendaPublish: Agenda.isBlank(),
       agendaDraft: Agenda.isBlank(),
-      questionsPublish: Quiz.isBlank(),
-      questionsDraft: Quiz.isBlank(),
+      questionsPublish: [],
+      questionsDraft: [],
       reference: FirebaseFirestore.instance.collection("2024").doc(),
     );
   }

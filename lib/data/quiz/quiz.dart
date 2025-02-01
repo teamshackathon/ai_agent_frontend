@@ -138,7 +138,7 @@ class Option with _$Option {
 
   factory Option.fromMap(Map<String, dynamic> map) {
     return Option(
-      number: int.parse(map["item_num"] ?? -1),
+      number: int.parse(map["item_num"].toString()),
       word: map["item_word"] ?? "",
     );
   }

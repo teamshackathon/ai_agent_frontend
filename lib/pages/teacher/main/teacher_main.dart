@@ -1,3 +1,4 @@
+import 'package:code/widget/utils/sakura_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -28,7 +29,7 @@ class TeacherMain extends HookConsumerWidget {
             ),
             // 読込中の表示
             loading: () => const Center(
-              child: CircularProgressIndicator(),
+              child: SakuraProgressIndicator(),
             ),
           ),
         ),

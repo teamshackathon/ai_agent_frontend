@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:code/widget/utils/sakura_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -29,7 +30,7 @@ class StudentLessons extends ConsumerWidget {
             // エラー時の表示
             error: (_, __) => const Center(child: Text("読み込み失敗")),
             // 読込中の表示
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => const Center(child: SakuraProgressIndicator()),
           ),
         ),
       ),
@@ -44,7 +45,7 @@ class StudentLessonsDisplay extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentRoomNot = ref.read(currentRoomProvider);
+    final currentRoom = ref.watch(currentRoomProvider);
     final currentLessonNot = ref.read(currentLessonProvider.notifier);
 
     return lessons.isEmpty
@@ -53,7 +54,7 @@ class StudentLessonsDisplay extends ConsumerWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: LessonsSummary(room: currentRoomNot),
+                child: LessonsSummary(room: currentRoom),
               ),
               Expanded(
                 child: ListView.builder(

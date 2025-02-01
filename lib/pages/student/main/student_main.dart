@@ -1,5 +1,6 @@
 import 'package:code/widget/sakura_redial_menu/components/radial_sakura_menu.dart';
 import 'package:code/widget/sakura_redial_menu/components/radial_sakura_menu_item.dart';
+import 'package:code/widget/utils/sakura_progress_indicator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -32,7 +33,7 @@ class StudentMain extends HookConsumerWidget {
             ),
             // 読込中の表示
             loading: () => const Center(
-              child: CircularProgressIndicator(),
+              child: SakuraProgressIndicator(),
             ),
           ),
         ),
@@ -49,7 +50,6 @@ class StudentMainDisplay extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentRoomNot = ref.read(currentRoomProvider.notifier);
-
     return rooms.isEmpty
         ? Center(child: Text("授業がありません"))
         : Column(

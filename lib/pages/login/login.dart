@@ -4,7 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../firebase/auth/login/login_firebase.dart';
-import '../../widget/loading_button.dart';
+import '../../widget/utils/loading_button.dart';
 
 class LoginPage extends HookWidget {
   const LoginPage({super.key});
@@ -12,8 +12,8 @@ class LoginPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final displaySize = MediaQuery.of(context).size;
-    final mail = useState<String>("asuka.morita@manabiya.ai.com");
-    final pass = useState<String>("Manab1yaa1asuka.morita");
+    final mail = useState<String>("daisuke.suzuki@manabiya.ai.com");
+    final pass = useState<String>("Manab1yaa1daisuke.suzuki");
     final registerLoad = useState<bool>(false);
     final loginLoad = useState<bool>(false);
 

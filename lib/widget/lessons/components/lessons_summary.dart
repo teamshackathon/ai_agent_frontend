@@ -1,4 +1,7 @@
+import 'package:code/firebase/firestore/chat/create_chat_room.dart';
+import 'package:code/route/route.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../data/room/room.dart';
@@ -36,7 +39,10 @@ class LessonsSummary extends HookConsumerWidget {
                   ],
                 )),
                 Expanded(
-                  child: ChatToTeacherBadgeIcon(onPressed: () {}),
+                  child: ChatToTeacherBadgeIcon(onPressed: () {
+                    createChatRoom(ref: ref);
+                    GoRouter.of(context).push(Routes.chatroom);
+                  }),
                 ),
                 Expanded(
                   child: ChatToAIBadgeIcon(onPressed: () {}),
