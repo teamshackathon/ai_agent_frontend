@@ -59,6 +59,8 @@ class Quiz with _$Quiz {
         correctAnswer: map["correct_answer"] ?? "",
         score: map["score"] ?? -1,
         answer: map["answer"] ?? "",
+        correct: map["correct"] ?? false,
+        reloadFlag: map["reloadFlag"] ?? false,
       );
     } else if (map["format"] == "Sentaku") {
       final List<Option> options = [];
@@ -72,6 +74,8 @@ class Quiz with _$Quiz {
         options: options,
         score: map["score"] ?? -1,
         answer: map["answer"] ?? "",
+        correct: map["correct"] ?? false,
+        reloadFlag: map["reloadFlag"] ?? false,
       );
     } else {
       return Kijutsu(
@@ -80,6 +84,8 @@ class Quiz with _$Quiz {
         correctAnswer: map["correct_answer"] ?? "",
         score: map["score"] ?? -1,
         answer: map["answer"] ?? "",
+        correct: map["correct"] ?? false,
+        reloadFlag: map["reloadFlag"] ?? false,
       );
     }
   }

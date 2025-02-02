@@ -12,3 +12,34 @@ final duringStreamProvider = StreamProvider((ref) async* {
   }
   yield* reference.snapshots();
 });
+
+// firestoreのduringに現在の授業情報を書き込み
+Future<void> addLessonToDuring({
+  required String roomNumber,
+  required String subject,
+  required int count,
+}) async {
+  await FirebaseFirestore.instance.collection("during").add({
+    "room": roomNumber,
+    "subject": subject,
+    "count": count,
+  });
+}
+
+// 現在行われている授業一覧に、指定した（今行っている）授業があればtrue、
+// 他の人が同じクラスで授業を行っている場合はfalse、
+// 同じクラスで誰も授業を行っていなければnullを返す
+bool? duringLesson({
+  required List<QueryDocumentSnapshot<Map<String, dynamic>>> snapshotData,
+  required String roomNumber,
+  required String subject,
+  required int count,
+}) {
+  for (var d in snapshotData) {
+    var map = d.data();
+    if (map["room"] == roomNumber) {
+      return map["subject"] == subject && map["count"] == count;
+    }
+  }
+  return null;
+}

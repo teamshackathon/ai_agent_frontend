@@ -6,7 +6,7 @@ part of 'room.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$activeRoomsHash() => r'e188d3de67d1581e104a03ab5060b993401acb36';
+String _$activeRoomsHash() => r'98445920811675589c7ce0877ded69e0b86774d8';
 
 /// See also [activeRooms].
 @ProviderFor(activeRooms)
@@ -22,7 +22,7 @@ final activeRoomsProvider = AutoDisposeFutureProvider<List<Room>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef ActiveRoomsRef = AutoDisposeFutureProviderRef<List<Room>>;
-String _$archiveRoomsHash() => r'd2fbdd535d74a6e4e51e165b57d29230d0934fb1';
+String _$archiveRoomsHash() => r'd781c211cb21c7a424a980ccab9f815b3035bfde';
 
 /// See also [archiveRooms].
 @ProviderFor(archiveRooms)

@@ -1,4 +1,7 @@
 // import 'package:code/data/firebase/lesson_stream.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:code/data/firebase/during_stream.dart';
+import 'package:code/widget/tools/lesson_start_slide.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swipe_button/flutter_swipe_button.dart';
 import 'package:go_router/go_router.dart';
@@ -46,18 +49,13 @@ class TeacherToolsDisplay extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final during = ref.watch(duringStreamProvider);
+
     return Stack(
       children: [
         Align(
           alignment: Alignment.bottomCenter,
-          child: SizedBox(
-            // flutter_swipe_button package
-            child: SwipeButton(
-              width: displayWidth * 0.6,
-              height: displayHeight * 0.08,
-              child: Text("授業開始"),
-            ),
-          ),
+          child: LessonStartSlide(),
         ),
         Column(
           children: [
