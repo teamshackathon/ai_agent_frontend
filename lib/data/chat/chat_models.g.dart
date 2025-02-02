@@ -33,8 +33,7 @@ _$MessageModelImpl _$$MessageModelImplFromJson(Map<String, dynamic> json) =>
       senderId: json['senderId'] as String,
       text: json['text'] as String?,
       imageUrl: json['imageUrl'] as String?,
-      readBy:
-          (json['readBy'] as List<dynamic>).map((e) => e as String).toList(),
+      read: json['read'] as bool,
       createdAt: const TimestampConverter().fromJson(json['createdAt']),
     );
 
@@ -44,6 +43,6 @@ Map<String, dynamic> _$$MessageModelImplToJson(_$MessageModelImpl instance) =>
       'senderId': instance.senderId,
       'text': instance.text,
       'imageUrl': instance.imageUrl,
-      'readBy': instance.readBy,
+      'read': instance.read,
       'createdAt': const TimestampConverter().toJson(instance.createdAt),
     };
