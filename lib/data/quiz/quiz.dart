@@ -225,7 +225,7 @@ List<Map<String, dynamic>> readQuiz(String lessonId) {
       "format": "Anaume",
       "score": 25,
       "question": "英語の文で「I _ a book.」と書く場合、空欄にはどの動詞を入れますか？",
-      "correctAnswer": "read",
+      "correct_answer": "read",
       "answer": "read"
     },
     {
@@ -238,7 +238,7 @@ List<Map<String, dynamic>> readQuiz(String lessonId) {
         {"item_num": "2", "item_word": "He is a teacher?"},
         {"item_num": "3", "item_word": "A teacher is he?"}
       ],
-      "correctAnswer": "Is he a teacher?",
+      "correct_answer": "Is he a teacher?",
       "correctNum": 1,
       "answer": "He is a teacher?"
     },
@@ -247,7 +247,7 @@ List<Map<String, dynamic>> readQuiz(String lessonId) {
       "format": "Kijutsu",
       "score": 25,
       "question": "「cat」の複数形は何ですか？",
-      "correctAnswer": "cats",
+      "correct_answer": "cats",
       "answer": "cas?"
     },
     {
@@ -255,7 +255,7 @@ List<Map<String, dynamic>> readQuiz(String lessonId) {
       "format": "Anaume",
       "score": 25,
       "question": "英語で「今は3時です」と言いたい場合、空欄には何が入りますか？「It is _ o'clock.」",
-      "correctAnswer": "three",
+      "correct_answer": "three",
       "answer": "san?"
     },
   ];
