@@ -20,9 +20,9 @@ class DummyProfilePage extends ConsumerWidget {
         children: [
           ElevatedButton(
             onPressed: () {
-              if(record.isRecording){
+              if (record.isRecording) {
                 recordNot.stopRecording();
-              }else{
+              } else {
                 recordNot.startRecording();
               }
             },
@@ -30,9 +30,9 @@ class DummyProfilePage extends ConsumerWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              if(player.isPlaying){
+              if (player.isPlaying) {
                 playerNot.pausePlaying();
-              }else{
+              } else {
                 playerNot.startPlaying();
               }
             },

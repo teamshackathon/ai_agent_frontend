@@ -37,7 +37,8 @@ class AudioRecordService extends StateNotifier<AudioRecordState> {
     final String filePath = await getLocalFilePath();
     print("fuga");
     state = state.copyWith(isRecording: true);
-    await _recorder.start(RecordConfig(encoder: AudioEncoder.pcm16bits),path: filePath);
+    await _recorder.start(RecordConfig(encoder: AudioEncoder.pcm16bits),
+        path: filePath);
   }
 
   Future<void> stopRecording() async {
@@ -73,7 +74,7 @@ class AudioPlayState with _$AudioPlayState {
 }
 
 final audioPlayServiceProvider =
-StateNotifierProvider<AudioPlayService, AudioPlayState>((ref) {
+    StateNotifierProvider<AudioPlayService, AudioPlayState>((ref) {
   return AudioPlayService();
 });
 
