@@ -16,18 +16,6 @@ class LessonStartSlide extends ConsumerWidget {
 
   final double width, height;
 
-  Future<void> addLessonStart({
-    required String roomNumber,
-    required String subject,
-    required String teacher,
-  }) async {
-    await FirebaseFirestore.instance.collection("during").add({
-      "room": roomNumber,
-      "subject": subject,
-      "teacher": teacher,
-    });
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final during = ref.watch(duringStreamProvider);
@@ -36,18 +24,30 @@ class LessonStartSlide extends ConsumerWidget {
 
     return during.when(
       data: (snapshot) {
-        return SwipeButton.expand(
-          width: width,
-          height: height,
-          child: Text("授業開始"),
-          onSwipeEnd: () async {
-            await addLessonStart(
-              roomNumber: currentRoom.roomNumber,
-              subject: currentRoom.subject,
-              teacher: currentRoom.teacher,
+        switch (duringLesson(
+          snapshotData: snapshot.docs,
+          roomNumber: currentRoom.roomNumber,
+          subject: currentRoom.subject,
+          count: currentLesson!.data().count,
+        )) {
+          case true:
+            return Text("授業中です");
+          case false:
+            return Text("他のコマで授業中です");
+          default:
+            return SwipeButton.expand(
+              width: width,
+              height: height,
+              child: Text("授業開始"),
+              onSwipeEnd: () async {
+                await addLessonToDuring(
+                  roomNumber: currentRoom.roomNumber,
+                  subject: currentRoom.subject,
+                  count: currentLesson.data().count,
+                );
+              },
             );
-          },
-        );
+        }
       },
       // エラー時の表示
       error: (_, __) => const Center(
