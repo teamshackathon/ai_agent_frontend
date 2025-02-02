@@ -22,6 +22,7 @@ class RecordService extends StateNotifier<RecordState> {
 
   final _recorder = AudioRecorder();
   final List<Uint8List> audioChunks = [];
+  // 外からこれを参照すれば、声に反応して光らせたりできるかも
   Uint8List currentChunk = Uint8List(0);
   late StreamSubscription<Uint8List>? subscription;
 
@@ -44,21 +45,32 @@ class RecordService extends StateNotifier<RecordState> {
     state = state.copyWith(isRecording: true);
   }
 
+  Future<void> pauseRecording()async{
+    await _recorder.pause();
+    // ここで一旦送信が入ってもいいかも
+    state = state.copyWith(isRecording: false);
+  }
+
+  Future<void> resumeRecording()async{
+    await _recorder.resume();
+    state = state.copyWith(isRecording: true);
+  }
+
   Future<void> stopRecording() async {
     subscription!.cancel();
 
     // chunks確認用
-    for (var audio in audioChunks) {
-      for (var i = 0; i < 10; i += 1) {
-        final bytes = [];
-        for (var j = 0; j < 10; j += 1) {
-          bytes.add(
-            '0x${audio[0 + i * 10 + j].toRadixString(16).padLeft(2, '0')}',
-          );
-        }
-        print(bytes.join(' '));
-      }
-    }
+    // for (var audio in audioChunks) {
+    //   for (var i = 0; i < 10; i += 1) {
+    //     final bytes = [];
+    //     for (var j = 0; j < 10; j += 1) {
+    //       bytes.add(
+    //         '0x${audio[0 + i * 10 + j].toRadixString(16).padLeft(2, '0')}',
+    //       );
+    //     }
+    //     print(bytes.join(' '));
+    //   }
+    // }
 
     _recorder.stop();
     state = state.copyWith(isRecording: false);

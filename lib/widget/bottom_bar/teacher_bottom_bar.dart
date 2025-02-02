@@ -3,6 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+import '../../data/firebase/during_stream.dart';
+import '../../data/person/person.dart';
+import '../floating/floating_record_button.dart';
 import 'bottom_bar_widget.dart';
 
 class TeacherBottomBar extends HookConsumerWidget {
@@ -17,6 +20,8 @@ class TeacherBottomBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final during = ref.watch(duringStreamProvider);
+    final user = useState<Person>(Person.isBlank());
     // animation controllerが入ったリストを作成
     final controllers = useState<List<AnimationController>>(
       List.generate(
@@ -36,9 +41,30 @@ class TeacherBottomBar extends HookConsumerWidget {
       }
     });
 
+    void getUser() async {
+      user.value = await ref.watch(personStatusProvider.future);
+    }
+
+    useEffect(() {
+      getUser();
+      return null;
+    }, []);
+
     return Scaffold(
       body: navigationShell,
-      floatingActionButton: null,
+      floatingActionButton: during.when(
+        data: (snapshot) {
+          if (givingLesson(
+            snapshotData: snapshot.docs,
+            teacher: user.value.name,
+          )) {
+            return FloatingRecordButton(teacher: user.value.name);
+          }
+          return null;
+        },
+        error: (_, __) => null,
+        loading: () => null,
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
         destinations: [

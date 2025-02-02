@@ -57,6 +57,10 @@ class Person with _$Person {
   }) = Teacher;
 
   String get folderName => "$firstName.$familyName".toLowerCase();
+
+  factory Person.isBlank() {
+    return Person(uid: "", name: "", firstName: "", familyName: "", rooms: []);
+  }
 }
 
 @riverpod
