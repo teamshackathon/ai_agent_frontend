@@ -40,12 +40,15 @@ class LessonsSummary extends HookConsumerWidget {
                 )),
                 Expanded(
                   child: ChatToTeacherBadgeIcon(onPressed: () {
-                    createChatRoom(ref: ref);
-                    GoRouter.of(context).push(Routes.chatroom);
+                    createChatRoom(ref: ref, target: "teacher");
+                    GoRouter.of(context).push(Routes.chatTeacher);
                   }),
                 ),
                 Expanded(
-                  child: ChatToAIBadgeIcon(onPressed: () {}),
+                  child: ChatToAIBadgeIcon(onPressed: () {
+                    createChatRoom(ref: ref, target: "ai");
+                    GoRouter.of(context).push(Routes.chatAI);
+                  }),
                 ),
                 Expanded(
                   child: AnalyticsBadgeIcon(onPressed: () {}),
