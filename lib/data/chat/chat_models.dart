@@ -26,7 +26,7 @@ class MessageModel with _$MessageModel {
     required String senderId,
     String? text,
     String? imageUrl,
-    required List<String> readBy,
+    required bool read,
     @TimestampConverter() required DateTime createdAt,
   }) = _MessageModel;
 
