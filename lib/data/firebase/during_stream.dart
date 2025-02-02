@@ -30,10 +30,7 @@ Future<void> addLessonToDuring({
 }
 
 Future<void> removeLessonToDuring({required String teacher}) async {
-  await FirebaseFirestore.instance
-      .collection("during")
-      .doc(teacher)
-      .delete();
+  await FirebaseFirestore.instance.collection("during").doc(teacher).delete();
 }
 
 // 現在行われている授業一覧に、指定した（今行っている）授業があればtrue、

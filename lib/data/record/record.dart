@@ -45,13 +45,13 @@ class RecordService extends StateNotifier<RecordState> {
     state = state.copyWith(isRecording: true);
   }
 
-  Future<void> pauseRecording()async{
+  Future<void> pauseRecording() async {
     await _recorder.pause();
     // ここで一旦送信が入ってもいいかも
     state = state.copyWith(isRecording: false);
   }
 
-  Future<void> resumeRecording()async{
+  Future<void> resumeRecording() async {
     await _recorder.resume();
     state = state.copyWith(isRecording: true);
   }

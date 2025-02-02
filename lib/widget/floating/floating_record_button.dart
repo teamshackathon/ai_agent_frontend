@@ -32,7 +32,7 @@ class FloatingRecordButton extends HookConsumerWidget {
       verticalDirection: VerticalDirection.up,
       children: [
         InkWell(
-          onLongPress: ()async{
+          onLongPress: () async {
             await lessonFinish();
             removeLessonToDuring(teacher: teacher);
           },
