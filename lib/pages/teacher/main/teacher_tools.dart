@@ -49,8 +49,6 @@ class TeacherToolsDisplay extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final during = ref.watch(duringStreamProvider);
-
     return Stack(
       children: [
         Align(
