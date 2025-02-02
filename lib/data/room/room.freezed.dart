@@ -26,6 +26,7 @@ mixin _$Room {
   CollectionReference<Object?> get ownReference =>
       throw _privateConstructorUsedError;
   String get teacher => throw _privateConstructorUsedError;
+  String get textLink => throw _privateConstructorUsedError;
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
@@ -45,7 +46,8 @@ abstract class $RoomCopyWith<$Res> {
       String chatId,
       CollectionReference<Object?> reference,
       CollectionReference<Object?> ownReference,
-      String teacher});
+      String teacher,
+      String textLink});
 }
 
 /// @nodoc
@@ -70,6 +72,7 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
     Object? reference = null,
     Object? ownReference = null,
     Object? teacher = null,
+    Object? textLink = null,
   }) {
     return _then(_value.copyWith(
       year: null == year
@@ -100,6 +103,10 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
           ? _value.teacher
           : teacher // ignore: cast_nullable_to_non_nullable
               as String,
+      textLink: null == textLink
+          ? _value.textLink
+          : textLink // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -118,7 +125,8 @@ abstract class _$$RoomImplCopyWith<$Res> implements $RoomCopyWith<$Res> {
       String chatId,
       CollectionReference<Object?> reference,
       CollectionReference<Object?> ownReference,
-      String teacher});
+      String teacher,
+      String textLink});
 }
 
 /// @nodoc
@@ -140,6 +148,7 @@ class __$$RoomImplCopyWithImpl<$Res>
     Object? reference = null,
     Object? ownReference = null,
     Object? teacher = null,
+    Object? textLink = null,
   }) {
     return _then(_$RoomImpl(
       year: null == year
@@ -170,6 +179,10 @@ class __$$RoomImplCopyWithImpl<$Res>
           ? _value.teacher
           : teacher // ignore: cast_nullable_to_non_nullable
               as String,
+      textLink: null == textLink
+          ? _value.textLink
+          : textLink // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -184,7 +197,8 @@ class _$RoomImpl extends _Room {
       required this.chatId,
       required this.reference,
       required this.ownReference,
-      required this.teacher})
+      required this.teacher,
+      required this.textLink})
       : super._();
 
   @override
@@ -203,10 +217,12 @@ class _$RoomImpl extends _Room {
   final CollectionReference<Object?> ownReference;
   @override
   final String teacher;
+  @override
+  final String textLink;
 
   @override
   String toString() {
-    return 'Room(year: $year, roomNumber: $roomNumber, subject: $subject, chatId: $chatId, reference: $reference, ownReference: $ownReference, teacher: $teacher)';
+    return 'Room(year: $year, roomNumber: $roomNumber, subject: $subject, chatId: $chatId, reference: $reference, ownReference: $ownReference, teacher: $teacher, textLink: $textLink)';
   }
 
   @override
@@ -223,12 +239,14 @@ class _$RoomImpl extends _Room {
                 other.reference == reference) &&
             (identical(other.ownReference, ownReference) ||
                 other.ownReference == ownReference) &&
-            (identical(other.teacher, teacher) || other.teacher == teacher));
+            (identical(other.teacher, teacher) || other.teacher == teacher) &&
+            (identical(other.textLink, textLink) ||
+                other.textLink == textLink));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, year, roomNumber, subject,
-      chatId, reference, ownReference, teacher);
+      chatId, reference, ownReference, teacher, textLink);
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
@@ -247,7 +265,8 @@ abstract class _Room extends Room {
       required final String chatId,
       required final CollectionReference<Object?> reference,
       required final CollectionReference<Object?> ownReference,
-      required final String teacher}) = _$RoomImpl;
+      required final String teacher,
+      required final String textLink}) = _$RoomImpl;
   const _Room._() : super._();
 
   @override
@@ -264,6 +283,8 @@ abstract class _Room extends Room {
   CollectionReference<Object?> get ownReference;
   @override
   String get teacher;
+  @override
+  String get textLink;
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.

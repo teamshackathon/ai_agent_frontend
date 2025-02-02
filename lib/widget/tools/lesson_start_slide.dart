@@ -16,8 +16,16 @@ class LessonStartSlide extends ConsumerWidget {
 
   final double width, height;
 
-  void addLessonStart(String roomNumber) async {
-    FirebaseFirestore.instance.collection("during").add({});
+  Future<void> addLessonStart({
+    required String roomNumber,
+    required String subject,
+    required String teacher,
+  }) async {
+    await FirebaseFirestore.instance.collection("during").add({
+      "room": roomNumber,
+      "subject": subject,
+      "teacher": teacher,
+    });
   }
 
   @override
@@ -32,8 +40,12 @@ class LessonStartSlide extends ConsumerWidget {
           width: width,
           height: height,
           child: Text("授業開始"),
-          onSwipeEnd: () {
-            // currentLesson.
+          onSwipeEnd: () async {
+            await addLessonStart(
+              roomNumber: currentRoom.roomNumber,
+              subject: currentRoom.subject,
+              teacher: currentRoom.teacher,
+            );
           },
         );
       },
