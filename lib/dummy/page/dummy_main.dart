@@ -13,8 +13,6 @@ class DummyMain extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final dummyNot = ref.read(dummyModeProvider.notifier);
-    dummyNot.state = true;
     final quizNot = ref.read(quizNotifierProvider.notifier);
     final quiz = ref.watch(quizNotifierProvider);
 
