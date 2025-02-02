@@ -44,7 +44,9 @@ class TeacherBottomBar extends HookConsumerWidget {
         destinations: [
           ProfileLottieNavigationDestination(
             label: 'プロフィール',
-            iconPath: 'assets/profile.json',
+            iconPath: selectedIndex.value == 0
+                ? 'assets/profile_black.json'
+                : 'assets/profile.json',
             index: 0,
             selectedIndex: selectedIndex.value,
             animationController: controllers.value[0],

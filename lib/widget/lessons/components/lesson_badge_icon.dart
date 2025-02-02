@@ -31,7 +31,7 @@ class ChatToAIBadgeIcon extends HookConsumerWidget {
       Badge.count(
           count: 3,
           backgroundColor: Colors.pinkAccent,
-          child: IconButton(onPressed: () {}, icon: Icon(Icons.smart_toy))),
+          child: IconButton(onPressed: onPressed, icon: Icon(Icons.smart_toy))),
       Text("AIに聞く"),
     ]);
   }

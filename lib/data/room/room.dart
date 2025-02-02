@@ -36,6 +36,7 @@ class Room with _$Room {
     // 各授業の個人のlessonsまでのpathを保持しておく
     required CollectionReference ownReference,
     required String teacher,
+    required String textLink,
   }) = _Room;
 
   String get displaySubject => subjects[subject] ?? "";
@@ -49,6 +50,7 @@ class Room with _$Room {
       reference: FirebaseFirestore.instance.collection("2024"),
       ownReference: FirebaseFirestore.instance.collection("2024"),
       teacher: "",
+      textLink: "",
     );
   }
 }
@@ -86,6 +88,7 @@ Future<List<Room>> activeRooms(ref) async {
                 ownReference: ownDocRef.doc(doc.id).collection("lessons"),
                 reference: docRef.doc(doc.id).collection("lessons"),
                 teacher: doc.data()["teacher"] ?? "",
+                textLink: doc.data()["text_link"] ?? "",
               ),
             );
           }
@@ -110,18 +113,22 @@ Future<List<Room>> activeRooms(ref) async {
       if (r["year"] == latestYear) {
         list.add(
           Room(
-              year: r["year"]!,
-              roomNumber: r["room"]!,
-              subject: r["subject"]!,
-              chatId: "", // 教師はchatIdを持たない
-              ownReference: store.collection(r["year"]!), // 教師は個人のlessonsを持たない
-              reference: store
-                  .collection(r["year"]!)
-                  .doc(r["room"]!)
-                  .collection("common")
-                  .doc(r["subject"]!)
-                  .collection("lessons"),
-              teacher: teacher.name),
+            year: r["year"]!,
+            roomNumber: r["room"]!,
+            subject: r["subject"]!,
+            chatId: "",
+            // 教師はchatIdを持たない
+            ownReference: store.collection(r["year"]!),
+            // 教師は個人のlessonsを持たない
+            reference: store
+                .collection(r["year"]!)
+                .doc(r["room"]!)
+                .collection("common")
+                .doc(r["subject"]!)
+                .collection("lessons"),
+            teacher: teacher.name,
+            textLink: "",
+          ),
         );
       }
     }
@@ -183,6 +190,7 @@ Future<List<Room>> archiveRooms(ref) async {
                 ownReference: ownDocRef.doc(doc.id).collection("lessons"),
                 reference: docRef.doc(doc.id).collection("lessons"),
                 teacher: doc.data()["teacher"] ?? "",
+                textLink: doc.data()["text_link"] ?? "",
               ),
             );
           }
@@ -210,7 +218,8 @@ Future<List<Room>> archiveRooms(ref) async {
             year: r["year"]!,
             roomNumber: r["room"]!,
             subject: r["subject"]!,
-            chatId: "", // 教師はchatIdを持たない
+            chatId: "",
+            // 教師はchatIdを持たない
             ownReference: store.collection(r["year"]!),
             reference: store
                 .collection(r["year"]!)
@@ -219,6 +228,7 @@ Future<List<Room>> archiveRooms(ref) async {
                 .doc(r["subject"]!)
                 .collection("lessons"),
             teacher: teacher.name,
+            textLink: "",
           ),
         );
       }

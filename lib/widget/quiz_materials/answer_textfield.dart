@@ -20,3 +20,21 @@ class AnswerTextbox extends StatelessWidget {
     );
   }
 }
+
+class AnswerTextboxResult extends StatelessWidget {
+  const AnswerTextboxResult({
+    super.key,
+    required this.answer,
+  });
+  final String answer;
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 50,
+      width: MediaQuery.of(context).size.width * 0.8,
+      child: Text(
+        answer,
+      ),
+    );
+  }
+}

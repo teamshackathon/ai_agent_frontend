@@ -2,6 +2,7 @@ import 'package:code/data/quiz/quiz.dart';
 import 'package:code/widget/quiz_materials/answer_textfield.dart';
 import 'package:code/widget/quiz_materials/quiz_text.dart';
 import 'package:code/widget/quiz_materials/radio_button.dart';
+import 'package:code/widget/quiz_materials/result_and_correct.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,6 +22,7 @@ class AnswerWidget extends HookConsumerWidget {
     final controller = useTextEditingController(text: quiz.answer);
     return Column(
       children: [
+        Text("test"),
         QuizText(quizText: quiz.question),
         formatAnswer(quiz, controller),
       ],
@@ -47,5 +49,28 @@ class AnswerWidget extends HookConsumerWidget {
     } else {
       throw FormatException("クイズのフォーマットが正常ではありません。");
     }
+  }
+}
+
+class AnswerResultWidget extends HookConsumerWidget {
+  const AnswerResultWidget({
+    super.key,
+    required this.quiz,
+  });
+  final Quiz quiz;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Column(
+      children: [
+        QuizText(quizText: quiz.question),
+        AnswerTextboxResult(answer: quiz.answer),
+        ResultAndCorrect(
+          result: quiz.correct,
+          score: quiz.score,
+          correctAnswer: quiz.correctAnswer,
+        )
+      ],
+    );
   }
 }
