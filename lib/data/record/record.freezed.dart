@@ -19,6 +19,7 @@ mixin _$StreamRecord {
   AudioRecorder get recorder => throw _privateConstructorUsedError;
   Socket get socket => throw _privateConstructorUsedError;
   bool get isRecording => throw _privateConstructorUsedError;
+  double get dB => throw _privateConstructorUsedError;
 
   /// Create a copy of StreamRecord
   /// with the given fields replaced by the non-null parameter values.
@@ -33,7 +34,8 @@ abstract class $StreamRecordCopyWith<$Res> {
           StreamRecord value, $Res Function(StreamRecord) then) =
       _$StreamRecordCopyWithImpl<$Res, StreamRecord>;
   @useResult
-  $Res call({AudioRecorder recorder, Socket socket, bool isRecording});
+  $Res call(
+      {AudioRecorder recorder, Socket socket, bool isRecording, double dB});
 }
 
 /// @nodoc
@@ -54,6 +56,7 @@ class _$StreamRecordCopyWithImpl<$Res, $Val extends StreamRecord>
     Object? recorder = null,
     Object? socket = null,
     Object? isRecording = null,
+    Object? dB = null,
   }) {
     return _then(_value.copyWith(
       recorder: null == recorder
@@ -68,6 +71,10 @@ class _$StreamRecordCopyWithImpl<$Res, $Val extends StreamRecord>
           ? _value.isRecording
           : isRecording // ignore: cast_nullable_to_non_nullable
               as bool,
+      dB: null == dB
+          ? _value.dB
+          : dB // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 }
@@ -80,7 +87,8 @@ abstract class _$$StreamRecordImplCopyWith<$Res>
       __$$StreamRecordImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({AudioRecorder recorder, Socket socket, bool isRecording});
+  $Res call(
+      {AudioRecorder recorder, Socket socket, bool isRecording, double dB});
 }
 
 /// @nodoc
@@ -99,6 +107,7 @@ class __$$StreamRecordImplCopyWithImpl<$Res>
     Object? recorder = null,
     Object? socket = null,
     Object? isRecording = null,
+    Object? dB = null,
   }) {
     return _then(_$StreamRecordImpl(
       recorder: null == recorder
@@ -113,6 +122,10 @@ class __$$StreamRecordImplCopyWithImpl<$Res>
           ? _value.isRecording
           : isRecording // ignore: cast_nullable_to_non_nullable
               as bool,
+      dB: null == dB
+          ? _value.dB
+          : dB // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -121,7 +134,10 @@ class __$$StreamRecordImplCopyWithImpl<$Res>
 
 class _$StreamRecordImpl implements _StreamRecord {
   const _$StreamRecordImpl(
-      {required this.recorder, required this.socket, this.isRecording = false});
+      {required this.recorder,
+      required this.socket,
+      this.isRecording = false,
+      this.dB = 0.0});
 
   @override
   final AudioRecorder recorder;
@@ -130,10 +146,13 @@ class _$StreamRecordImpl implements _StreamRecord {
   @override
   @JsonKey()
   final bool isRecording;
+  @override
+  @JsonKey()
+  final double dB;
 
   @override
   String toString() {
-    return 'StreamRecord(recorder: $recorder, socket: $socket, isRecording: $isRecording)';
+    return 'StreamRecord(recorder: $recorder, socket: $socket, isRecording: $isRecording, dB: $dB)';
   }
 
   @override
@@ -145,11 +164,13 @@ class _$StreamRecordImpl implements _StreamRecord {
                 other.recorder == recorder) &&
             (identical(other.socket, socket) || other.socket == socket) &&
             (identical(other.isRecording, isRecording) ||
-                other.isRecording == isRecording));
+                other.isRecording == isRecording) &&
+            (identical(other.dB, dB) || other.dB == dB));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, recorder, socket, isRecording);
+  int get hashCode =>
+      Object.hash(runtimeType, recorder, socket, isRecording, dB);
 
   /// Create a copy of StreamRecord
   /// with the given fields replaced by the non-null parameter values.
@@ -164,7 +185,8 @@ abstract class _StreamRecord implements StreamRecord {
   const factory _StreamRecord(
       {required final AudioRecorder recorder,
       required final Socket socket,
-      final bool isRecording}) = _$StreamRecordImpl;
+      final bool isRecording,
+      final double dB}) = _$StreamRecordImpl;
 
   @override
   AudioRecorder get recorder;
@@ -172,6 +194,8 @@ abstract class _StreamRecord implements StreamRecord {
   Socket get socket;
   @override
   bool get isRecording;
+  @override
+  double get dB;
 
   /// Create a copy of StreamRecord
   /// with the given fields replaced by the non-null parameter values.

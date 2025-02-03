@@ -1,11 +1,15 @@
 import 'dart:async';
 import 'dart:typed_data';
+import 'dart:math' as math;
 
-import 'package:code/toast.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:record/record.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:socket_io_client/socket_io_client.dart';
+
+import '../../toast.dart';
+import '../firebase/during_stream.dart';
+import '../person/person.dart';
 
 part 'record.freezed.dart';
 
@@ -17,6 +21,7 @@ class StreamRecord with _$StreamRecord {
     required AudioRecorder recorder,
     required Socket socket,
     @Default(false) bool isRecording,
+    @Default(0.0) double dB,
   }) = _StreamRecord;
 }
 
@@ -29,7 +34,15 @@ class StreamRecorder extends _$StreamRecorder {
   // 外からこれを参照すれば、声に反応して光らせたりできるかも
   Uint8List currentChunk = Uint8List(0);
   var silenceChunks = 0;
-  final silenceThreshold = 10;
+
+  // 教室の通常のdBは45ぐらいで想定、要調整
+  // 設定欄から感度調整バーがあってもいいかも
+  // SharedPreferenceで端末側に情報を残して
+  final dBThreshold = 45.0;
+
+  // 下のページを見る限り、1chunk0.1secっぽい
+  // https://zenn.dev/tatsuyasusukida/scraps/c9503b9fec2e51
+  // とりあえず規定時間を二秒にしておく
   final silenceDuring = 20;
 
   @override
@@ -55,19 +68,33 @@ class StreamRecorder extends _$StreamRecorder {
 
   void _sendAudio() {
     if (audioChunks.isNotEmpty) {
-      state.socket.emit("message", audioChunks.join());
+      // 送信データをどうすればいいか確認
+      state.socket.emit("message", audioChunks);
       audioChunks.clear();
       silenceChunks = 0;
     }
   }
 
-  void _onAudioDataAvailable(Uint8List audioChunk) {
-    // 音の取り始めを理解させる
-    // デシベル検知がいるのでは
-    audioChunks.add(audioChunk);
-    final sum = audioChunk.reduce((a, b) => a + b);
+  double _calcRMS(Int16List data) {
+    double squareSum =
+        data.map((d) => (d * d).toDouble()).reduce((a, b) => a + b);
+    return math.sqrt(squareSum / data.length);
+  }
 
-    if (sum < silenceThreshold) {
+  void _onAudioDataAvailable(Uint8List audioChunk) {
+    audioChunks.add(audioChunk);
+
+    // 音声データの実効値を計算して、dBに変換(AI三人に聞きました)
+    var pcmData = Int16List.view(audioChunk.buffer);
+    var rms = _calcRMS(pcmData);
+    var currentDB = 20 *
+        math.log(math.max(rms / 32767, 0.000000000001)) / // 0来てバグらないように
+        math.ln10;
+    state = state.copyWith(dB: currentDB);
+
+    print("rms : $rms , dB : $currentDB");
+
+    if (currentDB < dBThreshold) {
       silenceChunks++;
     } else {
       silenceChunks = 0;
@@ -81,6 +108,13 @@ class StreamRecorder extends _$StreamRecorder {
     }
   }
 
+  Future<bool> _permission()async{
+    if(await state.recorder.hasPermission())return true;
+    final user = await ref.read(personStatusProvider.future);
+    removeLessonToDuring(teacher: user.name);
+    return false;
+  }
+
   Future<void> _startRecorder() async {
     audioChunks.clear();
     final stream = await state.recorder
@@ -90,7 +124,7 @@ class StreamRecorder extends _$StreamRecorder {
   }
 
   Future<void> start() async {
-    if (await state.recorder.hasPermission()) {
+    if (await _permission()) {
       state.socket.connect();
       await _startRecorder();
     }
@@ -103,8 +137,10 @@ class StreamRecorder extends _$StreamRecorder {
   }
 
   Future<void> resume() async {
-    await state.recorder.resume();
-    state = state.copyWith(isRecording: true);
+    if (await _permission()) {
+      await state.recorder.resume();
+      state = state.copyWith(isRecording: true);
+    }
   }
 
   Future<void> stop() async {
