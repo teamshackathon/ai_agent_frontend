@@ -258,7 +258,7 @@ Future<List<Room>> archiveRooms(ref) async {
   }
 }
 
-Room searchRoom(List<Room> rooms, String subject) {
+Future<Room> searchRoom(List<Room> rooms, String subject) async{
   for (var room in rooms) {
     if (room.subject == subject) return room;
   }
