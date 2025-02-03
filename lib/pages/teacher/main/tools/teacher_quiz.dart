@@ -14,7 +14,7 @@ class TeacherQuiz extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(currentLessonProvider);
+    final snapshot = ref.watch(currentLessonStreamProvider);
     final lesson = snapshot?.data() ?? Lesson.isBlank();
     final size = MediaQuery.of(context).size;
     const widthFactor = 0.9;

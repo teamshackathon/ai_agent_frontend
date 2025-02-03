@@ -20,7 +20,7 @@ class LessonStartSlide extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final during = ref.watch(duringStreamProvider);
     final currentRoom = ref.watch(currentRoomProvider);
-    final currentLesson = ref.watch(currentLessonProvider);
+    final currentLessonStream = ref.watch(currentLessonStreamProvider);
 
     return during.when(
       data: (snapshot) {
@@ -28,7 +28,7 @@ class LessonStartSlide extends ConsumerWidget {
           snapshotData: snapshot.docs,
           roomNumber: currentRoom.roomNumber,
           subject: currentRoom.subject,
-          count: currentLesson!.data().count,
+          count: currentLessonStream!.data().count,
         )) {
           case true:
             return Text("授業中です");
@@ -43,7 +43,8 @@ class LessonStartSlide extends ConsumerWidget {
                 await addLessonToDuring(
                   roomNumber: currentRoom.roomNumber,
                   subject: currentRoom.subject,
-                  count: currentLesson.data().count,
+                  count: currentLessonStream.data().count,
+                  teacher: currentRoom.teacher,
                 );
               },
             );

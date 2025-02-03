@@ -9,7 +9,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../data/firebase/lesson_stream.dart';
 import '../../../data/lesson/lesson.dart';
-import '../../../data/quiz/quiz.dart';
 import '../../../route/route.dart';
 import '../../../widget/base_page/base_page.dart';
 
@@ -50,7 +49,7 @@ class TeacherLessonsDisplay extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentLessonNot = ref.read(currentLessonProvider.notifier);
+    final currentLessonNot = ref.read(currentLessonStreamProvider.notifier);
     final currentRoom = ref.watch(currentRoomProvider);
     final disable = useState<bool>(false);
 

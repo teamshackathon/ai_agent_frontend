@@ -26,5 +26,5 @@ final lessonsStreamProvider = StreamProvider(
 
 // 選択した授業内容を監視するプロバイダー
 // lessonsStreamProviderの支流を作るイメージ
-final currentLessonProvider =
+final currentLessonStreamProvider =
     StateProvider<QueryDocumentSnapshot<Lesson>?>((ref) => null);

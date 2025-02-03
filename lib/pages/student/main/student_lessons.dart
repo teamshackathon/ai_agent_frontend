@@ -46,7 +46,7 @@ class StudentLessonsDisplay extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentRoom = ref.watch(currentRoomProvider);
-    final currentLessonNot = ref.read(currentLessonProvider.notifier);
+    final currentLessonNot = ref.read(currentLessonStreamProvider.notifier);
 
     return lessons.isEmpty
         ? Center(child: Text("授業がありません"))
