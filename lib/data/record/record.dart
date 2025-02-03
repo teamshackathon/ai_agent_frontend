@@ -108,8 +108,8 @@ class StreamRecorder extends _$StreamRecorder {
     }
   }
 
-  Future<bool> _permission()async{
-    if(await state.recorder.hasPermission())return true;
+  Future<bool> _permission() async {
+    if (await state.recorder.hasPermission()) return true;
     final user = await ref.read(personStatusProvider.future);
     removeLessonToDuring(teacher: user.name);
     return false;

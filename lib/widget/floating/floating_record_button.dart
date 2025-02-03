@@ -48,7 +48,8 @@ class FloatingRecordButton extends HookConsumerWidget {
             ),
           ],
         ),
-        child: Material( // 🔥 Web で確実に丸くするために Material をラップ
+        child: Material(
+          // 🔥 Web で確実に丸くするために Material をラップ
           shape: CircleBorder(),
           color: Colors.transparent,
           elevation: 0, // 影は `AnimatedContainer` に任せる
