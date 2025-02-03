@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code/data/person/person.dart';
+import 'package:code/toast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final duringStreamProvider = StreamProvider((ref) async* {
@@ -18,12 +19,18 @@ Future<void> addLessonToDuring({
   required String roomNumber,
   required String subject,
   required int count,
+  required String teacher,
 }) async {
-  await FirebaseFirestore.instance.collection("during").add({
+  await FirebaseFirestore.instance.collection("during").doc(teacher).set({
     "room": roomNumber,
     "subject": subject,
     "count": count,
+    "teacher": teacher,
   });
+}
+
+Future<void> removeLessonToDuring({required String teacher}) async {
+  await FirebaseFirestore.instance.collection("during").doc(teacher).delete();
 }
 
 // 現在行われている授業一覧に、指定した（今行っている）授業があればtrue、
@@ -42,4 +49,17 @@ bool? duringLesson({
     }
   }
   return null;
+}
+
+bool givingLesson({
+  required List<QueryDocumentSnapshot<Map<String, dynamic>>> snapshotData,
+  required String teacher,
+}) {
+  for (var d in snapshotData) {
+    var map = d.data();
+    if (map["teacher"] == teacher) {
+      return true;
+    }
+  }
+  return false;
 }
