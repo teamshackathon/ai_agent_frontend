@@ -257,3 +257,10 @@ Future<List<Room>> archiveRooms(ref) async {
     return [];
   }
 }
+
+Room searchRoom(List<Room> rooms, String subject){
+  for(var room in rooms){
+    if(room.subject == subject) return room;
+  }
+  return Room.isBlank();
+}

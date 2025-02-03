@@ -1,5 +1,8 @@
+import 'package:code/data/firebase/during_stream.dart';
+import 'package:code/toast.dart';
 import 'package:code/widget/sakura_redial_menu/components/radial_sakura_menu.dart';
 import 'package:code/widget/sakura_redial_menu/components/radial_sakura_menu_item.dart';
+import 'package:code/widget/shortcut/shortcut.dart';
 import 'package:code/widget/utils/sakura_progress_indicator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +53,8 @@ class StudentMainDisplay extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentRoomNot = ref.read(currentRoomProvider.notifier);
+    final during = ref.watch(duringStreamProvider);
+
     return rooms.isEmpty
         ? Center(child: Text("授業がありません"))
         : Column(
@@ -62,30 +67,41 @@ class StudentMainDisplay extends ConsumerWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 0),
+                padding: EdgeInsets.only(top: 0, bottom: 30),
                 child: Text(
                   "授業を選んでください",
                   style: TextStyle(fontSize: 15),
                 ),
               ),
-              Spacer(),
-              Expanded(
-                child: RadialSakuraMenu(
-                  items: rooms
-                      .map(
-                        (room) => RadialSakuraMenuItem(
-                          key: UniqueKey(),
-                          subject: getOptionFromIndex(room.subject),
-                          angle:
-                              2 * math.pi / rooms.length * rooms.indexOf(room),
-                          onTap: () {
-                            currentRoomNot.state = room;
-                            GoRouter.of(context).push(Routes.studentLessons);
-                          },
-                        ),
-                      )
-                      .toList(),
-                ),
+              during.when(
+                data: (snapshots) {
+                  if (snapshots.docs.isEmpty) return Spacer();
+                  return SizedBox(
+                    width: 300,
+                    height: 100,
+                    child: ShortcutButton(
+                      rooms: rooms,
+                      shortcut: snapshots.docs.first,
+                    ),
+                  );
+                },
+                error: (_, __) => Spacer(),
+                loading: () => Spacer(),
+              ),
+              RadialSakuraMenu(
+                items: rooms
+                    .map(
+                      (room) => RadialSakuraMenuItem(
+                        key: UniqueKey(),
+                        subject: getOptionFromIndex(room.subject),
+                        angle: 2 * math.pi / rooms.length * rooms.indexOf(room),
+                        onTap: () {
+                          currentRoomNot.state = room;
+                          GoRouter.of(context).push(Routes.studentLessons);
+                        },
+                      ),
+                    )
+                    .toList(),
               ),
             ],
           );
