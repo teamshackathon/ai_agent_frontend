@@ -21,7 +21,7 @@ class StreamRecord with _$StreamRecord {
     required AudioRecorder recorder,
     required Socket socket,
     @Default(false) bool isRecording,
-    @Default(0.0) double dB,
+    @Default(0.0) double dB, // 外から
   }) = _StreamRecord;
 }
 
@@ -30,9 +30,6 @@ class StreamRecorder extends _$StreamRecorder {
   final List<String> messages = [];
   StreamSubscription<Uint8List>? subscription;
   final List<Uint8List> audioChunks = [];
-
-  // 外からこれを参照すれば、声に反応して光らせたりできるかも
-  Uint8List currentChunk = Uint8List(0);
   var silenceChunks = 0;
 
   // 教室の通常のdBは45ぐらいで想定、要調整
