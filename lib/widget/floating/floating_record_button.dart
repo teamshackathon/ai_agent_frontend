@@ -12,15 +12,11 @@ class FloatingRecordButton extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final recorder = ref.watch(recordProvider);
-    final recorderNot = ref.read(recordProvider.notifier);
+    final recorder = ref.watch(streamRecorderProvider);
+    final recorderNot = ref.read(streamRecorderProvider.notifier);
 
     void lessonStart() async {
-      await recorderNot.startRecording();
-    }
-
-    Future<void> lessonFinish() async {
-      await recorderNot.stopRecording();
+      await recorderNot.start();
     }
 
     useEffect(() {
@@ -33,7 +29,7 @@ class FloatingRecordButton extends HookConsumerWidget {
       children: [
         InkWell(
           onLongPress: () async {
-            await lessonFinish();
+            await recorderNot.stop();
             removeLessonToDuring(teacher: teacher);
           },
           child: FloatingActionButton(
@@ -43,9 +39,9 @@ class FloatingRecordButton extends HookConsumerWidget {
             child: recorder.isRecording ? Icon(Icons.mic) : Icon(Icons.mic_off),
             onPressed: () {
               if (recorder.isRecording) {
-                recorderNot.pauseRecording();
+                recorderNot.pause();
               } else {
-                recorderNot.resumeRecording();
+                recorderNot.resume();
               }
             },
           ),

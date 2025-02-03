@@ -1,78 +1,116 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:code/toast.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:record/record.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 
 part 'record.freezed.dart';
 
-final recordProvider =
-    StateNotifierProvider<RecordService, RecordState>((ref) => RecordService());
+part 'record.g.dart';
 
 @freezed
-class RecordState with _$RecordState {
-  const factory RecordState({
+class StreamRecord with _$StreamRecord {
+  const factory StreamRecord({
+    required AudioRecorder recorder,
+    required Socket socket,
     @Default(false) bool isRecording,
-  }) = _RecordState;
+  }) = _StreamRecord;
 }
 
-class RecordService extends StateNotifier<RecordState> {
-  RecordService() : super(const RecordState());
-
-  final _recorder = AudioRecorder();
+@Riverpod(keepAlive: true)
+class StreamRecorder extends _$StreamRecorder {
+  final List<String> messages = [];
+  StreamSubscription<Uint8List>? subscription;
   final List<Uint8List> audioChunks = [];
+
   // 外からこれを参照すれば、声に反応して光らせたりできるかも
   Uint8List currentChunk = Uint8List(0);
-  late StreamSubscription<Uint8List>? subscription;
+  var silenceChunks = 0;
+  final silenceThreshold = 10;
+  final silenceDuring = 20;
 
-  Future<bool> get _hasPermission async {
-    return _recorder.hasPermission();
+  @override
+  StreamRecord build() {
+    final recorder = AudioRecorder();
+    final socket = io(
+      'http://10.0.2.2:5002',
+      <String, dynamic>{
+        'transports': ['websocket'],
+        'autoConnect': false,
+      },
+    );
+
+    socket.onConnect((_) => infoToast(log: "WebSocket Connected"));
+    socket.on("message", (data) => messages.add(data));
+    socket.onDisconnect((_) {
+      infoToast(log: messages);
+      infoToast(log: "WebSocket Disconnected");
+    });
+    socket.on('error', (error) => infoToast(log: "WebSocket Error : $error"));
+    return StreamRecord(recorder: recorder, socket: socket);
   }
 
-  void addChunkToList(Uint8List chunk) {
-    audioChunks.add(chunk);
-    currentChunk = chunk;
-  }
-
-  Future<void> startRecording() async {
-    if (!(await _hasPermission)) {
-      return;
+  void _sendAudio() {
+    if (audioChunks.isNotEmpty) {
+      state.socket.emit("message", audioChunks.join());
+      audioChunks.clear();
+      silenceChunks = 0;
     }
-    final stream = await _recorder
+  }
+
+  void _onAudioDataAvailable(Uint8List audioChunk) {
+    // 音の取り始めを理解させる
+    // デシベル検知がいるのでは
+    audioChunks.add(audioChunk);
+    final sum = audioChunk.reduce((a, b) => a + b);
+
+    if (sum < silenceThreshold) {
+      silenceChunks++;
+    } else {
+      silenceChunks = 0;
+    }
+
+    if (silenceChunks > silenceDuring) {
+      if (state.isRecording) {
+        infoToast(log: 'Silence detected. Save recording...');
+        _sendAudio();
+      }
+    }
+  }
+
+  Future<void> _startRecorder() async {
+    audioChunks.clear();
+    final stream = await state.recorder
         .startStream(const RecordConfig(encoder: AudioEncoder.pcm16bits));
-    subscription = stream.listen(addChunkToList);
+    subscription = stream.listen(_onAudioDataAvailable);
     state = state.copyWith(isRecording: true);
   }
 
-  Future<void> pauseRecording() async {
-    await _recorder.pause();
-    // ここで一旦送信が入ってもいいかも
+  Future<void> start() async {
+    if (await state.recorder.hasPermission()) {
+      state.socket.connect();
+      await _startRecorder();
+    }
+  }
+
+  Future<void> pause() async {
+    await state.recorder.pause();
+    _sendAudio();
     state = state.copyWith(isRecording: false);
   }
 
-  Future<void> resumeRecording() async {
-    await _recorder.resume();
+  Future<void> resume() async {
+    await state.recorder.resume();
     state = state.copyWith(isRecording: true);
   }
 
-  Future<void> stopRecording() async {
+  Future<void> stop() async {
     subscription!.cancel();
-
-    // chunks確認用
-    // for (var audio in audioChunks) {
-    //   for (var i = 0; i < 10; i += 1) {
-    //     final bytes = [];
-    //     for (var j = 0; j < 10; j += 1) {
-    //       bytes.add(
-    //         '0x${audio[0 + i * 10 + j].toRadixString(16).padLeft(2, '0')}',
-    //       );
-    //     }
-    //     print(bytes.join(' '));
-    //   }
-    // }
-
-    _recorder.stop();
+    state.recorder.stop();
+    state.socket.disconnect();
     state = state.copyWith(isRecording: false);
   }
 }
