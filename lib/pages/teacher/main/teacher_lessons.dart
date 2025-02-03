@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../data/firebase/lesson_stream.dart';
 import '../../../data/lesson/lesson.dart';
@@ -21,22 +22,33 @@ class TeacherLessons extends ConsumerWidget {
 
     return BasePage(
       pageTitle: "教師コマ選択",
-      body: Center(
-        child: FractionallySizedBox(
-          widthFactor: 0.95,
-          heightFactor: 0.95,
-          child: lessonsStream.when(
-            data: (snapshot) => TeacherLessonsDisplay(lessons: snapshot.docs),
-            // エラー時の表示
-            error: (_, __) => const Center(
-              child: Text("読み込み失敗"),
-            ),
-            // 読込中の表示
-            loading: () => const Center(
-              child: SakuraProgressIndicator(),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            // サイズを画面に合わせる
+            child: SvgPicture.asset(
+              'assets/background_math.svg',
             ),
           ),
-        ),
+          Center(
+            child: FractionallySizedBox(
+              widthFactor: 0.95,
+              heightFactor: 0.95,
+              child: lessonsStream.when(
+                data: (snapshot) =>
+                    TeacherLessonsDisplay(lessons: snapshot.docs),
+                // エラー時の表示
+                error: (_, __) => const Center(
+                  child: Text("読み込み失敗"),
+                ),
+                // 読込中の表示
+                loading: () => const Center(
+                  child: SakuraProgressIndicator(),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
