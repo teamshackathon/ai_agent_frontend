@@ -21,7 +21,7 @@ class StreamRecord with _$StreamRecord {
     required AudioRecorder recorder,
     required Socket socket,
     @Default(false) bool isRecording,
-    @Default(0.0) double dB, // 外から
+    @Default(0.0) double dB, // 外から見る用
   }) = _StreamRecord;
 }
 
@@ -31,6 +31,7 @@ class StreamRecorder extends _$StreamRecorder {
   StreamSubscription<Uint8List>? subscription;
   final List<Uint8List> audioChunks = [];
   var silenceChunks = 0;
+  var breakSilence = false;
 
   // 教室の通常のdBは45ぐらいで想定、要調整
   // 設定欄から感度調整バーがあってもいいかも
@@ -79,21 +80,27 @@ class StreamRecorder extends _$StreamRecorder {
   }
 
   void _onAudioDataAvailable(Uint8List audioChunk) {
-    audioChunks.add(audioChunk);
-
     // 音声データの実効値を計算して、dBに変換(AI三人に聞きました)
     var pcmData = Int16List.view(audioChunk.buffer);
     var rms = _calcRMS(pcmData);
     var currentDB = 20 *
         math.log(math.max(rms / 32767, 0.000000000001)) / // 0来てバグらないように
         math.ln10;
+
     state = state.copyWith(dB: currentDB);
 
     print("rms : $rms , dB : $currentDB");
 
     if (currentDB < dBThreshold) {
-      silenceChunks++;
+      if (breakSilence) {
+        silenceChunks++;
+        if (silenceChunks <= silenceDuring / 2) {
+          audioChunks.add(audioChunk);
+        }
+      }
     } else {
+      audioChunks.add(audioChunk);
+      breakSilence = true;
       silenceChunks = 0;
     }
 
@@ -102,6 +109,7 @@ class StreamRecorder extends _$StreamRecorder {
         infoToast(log: 'Silence detected. Save recording...');
         _sendAudio();
       }
+      breakSilence = false;
     }
   }
 
