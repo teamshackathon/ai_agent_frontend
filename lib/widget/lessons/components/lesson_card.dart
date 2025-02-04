@@ -29,25 +29,36 @@ class LessonCard extends HookConsumerWidget {
             width: double.infinity,
             height: 100,
             child: Container(
-              margin: EdgeInsets.only(left: 50),
+              margin: EdgeInsets.only(left: 50, right: 70),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 textDirection: TextDirection.ltr,
                 children: [
                   Container(
-                    height: 10,
+                    height: 15,
                   ),
-                  Text("第${lesson.count}目の授業"),
-                  Text("実施日："),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 1),
+                        child: Text("第${lesson.count}回目の授業"),
+                      ),
+                      Container(
+                        width: 10,
+                      ),
+                      LessonDocumentTag(label: "授業後"),
+                    ],
+                  ),
                   Container(
                     height: 5,
                   ),
-                  Flex(direction: Axis.horizontal, children: [
-                    LessonDocumentTag(label: "授業資料"),
-                    LessonDocumentTag(label: "テスト"),
-                    LessonDocumentTag(label: "宿題"),
-                    LessonDocumentTag(label: "補足資料"),
-                  ]),
+                  Text(
+                    lesson.agendaPublish.title,
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
             )),
@@ -64,26 +75,19 @@ class LessonDocumentTag extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
-        padding: EdgeInsets.only(right: 10),
+        padding: EdgeInsets.only(right: 0),
         child: Row(
           children: [
             Container(
-              padding: EdgeInsets.all(4.0),
               decoration: BoxDecoration(
-                color: Colors.blue, // 背景色
-                shape: BoxShape.circle, // 円形の縁
+                border: Border.all(color: Colors.blue), // 枠線
+                borderRadius: BorderRadius.circular(5), // 角丸
               ),
-              child: Icon(
-                Icons.book,
-                color: Colors.white,
-                size: 13.0, // アイコンのサイズ
-              ),
-            ),
-            SizedBox(width: 4.0), // アイコンとテキストの間にスペースを追加
-            Text(
-              label,
-              style: TextStyle(
-                color: Colors.blue, // テキストの色
+              child: Text(
+                label,
+                style: TextStyle(
+                  color: Colors.blue, // テキストの色
+                ),
               ),
             ),
           ],
