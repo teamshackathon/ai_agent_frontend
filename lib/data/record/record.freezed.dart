@@ -15,131 +15,192 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$RecordState {
+mixin _$StreamRecord {
+  AudioRecorder get recorder => throw _privateConstructorUsedError;
+  Socket get socket => throw _privateConstructorUsedError;
   bool get isRecording => throw _privateConstructorUsedError;
+  double get dB => throw _privateConstructorUsedError;
 
-  /// Create a copy of RecordState
+  /// Create a copy of StreamRecord
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $RecordStateCopyWith<RecordState> get copyWith =>
+  $StreamRecordCopyWith<StreamRecord> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $RecordStateCopyWith<$Res> {
-  factory $RecordStateCopyWith(
-          RecordState value, $Res Function(RecordState) then) =
-      _$RecordStateCopyWithImpl<$Res, RecordState>;
+abstract class $StreamRecordCopyWith<$Res> {
+  factory $StreamRecordCopyWith(
+          StreamRecord value, $Res Function(StreamRecord) then) =
+      _$StreamRecordCopyWithImpl<$Res, StreamRecord>;
   @useResult
-  $Res call({bool isRecording});
+  $Res call(
+      {AudioRecorder recorder, Socket socket, bool isRecording, double dB});
 }
 
 /// @nodoc
-class _$RecordStateCopyWithImpl<$Res, $Val extends RecordState>
-    implements $RecordStateCopyWith<$Res> {
-  _$RecordStateCopyWithImpl(this._value, this._then);
+class _$StreamRecordCopyWithImpl<$Res, $Val extends StreamRecord>
+    implements $StreamRecordCopyWith<$Res> {
+  _$StreamRecordCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of RecordState
+  /// Create a copy of StreamRecord
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? recorder = null,
+    Object? socket = null,
     Object? isRecording = null,
+    Object? dB = null,
   }) {
     return _then(_value.copyWith(
+      recorder: null == recorder
+          ? _value.recorder
+          : recorder // ignore: cast_nullable_to_non_nullable
+              as AudioRecorder,
+      socket: null == socket
+          ? _value.socket
+          : socket // ignore: cast_nullable_to_non_nullable
+              as Socket,
       isRecording: null == isRecording
           ? _value.isRecording
           : isRecording // ignore: cast_nullable_to_non_nullable
               as bool,
+      dB: null == dB
+          ? _value.dB
+          : dB // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$RecordStateImplCopyWith<$Res>
-    implements $RecordStateCopyWith<$Res> {
-  factory _$$RecordStateImplCopyWith(
-          _$RecordStateImpl value, $Res Function(_$RecordStateImpl) then) =
-      __$$RecordStateImplCopyWithImpl<$Res>;
+abstract class _$$StreamRecordImplCopyWith<$Res>
+    implements $StreamRecordCopyWith<$Res> {
+  factory _$$StreamRecordImplCopyWith(
+          _$StreamRecordImpl value, $Res Function(_$StreamRecordImpl) then) =
+      __$$StreamRecordImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isRecording});
+  $Res call(
+      {AudioRecorder recorder, Socket socket, bool isRecording, double dB});
 }
 
 /// @nodoc
-class __$$RecordStateImplCopyWithImpl<$Res>
-    extends _$RecordStateCopyWithImpl<$Res, _$RecordStateImpl>
-    implements _$$RecordStateImplCopyWith<$Res> {
-  __$$RecordStateImplCopyWithImpl(
-      _$RecordStateImpl _value, $Res Function(_$RecordStateImpl) _then)
+class __$$StreamRecordImplCopyWithImpl<$Res>
+    extends _$StreamRecordCopyWithImpl<$Res, _$StreamRecordImpl>
+    implements _$$StreamRecordImplCopyWith<$Res> {
+  __$$StreamRecordImplCopyWithImpl(
+      _$StreamRecordImpl _value, $Res Function(_$StreamRecordImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of RecordState
+  /// Create a copy of StreamRecord
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? recorder = null,
+    Object? socket = null,
     Object? isRecording = null,
+    Object? dB = null,
   }) {
-    return _then(_$RecordStateImpl(
+    return _then(_$StreamRecordImpl(
+      recorder: null == recorder
+          ? _value.recorder
+          : recorder // ignore: cast_nullable_to_non_nullable
+              as AudioRecorder,
+      socket: null == socket
+          ? _value.socket
+          : socket // ignore: cast_nullable_to_non_nullable
+              as Socket,
       isRecording: null == isRecording
           ? _value.isRecording
           : isRecording // ignore: cast_nullable_to_non_nullable
               as bool,
+      dB: null == dB
+          ? _value.dB
+          : dB // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
 
 /// @nodoc
 
-class _$RecordStateImpl implements _RecordState {
-  const _$RecordStateImpl({this.isRecording = false});
+class _$StreamRecordImpl implements _StreamRecord {
+  const _$StreamRecordImpl(
+      {required this.recorder,
+      required this.socket,
+      this.isRecording = false,
+      this.dB = 0.0});
 
+  @override
+  final AudioRecorder recorder;
+  @override
+  final Socket socket;
   @override
   @JsonKey()
   final bool isRecording;
+  @override
+  @JsonKey()
+  final double dB;
 
   @override
   String toString() {
-    return 'RecordState(isRecording: $isRecording)';
+    return 'StreamRecord(recorder: $recorder, socket: $socket, isRecording: $isRecording, dB: $dB)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$RecordStateImpl &&
+            other is _$StreamRecordImpl &&
+            (identical(other.recorder, recorder) ||
+                other.recorder == recorder) &&
+            (identical(other.socket, socket) || other.socket == socket) &&
             (identical(other.isRecording, isRecording) ||
-                other.isRecording == isRecording));
+                other.isRecording == isRecording) &&
+            (identical(other.dB, dB) || other.dB == dB));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isRecording);
+  int get hashCode =>
+      Object.hash(runtimeType, recorder, socket, isRecording, dB);
 
-  /// Create a copy of RecordState
+  /// Create a copy of StreamRecord
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$RecordStateImplCopyWith<_$RecordStateImpl> get copyWith =>
-      __$$RecordStateImplCopyWithImpl<_$RecordStateImpl>(this, _$identity);
+  _$$StreamRecordImplCopyWith<_$StreamRecordImpl> get copyWith =>
+      __$$StreamRecordImplCopyWithImpl<_$StreamRecordImpl>(this, _$identity);
 }
 
-abstract class _RecordState implements RecordState {
-  const factory _RecordState({final bool isRecording}) = _$RecordStateImpl;
+abstract class _StreamRecord implements StreamRecord {
+  const factory _StreamRecord(
+      {required final AudioRecorder recorder,
+      required final Socket socket,
+      final bool isRecording,
+      final double dB}) = _$StreamRecordImpl;
 
   @override
+  AudioRecorder get recorder;
+  @override
+  Socket get socket;
+  @override
   bool get isRecording;
+  @override
+  double get dB;
 
-  /// Create a copy of RecordState
+  /// Create a copy of StreamRecord
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$RecordStateImplCopyWith<_$RecordStateImpl> get copyWith =>
+  _$$StreamRecordImplCopyWith<_$StreamRecordImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
