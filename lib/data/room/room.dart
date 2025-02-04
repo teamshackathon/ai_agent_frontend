@@ -36,7 +36,8 @@ class Room with _$Room {
     // 各授業の個人のlessonsまでのpathを保持しておく
     required CollectionReference ownReference,
     required String teacher,
-    required String textLink,
+    // データ名にしとくと、後から楽そう
+    required String textDataName,
   }) = _Room;
 
   String get displaySubject => subjects[subject] ?? "";
@@ -50,7 +51,7 @@ class Room with _$Room {
       reference: FirebaseFirestore.instance.collection("2024"),
       ownReference: FirebaseFirestore.instance.collection("2024"),
       teacher: "",
-      textLink: "",
+      textDataName: "",
     );
   }
 }
@@ -88,7 +89,7 @@ Future<List<Room>> activeRooms(ref) async {
                 ownReference: ownDocRef.doc(doc.id).collection("lessons"),
                 reference: docRef.doc(doc.id).collection("lessons"),
                 teacher: doc.data()["teacher"] ?? "",
-                textLink: doc.data()["text_link"] ?? "",
+                textDataName: doc.data()["text_link"] ?? "",
               ),
             );
           }
@@ -127,7 +128,7 @@ Future<List<Room>> activeRooms(ref) async {
                 .doc(r["subject"]!)
                 .collection("lessons"),
             teacher: teacher.name,
-            textLink: "",
+            textDataName: "",
           ),
         );
       }
@@ -190,7 +191,7 @@ Future<List<Room>> archiveRooms(ref) async {
                 ownReference: ownDocRef.doc(doc.id).collection("lessons"),
                 reference: docRef.doc(doc.id).collection("lessons"),
                 teacher: doc.data()["teacher"] ?? "",
-                textLink: doc.data()["text_link"] ?? "",
+                textDataName: doc.data()["text_link"] ?? "",
               ),
             );
           }
@@ -228,7 +229,7 @@ Future<List<Room>> archiveRooms(ref) async {
                 .doc(r["subject"]!)
                 .collection("lessons"),
             teacher: teacher.name,
-            textLink: "",
+            textDataName: "",
           ),
         );
       }
