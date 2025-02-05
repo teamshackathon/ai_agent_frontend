@@ -91,8 +91,6 @@ class StreamRecorder extends _$StreamRecorder {
 
     state = state.copyWith(dB: currentDB);
 
-    print("rms : $rms , dB : $currentDB");
-
     // しきい値を下回ってるか
     if (currentDB < dBThreshold) {
       // ずっと沈黙が続いていなければ
@@ -108,6 +106,7 @@ class StreamRecorder extends _$StreamRecorder {
       breakSilence = true;
       silenceChunks = 0;
     }
+
 
     if (silenceChunks > silenceDuring) {
       infoToast(log: 'Silence detected. Save recording...');
