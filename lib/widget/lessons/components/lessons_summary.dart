@@ -1,5 +1,7 @@
 import 'package:code/firebase/firestore/chat/create_chat_room.dart';
 import 'package:code/route/route.dart';
+import 'package:code/toast.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -36,7 +38,11 @@ class LessonsSummary extends HookConsumerWidget {
                 Expanded(
                     child: Column(
                   children: [
-                    IconButton(onPressed: () {}, icon: Icon(Icons.book)),
+                    IconButton(
+                        onPressed: () {
+                          GoRouter.of(context).push(Routes.studentReading);
+                        },
+                        icon: Icon(Icons.book)),
                     Text("教科書"),
                   ],
                 )),

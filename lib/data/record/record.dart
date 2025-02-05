@@ -91,9 +91,12 @@ class StreamRecorder extends _$StreamRecorder {
 
     print("rms : $rms , dB : $currentDB");
 
+    // しきい値を下回ってるか
     if (currentDB < dBThreshold) {
+      // ずっと沈黙が続いていなければ
       if (breakSilence) {
         silenceChunks++;
+        // 沈黙し始めても少しの間はデータ格納
         if (silenceChunks <= silenceDuring / 2) {
           audioChunks.add(audioChunk);
         }
@@ -105,10 +108,9 @@ class StreamRecorder extends _$StreamRecorder {
     }
 
     if (silenceChunks > silenceDuring) {
-      if (state.isRecording) {
-        infoToast(log: 'Silence detected. Save recording...');
-        _sendAudio();
-      }
+      infoToast(log: 'Silence detected. Save recording...');
+      _sendAudio();
+      // ここで長い沈黙とみなす
       breakSilence = false;
     }
   }

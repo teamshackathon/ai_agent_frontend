@@ -59,19 +59,21 @@ class TeacherLessonsDisplay extends HookConsumerWidget {
           flex: 20,
           child: InkWell(
             onTap: () async {
-              disable.value = true;
-              infoToast(log: currentRoom.toString());
-              await currentRoom.reference.add(
-                Lesson(
-                  count: lessons.length + 1,
-                  agendaPublish: Agenda.isBlank(),
-                  agendaDraft: Agenda.isBlank(),
-                  questionsPublish: [],
-                  questionsDraft: [],
-                  reference: currentRoom.reference.doc(),
-                ).toMap(),
-              );
-              disable.value = false;
+              currentLessonNot.state = lessons.isNotEmpty ? lessons[0] : null;
+              GoRouter.of(context).push(Routes.teacherCreateLesson);
+              // disable.value = true;
+              // infoToast(log: currentRoom.toString());
+              // await currentRoom.reference.add(
+              //   Lesson(
+              //     count: lessons.length + 1,
+              //     agendaPublish: Agenda.isBlank(),
+              //     agendaDraft: Agenda.isBlank(),
+              //     questionsPublish: [],
+              //     questionsDraft: [],
+              //     reference: currentRoom.reference.doc(),
+              //   ).toMap(),
+              // );
+              // disable.value = false;
             },
             child: Card(
               child: Center(

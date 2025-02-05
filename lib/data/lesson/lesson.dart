@@ -10,14 +10,15 @@ part 'lesson.freezed.dart';
 class Lesson with _$Lesson {
   const Lesson._();
 
-  const factory Lesson({
-    required int count,
-    required Agenda agendaPublish,
-    required Agenda agendaDraft,
-    required List<Quiz> questionsPublish,
-    required List<Quiz> questionsDraft,
-    required DocumentReference reference,
-  }) = _Lesson;
+  const factory Lesson(
+      {required int count,
+      required Agenda agendaPublish,
+      required Agenda agendaDraft,
+      required List<Quiz> questionsPublish,
+      required List<Quiz> questionsDraft,
+      required DocumentReference reference,
+      required int startPage,
+      required int endPage}) = _Lesson;
 
   factory Lesson.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -37,6 +38,8 @@ class Lesson with _$Lesson {
       questionsPublish: publish,
       questionsDraft: draft,
       count: map?["count"] ?? -1,
+      startPage: map?["start_page"] ?? 1,
+      endPage: map?["end_page"] ?? 1,
     );
   }
 
@@ -52,17 +55,20 @@ class Lesson with _$Lesson {
       "agenda_draft": agendaDraft.toMap(),
       "questions_publish": publish,
       "questions_draft": draft,
+      "start_page": startPage,
+      "end_page": endPage,
     };
   }
 
   factory Lesson.isBlank() {
     return Lesson(
-      count: 0,
-      agendaPublish: Agenda.isBlank(),
-      agendaDraft: Agenda.isBlank(),
-      questionsPublish: [],
-      questionsDraft: [],
-      reference: FirebaseFirestore.instance.collection("2024").doc(),
-    );
+        count: 0,
+        agendaPublish: Agenda.isBlank(),
+        agendaDraft: Agenda.isBlank(),
+        questionsPublish: [],
+        questionsDraft: [],
+        reference: FirebaseFirestore.instance.collection("2024").doc(),
+        startPage: 0,
+        endPage: 0);
   }
 }

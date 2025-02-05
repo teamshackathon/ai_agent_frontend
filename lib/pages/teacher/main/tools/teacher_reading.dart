@@ -10,8 +10,8 @@ import '../../../../data/firebase/lesson_stream.dart';
 import '../../../../widget/base_page/base_page.dart';
 import '../../../../widget/utils/sakura_progress_indicator.dart';
 
-class StudentReading extends HookConsumerWidget {
-  const StudentReading({super.key});
+class TeacherReading extends HookConsumerWidget {
+  const TeacherReading({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,7 +32,7 @@ class StudentReading extends HookConsumerWidget {
             return const Center(child: Text("教科書データが見つかりませんでした"));
           } else {
             // SharedPreferenceで保存できるか？
-            return StudentReadingDisplay(uri: Uri.parse(snapshot.data ?? ""));
+            return TeacherReadingDisplay(uri: Uri.parse(snapshot.data ?? ""));
           }
         },
       ),
@@ -40,8 +40,8 @@ class StudentReading extends HookConsumerWidget {
   }
 }
 
-class StudentReadingDisplay extends HookConsumerWidget {
-  const StudentReadingDisplay({super.key, required this.uri});
+class TeacherReadingDisplay extends HookConsumerWidget {
+  const TeacherReadingDisplay({super.key, required this.uri});
 
   final Uri uri;
 

@@ -25,8 +25,8 @@ mixin _$Room {
       throw _privateConstructorUsedError; // 各授業の個人のlessonsまでのpathを保持しておく
   CollectionReference<Object?> get ownReference =>
       throw _privateConstructorUsedError;
-  String get teacher => throw _privateConstructorUsedError;
-  String get textLink => throw _privateConstructorUsedError;
+  String get teacher => throw _privateConstructorUsedError; // データ名にしとくと、後から楽そう
+  String get textDataName => throw _privateConstructorUsedError;
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
@@ -47,7 +47,7 @@ abstract class $RoomCopyWith<$Res> {
       CollectionReference<Object?> reference,
       CollectionReference<Object?> ownReference,
       String teacher,
-      String textLink});
+      String textDataName});
 }
 
 /// @nodoc
@@ -72,7 +72,7 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
     Object? reference = null,
     Object? ownReference = null,
     Object? teacher = null,
-    Object? textLink = null,
+    Object? textDataName = null,
   }) {
     return _then(_value.copyWith(
       year: null == year
@@ -103,9 +103,9 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
           ? _value.teacher
           : teacher // ignore: cast_nullable_to_non_nullable
               as String,
-      textLink: null == textLink
-          ? _value.textLink
-          : textLink // ignore: cast_nullable_to_non_nullable
+      textDataName: null == textDataName
+          ? _value.textDataName
+          : textDataName // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -126,7 +126,7 @@ abstract class _$$RoomImplCopyWith<$Res> implements $RoomCopyWith<$Res> {
       CollectionReference<Object?> reference,
       CollectionReference<Object?> ownReference,
       String teacher,
-      String textLink});
+      String textDataName});
 }
 
 /// @nodoc
@@ -148,7 +148,7 @@ class __$$RoomImplCopyWithImpl<$Res>
     Object? reference = null,
     Object? ownReference = null,
     Object? teacher = null,
-    Object? textLink = null,
+    Object? textDataName = null,
   }) {
     return _then(_$RoomImpl(
       year: null == year
@@ -179,9 +179,9 @@ class __$$RoomImplCopyWithImpl<$Res>
           ? _value.teacher
           : teacher // ignore: cast_nullable_to_non_nullable
               as String,
-      textLink: null == textLink
-          ? _value.textLink
-          : textLink // ignore: cast_nullable_to_non_nullable
+      textDataName: null == textDataName
+          ? _value.textDataName
+          : textDataName // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -198,7 +198,7 @@ class _$RoomImpl extends _Room {
       required this.reference,
       required this.ownReference,
       required this.teacher,
-      required this.textLink})
+      required this.textDataName})
       : super._();
 
   @override
@@ -217,12 +217,13 @@ class _$RoomImpl extends _Room {
   final CollectionReference<Object?> ownReference;
   @override
   final String teacher;
+// データ名にしとくと、後から楽そう
   @override
-  final String textLink;
+  final String textDataName;
 
   @override
   String toString() {
-    return 'Room(year: $year, roomNumber: $roomNumber, subject: $subject, chatId: $chatId, reference: $reference, ownReference: $ownReference, teacher: $teacher, textLink: $textLink)';
+    return 'Room(year: $year, roomNumber: $roomNumber, subject: $subject, chatId: $chatId, reference: $reference, ownReference: $ownReference, teacher: $teacher, textDataName: $textDataName)';
   }
 
   @override
@@ -240,13 +241,13 @@ class _$RoomImpl extends _Room {
             (identical(other.ownReference, ownReference) ||
                 other.ownReference == ownReference) &&
             (identical(other.teacher, teacher) || other.teacher == teacher) &&
-            (identical(other.textLink, textLink) ||
-                other.textLink == textLink));
+            (identical(other.textDataName, textDataName) ||
+                other.textDataName == textDataName));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, year, roomNumber, subject,
-      chatId, reference, ownReference, teacher, textLink);
+      chatId, reference, ownReference, teacher, textDataName);
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
@@ -266,7 +267,7 @@ abstract class _Room extends Room {
       required final CollectionReference<Object?> reference,
       required final CollectionReference<Object?> ownReference,
       required final String teacher,
-      required final String textLink}) = _$RoomImpl;
+      required final String textDataName}) = _$RoomImpl;
   const _Room._() : super._();
 
   @override
@@ -282,9 +283,9 @@ abstract class _Room extends Room {
   @override
   CollectionReference<Object?> get ownReference;
   @override
-  String get teacher;
+  String get teacher; // データ名にしとくと、後から楽そう
   @override
-  String get textLink;
+  String get textDataName;
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
