@@ -60,122 +60,131 @@ class TeacherCreateLessonDisplay extends HookConsumerWidget {
     final lastLesson =
         ref.watch(currentLessonStreamProvider)?.data() ?? Lesson.isBlank();
     final pageController =
-        useMemoized(() => PageController(initialPage: lastLesson.endPage + 1));
+        useMemoized(() => PageController(initialPage: lastLesson.endPage));
     final current = useState<int>(lastLesson.endPage + 1);
     final start = useState<int>(0);
     final end = useState<int>(0);
 
     return PdfDocumentViewBuilder.uri(uri, builder: (context, document) {
-      return Column(
-        children: [
-          Flexible(
-            flex: 1,
-            child: SizedBox(height: 30),
-          ),
-          Flexible(
-            flex: 19,
-            child: ScrollConfiguration(
-              // chrome上でスワイプを検知するために必要、実機ではいらない
-              behavior: MouseDraggableScrollBehavior(),
-              child: PageView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: document?.pages.length ?? 0,
-                // ダブルタップで拡大はこのWidgetだと実装されていない、一旦諦め
-                itemBuilder: (context, index) => InteractiveViewer(
-                  child: FractionallySizedBox(
-                    widthFactor:
-                        inRange(start.value, end.value, index) ? 0.92 : 1,
-                    heightFactor:
-                        inRange(start.value, end.value, index) ? 0.92 : 1,
-                    child: PdfPageView(
-                      document: document,
-                      pageNumber: index + 1,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: inRange(start.value, end.value, index)
-                            ? [
-                                BoxShadow(
-                                  color: Colors.red,
-                                  spreadRadius: 3,
-                                  blurRadius: 10,
-                                )
-                              ]
-                            : null,
+      if (document?.pages.isNotEmpty == true) {
+        return Column(
+          children: [
+            Flexible(
+              flex: 1,
+              child: SizedBox(height: 30),
+            ),
+            Flexible(
+              flex: 19,
+              child: ScrollConfiguration(
+                // chrome上でスワイプを検知するために必要、実機ではいらない
+                behavior: MouseDraggableScrollBehavior(),
+                child: PageView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: document?.pages.length ?? 0,
+                  // ダブルタップで拡大はこのWidgetだと実装されていない、一旦諦め
+                  itemBuilder: (context, index) => InteractiveViewer(
+                    child: FractionallySizedBox(
+                      widthFactor:
+                          inRange(start.value, end.value, index) ? 0.92 : 1,
+                      heightFactor:
+                          inRange(start.value, end.value, index) ? 0.92 : 1,
+                      child: PdfPageView(
+                        document: document,
+                        pageNumber: index + 1,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: inRange(start.value, end.value, index)
+                              ? [
+                                  BoxShadow(
+                                    color: Colors.red,
+                                    spreadRadius: 3,
+                                    blurRadius: 10,
+                                  )
+                                ]
+                              : null,
+                        ),
                       ),
                     ),
                   ),
+                  onPageChanged: (page) => current.value = page + 1,
+                  controller: pageController,
                 ),
-                onPageChanged: (page) => current.value = page + 1,
-                controller: pageController,
               ),
             ),
-          ),
-          Flexible(
-            flex: 1,
-            child: Slider(
-              max:
-                  (document?.pages.length ?? lastLesson.endPage + 1).toDouble(),
-              min: 1.0,
-              value: current.value.toDouble(),
-              divisions: _calcDivisions(document?.pages.length),
-              onChanged: (value) =>
-                  pageController.jumpToPage((value - 1).round()),
+            Flexible(
+              flex: 1,
+              child: Slider(
+                max: (document?.pages.length ?? lastLesson.endPage + 1)
+                    .toDouble(),
+                min: 1.0,
+                value: inRange(
+                        1,
+                        (document?.pages.length ?? lastLesson.endPage) + 1,
+                        current.value)
+                    ? current.value.toDouble()
+                    : 1.0,
+                divisions: _calcDivisions(document?.pages.length),
+                onChanged: (value) =>
+                    pageController.jumpToPage((value - 1).round()),
+              ),
             ),
-          ),
-          Flexible(
-            flex: 1,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    start.value = current.value;
-                    if (end.value == 0 || end.value < start.value) {
-                      end.value = current.value;
-                    }
-                    infoToast(
-                        log: "start : ${start.value} , end : ${end.value}");
-                  },
-                  child: Text("ここから"),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    end.value = current.value;
-                    if (start.value == 0 || start.value > end.value) {
+            Flexible(
+              flex: 1,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
                       start.value = current.value;
-                    }
-                    infoToast(
-                        log: "start : ${start.value} , end : ${end.value}");
-                  },
-                  child: Text("ここまで"),
-                ),
-              ],
+                      if (end.value == 0 || end.value < start.value) {
+                        end.value = current.value;
+                      }
+                      infoToast(
+                          log: "start : ${start.value} , end : ${end.value}");
+                    },
+                    child: Text("ここから"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      end.value = current.value;
+                      if (start.value == 0 || start.value > end.value) {
+                        start.value = current.value;
+                      }
+                      infoToast(
+                          log: "start : ${start.value} , end : ${end.value}");
+                    },
+                    child: Text("ここまで"),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Flexible(
-            flex: 1,
-            child: ElevatedButton(
-              onPressed: () {
-                room.reference.add(
-                  Lesson(
-                    count: lastLesson.count + 1,
-                    agendaPublish: Agenda.isBlank(),
-                    agendaDraft: Agenda.isBlank(),
-                    questionsPublish: [],
-                    questionsDraft: [],
-                    reference: room.reference.doc(),
-                    startPage: start.value,
-                    endPage: end.value,
-                  ).toMap(),
-                );
-                GoRouter.of(context).pop();
-              },
-              child: Text("授業作成"),
+            Flexible(
+              flex: 1,
+              child: ElevatedButton(
+                onPressed: () {
+                  room.reference.add(
+                    Lesson(
+                      count: lastLesson.count + 1,
+                      agendaPublish: Agenda.isBlank(),
+                      agendaDraft: Agenda.isBlank(),
+                      questionsPublish: [],
+                      questionsDraft: [],
+                      reference: room.reference.doc(),
+                      startPage: start.value,
+                      endPage: end.value,
+                    ).toMap(),
+                  );
+                  GoRouter.of(context).pop();
+                },
+                child: Text("授業作成"),
+              ),
             ),
-          ),
-        ],
-      );
+          ],
+        );
+      } else {
+        return const Center(child: SakuraProgressIndicator());
+      }
     });
   }
 }
