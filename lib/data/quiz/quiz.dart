@@ -89,6 +89,12 @@ class Quiz with _$Quiz {
       );
     }
   }
+  Map<String, dynamic> answerToMap() {
+    return {
+      "title": title,
+      "answer": answer,
+    };
+  }
 
   Map<String, dynamic> toMap() {
     if (this is Anaume) {
@@ -213,6 +219,14 @@ class QuizNotifier extends _$QuizNotifier {
       for (final quiz in state)
         quiz.title == replaceQuiz.title ? replaceQuiz : quiz
     ];
+  }
+
+  List<Map<String, dynamic>> quizAnswersToListMap() {
+    List<Map<String, dynamic>> list = [];
+    for (var q in state) {
+      list.add(q.answerToMap());
+    }
+    return list;
   }
 }
 
