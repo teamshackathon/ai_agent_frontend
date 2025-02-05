@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:logger/logger.dart';
 
 import '../../../data/firebase/lesson_stream.dart';
 import '../../../data/room/room.dart';
@@ -93,9 +94,9 @@ class ClassesTabBarView extends HookConsumerWidget {
                             ),
                           ],
                         ),
-                        Text("授業時間：火曜日 1限"),
-                        Text("教室： 教室A"),
-                        Text("生徒の人数：8人")
+                        Text("授業時間：${room.dateOfLessons}"),
+                        Text("教室： ${room.classrooms}"),
+                        Text("生徒の人数：${room.studentsReference.length}人")
                       ],
                     ),
                   )

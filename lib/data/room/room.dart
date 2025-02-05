@@ -35,8 +35,14 @@ class Room with _$Room {
     required CollectionReference reference,
     // 各授業の個人のlessonsまでのpathを保持しておく
     required CollectionReference ownReference,
+    // 教師は各クラスの生徒のlessonsまでのpathを保持しておく
+    required List<CollectionReference> studentsReference,
     required String teacher,
     required String textLink,
+    required String teachingHours,
+    required String numberOfTeachingHours,
+    required String dateOfLessons,
+    required String classrooms,
   }) = _Room;
 
   String get displaySubject => subjects[subject] ?? "";
@@ -49,8 +55,13 @@ class Room with _$Room {
       chatId: "",
       reference: FirebaseFirestore.instance.collection("2024"),
       ownReference: FirebaseFirestore.instance.collection("2024"),
+      studentsReference: [],
       teacher: "",
       textLink: "",
+      teachingHours: "",
+      numberOfTeachingHours: "",
+      dateOfLessons: "",
+      classrooms: "",
     );
   }
 }
@@ -87,8 +98,14 @@ Future<List<Room>> activeRooms(ref) async {
                     "${r["year"]}-${r["room"]}-${student.folderName}-${doc.id}",
                 ownReference: ownDocRef.doc(doc.id).collection("lessons"),
                 reference: docRef.doc(doc.id).collection("lessons"),
+                studentsReference: [],
                 teacher: doc.data()["teacher"] ?? "",
                 textLink: doc.data()["text_link"] ?? "",
+                teachingHours: doc.data()["teachingHours"] ?? "",
+                numberOfTeachingHours:
+                    doc.data()["numberOfTeachingHours"] ?? "",
+                dateOfLessons: doc.data()["dateOfLessons"] ?? "",
+                classrooms: doc.data()["classrooms"] ?? "",
               ),
             );
           }
@@ -106,37 +123,61 @@ Future<List<Room>> activeRooms(ref) async {
   }
 
   // 教師の現在のroom一覧作成
-  List<Room> buildFromTeacher(Teacher teacher) {
+  Future<List<Room>> buildFromTeacher(Teacher teacher) async {
     final List<Room> list = [];
     final store = FirebaseFirestore.instance;
     for (var r in teacher.rooms) {
       if (r["year"] == latestYear) {
-        list.add(
-          Room(
-            year: r["year"]!,
-            roomNumber: r["room"]!,
-            subject: r["subject"]!,
-            chatId: "",
-            // 教師はchatIdを持たない
-            ownReference: store.collection(r["year"]!),
-            // 教師は個人のlessonsを持たない
-            reference: store
+        final List<CollectionReference> studentsColelction = [];
+        await store
+            .collection(r["year"]!)
+            .doc(r["room"]!)
+            .get()
+            .then((snapshot) {
+          for (var student in snapshot.data()!["collections"]) {
+            studentsColelction.add(store
                 .collection(r["year"]!)
                 .doc(r["room"]!)
-                .collection("common")
+                .collection(student)
                 .doc(r["subject"]!)
-                .collection("lessons"),
-            teacher: teacher.name,
-            textLink: "",
-          ),
-        );
+                .collection("lessons"));
+          }
+        });
+
+        var docRef =
+            store.collection(r["year"]!).doc(r["room"]!).collection("common");
+        await docRef.get().then((querySnapshot) {
+          for (var doc in querySnapshot.docs) {
+            if (doc.id == r["subject"]) {
+              list.add(
+                Room(
+                  year: r["year"]!,
+                  roomNumber: r["room"]!,
+                  subject: r["subject"]!,
+                  chatId: "",
+                  // 教師はchatIdを持たない
+                  ownReference: store.collection(r["year"]!),
+                  reference: docRef.doc(r["subject"]!).collection("lessons"),
+                  studentsReference: studentsColelction,
+                  teacher: teacher.name,
+                  textLink: doc.data()["text_link"] ?? "",
+                  teachingHours: doc.data()["teachingHours"] ?? "",
+                  numberOfTeachingHours:
+                      doc.data()["numberOfTeachingHours"] ?? "",
+                  dateOfLessons: doc.data()["dateOfLessons"] ?? "",
+                  classrooms: doc.data()["classrooms"] ?? "",
+                ),
+              );
+            }
+          }
+        }, onError: (e) => throw Exception(e));
       }
     }
 
     // ここにたどり着いたときは、多分store側に部屋データがない
     // auth側に関してはpersonプロバイダーができてる限り問題ない
     if (list.isEmpty) {
-      throw Exception("Error(buildFromStudent) : ROOMS IS EMPTY");
+      throw Exception("Error(buildFromTeacher) : ROOMS IS EMPTY");
     }
 
     return list;
@@ -189,8 +230,14 @@ Future<List<Room>> archiveRooms(ref) async {
                     "${r["year"]}-${r["room"]}-${student.folderName}-${doc.id}",
                 ownReference: ownDocRef.doc(doc.id).collection("lessons"),
                 reference: docRef.doc(doc.id).collection("lessons"),
+                studentsReference: [],
                 teacher: doc.data()["teacher"] ?? "",
                 textLink: doc.data()["text_link"] ?? "",
+                teachingHours: doc.data()["teachingHours"] ?? "",
+                numberOfTeachingHours:
+                    doc.data()["numberOfTeachingHours"] ?? "",
+                dateOfLessons: doc.data()["dateOfLessons"] ?? "",
+                classrooms: doc.data()["classrooms"] ?? "",
               ),
             );
           }
@@ -208,29 +255,56 @@ Future<List<Room>> archiveRooms(ref) async {
   }
 
   // 教師の過去のroom一覧作成
-  List<Room> buildFromTeacher(Teacher teacher) {
+  Future<List<Room>> buildFromTeacher(Teacher teacher) async {
     final List<Room> list = [];
     final store = FirebaseFirestore.instance;
     for (var r in teacher.rooms) {
       if (r["year"] != latestYear) {
-        list.add(
-          Room(
-            year: r["year"]!,
-            roomNumber: r["room"]!,
-            subject: r["subject"]!,
-            chatId: "",
-            // 教師はchatIdを持たない
-            ownReference: store.collection(r["year"]!),
-            reference: store
+        final List<CollectionReference> studentsColelction = [];
+
+        await store
+            .collection(r["year"]!)
+            .doc(r["room"]!)
+            .get()
+            .then((snapshot) {
+          for (var student in snapshot.data()!["collections"]) {
+            studentsColelction.add(store
                 .collection(r["year"]!)
                 .doc(r["room"]!)
-                .collection("common")
+                .collection(student)
                 .doc(r["subject"]!)
-                .collection("lessons"),
-            teacher: teacher.name,
-            textLink: "",
-          ),
-        );
+                .collection("lessons"));
+          }
+        });
+
+        var docRef =
+            store.collection(r["year"]!).doc(r["room"]!).collection("common");
+
+        await docRef.get().then((querySnapshot) {
+          for (var doc in querySnapshot.docs) {
+            if (doc.id == r["subject"]) {
+              list.add(
+                Room(
+                  year: r["year"]!,
+                  roomNumber: r["room"]!,
+                  subject: r["subject"]!,
+                  chatId: "",
+                  // 教師はchatIdを持たない
+                  ownReference: store.collection(r["year"]!),
+                  reference: docRef.doc(r["subject"]!).collection("lessons"),
+                  studentsReference: studentsColelction,
+                  teacher: teacher.name,
+                  textLink: doc.data()["text_link"] ?? "",
+                  teachingHours: doc.data()["teachingHours"] ?? "",
+                  numberOfTeachingHours:
+                      doc.data()["numberOfTeachingHours"] ?? "",
+                  dateOfLessons: doc.data()["dateOfLessons"] ?? "",
+                  classrooms: doc.data()["classrooms"] ?? "",
+                ),
+              );
+            }
+          }
+        }, onError: (e) => throw Exception(e));
       }
     }
 
