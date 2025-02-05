@@ -163,19 +163,21 @@ class TeacherCreateLessonDisplay extends HookConsumerWidget {
               flex: 1,
               child: ElevatedButton(
                 onPressed: () {
-                  room.reference.add(
-                    Lesson(
-                      count: lastLesson.count + 1,
-                      agendaPublish: Agenda.isBlank(),
-                      agendaDraft: Agenda.isBlank(),
-                      questionsPublish: [],
-                      questionsDraft: [],
-                      reference: room.reference.doc(),
-                      startPage: start.value,
-                      endPage: end.value,
-                    ).toMap(),
-                  );
-                  GoRouter.of(context).pop();
+                  if (start.value > 0 && end.value > 0) {
+                    room.reference.add(
+                      Lesson(
+                        count: lastLesson.count + 1,
+                        agendaPublish: Agenda.isBlank(),
+                        agendaDraft: Agenda.isBlank(),
+                        questionsPublish: [],
+                        questionsDraft: [],
+                        reference: room.reference.doc(),
+                        startPage: start.value,
+                        endPage: end.value,
+                      ).toMap(),
+                    );
+                    GoRouter.of(context).pop();
+                  }
                 },
                 child: Text("授業作成"),
               ),
