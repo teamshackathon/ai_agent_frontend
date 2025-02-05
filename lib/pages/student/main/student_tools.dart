@@ -11,23 +11,6 @@ import '../../../widget/student_tools/student_tab_bar_view.dart';
 class StudentTools extends ConsumerWidget {
   const StudentTools({super.key});
 
-  String subjectToJapanese(String subject) {
-    switch (subject) {
-      case "math":
-        return "数学";
-      case "science":
-        return "理科";
-      case "social":
-        return "社会";
-      case "english":
-        return "英語";
-      case "japanese":
-        return "国語";
-      default:
-        return "その他";
-    }
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     const widthFactor = 0.95;
@@ -38,7 +21,7 @@ class StudentTools extends ConsumerWidget {
     final currentRoom = ref.watch(currentRoomProvider);
 
     return BasePage(
-      pageTitle: "第${lesson.count}回 ${subjectToJapanese(currentRoom.subject)}",
+      pageTitle: "第${lesson.count}回 ${currentRoom.displaySubject}",
       body: Center(
         child: FractionallySizedBox(
           widthFactor: widthFactor,
@@ -60,23 +43,6 @@ class StudentToolsDisplay extends HookConsumerWidget {
 
   final Lesson lesson;
 
-  String subjectToJapanese(String subject) {
-    switch (subject) {
-      case "math":
-        return "数学";
-      case "science":
-        return "理科";
-      case "social":
-        return "社会";
-      case "english":
-        return "英語";
-      case "japanese":
-        return "国語";
-      default:
-        return "その他";
-    }
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tabController = useTabController(initialLength: 3);
@@ -85,7 +51,7 @@ class StudentToolsDisplay extends HookConsumerWidget {
     return Column(children: [
       Row(children: [
         Text(
-          subjectToJapanese(currentRoom.subject),
+          currentRoom.displaySubject,
           style: TextStyle(
             fontSize: 50,
             fontWeight: FontWeight.bold,

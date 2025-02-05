@@ -14,30 +14,13 @@ import '../../../widget/lessons/components/lessons_summary.dart';
 class StudentLessons extends ConsumerWidget {
   const StudentLessons({super.key});
 
-  String subjectToJapanese(String subject) {
-    switch (subject) {
-      case "math":
-        return "数学";
-      case "science":
-        return "理科";
-      case "social":
-        return "社会";
-      case "english":
-        return "英語";
-      case "japanese":
-        return "国語";
-      default:
-        return "その他";
-    }
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final lessonsStream = ref.watch(lessonsStreamProvider);
     final currentRoom = ref.watch(currentRoomProvider);
 
     return BasePage(
-      pageTitle: "あなたの${subjectToJapanese(currentRoom.subject)}の授業",
+      pageTitle: "あなたの${currentRoom.displaySubject}の授業",
       body: Center(
         child: FractionallySizedBox(
           widthFactor: 0.95,
