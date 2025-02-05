@@ -1,9 +1,9 @@
 import 'package:code/data/firebase/during_stream.dart';
-import 'package:code/toast.dart';
 import 'package:code/widget/sakura_redial_menu/components/radial_sakura_menu.dart';
 import 'package:code/widget/sakura_redial_menu/components/radial_sakura_menu_item.dart';
 import 'package:code/widget/shortcut/shortcut.dart';
 import 'package:code/widget/utils/sakura_progress_indicator.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -22,24 +22,39 @@ class StudentMain extends HookConsumerWidget {
     // activeRoomsProvider：今年のroomだけ呼び出すプロバイダー
     final activeRooms = ref.watch(activeRoomsProvider);
 
+    final size = MediaQuery.of(context).size;
+
     return BasePage(
       pageTitle: "あなたの教室",
-      body: Center(
-        child: FractionallySizedBox(
-          widthFactor: 0.95,
-          heightFactor: 0.95,
-          child: activeRooms.when(
-            data: (rooms) => StudentMainDisplay(rooms: rooms),
-            // エラー時の表示
-            error: (_, __) => const Center(
-              child: Text("読み込み失敗"),
-            ),
-            // 読込中の表示
-            loading: () => const Center(
-              child: SakuraProgressIndicator(),
+      body: Stack(
+        children: [
+          Positioned(
+            bottom: -size.height * 0.3,
+            left: 0,
+            right: 0,
+            child: SvgPicture.asset(
+              'assets/hand.svg',
+              fit: BoxFit.fitWidth,
             ),
           ),
-        ),
+          Center(
+            child: FractionallySizedBox(
+              widthFactor: 0.95,
+              heightFactor: 0.95,
+              child: activeRooms.when(
+                data: (rooms) => StudentMainDisplay(rooms: rooms),
+                // エラー時の表示
+                error: (_, __) => const Center(
+                  child: Text("読み込み失敗"),
+                ),
+                // 読込中の表示
+                loading: () => const Center(
+                  child: SakuraProgressIndicator(),
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

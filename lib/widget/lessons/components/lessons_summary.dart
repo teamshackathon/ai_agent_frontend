@@ -32,6 +32,8 @@ class LessonsSummary extends HookConsumerWidget {
               Text("教科：${room.displaySubject}"),
               Text("先生：${room.teacher}"),
               Text("教室：教室A"),
+              Text("時間割：月曜日3限 水曜日4限"),
+              Text("授業時間：45分"),
               Row(children: [
                 Expanded(
                     child: Column(
