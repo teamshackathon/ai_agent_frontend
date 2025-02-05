@@ -16,20 +16,25 @@ import '../../../widget/base_page/base_page.dart';
 class TeacherLessons extends ConsumerWidget {
   const TeacherLessons({super.key});
 
+  String getGakunenAndClass(String room) {
+    return "${room.split("-")[0]}年 ${room.split("-")[1]}組";
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final lessonsStream = ref.watch(lessonsStreamProvider);
+    final currentRoom = ref.watch(currentRoomProvider);
 
     return BasePage(
-      pageTitle: "教師コマ選択",
+      pageTitle: "${getGakunenAndClass(currentRoom.roomNumber)}の授業一覧",
       body: Stack(
         children: [
-          Positioned.fill(
-            // サイズを画面に合わせる
-            child: SvgPicture.asset(
-              'assets/background_math.svg',
-            ),
-          ),
+          // Positioned.fill(
+          //   // サイズを画面に合わせる
+          //   child: SvgPicture.asset(
+          //     'assets/background_math.svg',
+          //   ),
+          // ),
           Center(
             child: FractionallySizedBox(
               widthFactor: 0.95,
