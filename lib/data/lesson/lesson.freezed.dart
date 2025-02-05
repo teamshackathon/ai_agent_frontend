@@ -23,6 +23,8 @@ mixin _$Lesson {
   List<Quiz> get questionsDraft => throw _privateConstructorUsedError;
   DocumentReference<Object?> get reference =>
       throw _privateConstructorUsedError;
+  int get startPage => throw _privateConstructorUsedError;
+  int get endPage => throw _privateConstructorUsedError;
 
   /// Create a copy of Lesson
   /// with the given fields replaced by the non-null parameter values.
@@ -41,7 +43,9 @@ abstract class $LessonCopyWith<$Res> {
       Agenda agendaDraft,
       List<Quiz> questionsPublish,
       List<Quiz> questionsDraft,
-      DocumentReference<Object?> reference});
+      DocumentReference<Object?> reference,
+      int startPage,
+      int endPage});
 
   $AgendaCopyWith<$Res> get agendaPublish;
   $AgendaCopyWith<$Res> get agendaDraft;
@@ -68,6 +72,8 @@ class _$LessonCopyWithImpl<$Res, $Val extends Lesson>
     Object? questionsPublish = null,
     Object? questionsDraft = null,
     Object? reference = null,
+    Object? startPage = null,
+    Object? endPage = null,
   }) {
     return _then(_value.copyWith(
       count: null == count
@@ -94,6 +100,14 @@ class _$LessonCopyWithImpl<$Res, $Val extends Lesson>
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
               as DocumentReference<Object?>,
+      startPage: null == startPage
+          ? _value.startPage
+          : startPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      endPage: null == endPage
+          ? _value.endPage
+          : endPage // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 
@@ -131,7 +145,9 @@ abstract class _$$LessonImplCopyWith<$Res> implements $LessonCopyWith<$Res> {
       Agenda agendaDraft,
       List<Quiz> questionsPublish,
       List<Quiz> questionsDraft,
-      DocumentReference<Object?> reference});
+      DocumentReference<Object?> reference,
+      int startPage,
+      int endPage});
 
   @override
   $AgendaCopyWith<$Res> get agendaPublish;
@@ -158,6 +174,8 @@ class __$$LessonImplCopyWithImpl<$Res>
     Object? questionsPublish = null,
     Object? questionsDraft = null,
     Object? reference = null,
+    Object? startPage = null,
+    Object? endPage = null,
   }) {
     return _then(_$LessonImpl(
       count: null == count
@@ -184,6 +202,14 @@ class __$$LessonImplCopyWithImpl<$Res>
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
               as DocumentReference<Object?>,
+      startPage: null == startPage
+          ? _value.startPage
+          : startPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      endPage: null == endPage
+          ? _value.endPage
+          : endPage // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -197,7 +223,9 @@ class _$LessonImpl extends _Lesson {
       required this.agendaDraft,
       required final List<Quiz> questionsPublish,
       required final List<Quiz> questionsDraft,
-      required this.reference})
+      required this.reference,
+      required this.startPage,
+      required this.endPage})
       : _questionsPublish = questionsPublish,
         _questionsDraft = questionsDraft,
         super._();
@@ -227,10 +255,14 @@ class _$LessonImpl extends _Lesson {
 
   @override
   final DocumentReference<Object?> reference;
+  @override
+  final int startPage;
+  @override
+  final int endPage;
 
   @override
   String toString() {
-    return 'Lesson(count: $count, agendaPublish: $agendaPublish, agendaDraft: $agendaDraft, questionsPublish: $questionsPublish, questionsDraft: $questionsDraft, reference: $reference)';
+    return 'Lesson(count: $count, agendaPublish: $agendaPublish, agendaDraft: $agendaDraft, questionsPublish: $questionsPublish, questionsDraft: $questionsDraft, reference: $reference, startPage: $startPage, endPage: $endPage)';
   }
 
   @override
@@ -248,7 +280,10 @@ class _$LessonImpl extends _Lesson {
             const DeepCollectionEquality()
                 .equals(other._questionsDraft, _questionsDraft) &&
             (identical(other.reference, reference) ||
-                other.reference == reference));
+                other.reference == reference) &&
+            (identical(other.startPage, startPage) ||
+                other.startPage == startPage) &&
+            (identical(other.endPage, endPage) || other.endPage == endPage));
   }
 
   @override
@@ -259,7 +294,9 @@ class _$LessonImpl extends _Lesson {
       agendaDraft,
       const DeepCollectionEquality().hash(_questionsPublish),
       const DeepCollectionEquality().hash(_questionsDraft),
-      reference);
+      reference,
+      startPage,
+      endPage);
 
   /// Create a copy of Lesson
   /// with the given fields replaced by the non-null parameter values.
@@ -277,7 +314,9 @@ abstract class _Lesson extends Lesson {
       required final Agenda agendaDraft,
       required final List<Quiz> questionsPublish,
       required final List<Quiz> questionsDraft,
-      required final DocumentReference<Object?> reference}) = _$LessonImpl;
+      required final DocumentReference<Object?> reference,
+      required final int startPage,
+      required final int endPage}) = _$LessonImpl;
   const _Lesson._() : super._();
 
   @override
@@ -292,6 +331,10 @@ abstract class _Lesson extends Lesson {
   List<Quiz> get questionsDraft;
   @override
   DocumentReference<Object?> get reference;
+  @override
+  int get startPage;
+  @override
+  int get endPage;
 
   /// Create a copy of Lesson
   /// with the given fields replaced by the non-null parameter values.

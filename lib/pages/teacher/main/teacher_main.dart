@@ -1,3 +1,4 @@
+import 'package:code/toast.dart';
 import 'package:code/widget/utils/sakura_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -60,6 +61,7 @@ class ClassesTabBarView extends HookConsumerWidget {
               return InkWell(
                 onTap: () {
                   ref.read(currentRoomProvider.notifier).state = room;
+                  infoToast(log: room.toString());
                   GoRouter.of(context).push(Routes.teacherLessons);
                 },
                 child: Stack(children: [

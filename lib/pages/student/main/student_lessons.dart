@@ -3,7 +3,6 @@ import 'package:code/widget/utils/sakura_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'dart:math' as math;
 
 import '../../../data/firebase/lesson_stream.dart';
 import '../../../data/lesson/lesson.dart';
@@ -18,9 +17,10 @@ class StudentLessons extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final lessonsStream = ref.watch(lessonsStreamProvider);
+    final currentRoom = ref.watch(currentRoomProvider);
 
     return BasePage(
-      pageTitle: "生徒コマ選択",
+      pageTitle: "あなたの${currentRoom.displaySubject}の授業",
       body: Center(
         child: FractionallySizedBox(
           widthFactor: 0.95,
@@ -63,7 +63,7 @@ class StudentLessonsDisplay extends ConsumerWidget {
                     final lesson = lessons[index].data();
                     return LessonCard(
                       lesson: lesson,
-                      angle: math.pi * (index % 2 == 0 ? 0 : 1),
+                      angle: 0,
                       onTap: () {
                         currentLessonNot.state = lessons[index];
                         GoRouter.of(context).push(Routes.studentTools);

@@ -1,4 +1,5 @@
 // 長くなりそうなのでファイル分け
+import 'package:code/pages/teacher/main/tools/teacher_create_lesson.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -68,6 +69,11 @@ final teacherBranch = StatefulShellRoute.indexedStack(
                       builder: (context, state) => TeacherQuiz(),
                     ),
                   ],
+                ),
+                GoRoute(
+                  parentNavigatorKey: _teacherMainKey,
+                  path: "create",
+                  builder: (context, state) => TeacherCreateLesson(),
                 ),
               ],
             ),
