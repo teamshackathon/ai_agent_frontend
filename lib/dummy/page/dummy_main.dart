@@ -24,8 +24,8 @@ class DummyMain extends HookConsumerWidget {
     return DummyBasePage(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          var responce =
-              await http.get(Uri.http('127.0.0.1:5000', 'api/endpoint'));
+          var responce = await http.get(Uri.http(
+              'localhost:3001', '/test_firebase', {'path': '2024/1-1'}));
           // infoToast(log: responce);
           status.value = responce.statusCode.toString();
         },
