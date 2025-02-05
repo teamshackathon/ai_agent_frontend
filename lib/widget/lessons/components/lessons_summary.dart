@@ -38,9 +38,11 @@ class LessonsSummary extends HookConsumerWidget {
                 Expanded(
                     child: Column(
                   children: [
-                    IconButton(onPressed: () {
-                      GoRouter.of(context).push(Routes.studentReading);
-                    }, icon: Icon(Icons.book)),
+                    IconButton(
+                        onPressed: () {
+                          GoRouter.of(context).push(Routes.studentReading);
+                        },
+                        icon: Icon(Icons.book)),
                     Text("教科書"),
                   ],
                 )),

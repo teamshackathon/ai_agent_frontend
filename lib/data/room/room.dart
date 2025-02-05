@@ -128,7 +128,7 @@ Future<List<Room>> activeRooms(ref) async {
                 .doc(r["subject"]!)
                 .collection("lessons"),
             teacher: teacher.name,
-            textDataName: "",
+            textDataName: r["text"] ?? "",
           ),
         );
       }

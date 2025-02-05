@@ -52,7 +52,7 @@ class Person with _$Person {
     required String firstName,
     required String familyName,
     // indexの低い方に最新のクラスが来る
-    /// [ { "subject": "~", "room": "~", "year": "~" }, ... ]
+    /// [ { "subject": "~", "room": "~", "year": "~", "text": "~" }, ... ]
     required List<Map<String, String>> rooms,
   }) = Teacher;
 
@@ -127,8 +127,9 @@ class PersonStatus extends _$PersonStatus {
           for (var d in data[subject]) {
             list.add({
               "subject": subject,
-              "room": d["room"],
-              "year": d["year"],
+              "room": d["room"] ?? "",
+              "year": d["year"] ?? "",
+              "text": d["text"] ?? "",
             });
           }
         }
