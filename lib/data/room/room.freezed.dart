@@ -1,398 +1,42 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'room.dart';
 
 // **************************************************************************
-// FreezedGenerator
+// RiverpodGenerator
 // **************************************************************************
 
-T _$identity<T>(T value) => value;
+String _$activeRoomsHash() => r'749af0c8bfbd38e3764db76012422f2e8d686b87';
 
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+/// See also [activeRooms].
+@ProviderFor(activeRooms)
+final activeRoomsProvider = AutoDisposeFutureProvider<List<Room>>.internal(
+  activeRooms,
+  name: r'activeRoomsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$activeRoomsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-/// @nodoc
-mixin _$Room {
-  String get year => throw _privateConstructorUsedError;
-  String get roomNumber => throw _privateConstructorUsedError;
-  String get subject => throw _privateConstructorUsedError;
-  String get chatId =>
-      throw _privateConstructorUsedError; // 各授業のlessonsまでのpathを保持しておく
-  CollectionReference<Object?> get reference =>
-      throw _privateConstructorUsedError; // 教師は各クラスの生徒のlessonsまでのpathを保持しておく
-  List<String> get students => throw _privateConstructorUsedError;
-  String get teacher => throw _privateConstructorUsedError;
-  String get textLink => throw _privateConstructorUsedError;
-  String get teachingHours => throw _privateConstructorUsedError;
-  String get numberOfTeachingHours => throw _privateConstructorUsedError;
-  String get dateOfLessons => throw _privateConstructorUsedError;
-  String get classrooms => throw _privateConstructorUsedError;
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef ActiveRoomsRef = AutoDisposeFutureProviderRef<List<Room>>;
+String _$archiveRoomsHash() => r'efe3d7aaca1964b05eb6294a9125f9e38a463ecf';
 
-  /// Create a copy of Room
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $RoomCopyWith<Room> get copyWith => throw _privateConstructorUsedError;
-}
+/// See also [archiveRooms].
+@ProviderFor(archiveRooms)
+final archiveRoomsProvider = AutoDisposeFutureProvider<List<Room>>.internal(
+  archiveRooms,
+  name: r'archiveRoomsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$archiveRoomsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-/// @nodoc
-abstract class $RoomCopyWith<$Res> {
-  factory $RoomCopyWith(Room value, $Res Function(Room) then) =
-      _$RoomCopyWithImpl<$Res, Room>;
-  @useResult
-  $Res call(
-      {String year,
-      String roomNumber,
-      String subject,
-      String chatId,
-      CollectionReference<Object?> reference,
-      List<String> students,
-      String teacher,
-      String textLink,
-      String teachingHours,
-      String numberOfTeachingHours,
-      String dateOfLessons,
-      String classrooms});
-}
-
-/// @nodoc
-class _$RoomCopyWithImpl<$Res, $Val extends Room>
-    implements $RoomCopyWith<$Res> {
-  _$RoomCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Room
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? year = null,
-    Object? roomNumber = null,
-    Object? subject = null,
-    Object? chatId = null,
-    Object? reference = null,
-    Object? students = null,
-    Object? teacher = null,
-    Object? textLink = null,
-    Object? teachingHours = null,
-    Object? numberOfTeachingHours = null,
-    Object? dateOfLessons = null,
-    Object? classrooms = null,
-  }) {
-    return _then(_value.copyWith(
-      year: null == year
-          ? _value.year
-          : year // ignore: cast_nullable_to_non_nullable
-              as String,
-      roomNumber: null == roomNumber
-          ? _value.roomNumber
-          : roomNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      subject: null == subject
-          ? _value.subject
-          : subject // ignore: cast_nullable_to_non_nullable
-              as String,
-      chatId: null == chatId
-          ? _value.chatId
-          : chatId // ignore: cast_nullable_to_non_nullable
-              as String,
-      reference: null == reference
-          ? _value.reference
-          : reference // ignore: cast_nullable_to_non_nullable
-              as CollectionReference<Object?>,
-      students: null == students
-          ? _value.students
-          : students // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      teacher: null == teacher
-          ? _value.teacher
-          : teacher // ignore: cast_nullable_to_non_nullable
-              as String,
-      textLink: null == textLink
-          ? _value.textLink
-          : textLink // ignore: cast_nullable_to_non_nullable
-              as String,
-      teachingHours: null == teachingHours
-          ? _value.teachingHours
-          : teachingHours // ignore: cast_nullable_to_non_nullable
-              as String,
-      numberOfTeachingHours: null == numberOfTeachingHours
-          ? _value.numberOfTeachingHours
-          : numberOfTeachingHours // ignore: cast_nullable_to_non_nullable
-              as String,
-      dateOfLessons: null == dateOfLessons
-          ? _value.dateOfLessons
-          : dateOfLessons // ignore: cast_nullable_to_non_nullable
-              as String,
-      classrooms: null == classrooms
-          ? _value.classrooms
-          : classrooms // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$RoomImplCopyWith<$Res> implements $RoomCopyWith<$Res> {
-  factory _$$RoomImplCopyWith(
-          _$RoomImpl value, $Res Function(_$RoomImpl) then) =
-      __$$RoomImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String year,
-      String roomNumber,
-      String subject,
-      String chatId,
-      CollectionReference<Object?> reference,
-      List<String> students,
-      String teacher,
-      String textLink,
-      String teachingHours,
-      String numberOfTeachingHours,
-      String dateOfLessons,
-      String classrooms});
-}
-
-/// @nodoc
-class __$$RoomImplCopyWithImpl<$Res>
-    extends _$RoomCopyWithImpl<$Res, _$RoomImpl>
-    implements _$$RoomImplCopyWith<$Res> {
-  __$$RoomImplCopyWithImpl(_$RoomImpl _value, $Res Function(_$RoomImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of Room
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? year = null,
-    Object? roomNumber = null,
-    Object? subject = null,
-    Object? chatId = null,
-    Object? reference = null,
-    Object? students = null,
-    Object? teacher = null,
-    Object? textLink = null,
-    Object? teachingHours = null,
-    Object? numberOfTeachingHours = null,
-    Object? dateOfLessons = null,
-    Object? classrooms = null,
-  }) {
-    return _then(_$RoomImpl(
-      year: null == year
-          ? _value.year
-          : year // ignore: cast_nullable_to_non_nullable
-              as String,
-      roomNumber: null == roomNumber
-          ? _value.roomNumber
-          : roomNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      subject: null == subject
-          ? _value.subject
-          : subject // ignore: cast_nullable_to_non_nullable
-              as String,
-      chatId: null == chatId
-          ? _value.chatId
-          : chatId // ignore: cast_nullable_to_non_nullable
-              as String,
-      reference: null == reference
-          ? _value.reference
-          : reference // ignore: cast_nullable_to_non_nullable
-              as CollectionReference<Object?>,
-      students: null == students
-          ? _value._students
-          : students // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      teacher: null == teacher
-          ? _value.teacher
-          : teacher // ignore: cast_nullable_to_non_nullable
-              as String,
-      textLink: null == textLink
-          ? _value.textLink
-          : textLink // ignore: cast_nullable_to_non_nullable
-              as String,
-      teachingHours: null == teachingHours
-          ? _value.teachingHours
-          : teachingHours // ignore: cast_nullable_to_non_nullable
-              as String,
-      numberOfTeachingHours: null == numberOfTeachingHours
-          ? _value.numberOfTeachingHours
-          : numberOfTeachingHours // ignore: cast_nullable_to_non_nullable
-              as String,
-      dateOfLessons: null == dateOfLessons
-          ? _value.dateOfLessons
-          : dateOfLessons // ignore: cast_nullable_to_non_nullable
-              as String,
-      classrooms: null == classrooms
-          ? _value.classrooms
-          : classrooms // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$RoomImpl extends _Room {
-  const _$RoomImpl(
-      {required this.year,
-      required this.roomNumber,
-      required this.subject,
-      required this.chatId,
-      required this.reference,
-      required final List<String> students,
-      required this.teacher,
-      required this.textLink,
-      required this.teachingHours,
-      required this.numberOfTeachingHours,
-      required this.dateOfLessons,
-      required this.classrooms})
-      : _students = students,
-        super._();
-
-  @override
-  final String year;
-  @override
-  final String roomNumber;
-  @override
-  final String subject;
-  @override
-  final String chatId;
-// 各授業のlessonsまでのpathを保持しておく
-  @override
-  final CollectionReference<Object?> reference;
-// 教師は各クラスの生徒のlessonsまでのpathを保持しておく
-  final List<String> _students;
-// 教師は各クラスの生徒のlessonsまでのpathを保持しておく
-  @override
-  List<String> get students {
-    if (_students is EqualUnmodifiableListView) return _students;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_students);
-  }
-
-  @override
-  final String teacher;
-  @override
-  final String textLink;
-  @override
-  final String teachingHours;
-  @override
-  final String numberOfTeachingHours;
-  @override
-  final String dateOfLessons;
-  @override
-  final String classrooms;
-
-  @override
-  String toString() {
-    return 'Room(year: $year, roomNumber: $roomNumber, subject: $subject, chatId: $chatId, reference: $reference, students: $students, teacher: $teacher, textLink: $textLink, teachingHours: $teachingHours, numberOfTeachingHours: $numberOfTeachingHours, dateOfLessons: $dateOfLessons, classrooms: $classrooms)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$RoomImpl &&
-            (identical(other.year, year) || other.year == year) &&
-            (identical(other.roomNumber, roomNumber) ||
-                other.roomNumber == roomNumber) &&
-            (identical(other.subject, subject) || other.subject == subject) &&
-            (identical(other.chatId, chatId) || other.chatId == chatId) &&
-            (identical(other.reference, reference) ||
-                other.reference == reference) &&
-            const DeepCollectionEquality().equals(other._students, _students) &&
-            (identical(other.teacher, teacher) || other.teacher == teacher) &&
-            (identical(other.textLink, textLink) ||
-                other.textLink == textLink) &&
-            (identical(other.teachingHours, teachingHours) ||
-                other.teachingHours == teachingHours) &&
-            (identical(other.numberOfTeachingHours, numberOfTeachingHours) ||
-                other.numberOfTeachingHours == numberOfTeachingHours) &&
-            (identical(other.dateOfLessons, dateOfLessons) ||
-                other.dateOfLessons == dateOfLessons) &&
-            (identical(other.classrooms, classrooms) ||
-                other.classrooms == classrooms));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      year,
-      roomNumber,
-      subject,
-      chatId,
-      reference,
-      const DeepCollectionEquality().hash(_students),
-      teacher,
-      textLink,
-      teachingHours,
-      numberOfTeachingHours,
-      dateOfLessons,
-      classrooms);
-
-  /// Create a copy of Room
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$RoomImplCopyWith<_$RoomImpl> get copyWith =>
-      __$$RoomImplCopyWithImpl<_$RoomImpl>(this, _$identity);
-}
-
-abstract class _Room extends Room {
-  const factory _Room(
-      {required final String year,
-      required final String roomNumber,
-      required final String subject,
-      required final String chatId,
-      required final CollectionReference<Object?> reference,
-      required final List<String> students,
-      required final String teacher,
-      required final String textLink,
-      required final String teachingHours,
-      required final String numberOfTeachingHours,
-      required final String dateOfLessons,
-      required final String classrooms}) = _$RoomImpl;
-  const _Room._() : super._();
-
-  @override
-  String get year;
-  @override
-  String get roomNumber;
-  @override
-  String get subject;
-  @override
-  String get chatId; // 各授業のlessonsまでのpathを保持しておく
-  @override
-  CollectionReference<Object?>
-      get reference; // 教師は各クラスの生徒のlessonsまでのpathを保持しておく
-  @override
-  List<String> get students;
-  @override
-  String get teacher;
-  @override
-  String get textLink;
-  @override
-  String get teachingHours;
-  @override
-  String get numberOfTeachingHours;
-  @override
-  String get dateOfLessons;
-  @override
-  String get classrooms;
-
-  /// Create a copy of Room
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$RoomImplCopyWith<_$RoomImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef ArchiveRoomsRef = AutoDisposeFutureProviderRef<List<Room>>;
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
