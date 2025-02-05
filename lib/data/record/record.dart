@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:math' as math;
+import 'dart:convert';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:record/record.dart';
@@ -29,7 +30,7 @@ class StreamRecord with _$StreamRecord {
 class StreamRecorder extends _$StreamRecorder {
   final List<String> messages = [];
   StreamSubscription<Uint8List>? subscription;
-  final List<Uint8List> audioChunks = [];
+  final List<int> audioChunks = [];
   var silenceChunks = 0;
   var breakSilence = false;
 
@@ -64,10 +65,11 @@ class StreamRecorder extends _$StreamRecorder {
     return StreamRecord(recorder: recorder, socket: socket);
   }
 
+  // utf8 base64に変換する必要ある
   void _sendAudio() {
     if (audioChunks.isNotEmpty) {
       // 送信データをどうすればいいか確認
-      state.socket.emit("message", audioChunks);
+      state.socket.emit("message", base64Encode(audioChunks));
       audioChunks.clear();
       silenceChunks = 0;
     }
@@ -89,26 +91,26 @@ class StreamRecorder extends _$StreamRecorder {
 
     state = state.copyWith(dB: currentDB);
 
-    print("rms : $rms , dB : $currentDB");
-
+    // しきい値を下回ってるか
     if (currentDB < dBThreshold) {
+      // ずっと沈黙が続いていなければ
       if (breakSilence) {
         silenceChunks++;
+        // 沈黙し始めても少しの間はデータ格納
         if (silenceChunks <= silenceDuring / 2) {
-          audioChunks.add(audioChunk);
+          audioChunk.map((data) => audioChunks.add(data));
         }
       }
     } else {
-      audioChunks.add(audioChunk);
+      audioChunk.map((data) => audioChunks.add(data));
       breakSilence = true;
       silenceChunks = 0;
     }
 
     if (silenceChunks > silenceDuring) {
-      if (state.isRecording) {
-        infoToast(log: 'Silence detected. Save recording...');
-        _sendAudio();
-      }
+      infoToast(log: 'Silence detected. Save recording...');
+      _sendAudio();
+      // ここで長い沈黙とみなす
       breakSilence = false;
     }
   }

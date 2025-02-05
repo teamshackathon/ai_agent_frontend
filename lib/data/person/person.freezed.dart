@@ -707,10 +707,10 @@ class _$TeacherImpl extends Teacher {
   @override
   final String familyName;
 // indexの低い方に最新のクラスが来る
-  /// [ { "subject": "~", "room": "~", "year": "~" }, ... ]
+  /// [ { "subject": "~", "room": "~", "year": "~", "text": "~" }, ... ]
   final List<Map<String, String>> _rooms;
 // indexの低い方に最新のクラスが来る
-  /// [ { "subject": "~", "room": "~", "year": "~" }, ... ]
+  /// [ { "subject": "~", "room": "~", "year": "~", "text": "~" }, ... ]
   @override
   List<Map<String, String>> get rooms {
     if (_rooms is EqualUnmodifiableListView) return _rooms;
@@ -853,7 +853,7 @@ abstract class Teacher extends Person {
   String get firstName;
   @override
   String get familyName; // indexの低い方に最新のクラスが来る
-  /// [ { "subject": "~", "room": "~", "year": "~" }, ... ]
+  /// [ { "subject": "~", "room": "~", "year": "~", "text": "~" }, ... ]
   @override
   List<Map<String, String>> get rooms;
 
