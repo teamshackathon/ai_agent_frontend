@@ -59,10 +59,6 @@ class AudioRecorderTest extends HookConsumerWidget {
         Logger().i('Connected to WebSocket server');
       });
 
-      socket.on('connect', (_) {
-        Logger().i('Connected to WebSocket server');
-      });
-
       socket.on('message', (data) {
         messages.value = [...messages.value, data];
       });
@@ -89,13 +85,15 @@ class AudioRecorderTest extends HookConsumerWidget {
 
     void sendAudio() {
       if (audioChunksRef.value.isNotEmpty) {
-        socket.emit('message', audioChunksRef.value[0]);
+        socket.emit('message', audioChunksRef.value.join());
         // audioChunksRefを空にする
         audioChunksRef.value = [];
       }
     }
 
     void onAudioDataAvailable(Uint8List audioChunk) {
+      // 音の取り始めを理解させる
+      // デシベル検知がいるのでは
       audioChunksRef.value = [...audioChunksRef.value, audioChunk];
       final sum = audioChunk.reduce((a, b) => a + b);
 
