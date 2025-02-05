@@ -107,7 +107,6 @@ class StreamRecorder extends _$StreamRecorder {
       silenceChunks = 0;
     }
 
-
     if (silenceChunks > silenceDuring) {
       infoToast(log: 'Silence detected. Save recording...');
       _sendAudio();
