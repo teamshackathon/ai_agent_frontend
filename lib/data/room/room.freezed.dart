@@ -23,10 +23,13 @@ mixin _$Room {
       throw _privateConstructorUsedError; // 各授業のlessonsまでのpathを保持しておく
   CollectionReference<Object?> get reference =>
       throw _privateConstructorUsedError; // 各授業の個人のlessonsまでのpathを保持しておく
-  CollectionReference<Object?> get ownReference =>
-      throw _privateConstructorUsedError;
+  List<String> get students => throw _privateConstructorUsedError;
   String get teacher => throw _privateConstructorUsedError; // データ名にしとくと、後から楽そう
   String get textDataName => throw _privateConstructorUsedError;
+  String get teachingHours => throw _privateConstructorUsedError;
+  String get numberOfTeachingHours => throw _privateConstructorUsedError;
+  String get dateOfLessons => throw _privateConstructorUsedError;
+  String get classrooms => throw _privateConstructorUsedError;
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
@@ -45,9 +48,13 @@ abstract class $RoomCopyWith<$Res> {
       String subject,
       String chatId,
       CollectionReference<Object?> reference,
-      CollectionReference<Object?> ownReference,
+      List<String> students,
       String teacher,
-      String textDataName});
+      String textDataName,
+      String teachingHours,
+      String numberOfTeachingHours,
+      String dateOfLessons,
+      String classrooms});
 }
 
 /// @nodoc
@@ -70,9 +77,13 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
     Object? subject = null,
     Object? chatId = null,
     Object? reference = null,
-    Object? ownReference = null,
+    Object? students = null,
     Object? teacher = null,
     Object? textDataName = null,
+    Object? teachingHours = null,
+    Object? numberOfTeachingHours = null,
+    Object? dateOfLessons = null,
+    Object? classrooms = null,
   }) {
     return _then(_value.copyWith(
       year: null == year
@@ -95,10 +106,10 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
               as CollectionReference<Object?>,
-      ownReference: null == ownReference
-          ? _value.ownReference
-          : ownReference // ignore: cast_nullable_to_non_nullable
-              as CollectionReference<Object?>,
+      students: null == students
+          ? _value.students
+          : students // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       teacher: null == teacher
           ? _value.teacher
           : teacher // ignore: cast_nullable_to_non_nullable
@@ -106,6 +117,22 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
       textDataName: null == textDataName
           ? _value.textDataName
           : textDataName // ignore: cast_nullable_to_non_nullable
+              as String,
+      teachingHours: null == teachingHours
+          ? _value.teachingHours
+          : teachingHours // ignore: cast_nullable_to_non_nullable
+              as String,
+      numberOfTeachingHours: null == numberOfTeachingHours
+          ? _value.numberOfTeachingHours
+          : numberOfTeachingHours // ignore: cast_nullable_to_non_nullable
+              as String,
+      dateOfLessons: null == dateOfLessons
+          ? _value.dateOfLessons
+          : dateOfLessons // ignore: cast_nullable_to_non_nullable
+              as String,
+      classrooms: null == classrooms
+          ? _value.classrooms
+          : classrooms // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -124,9 +151,13 @@ abstract class _$$RoomImplCopyWith<$Res> implements $RoomCopyWith<$Res> {
       String subject,
       String chatId,
       CollectionReference<Object?> reference,
-      CollectionReference<Object?> ownReference,
+      List<String> students,
       String teacher,
-      String textDataName});
+      String textDataName,
+      String teachingHours,
+      String numberOfTeachingHours,
+      String dateOfLessons,
+      String classrooms});
 }
 
 /// @nodoc
@@ -146,9 +177,13 @@ class __$$RoomImplCopyWithImpl<$Res>
     Object? subject = null,
     Object? chatId = null,
     Object? reference = null,
-    Object? ownReference = null,
+    Object? students = null,
     Object? teacher = null,
     Object? textDataName = null,
+    Object? teachingHours = null,
+    Object? numberOfTeachingHours = null,
+    Object? dateOfLessons = null,
+    Object? classrooms = null,
   }) {
     return _then(_$RoomImpl(
       year: null == year
@@ -171,10 +206,10 @@ class __$$RoomImplCopyWithImpl<$Res>
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
               as CollectionReference<Object?>,
-      ownReference: null == ownReference
-          ? _value.ownReference
-          : ownReference // ignore: cast_nullable_to_non_nullable
-              as CollectionReference<Object?>,
+      students: null == students
+          ? _value._students
+          : students // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       teacher: null == teacher
           ? _value.teacher
           : teacher // ignore: cast_nullable_to_non_nullable
@@ -182,6 +217,22 @@ class __$$RoomImplCopyWithImpl<$Res>
       textDataName: null == textDataName
           ? _value.textDataName
           : textDataName // ignore: cast_nullable_to_non_nullable
+              as String,
+      teachingHours: null == teachingHours
+          ? _value.teachingHours
+          : teachingHours // ignore: cast_nullable_to_non_nullable
+              as String,
+      numberOfTeachingHours: null == numberOfTeachingHours
+          ? _value.numberOfTeachingHours
+          : numberOfTeachingHours // ignore: cast_nullable_to_non_nullable
+              as String,
+      dateOfLessons: null == dateOfLessons
+          ? _value.dateOfLessons
+          : dateOfLessons // ignore: cast_nullable_to_non_nullable
+              as String,
+      classrooms: null == classrooms
+          ? _value.classrooms
+          : classrooms // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -196,10 +247,15 @@ class _$RoomImpl extends _Room {
       required this.subject,
       required this.chatId,
       required this.reference,
-      required this.ownReference,
+      required final List<String> students,
       required this.teacher,
-      required this.textDataName})
-      : super._();
+      required this.textDataName,
+      required this.teachingHours,
+      required this.numberOfTeachingHours,
+      required this.dateOfLessons,
+      required this.classrooms})
+      : _students = students,
+        super._();
 
   @override
   final String year;
@@ -213,17 +269,32 @@ class _$RoomImpl extends _Room {
   @override
   final CollectionReference<Object?> reference;
 // 各授業の個人のlessonsまでのpathを保持しておく
+  final List<String> _students;
+// 各授業の個人のlessonsまでのpathを保持しておく
   @override
-  final CollectionReference<Object?> ownReference;
+  List<String> get students {
+    if (_students is EqualUnmodifiableListView) return _students;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_students);
+  }
+
   @override
   final String teacher;
 // データ名にしとくと、後から楽そう
   @override
   final String textDataName;
+  @override
+  final String teachingHours;
+  @override
+  final String numberOfTeachingHours;
+  @override
+  final String dateOfLessons;
+  @override
+  final String classrooms;
 
   @override
   String toString() {
-    return 'Room(year: $year, roomNumber: $roomNumber, subject: $subject, chatId: $chatId, reference: $reference, ownReference: $ownReference, teacher: $teacher, textDataName: $textDataName)';
+    return 'Room(year: $year, roomNumber: $roomNumber, subject: $subject, chatId: $chatId, reference: $reference, students: $students, teacher: $teacher, textDataName: $textDataName, teachingHours: $teachingHours, numberOfTeachingHours: $numberOfTeachingHours, dateOfLessons: $dateOfLessons, classrooms: $classrooms)';
   }
 
   @override
@@ -238,16 +309,35 @@ class _$RoomImpl extends _Room {
             (identical(other.chatId, chatId) || other.chatId == chatId) &&
             (identical(other.reference, reference) ||
                 other.reference == reference) &&
-            (identical(other.ownReference, ownReference) ||
-                other.ownReference == ownReference) &&
+            const DeepCollectionEquality().equals(other._students, _students) &&
             (identical(other.teacher, teacher) || other.teacher == teacher) &&
             (identical(other.textDataName, textDataName) ||
-                other.textDataName == textDataName));
+                other.textDataName == textDataName) &&
+            (identical(other.teachingHours, teachingHours) ||
+                other.teachingHours == teachingHours) &&
+            (identical(other.numberOfTeachingHours, numberOfTeachingHours) ||
+                other.numberOfTeachingHours == numberOfTeachingHours) &&
+            (identical(other.dateOfLessons, dateOfLessons) ||
+                other.dateOfLessons == dateOfLessons) &&
+            (identical(other.classrooms, classrooms) ||
+                other.classrooms == classrooms));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, year, roomNumber, subject,
-      chatId, reference, ownReference, teacher, textDataName);
+  int get hashCode => Object.hash(
+      runtimeType,
+      year,
+      roomNumber,
+      subject,
+      chatId,
+      reference,
+      const DeepCollectionEquality().hash(_students),
+      teacher,
+      textDataName,
+      teachingHours,
+      numberOfTeachingHours,
+      dateOfLessons,
+      classrooms);
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
@@ -265,9 +355,13 @@ abstract class _Room extends Room {
       required final String subject,
       required final String chatId,
       required final CollectionReference<Object?> reference,
-      required final CollectionReference<Object?> ownReference,
+      required final List<String> students,
       required final String teacher,
-      required final String textDataName}) = _$RoomImpl;
+      required final String textDataName,
+      required final String teachingHours,
+      required final String numberOfTeachingHours,
+      required final String dateOfLessons,
+      required final String classrooms}) = _$RoomImpl;
   const _Room._() : super._();
 
   @override
@@ -281,11 +375,19 @@ abstract class _Room extends Room {
   @override
   CollectionReference<Object?> get reference; // 各授業の個人のlessonsまでのpathを保持しておく
   @override
-  CollectionReference<Object?> get ownReference;
+  List<String> get students;
   @override
   String get teacher; // データ名にしとくと、後から楽そう
   @override
   String get textDataName;
+  @override
+  String get teachingHours;
+  @override
+  String get numberOfTeachingHours;
+  @override
+  String get dateOfLessons;
+  @override
+  String get classrooms;
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
