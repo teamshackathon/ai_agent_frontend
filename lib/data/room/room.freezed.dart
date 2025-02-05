@@ -22,11 +22,8 @@ mixin _$Room {
   String get chatId =>
       throw _privateConstructorUsedError; // 各授業のlessonsまでのpathを保持しておく
   CollectionReference<Object?> get reference =>
-      throw _privateConstructorUsedError; // 各授業の個人のlessonsまでのpathを保持しておく
-  CollectionReference<Object?> get ownReference =>
       throw _privateConstructorUsedError; // 教師は各クラスの生徒のlessonsまでのpathを保持しておく
-  List<CollectionReference<Object?>> get studentsReference =>
-      throw _privateConstructorUsedError;
+  List<String> get students => throw _privateConstructorUsedError;
   String get teacher => throw _privateConstructorUsedError;
   String get textLink => throw _privateConstructorUsedError;
   String get teachingHours => throw _privateConstructorUsedError;
@@ -51,8 +48,7 @@ abstract class $RoomCopyWith<$Res> {
       String subject,
       String chatId,
       CollectionReference<Object?> reference,
-      CollectionReference<Object?> ownReference,
-      List<CollectionReference<Object?>> studentsReference,
+      List<String> students,
       String teacher,
       String textLink,
       String teachingHours,
@@ -81,8 +77,7 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
     Object? subject = null,
     Object? chatId = null,
     Object? reference = null,
-    Object? ownReference = null,
-    Object? studentsReference = null,
+    Object? students = null,
     Object? teacher = null,
     Object? textLink = null,
     Object? teachingHours = null,
@@ -111,14 +106,10 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
               as CollectionReference<Object?>,
-      ownReference: null == ownReference
-          ? _value.ownReference
-          : ownReference // ignore: cast_nullable_to_non_nullable
-              as CollectionReference<Object?>,
-      studentsReference: null == studentsReference
-          ? _value.studentsReference
-          : studentsReference // ignore: cast_nullable_to_non_nullable
-              as List<CollectionReference<Object?>>,
+      students: null == students
+          ? _value.students
+          : students // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       teacher: null == teacher
           ? _value.teacher
           : teacher // ignore: cast_nullable_to_non_nullable
@@ -160,8 +151,7 @@ abstract class _$$RoomImplCopyWith<$Res> implements $RoomCopyWith<$Res> {
       String subject,
       String chatId,
       CollectionReference<Object?> reference,
-      CollectionReference<Object?> ownReference,
-      List<CollectionReference<Object?>> studentsReference,
+      List<String> students,
       String teacher,
       String textLink,
       String teachingHours,
@@ -187,8 +177,7 @@ class __$$RoomImplCopyWithImpl<$Res>
     Object? subject = null,
     Object? chatId = null,
     Object? reference = null,
-    Object? ownReference = null,
-    Object? studentsReference = null,
+    Object? students = null,
     Object? teacher = null,
     Object? textLink = null,
     Object? teachingHours = null,
@@ -217,14 +206,10 @@ class __$$RoomImplCopyWithImpl<$Res>
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
               as CollectionReference<Object?>,
-      ownReference: null == ownReference
-          ? _value.ownReference
-          : ownReference // ignore: cast_nullable_to_non_nullable
-              as CollectionReference<Object?>,
-      studentsReference: null == studentsReference
-          ? _value._studentsReference
-          : studentsReference // ignore: cast_nullable_to_non_nullable
-              as List<CollectionReference<Object?>>,
+      students: null == students
+          ? _value._students
+          : students // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       teacher: null == teacher
           ? _value.teacher
           : teacher // ignore: cast_nullable_to_non_nullable
@@ -262,15 +247,14 @@ class _$RoomImpl extends _Room {
       required this.subject,
       required this.chatId,
       required this.reference,
-      required this.ownReference,
-      required final List<CollectionReference<Object?>> studentsReference,
+      required final List<String> students,
       required this.teacher,
       required this.textLink,
       required this.teachingHours,
       required this.numberOfTeachingHours,
       required this.dateOfLessons,
       required this.classrooms})
-      : _studentsReference = studentsReference,
+      : _students = students,
         super._();
 
   @override
@@ -284,18 +268,14 @@ class _$RoomImpl extends _Room {
 // 各授業のlessonsまでのpathを保持しておく
   @override
   final CollectionReference<Object?> reference;
-// 各授業の個人のlessonsまでのpathを保持しておく
-  @override
-  final CollectionReference<Object?> ownReference;
 // 教師は各クラスの生徒のlessonsまでのpathを保持しておく
-  final List<CollectionReference<Object?>> _studentsReference;
+  final List<String> _students;
 // 教師は各クラスの生徒のlessonsまでのpathを保持しておく
   @override
-  List<CollectionReference<Object?>> get studentsReference {
-    if (_studentsReference is EqualUnmodifiableListView)
-      return _studentsReference;
+  List<String> get students {
+    if (_students is EqualUnmodifiableListView) return _students;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_studentsReference);
+    return EqualUnmodifiableListView(_students);
   }
 
   @override
@@ -313,7 +293,7 @@ class _$RoomImpl extends _Room {
 
   @override
   String toString() {
-    return 'Room(year: $year, roomNumber: $roomNumber, subject: $subject, chatId: $chatId, reference: $reference, ownReference: $ownReference, studentsReference: $studentsReference, teacher: $teacher, textLink: $textLink, teachingHours: $teachingHours, numberOfTeachingHours: $numberOfTeachingHours, dateOfLessons: $dateOfLessons, classrooms: $classrooms)';
+    return 'Room(year: $year, roomNumber: $roomNumber, subject: $subject, chatId: $chatId, reference: $reference, students: $students, teacher: $teacher, textLink: $textLink, teachingHours: $teachingHours, numberOfTeachingHours: $numberOfTeachingHours, dateOfLessons: $dateOfLessons, classrooms: $classrooms)';
   }
 
   @override
@@ -328,10 +308,7 @@ class _$RoomImpl extends _Room {
             (identical(other.chatId, chatId) || other.chatId == chatId) &&
             (identical(other.reference, reference) ||
                 other.reference == reference) &&
-            (identical(other.ownReference, ownReference) ||
-                other.ownReference == ownReference) &&
-            const DeepCollectionEquality()
-                .equals(other._studentsReference, _studentsReference) &&
+            const DeepCollectionEquality().equals(other._students, _students) &&
             (identical(other.teacher, teacher) || other.teacher == teacher) &&
             (identical(other.textLink, textLink) ||
                 other.textLink == textLink) &&
@@ -353,8 +330,7 @@ class _$RoomImpl extends _Room {
       subject,
       chatId,
       reference,
-      ownReference,
-      const DeepCollectionEquality().hash(_studentsReference),
+      const DeepCollectionEquality().hash(_students),
       teacher,
       textLink,
       teachingHours,
@@ -378,8 +354,7 @@ abstract class _Room extends Room {
       required final String subject,
       required final String chatId,
       required final CollectionReference<Object?> reference,
-      required final CollectionReference<Object?> ownReference,
-      required final List<CollectionReference<Object?>> studentsReference,
+      required final List<String> students,
       required final String teacher,
       required final String textLink,
       required final String teachingHours,
@@ -397,12 +372,10 @@ abstract class _Room extends Room {
   @override
   String get chatId; // 各授業のlessonsまでのpathを保持しておく
   @override
-  CollectionReference<Object?> get reference; // 各授業の個人のlessonsまでのpathを保持しておく
-  @override
   CollectionReference<Object?>
-      get ownReference; // 教師は各クラスの生徒のlessonsまでのpathを保持しておく
+      get reference; // 教師は各クラスの生徒のlessonsまでのpathを保持しておく
   @override
-  List<CollectionReference<Object?>> get studentsReference;
+  List<String> get students;
   @override
   String get teacher;
   @override

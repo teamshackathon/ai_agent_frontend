@@ -33,10 +33,8 @@ class Room with _$Room {
     required String chatId,
     // 各授業のlessonsまでのpathを保持しておく
     required CollectionReference reference,
-    // 各授業の個人のlessonsまでのpathを保持しておく
-    required CollectionReference ownReference,
     // 教師は各クラスの生徒のlessonsまでのpathを保持しておく
-    required List<CollectionReference> studentsReference,
+    required List<String> students,
     required String teacher,
     required String textLink,
     required String teachingHours,
@@ -54,8 +52,7 @@ class Room with _$Room {
       subject: "",
       chatId: "",
       reference: FirebaseFirestore.instance.collection("2024"),
-      ownReference: FirebaseFirestore.instance.collection("2024"),
-      studentsReference: [],
+      students: [],
       teacher: "",
       textLink: "",
       teachingHours: "",
@@ -96,9 +93,8 @@ Future<List<Room>> activeRooms(ref) async {
                 subject: doc.id,
                 chatId: chatIds[doc.id] ??
                     "${r["year"]}-${r["room"]}-${student.folderName}-${doc.id}",
-                ownReference: ownDocRef.doc(doc.id).collection("lessons"),
                 reference: docRef.doc(doc.id).collection("lessons"),
-                studentsReference: [],
+                students: [],
                 teacher: doc.data()["teacher"] ?? "",
                 textLink: doc.data()["text_link"] ?? "",
                 teachingHours: doc.data()["teachingHours"] ?? "",
@@ -128,19 +124,14 @@ Future<List<Room>> activeRooms(ref) async {
     final store = FirebaseFirestore.instance;
     for (var r in teacher.rooms) {
       if (r["year"] == latestYear) {
-        final List<CollectionReference> studentsColelction = [];
+        final List<String> students = [];
         await store
             .collection(r["year"]!)
             .doc(r["room"]!)
             .get()
             .then((snapshot) {
           for (var student in snapshot.data()!["collections"]) {
-            studentsColelction.add(store
-                .collection(r["year"]!)
-                .doc(r["room"]!)
-                .collection(student)
-                .doc(r["subject"]!)
-                .collection("lessons"));
+            students.add(student);
           }
         });
 
@@ -156,9 +147,8 @@ Future<List<Room>> activeRooms(ref) async {
                   subject: r["subject"]!,
                   chatId: "",
                   // 教師はchatIdを持たない
-                  ownReference: store.collection(r["year"]!),
                   reference: docRef.doc(r["subject"]!).collection("lessons"),
-                  studentsReference: studentsColelction,
+                  students: students,
                   teacher: teacher.name,
                   textLink: doc.data()["text_link"] ?? "",
                   teachingHours: doc.data()["teachingHours"] ?? "",
@@ -228,9 +218,8 @@ Future<List<Room>> archiveRooms(ref) async {
                 subject: doc.id,
                 chatId: chatIds[doc.id] ??
                     "${r["year"]}-${r["room"]}-${student.folderName}-${doc.id}",
-                ownReference: ownDocRef.doc(doc.id).collection("lessons"),
                 reference: docRef.doc(doc.id).collection("lessons"),
-                studentsReference: [],
+                students: [],
                 teacher: doc.data()["teacher"] ?? "",
                 textLink: doc.data()["text_link"] ?? "",
                 teachingHours: doc.data()["teachingHours"] ?? "",
@@ -260,7 +249,7 @@ Future<List<Room>> archiveRooms(ref) async {
     final store = FirebaseFirestore.instance;
     for (var r in teacher.rooms) {
       if (r["year"] != latestYear) {
-        final List<CollectionReference> studentsColelction = [];
+        final List<String> students = [];
 
         await store
             .collection(r["year"]!)
@@ -268,12 +257,7 @@ Future<List<Room>> archiveRooms(ref) async {
             .get()
             .then((snapshot) {
           for (var student in snapshot.data()!["collections"]) {
-            studentsColelction.add(store
-                .collection(r["year"]!)
-                .doc(r["room"]!)
-                .collection(student)
-                .doc(r["subject"]!)
-                .collection("lessons"));
+            students.add(student);
           }
         });
 
@@ -290,9 +274,8 @@ Future<List<Room>> archiveRooms(ref) async {
                   subject: r["subject"]!,
                   chatId: "",
                   // 教師はchatIdを持たない
-                  ownReference: store.collection(r["year"]!),
                   reference: docRef.doc(r["subject"]!).collection("lessons"),
-                  studentsReference: studentsColelction,
+                  students: students,
                   teacher: teacher.name,
                   textLink: doc.data()["text_link"] ?? "",
                   teachingHours: doc.data()["teachingHours"] ?? "",
