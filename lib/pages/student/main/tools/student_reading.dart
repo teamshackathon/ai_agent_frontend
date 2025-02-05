@@ -1,6 +1,5 @@
-import 'dart:math' as math;
+import 'dart:ui';
 
-import 'package:code/toast.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -10,9 +9,6 @@ import 'package:pdfrx/pdfrx.dart';
 import '../../../../data/firebase/lesson_stream.dart';
 import '../../../../widget/base_page/base_page.dart';
 import '../../../../widget/utils/sakura_progress_indicator.dart';
-
-final pdfCtrlProvider =
-    StateProvider<PdfViewerController>((ref) => PdfViewerController());
 
 class StudentReading extends HookConsumerWidget {
   const StudentReading({super.key});
@@ -44,7 +40,6 @@ class StudentReading extends HookConsumerWidget {
   }
 }
 
-// スワイプ方向を指定できてもいいかもね
 class StudentReadingDisplay extends HookConsumerWidget {
   const StudentReadingDisplay({super.key, required this.uri});
 
@@ -52,84 +47,59 @@ class StudentReadingDisplay extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ctrl = ref.watch(pdfCtrlProvider);
-    var ready = ctrl.isReady;
-    infoToast(log: ready);
+    final pageController = useMemoized(() => PageController());
+    final current = useState<int>(1);
 
-    useEffect(() {
-      ready = ctrl.isReady;
-      return null;
-    }, [ctrl]);
-
-    return !ctrl.isReady
-        ? const Center(child: SakuraProgressIndicator())
-        : Column(
-            children: [
-              Slider(
-                value: (ctrl.pageNumber ?? 0) / ctrl.pageCount,
-                onChanged: (value) {
-                  ctrl.setCurrentPageNumber((value * ctrl.pageCount).toInt());
-                },
-              ),
-              Expanded(
-                child: PdfViewer.uri(
-                  uri,
-                  params: PdfViewerParams(
-                    loadingBannerBuilder: (context, _, __) =>
-                        const Center(child: SakuraProgressIndicator()),
-                    layoutPages: (pages, params) {
-                      final height = pages.fold(0.0,
-                              (prev, page) => math.max(prev, page.height)) +
-                          params.margin * 2;
-                      final pageLayouts = <Rect>[];
-                      double x = params.margin;
-                      for (var page in pages) {
-                        pageLayouts.add(
-                          Rect.fromLTWH(
-                            x,
-                            (height - page.height) / 2, // center vertically
-                            page.width,
-                            page.height,
-                          ),
-                        );
-                        x += page.width + params.margin;
-                      }
-                      return PdfPageLayout(
-                        pageLayouts: pageLayouts,
-                        documentSize: Size(x, height),
-                      );
-                    },
+    return PdfDocumentViewBuilder.uri(uri, builder: (context, document) {
+      return Column(
+        children: [
+          Flexible(
+            flex: 19,
+            child: ScrollConfiguration(
+              // chrome上でスワイプを検知するために必要、実機ではいらない
+              behavior: MouseDraggableScrollBehavior(),
+              child: PageView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: document?.pages.length ?? 0,
+                // ダブルタップで拡大はこのWidgetだと実装されていない、一旦諦め
+                itemBuilder: (context, index) => InteractiveViewer(
+                  child: PdfPageView(
+                    document: document,
+                    pageNumber: index + 1,
+                    alignment: Alignment.center,
                   ),
-                  controller: ctrl,
                 ),
+                onPageChanged: (page) => current.value = page + 1,
+                controller: pageController,
               ),
-            ],
-          );
-    // return Column(
-    //   children: [
-    //     Expanded(
-    //       child: PdfDocumentViewBuilder.uri(
-    //         uri,
-    //         builder: (context, document) => PageView.builder(
-    //           itemCount: document?.pages.length ?? 0,
-    //           itemBuilder: (context, index) {
-    //             return PdfPageView(
-    //               document: document,
-    //               pageNumber: index + 1,
-    //               alignment: Alignment.center,
-    //             );
-    //           },
-    //           controller: page,
-    //         ),
-    //       ),
-    //     ),
-    //     Slider(
-    //       value: page.page ?? 0,
-    //       onChanged: (value) {
-    //         page.jumpTo(value);
-    //       },
-    //     ),
-    //   ],
-    // );
+            ),
+          ),
+          Flexible(
+            flex: 1,
+            child: Slider(
+              max: (document?.pages.length ?? 1).toDouble(),
+              min: 1.0,
+              value: current.value.toDouble(),
+              divisions: _calcDivisions(document?.pages.length),
+              onChanged: (value) =>
+                  pageController.jumpToPage((value - 1).round()),
+            ),
+          ),
+        ],
+      );
+    });
   }
+}
+
+class MouseDraggableScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => <PointerDeviceKind>{
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+      };
+}
+
+int? _calcDivisions(int? count) {
+  if (count == null || count < 2) return null;
+  return count - 1;
 }
