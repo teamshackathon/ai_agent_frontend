@@ -11,11 +11,13 @@ class LessonCard extends HookConsumerWidget {
       {super.key,
       required this.lesson,
       required this.onTap,
-      required this.angle});
+      required this.angle,
+      required this.subject});
 
   final Lesson lesson;
   final GestureTapCallback onTap;
   final double angle;
+  final String subject;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,7 +26,8 @@ class LessonCard extends HookConsumerWidget {
       child: Stack(children: [
         Transform.rotate(
             angle: angle,
-            child: FittedBox(fit: BoxFit.scaleDown, child: PencilSvg())),
+            child: FittedBox(
+                fit: BoxFit.scaleDown, child: PencilSvg(subject: subject))),
         SizedBox(
             width: double.infinity,
             height: 100,
@@ -96,7 +99,9 @@ class LessonDocumentTag extends HookConsumerWidget {
 }
 
 class PencilSvg extends HookWidget {
-  const PencilSvg({super.key});
+  const PencilSvg({super.key, required this.subject});
+
+  final String subject;
 
   // ランダムで0~7の数字を生成する関数
   int randomInt() {
@@ -121,9 +126,8 @@ class PencilSvg extends HookWidget {
 
     useEffect(() {
       Future<void> loadSvg() async {
-        String rawSvg = await rootBundle.loadString('assets/pencil.svg');
-        rawSvg = rawSvg.replaceAll('#73ff86', '#73ff86');
-        rawSvg = rawSvg.replaceAll('#fff5db', '#f5f3ed');
+        String rawSvg =
+            await rootBundle.loadString('assets/pencil_$subject.svg');
         svgString.value = rawSvg;
       }
 

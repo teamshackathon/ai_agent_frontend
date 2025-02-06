@@ -66,29 +66,29 @@ class TeacherAgendaDisplay extends HookConsumerWidget {
             editable.value = value;
           },
         ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: agendaState.value.sentences.length,
-            itemBuilder: (context, index) {
-              return SentenceCard(
-                editable: editable.value,
-                displayWidth: displayWidth,
-                displayHeight: displayHeight,
-                sentence: agendaState.value.sentences[index],
-                onChanged: (sentence) {
-                  infoToast(log: "before : ${agendaState.value}");
-                  var list = [
-                    for (var i = 0; i < agendaState.value.sentences.length; i++)
-                      i == index ? sentence : agendaState.value.sentences[i]
-                  ];
-                  agendaState.value =
-                      agendaState.value.copyWith(sentences: list);
-                  infoToast(log: "after : ${agendaState.value}");
-                },
-              );
-            },
-          ),
-        ),
+        // Expanded(
+        //   child: ListView.builder(
+        //     itemCount: agendaState.value.sentences.length,
+        //     itemBuilder: (context, index) {
+        //       return SentenceCard(
+        //         editable: editable.value,
+        //         displayWidth: displayWidth,
+        //         displayHeight: displayHeight,
+        //         sentence: agendaState.value.sentences[index],
+        //         onChanged: (sentence) {
+        //           infoToast(log: "before : ${agendaState.value}");
+        //           var list = [
+        //             for (var i = 0; i < agendaState.value.sentences.length; i++)
+        //               i == index ? sentence : agendaState.value.sentences[i]
+        //           ];
+        //           agendaState.value =
+        //               agendaState.value.copyWith(sentences: list);
+        //           infoToast(log: "after : ${agendaState.value}");
+        //         },
+        //       );
+        //     },
+        //   ),
+        // ),
       ],
     );
   }

@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class _HttpConst {
-  static const url = 'localhost:3001';
+  static const url = kIsWeb ? 'localhost:3001' : '10.0.2.2:3001';
   static const helloAiEndpoint = '/';
   static const testFirebaseEndpoint = '/test_firebase';
   static const createAgendaEndpoint = '/create_agenda';
@@ -44,11 +46,14 @@ Future<void> createAgenda(
         _HttpConst.url,
         _HttpConst.createAgendaEndpoint,
       ),
-      body: {
-        'refarence': refarence,
-        'start_page': startPage,
-        'finish_page': finishPage,
-      });
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'reference': refarence,
+        'start_page': startPage.toString(),
+        'finish_page': finishPage.toString(),
+      }));
 
   if (responce.statusCode == 200) {
     return;
