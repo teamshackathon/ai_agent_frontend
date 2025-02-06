@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 class _HttpConst {
   static const url = kIsWeb ? 'localhost:3001' : '10.0.2.2:3001';
   static const helloAiEndpoint = '/';
+  static const chatsAsStudent = '/chats_as_student';
+  static const chatsAsTeacher = '/chats_as_teacher';
   static const testFirebaseEndpoint = '/test_firebase';
   static const createAgendaEndpoint = '/create_agenda';
   static const createQuestionsEndpoint = '/create_questions';
@@ -21,6 +23,44 @@ Future<String> helloAi() async {
 
   if (responce.statusCode == 200) {
     return responce.body;
+  } else {
+    throw HttpException("HTTP ERROR ${responce.statusCode}");
+  }
+}
+
+Future<void> aiChatTriggerAsStudent(String reference) async {
+  var responce = await http.post(
+    Uri.http(_HttpConst.url, _HttpConst.chatsAsStudent),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: jsonEncode({
+      'reference': reference,
+    }),
+  );
+  if (responce.statusCode == 200) {
+    return;
+  } else if (responce.statusCode == 400) {
+    throw HttpException("HTTP ERROR :${responce.body}");
+  } else {
+    throw HttpException("HTTP ERROR ${responce.statusCode}");
+  }
+}
+
+Future<void> aiChatTriggerAsTeacher(String reference) async {
+  var responce = await http.post(
+    Uri.http(_HttpConst.url, _HttpConst.chatsAsTeacher),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: jsonEncode({
+      'reference': reference,
+    }),
+  );
+  if (responce.statusCode == 200) {
+    return;
+  } else if (responce.statusCode == 400) {
+    throw HttpException("HTTP ERROR :${responce.body}");
   } else {
     throw HttpException("HTTP ERROR ${responce.statusCode}");
   }
