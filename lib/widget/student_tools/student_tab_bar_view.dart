@@ -1,5 +1,6 @@
 import 'package:code/data/agenda/agenda.dart';
 import 'package:code/data/firebase/lesson_stream.dart';
+import 'package:code/pages/student/main/tools/student_answer_check.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -168,7 +169,7 @@ class StudentQuizTabBarView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Text("クイズ");
+    return StudentAnswerCheck(lesson: lesson);
   }
 }
 

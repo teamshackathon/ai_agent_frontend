@@ -174,6 +174,7 @@ class TeacherCreateLessonDisplay extends HookConsumerWidget {
                         reference: room.reference.doc(),
                         startPage: start.value,
                         endPage: end.value,
+                        state: "before",
                       ).toMap(),
                     );
                     GoRouter.of(context).pop();

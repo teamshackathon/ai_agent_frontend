@@ -1,5 +1,6 @@
 import 'package:code/data/agenda/agenda.dart';
 import 'package:code/data/firebase/lesson_stream.dart';
+import 'package:code/pages/teacher/main/tools/teacher_quiz.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -323,36 +324,7 @@ class TeacherQuizTabBarView extends HookConsumerWidget {
     return Scaffold(
       // 透明
       backgroundColor: Colors.transparent,
-      body: TeacherQuizDisplay(lesson: lesson),
-    );
-  }
-}
-
-class TeacherQuizDisplay extends HookConsumerWidget {
-  const TeacherQuizDisplay({
-    super.key,
-    required this.lesson,
-  });
-
-  final Lesson lesson;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return InkWell(
-      onTap: () {
-        GoRouter.of(context).push(Routes.teacherQuiz);
-      },
-      child: ListTile(
-        title: Card(
-          child: Column(
-            children: [
-              Text(""),
-              Text("小テストの確認"),
-              Text(""),
-            ],
-          ),
-        ),
-      ),
+      body: TeacherQuiz(),
     );
   }
 }

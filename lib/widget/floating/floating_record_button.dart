@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:code/data/firebase/during_stream.dart';
+import 'package:code/data/firebase/lesson_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -18,14 +19,21 @@ class FloatingRecordButton extends HookConsumerWidget {
     final recorderNot = ref.read(streamRecorderProvider.notifier);
     final dB = recorder.dB;
     final double elevation = math.min(math.max((dB + 60) / 10, 1.5), 20.0);
+    final lesson = ref.watch(currentLessonStreamProvider);
 
     void lessonStart() async {
       await recorderNot.start();
     }
 
+    void lessonEnd() async{
+      if(await recorder.recorder.isRecording()){
+        await recorderNot.stop();
+      }
+    }
+
     useEffect(() {
       lessonStart();
-      return null;
+      return lessonEnd;
     }, []);
 
     // ここまで大げさにしないとchromeだとボタンが四角くなる仕様
@@ -34,7 +42,7 @@ class FloatingRecordButton extends HookConsumerWidget {
     return InkWell(
       onLongPress: () async {
         await recorderNot.stop();
-        removeLessonToDuring(teacher: teacher);
+        breakLessonToDuring(teacher: teacher, currentLesson: lesson!.data());
       },
       child: AnimatedContainer(
         duration: Duration(milliseconds: 100),

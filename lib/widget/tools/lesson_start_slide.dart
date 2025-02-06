@@ -1,17 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code/data/firebase/during_stream.dart';
-import 'package:code/data/firebase/lesson_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swipe_button/flutter_swipe_button.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../data/firebase/during_stream.dart';
+import '../../data/firebase/lesson_stream.dart';
+import '../../data/record/record.dart';
 import '../utils/sakura_progress_indicator.dart';
 
 class LessonStartSlide extends ConsumerWidget {
   const LessonStartSlide({
     super.key,
     this.width = 400,
-    this.height = 80,
+    this.height = 60,
   });
 
   final double width, height;
@@ -20,7 +20,9 @@ class LessonStartSlide extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final during = ref.watch(duringStreamProvider);
     final currentRoom = ref.watch(currentRoomProvider);
-    final currentLessonStream = ref.watch(currentLessonStreamProvider);
+    final lesson = ref.watch(currentLessonStreamProvider);
+    final recorder = ref.watch(streamRecorderProvider);
+    final recorderNot = ref.read(streamRecorderProvider.notifier);
 
     return during.when(
       data: (snapshot) {
@@ -28,10 +30,30 @@ class LessonStartSlide extends ConsumerWidget {
           snapshotData: snapshot.docs,
           roomNumber: currentRoom.roomNumber,
           subject: currentRoom.subject,
-          count: currentLessonStream!.data().count,
+          count: lesson!.data().count,
         )) {
           case true:
-            return Text("授業中です");
+            return SwipeButton.expand(
+              width: width,
+              height: height,
+              child: Text("授業終了"),
+              onSwipeEnd: () async {
+                if (lesson.data().state != "break") {
+                  await cancelLessonToDuring(
+                    teacher: currentRoom.teacher,
+                    currentLesson: lesson.data(),
+                  );
+                } else {
+                  await finishLessonToDuring(
+                    teacher: currentRoom.teacher,
+                    currentLesson: lesson.data(),
+                  );
+                }
+                if (recorder.isRecording) {
+                  await recorderNot.stop();
+                }
+              },
+            );
           case false:
             return Text("他のコマで授業中です");
           default:
@@ -43,8 +65,9 @@ class LessonStartSlide extends ConsumerWidget {
                 await addLessonToDuring(
                   roomNumber: currentRoom.roomNumber,
                   subject: currentRoom.subject,
-                  count: currentLessonStream.data().count,
+                  count: lesson.data().count,
                   teacher: currentRoom.teacher,
+                  currentLesson: lesson.data(),
                 );
               },
             );

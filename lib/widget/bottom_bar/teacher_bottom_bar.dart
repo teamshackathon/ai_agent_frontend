@@ -55,9 +55,10 @@ class TeacherBottomBar extends HookConsumerWidget {
       floatingActionButton: during.when(
         data: (snapshot) {
           if (givingLesson(
-            snapshotData: snapshot.docs,
-            teacher: user.value.name,
-          )) {
+                snapshotData: snapshot.docs,
+                teacher: user.value.name,
+              ) ==
+              "lesson") {
             return FloatingRecordButton(teacher: user.value.name);
           }
           return null;
