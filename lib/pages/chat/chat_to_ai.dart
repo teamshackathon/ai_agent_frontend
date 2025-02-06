@@ -1,3 +1,4 @@
+import 'package:code/api/api.dart';
 import 'package:code/data/firebase/chat_provider.dart';
 import 'package:code/data/firebase/lesson_stream.dart';
 import 'package:code/data/person/person.dart';
@@ -90,7 +91,7 @@ class ChatAIRoomScreen extends ConsumerWidget {
         .collection("chats")
         .doc("${currentRoomNot.state.chatId}-ai")
         .collection("messages")
-        .doc();
+        .doc("${DateTime.now().millisecondsSinceEpoch}");
     await newMessageRef.set({
       "messageId": newMessageRef.id,
       "senderId": status.folderName, // TODO: Replace with actual user ID
@@ -98,5 +99,21 @@ class ChatAIRoomScreen extends ConsumerWidget {
       "read": false,
       "createdAt": DateTime.now(),
     });
+    // 先生の場合
+    if (status is Teacher) {
+      await aiChatTriggerAsTeacher(store
+          .collection("chats")
+          .doc("${currentRoomNot.state.chatId}-ai")
+          .collection("messages")
+          .path);
+      return;
+    } else if (status is Student) {
+      await aiChatTriggerAsStudent(store
+          .collection("chats")
+          .doc("${currentRoomNot.state.chatId}-ai")
+          .collection("messages")
+          .path);
+      return;
+    }
   }
 }
