@@ -8,13 +8,9 @@ import '../../data/agenda/agenda.dart';
 class SentenceCard extends ConsumerWidget {
   const SentenceCard(
       {super.key,
-      required this.displayWidth,
-      required this.displayHeight,
       required this.sentence,
       required this.onChanged,
       required this.editable});
-
-  final double displayWidth, displayHeight;
   final Sentence sentence;
   final ValueChanged<Sentence> onChanged;
   final bool editable;
@@ -22,14 +18,10 @@ class SentenceCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
-      width: displayWidth * 0.9,
-      height: displayHeight * 0.22,
       child: Card(
         child: Column(
           children: [
             SizedBox(
-              width: displayWidth * 0.9,
-              height: displayHeight * 0.1,
               child: Row(
                 children: [
                   Flexible(
@@ -63,8 +55,6 @@ class SentenceCard extends ConsumerWidget {
               ),
             ),
             SizedBox(
-              width: displayWidth * 0.9,
-              height: displayHeight * 0.1,
               child: AgendaEditorField(
                 editable: editable,
                 maxLines: null,
