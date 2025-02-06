@@ -1,7 +1,5 @@
 import 'package:code/firebase/firestore/chat/create_chat_room.dart';
 import 'package:code/route/route.dart';
-import 'package:code/toast.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -31,9 +29,9 @@ class LessonsSummary extends HookConsumerWidget {
               ),
               Text("教科：${room.displaySubject}"),
               Text("先生：${room.teacher}"),
-              Text("教室：教室A"),
-              Text("時間割：月曜日3限 水曜日4限"),
-              Text("授業時間：45分"),
+              Text("教室：${room.classrooms}"),
+              Text("時間割：${room.dateOfLessons}"),
+              Text("授業時間：${room.teachingHours}分"),
               Row(children: [
                 Expanded(
                     child: Column(

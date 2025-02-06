@@ -68,7 +68,7 @@ class ClassesTabBarView extends HookConsumerWidget {
                   FittedBox(
                     fit: BoxFit.scaleDown,
                     child: SvgPicture.asset(
-                      'assets/sticky_notes.svg',
+                      'assets/sticky_notes_${room.subject}.svg',
                     ),
                   ),
                   Container(

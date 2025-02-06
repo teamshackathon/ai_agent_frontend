@@ -64,6 +64,7 @@ class StudentLessonsDisplay extends ConsumerWidget {
                     return LessonCard(
                       lesson: lesson,
                       angle: 0,
+                      subject: currentRoom.subject,
                       onTap: () {
                         currentLessonNot.state = lessons[index];
                         GoRouter.of(context).push(Routes.studentTools);
