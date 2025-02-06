@@ -1,4 +1,5 @@
 // 長くなりそうなのでファイル分け
+import 'package:code/pages/chat/chat_to_ai.dart';
 import 'package:code/pages/teacher/main/tools/teacher_create_lesson.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -10,6 +11,7 @@ import '../pages/teacher/main/teacher_main.dart';
 import '../pages/teacher/main/teacher_tools.dart';
 import '../pages/teacher/main/tools/teacher_agenda.dart';
 import '../pages/teacher/main/tools/teacher_quiz.dart';
+import '../pages/teacher/main/tools/teacher_reading.dart';
 import '../widget/bottom_bar/teacher_bottom_bar.dart';
 import 'route.dart';
 
@@ -68,6 +70,11 @@ final teacherBranch = StatefulShellRoute.indexedStack(
                       path: "quiz",
                       builder: (context, state) => TeacherQuiz(),
                     ),
+                    GoRoute(
+                      parentNavigatorKey: _teacherMainKey,
+                      path: "reading",
+                      builder: (context, state) => TeacherReading(),
+                    ),
                   ],
                 ),
                 GoRoute(
@@ -75,6 +82,11 @@ final teacherBranch = StatefulShellRoute.indexedStack(
                   path: "create",
                   builder: (context, state) => TeacherCreateLesson(),
                 ),
+                GoRoute(
+                  parentNavigatorKey: _teacherMainKey,
+                  path: "chat/ai",
+                  builder: (context, state) => ChatAIRoomScreen(),
+                )
               ],
             ),
           ],

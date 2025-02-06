@@ -43,7 +43,7 @@ class TeacherToolsDisplay extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tabController = useTabController(initialLength: 3);
+    final tabController = useTabController(initialLength: 4);
     final snapshot = ref.watch(currentLessonStreamProvider);
     final lesson = snapshot?.data() ?? Lesson.isBlank();
 
@@ -58,7 +58,10 @@ class TeacherToolsDisplay extends HookConsumerWidget {
         TabBar(controller: tabController, tabs: [
           Tab(text: "授業内容"),
           Tab(text: "テスト"),
-          Tab(text: "宿題"),
+          Tab(text: "学び"),
+          Tab(
+            text: "傾向",
+          )
         ]),
         Expanded(
             child: TabBarView(
@@ -66,7 +69,8 @@ class TeacherToolsDisplay extends HookConsumerWidget {
           children: [
             TeacherAgendaTabBarView(),
             TeacherQuizTabBarView(),
-            Text("宿題"),
+            TeacherStudentStudyTabBarView(),
+            Text("先生へのフィードバックの表示"),
           ],
         )),
       ],
