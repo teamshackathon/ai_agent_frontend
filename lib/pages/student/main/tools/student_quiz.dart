@@ -62,7 +62,6 @@ class StudentQuizDisplay extends HookConsumerWidget {
             itemBuilder: (context, index) => AnswerWidget(
               quiz: quizzes.value[index],
               onChanged: (str) {
-                infoToast(log: "before : ${quizzes.value}");
                 final list = [
                   for (var i = 0; i < quizzes.value.length; i++)
                     i == index
@@ -70,7 +69,6 @@ class StudentQuizDisplay extends HookConsumerWidget {
                         : quizzes.value[i],
                 ];
                 quizzes.value = list;
-                infoToast(log: "after : ${quizzes.value}");
               },
             ),
           ),
