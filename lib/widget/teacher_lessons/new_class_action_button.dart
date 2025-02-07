@@ -52,7 +52,7 @@ class NewClassActionButton extends HookConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              '新規授業の作成',
+                              '新規授業アジェンダの作成',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -129,106 +129,179 @@ class TeacherCreateLessonDisplay extends HookConsumerWidget {
     final start = useState<int>(0);
     final end = useState<int>(0);
 
+    final stepper = useState<int>(0);
+
     return PdfDocumentViewBuilder.uri(uri, builder: (context, document) {
       if (document?.pages.isNotEmpty == true) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              height: 400,
-              child: PageView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                itemCount: document?.pages.length ?? 0,
-                itemBuilder: (context, index) => PdfPageView(
-                  document: document,
-                  pageNumber: index + 1,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: inRange(start.value, end.value, index)
-                        ? [
-                            BoxShadow(
-                              color: Colors.red,
-                              spreadRadius: 3,
-                              blurRadius: 10,
-                            )
-                          ]
-                        : null,
-                  ),
+        return Column(mainAxisSize: MainAxisSize.min, children: [
+          SizedBox(
+            height: 300,
+            child: PageView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              itemCount: document?.pages.length ?? 0,
+              itemBuilder: (context, index) => PdfPageView(
+                document: document,
+                pageNumber: index + 1,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: inRange(start.value, end.value, index)
+                      ? [
+                          BoxShadow(
+                            color: Colors.red,
+                            spreadRadius: 3,
+                            blurRadius: 10,
+                          )
+                        ]
+                      : null,
                 ),
-                onPageChanged: (page) => current.value = page + 1,
-                controller: pageController,
               ),
+              onPageChanged: (page) => current.value = page + 1,
+              controller: pageController,
             ),
-            Slider(
-              max:
-                  (document?.pages.length ?? lastLesson.endPage + 1).toDouble(),
-              min: 1.0,
-              value: inRange(
-                      1,
-                      (document?.pages.length ?? lastLesson.endPage) + 1,
-                      current.value)
-                  ? current.value.toDouble()
-                  : 1.0,
-              divisions: _calcDivisions(document?.pages.length),
-              onChanged: (value) =>
-                  pageController.jumpToPage((value - 1).round()),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    start.value = current.value;
-                    if (end.value == 0 || end.value < start.value) {
-                      end.value = current.value;
-                    }
-                  },
-                  child: Text("ここから"),
+          ),
+          Slider(
+            max: (document?.pages.length ?? lastLesson.endPage + 1).toDouble(),
+            min: 1.0,
+            value: inRange(
+                    1,
+                    (document?.pages.length ?? lastLesson.endPage) + 1,
+                    current.value)
+                ? current.value.toDouble()
+                : 1.0,
+            divisions: _calcDivisions(document?.pages.length),
+            onChanged: (value) =>
+                pageController.jumpToPage((value - 1).round()),
+          ),
+          Stepper(
+            currentStep: stepper.value,
+            onStepContinue: () {
+              if (stepper.value < 2) {
+                stepper.value++;
+              }
+            },
+            onStepCancel: () {
+              if (stepper.value > 0) {
+                stepper.value--;
+              }
+            },
+            steps: [
+              _buildStep(
+                  title: "開始ページを設定",
+                  content: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          start.value = current.value;
+                          if (end.value == 0 || end.value < start.value) {
+                            end.value = current.value;
+                          }
+                        },
+                        child: Text("開始ページに設定"),
+                      ),
+                      const SizedBox(height: 8),
+                      Text("開始ページ: ${start.value}"),
+                    ],
+                  )),
+              _buildStep(
+                title: "終了ページを設定",
+                content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        end.value = current.value;
+                        if (start.value == 0 || start.value > end.value) {
+                          start.value = current.value;
+                        }
+                      },
+                      child: Text("終了ページに設定"),
+                    ),
+                    const SizedBox(height: 8),
+                    Text("終了ページ: ${end.value}"),
+                  ],
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    end.value = current.value;
-                    if (start.value == 0 || start.value > end.value) {
-                      start.value = current.value;
-                    }
-                  },
-                  child: Text("ここまで"),
-                ),
-              ],
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                if (start.value > 0 && end.value > 0) {
-                  final document = await room.reference.add(
-                    Lesson(
-                      count: lastLesson.count + 1,
-                      agendaPublish: Agenda.isBlank(),
-                      agendaDraft: Agenda.isBlank(),
-                      questionsPublish: [],
-                      questionsDraft: [],
-                      reference: room.reference.doc(),
-                      startPage: start.value,
-                      endPage: end.value,
-                      state: "before",
-                    ).toMap(),
-                  );
-                  createAgenda("${room.reference.path}/${document.id}",
-                      start.value, end.value);
-                  if (context.mounted) {
-                    GoRouter.of(context).pop();
-                  }
-                }
-              },
-              child: Text("授業授業作成"),
-            ),
-          ],
-        );
+              ),
+              _buildStep(
+                  title: "授業アジェンダの作成",
+                  content: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("開始ページ: ${start.value}"),
+                      const SizedBox(height: 4),
+                      Text("終了ページ: ${end.value}"),
+                    ],
+                  ))
+            ],
+            controlsBuilder: (BuildContext context, ControlsDetails details) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  if (details.onStepContinue != null)
+                    FilledButton(
+                      onPressed: details.currentStep == 2
+                          ? () async {
+                              if (start.value > 0 && end.value > 0) {
+                                final document = await room.reference.add(
+                                  Lesson(
+                                    count: lastLesson.count + 1,
+                                    agendaPublish: Agenda.isBlank(),
+                                    agendaDraft: Agenda.isBlank(),
+                                    questionsPublish: [],
+                                    questionsDraft: [],
+                                    reference: room.reference.doc(),
+                                    startPage: start.value,
+                                    endPage: end.value,
+                                    state: "before",
+                                  ).toMap(),
+                                );
+                                await createAgenda(
+                                    "${room.reference.path}/${document.id}",
+                                    start.value,
+                                    end.value);
+                                if (context.mounted) {
+                                  GoRouter.of(context).pop();
+                                }
+                              }
+                            }
+                          : details.onStepContinue,
+                      child: details.currentStep == 2
+                          ? const Text('授業アジェンダの作成')
+                          : const Text('次へ'),
+                    ),
+                  if (details.onStepCancel != null)
+                    OutlinedButton(
+                      onPressed: details.onStepCancel,
+                      child: const Text('戻る'),
+                    ),
+                ],
+              );
+            },
+          )
+        ]);
       } else {
         return const Center(child: SakuraProgressIndicator());
       }
     });
+  }
+
+  Step _buildStep({required String title, required Widget content}) {
+    return Step(
+      title: Text(title,
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+      content: Card(
+        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: content,
+        ),
+      ),
+      isActive: true,
+    );
   }
 }
 
