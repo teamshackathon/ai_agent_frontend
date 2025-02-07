@@ -28,13 +28,28 @@ class QuizTextEditable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.8,
-      child: TextFormField(
-        maxLines: null,
-        initialValue: quizText,
-        onChanged: onChanged,
-        enabled: editable,
+    return TextFormField(
+      maxLines: null,
+      initialValue: quizText,
+      onChanged: onChanged,
+      enabled: editable,
+      style: TextStyle(
+        fontSize: 16,
+        color: Colors.black87,
+        fontWeight: FontWeight.w500,
+      ),
+      decoration: InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey.shade400, width: 1.5),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.blue.shade700, width: 2),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        filled: true,
+        fillColor: Colors.grey.shade100,
+        contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       ),
     );
   }

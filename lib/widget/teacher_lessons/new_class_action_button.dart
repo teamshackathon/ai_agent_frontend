@@ -258,7 +258,7 @@ class TeacherCreateLessonDisplay extends HookConsumerWidget {
                                     state: "before",
                                   ).toMap(),
                                 );
-                                await createAgenda(
+                                createAgenda(
                                     "${room.reference.path}/${document.id}",
                                     start.value,
                                     end.value);
