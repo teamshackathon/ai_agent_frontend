@@ -1,28 +1,31 @@
-import 'package:code/data/agenda/agenda.dart';
-import 'package:code/data/firebase/lesson_stream.dart';
-import 'package:code/pages/student/main/tools/student_answer_check.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../data/lesson/lesson.dart';
+import '../../data/agenda/agenda.dart';
+import '../../data/firebase/tools_stream.dart';
+import '../utils/sakura_progress_indicator.dart';
 
 class StudentAgendaTabBarView extends HookConsumerWidget {
   const StudentAgendaTabBarView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(currentLessonStreamProvider);
-    final lesson = snapshot?.data() ?? Lesson.isBlank();
+    final lessonStream = ref.watch(toolsStreamProvider);
 
-    return StudentAgendaDisplay(lesson: lesson);
+    return lessonStream.when(
+      data: (snapshot) =>
+          StudentAgendaDisplay(lesson: snapshot.data() ?? Lesson.isBlank()),
+      // エラー時の表示
+      error: (_, __) => const Center(child: Text("読み込み失敗")),
+      // 読込中の表示
+      loading: () => const Center(child: SakuraProgressIndicator()),
+    );
   }
 }
 
 class StudentAgendaDisplay extends HookConsumerWidget {
-  const StudentAgendaDisplay({
-    super.key,
-    required this.lesson,
-  });
+  const StudentAgendaDisplay({super.key, required this.lesson});
 
   final Lesson lesson;
 
@@ -31,25 +34,26 @@ class StudentAgendaDisplay extends HookConsumerWidget {
     final agenda = lesson.agendaPublish;
 
     return Container(
-        padding: EdgeInsets.only(top: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: agenda.sentences.isEmpty
-                  ? Text("まだ公開されていません")
-                  : ListView.builder(
-                      itemCount: agenda.sentences.length,
-                      itemBuilder: (context, index) {
-                        return StudentAgendaSentenceCard(
-                          sentence: agenda.sentences[index],
-                          index: index,
-                        );
-                      },
-                    ),
-            ),
-          ],
-        ));
+      padding: EdgeInsets.only(top: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: agenda.sentences.isEmpty
+                ? Text("まだ公開されていません")
+                : ListView.builder(
+                    itemCount: agenda.sentences.length,
+                    itemBuilder: (context, index) {
+                      return StudentAgendaSentenceCard(
+                        sentence: agenda.sentences[index],
+                        index: index,
+                      );
+                    },
+                  ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -59,14 +63,17 @@ class StudentAgendaSentenceCard extends ConsumerWidget {
     required this.sentence,
     required this.index,
   });
+
   final Sentence sentence;
   final int index;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-        margin: EdgeInsets.only(top: 20, bottom: 20),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      margin: EdgeInsets.only(top: 20, bottom: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           Row(
             children: [
               Stack(
@@ -154,35 +161,9 @@ class StudentAgendaSentenceCard extends ConsumerWidget {
                 ),
               )
             ],
-          )
-        ]));
-  }
-}
-
-class StudentQuizTabBarView extends HookConsumerWidget {
-  const StudentQuizTabBarView({
-    super.key,
-    required this.lesson,
-  });
-
-  final Lesson lesson;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return StudentAnswerCheck(lesson: lesson);
-  }
-}
-
-class StudentHomeworkTabBarView extends HookConsumerWidget {
-  const StudentHomeworkTabBarView({
-    super.key,
-    required this.lesson,
-  });
-
-  final Lesson lesson;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Text("宿題");
+          ),
+        ],
+      ),
+    );
   }
 }
