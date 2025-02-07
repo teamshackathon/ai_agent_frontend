@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:lottie/lottie.dart';
@@ -57,13 +58,9 @@ class LoginPage extends HookWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "Manabiya AI",
-                      style: GoogleFonts.sawarabiGothic(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.pinkAccent,
-                      ),
+                    Center(
+                      child: SvgPicture.asset(
+                          width: 300, 'assets/logo-manabiya-ai.svg'),
                     ),
                     SizedBox(height: 20),
                     // SvgPicture.asset('assets/sakura.svg'),
