@@ -19,7 +19,7 @@ class LessonSlide extends ConsumerWidget {
     final currentRoom = ref.watch(currentRoomProvider);
 
     if (lesson.state == "" || lesson.state == "after") {
-      return Text("授業完了");
+      return SizedBox();
     }
 
     return during.when(
@@ -34,7 +34,7 @@ class LessonSlide extends ConsumerWidget {
             return Text("他のコマで授業中です");
 
           case true:
-            return LessonCancelSlide(lesson: lesson);
+            return SizedBox();
 
           default:
             return LessonStartSlide(lesson: lesson);
@@ -67,7 +67,6 @@ class LessonStartSlide extends ConsumerWidget {
     final currentRoom = ref.watch(currentRoomProvider);
 
     return SwipeButton.expand(
-      width: width,
       height: height,
       child: Text("授業開始"),
       onSwipeEnd: () async {
@@ -101,7 +100,6 @@ class LessonCancelSlide extends ConsumerWidget {
     final recorderNot = ref.read(streamRecorderProvider.notifier);
 
     return SwipeButton.expand(
-      width: width,
       height: height,
       child: Text("授業終了"),
       onSwipeEnd: () async {
