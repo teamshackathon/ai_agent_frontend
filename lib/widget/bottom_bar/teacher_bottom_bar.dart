@@ -66,7 +66,7 @@ class TeacherBottomBar extends HookConsumerWidget {
                 posX.value += details.delta.dx;
                 posY.value += details.delta.dy;
               },
-              child: TeacherStatusMiniBottombar(teacher: user.value.name),
+              child: TeacherStatusMiniBottomBar(teacher: user.value.name),
             ),
           ),
         ]),

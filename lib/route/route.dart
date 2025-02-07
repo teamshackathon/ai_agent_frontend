@@ -34,7 +34,6 @@ class Routes {
   static const String teacherReading = "/teacher/lessons/tools/reading";
   static const String teacherAgenda = "/teacher/lessons/tools/agenda";
   static const String teacherQuiz = "/teacher/lessons/tools/quiz";
-  static const String teacherReading = "/teacher/lessons/tools/reading";
   static const String makeQuizzes = "/quiz";
   static const String editQuizzes = "/quiz/edit";
   static const String submitStatus = "/ss001";
@@ -70,9 +69,6 @@ class Router extends _$Router {
     // ログイン状態に応じて、自動で画面遷移
     // firebase側でログイン状態を保持しておいてくれる
     final authState = ref.watch(authStateProvider);
-
-    // 画面乗っ取りを常に監視
-    // final hackState = ref.watch(hackedProvider);
 
     // personプロバイダーから情報を得ずに、authから情報を取ってくるように変更
     final role = ref.watch(roleProvider);
