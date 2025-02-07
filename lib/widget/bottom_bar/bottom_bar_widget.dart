@@ -1,5 +1,9 @@
 import 'package:code/data/firebase/store_provider.dart';
+import 'package:code/data/person/person.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:logger/logger.dart';
 import 'package:lottie/lottie.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -96,7 +100,7 @@ class ProfileLottieNavigationDestination extends HookConsumerWidget {
   }
 }
 
-class ProfileContainerRottieIcon extends ConsumerWidget {
+class ProfileContainerRottieIcon extends HookConsumerWidget {
   const ProfileContainerRottieIcon({
     super.key,
     required this.iconPath,
@@ -120,6 +124,20 @@ class ProfileContainerRottieIcon extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.read(personStatusProvider.future);
+
+    final userIconPathState = useState<String>("");
+
+    Widget defaultIcon() {
+      return Icon(
+        Icons.person,
+        color: index == selectedIndex
+            ? Color(0xFF020b19)
+            : const Color(0xFF448AFF),
+        size: 25,
+      );
+    }
+
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -144,13 +162,49 @@ class ProfileContainerRottieIcon extends ConsumerWidget {
             ],
           ),
         ),
-        Icon(
-          Icons.person,
-          color: index == selectedIndex
-              ? Color(0xFF020b19)
-              : const Color(0xFF448AFF),
-          size: 25,
-        ),
+        userIconPathState.value != ""
+            ? CircleAvatar(
+                radius: 12,
+                backgroundImage: NetworkImage(userIconPathState.value),
+              )
+            : FutureBuilder(
+                future: user,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return const Text("エラーが発生しました");
+                  } else {
+                    Logger().i(snapshot.data?.iconPath);
+                    final userIconPath = snapshot.data?.iconPath ?? "";
+                    // userIconPathはstoreageに保存されている画像のパス
+                    final storage = FirebaseStorage.instance;
+                    final pdf = storage.ref(userIconPath).getDownloadURL();
+                    return userIconPath == ""
+                        ? defaultIcon()
+                        : FutureBuilder(
+                            future: pdf,
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return defaultIcon();
+                              } else if (snapshot.hasError) {
+                                return defaultIcon();
+                              } else if (!snapshot.hasData) {
+                                return defaultIcon();
+                              } else {
+                                userIconPathState.value = snapshot.data ?? "";
+                                return CircleAvatar(
+                                  backgroundImage:
+                                      NetworkImage(snapshot.data ?? ""),
+                                  radius: 12.5,
+                                );
+                              }
+                            },
+                          );
+                  }
+                },
+              ),
       ],
     );
   }
