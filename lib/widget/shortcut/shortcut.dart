@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../data/firebase/tools_stream.dart';
 import '../../data/room/room.dart';
 import '../../route/route.dart';
 
@@ -20,18 +21,18 @@ class ShortcutButton extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final data = shortcut.data();
     final currentRoomNot = ref.read(currentRoomProvider.notifier);
-    final currentLessonNot = ref.read(currentLessonStreamProvider.notifier);
+    final currentLessonNot = ref.read(currentLessonProvider.notifier);
+    final lessonStream = ref.watch(lessonsStreamProvider.future);
 
     return FloatingActionButton(
       onPressed: () async {
         // ショートカットで飛ばされる道中で入力されるべきデータをここで入力する
         currentRoomNot.state = await searchRoom(rooms, data["subject"]);
-        final lessonStream = ref.watch(lessonsStreamProvider.future);
         await lessonStream.then((lessons) {
           final wannaGo = lessons.docs.firstWhere((lesson) {
             return lesson.data().count == data["count"];
           });
-          currentLessonNot.state = wannaGo;
+          currentLessonNot.state = wannaGo.data();
           if (context.mounted) {
             GoRouter.of(context).push(Routes.studentTools);
           }

@@ -1,12 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code/data/firebase/lesson_stream.dart';
-import 'package:code/data/person/person.dart';
-import 'package:code/data/submission/submission.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../person/person.dart';
+import '../submission/submission.dart';
+import 'tools_stream.dart';
+
 final submissionStreamProvider = StreamProvider((ref) async* {
-  final reference = ref.watch(currentLessonStreamProvider)?.reference ??
-      FirebaseFirestore.instance.collection("2024").doc("common");
+  final reference = ref.watch(currentLessonProvider).reference;
   final user = await ref.watch(personStatusProvider.future);
   if (user is Student) {
     yield* reference

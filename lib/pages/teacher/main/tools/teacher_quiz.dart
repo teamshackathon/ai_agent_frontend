@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:code/widget/utils/loading_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
@@ -17,50 +18,45 @@ import '../../../../widget/utils/sakura_progress_indicator.dart';
 final draggableProvider = StateProvider<bool>((ref) => false);
 
 class TeacherQuiz extends ConsumerWidget {
-  const TeacherQuiz({super.key});
+  const TeacherQuiz({super.key, required this.lesson});
+
+  final Lesson lesson;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(currentLessonStreamProvider);
-    final lesson = snapshot?.data() ?? Lesson.isBlank();
-    final size = MediaQuery.of(context).size;
-    const widthFactor = 0.9;
-    const heightFactor = 0.95;
+    Widget widget;
 
-    return Center(
-      child: FractionallySizedBox(
-        widthFactor: widthFactor,
-        heightFactor: heightFactor,
-        child: TeacherQuizScreen(
-          lesson: lesson,
-          displayWidth: size.width * widthFactor,
-          displayHeight: size.height * widthFactor,
-        ),
-      ),
-    );
+    switch (lesson.state) {
+      case "before":
+        widget = Text("授業終了時に生成されます");
+      case "lesson":
+        widget = Text("授業終了時に生成されます");
+      case "break":
+        widget = QuizEditScreen(lesson: lesson);
+      case "test":
+        widget = QuizSubmissionDisplay(lesson: lesson);
+      case "after":
+        widget = Text("生徒たちの成績");
+      default:
+        widget = Text("読み込み失敗");
+    }
+
+    return Center(child: widget);
   }
 }
 
-class TeacherQuizScreen extends HookConsumerWidget {
-  const TeacherQuizScreen({
+class QuizEditScreen extends HookConsumerWidget {
+  const QuizEditScreen({
     super.key,
-    required this.displayWidth,
-    required this.displayHeight,
     required this.lesson,
   });
 
-  final double displayWidth, displayHeight;
   final Lesson lesson;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final draggable = ref.watch(draggableProvider);
-    final draggableNot = ref.read(draggableProvider.notifier);
     final currentRoom = ref.watch(currentRoomProvider);
-
-    useEffect(() {
-      return;
-    }, []);
 
     return Center(
       child: ScrollConfiguration(
@@ -72,16 +68,13 @@ class TeacherQuizScreen extends HookConsumerWidget {
           scrollDirection: Axis.vertical,
           children: [
             QuizEditDisplay(lesson: lesson),
-            QuizSubmissionDisplay(lesson: lesson),
+            SizedBox(),
           ],
           onPageChanged: (page) async {
-            if (page == 1) {
-              await startTestToDuring(
-                teacher: currentRoom.teacher,
-                currentLesson: lesson,
-              );
-              draggableNot.state = false;
-            }
+            await startTestToDuring(
+              teacher: currentRoom.teacher,
+              currentLesson: lesson,
+            );
           },
         ),
       ),
@@ -112,6 +105,7 @@ class QuizEditDisplay extends HookConsumerWidget {
     final drafting = useState<bool>(false);
     final draggable = ref.watch(draggableProvider);
     final draggableNot = ref.read(draggableProvider.notifier);
+    final loading = useState<bool>(false);
 
     return Column(
       children: [
@@ -135,10 +129,13 @@ class QuizEditDisplay extends HookConsumerWidget {
             ),
           ),
         ),
+        SizedBox(height: 10),
         Visibility(
           visible: !draggable,
-          child: ElevatedButton(
+          child: LoadingButton(
+            width: 160,
             onPressed: () async {
+              loading.value = true;
               if (drafting.value) {
                 await reference.update({
                   "questions_draft": [for (var q in quizzes.value) q.toMap()]
@@ -150,8 +147,10 @@ class QuizEditDisplay extends HookConsumerWidget {
                 });
                 draggableNot.state = true;
               }
+              loading.value = false;
             },
-            child: drafting.value ? Text("下書き保存") : Text("保存"),
+            isLoading: loading.value,
+            text: drafting.value ? "下書き保存" : "保存",
           ),
         ),
         Visibility(
@@ -163,7 +162,7 @@ class QuizEditDisplay extends HookConsumerWidget {
   }
 }
 
-class QuizSubmissionDisplay extends ConsumerWidget {
+class QuizSubmissionDisplay extends HookConsumerWidget {
   const QuizSubmissionDisplay({super.key, required this.lesson});
 
   final Lesson lesson;
@@ -172,6 +171,7 @@ class QuizSubmissionDisplay extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final results = ref.watch(submissionStreamProvider);
     final currentRoom = ref.watch(currentRoomProvider);
+    final loading = useState<bool>(false);
 
     return results.when(
       data: (snapshot) {
@@ -187,11 +187,15 @@ class QuizSubmissionDisplay extends ConsumerWidget {
 
         return Center(
           child: Column(children: [
+            Spacer(),
             Text("テスト中 : ${currentRoom.students.length - count}"),
             Text("提出済み : ${count - finish}"),
             Text("採点済み : $finish"),
-            ElevatedButton(
+            Spacer(),
+            LoadingButton(
+              width: 200,
               onPressed: () async {
+                loading.value = true;
                 await finishLessonToDuring(
                   teacher: currentRoom.teacher,
                   currentLesson: lesson,
@@ -199,8 +203,10 @@ class QuizSubmissionDisplay extends ConsumerWidget {
                 if (context.mounted) {
                   GoRouter.of(context).pop();
                 }
+                loading.value = false;
               },
-              child: Text("テスト終了"),
+              isLoading: loading.value,
+              text: "テスト終了",
             ),
           ]),
         );

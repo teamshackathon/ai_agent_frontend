@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'dart:math' as math;
 import 'dart:convert';
 
-import 'package:code/data/firebase/lesson_stream.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:record/record.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -11,6 +10,7 @@ import 'package:socket_io_client/socket_io_client.dart';
 
 import '../../toast.dart';
 import '../firebase/during_stream.dart';
+import '../firebase/tools_stream.dart';
 import '../person/person.dart';
 
 part 'record.freezed.dart';
@@ -119,8 +119,8 @@ class StreamRecorder extends _$StreamRecorder {
   Future<bool> _permission() async {
     if (await state.recorder.hasPermission()) return true;
     final user = await ref.watch(personStatusProvider.future);
-    final current = ref.watch(currentLessonStreamProvider);
-    cancelLessonToDuring(teacher: user.name, currentLesson: current!.data());
+    final current = ref.watch(currentLessonProvider);
+    cancelLessonToDuring(teacher: user.name, currentLesson: current);
     return false;
   }
 

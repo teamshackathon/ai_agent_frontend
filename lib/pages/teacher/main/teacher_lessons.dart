@@ -1,15 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code/widget/teacher_lessons/teacher_lessons_widget.dart';
-import 'package:code/widget/utils/sakura_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../data/firebase/lesson_stream.dart';
+import '../../../data/firebase/tools_stream.dart';
 import '../../../data/lesson/lesson.dart';
 import '../../../route/route.dart';
 import '../../../widget/base_page/base_page.dart';
 import '../../../widget/teacher_lessons/new_class_action_button.dart';
+import '../../../widget/teacher_lessons/teacher_lessons_widget.dart';
+import '../../../widget/utils/sakura_progress_indicator.dart';
 
 class TeacherLessons extends ConsumerWidget {
   const TeacherLessons({super.key});
@@ -25,7 +26,15 @@ class TeacherLessons extends ConsumerWidget {
 
     return BasePage(
       pageTitle: "${getGakunenAndClass(currentRoom.roomNumber)}の授業一覧",
-      floatingActionButton: NewClassActionButton(),
+      floatingActionButton: lessonsStream.when(
+        data: (snapshot) {
+          final lastLesson =
+              snapshot.size > 0 ? snapshot.docs[0].data() : Lesson.isBlank();
+          return NewClassActionButton(lastLesson: lastLesson);
+        },
+        error: (_, __) => const SizedBox(),
+        loading: () => const SizedBox(),
+      ),
       body: Stack(
         children: [
           Center(
@@ -59,7 +68,7 @@ class TeacherLessonsDisplay extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentLessonNot = ref.read(currentLessonStreamProvider.notifier);
+    final currentLessonNot = ref.read(currentLessonProvider.notifier);
     final currentRoom = ref.watch(currentRoomProvider);
 
     return lessons.isEmpty
@@ -78,7 +87,7 @@ class TeacherLessonsDisplay extends HookConsumerWidget {
                     return TeacherLessonsCard(
                       lesson: lesson,
                       onTap: () async {
-                        currentLessonNot.state = lessons[index];
+                        currentLessonNot.state = lesson;
                         GoRouter.of(context).push(Routes.teacherTools);
                       },
                     );

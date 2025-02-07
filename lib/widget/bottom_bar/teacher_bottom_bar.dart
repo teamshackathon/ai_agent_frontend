@@ -52,19 +52,26 @@ class TeacherBottomBar extends HookConsumerWidget {
 
     return Scaffold(
       body: navigationShell,
-      floatingActionButton: during.when(
-        data: (snapshot) {
-          if (givingLesson(
-                snapshotData: snapshot.docs,
-                teacher: user.value.name,
-              ) ==
-              "lesson") {
-            return FloatingRecordButton(teacher: user.value.name);
-          }
-          return null;
-        },
-        error: (_, __) => null,
-        loading: () => null,
+      floatingActionButton: Align(
+        alignment: Alignment(0.945, 0.955),
+        child: during.when(
+          data: (snapshot) {
+            if (givingLesson(
+                  snapshotData: snapshot.docs,
+                  teacher: user.value.name,
+                ) ==
+                "lesson") {
+              return SizedBox(
+                width: 55,
+                height: 55,
+                child: FloatingRecordButton(teacher: user.value.name),
+              );
+            }
+            return null;
+          },
+          error: (_, __) => null,
+          loading: () => null,
+        ),
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,

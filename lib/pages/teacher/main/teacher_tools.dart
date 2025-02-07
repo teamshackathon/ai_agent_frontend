@@ -1,13 +1,15 @@
-// import 'package:code/data/firebase/lesson_stream.dart';
-import 'package:code/data/firebase/lesson_stream.dart';
-import 'package:code/data/lesson/lesson.dart';
-import 'package:code/widget/tools/lesson_start_slide.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../data/firebase/tools_stream.dart';
+import '../../../data/lesson/lesson.dart';
 import '../../../widget/base_page/base_page.dart';
-import '../../../widget/tools/teacher_tab_bar_view.dart';
+import '../../../widget/teacher_tools/teacher_homework_tab_bar_view.dart';
+import '../../../widget/teacher_tools/teacher_quiz_tab_bar_view.dart';
+import '../../../widget/utils/sakura_progress_indicator.dart';
+import 'tools/teacher_agenda.dart';
+import 'tools/teacher_quiz.dart';
 
 /// hotreloadの際は一度mainに帰って
 class TeacherTools extends ConsumerWidget {
@@ -15,44 +17,46 @@ class TeacherTools extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final current = ref.watch(currentLessonProvider);
+    final lessonStream = ref.watch(toolsStreamProvider);
     const widthFactor = 0.95;
     const heightFactor = 0.95;
 
-    final snapshot = ref.watch(currentLessonStreamProvider);
-    final lesson = snapshot?.data() ?? Lesson.isBlank();
-
     return BasePage(
-      pageTitle: "第${lesson.count}回",
-
-      // childrenを縦に並べるWidget
+      pageTitle: "第${current.count}回",
       body: Center(
         child: FractionallySizedBox(
           widthFactor: widthFactor,
           heightFactor: heightFactor,
-          child: TeacherToolsDisplay(),
+          child: lessonStream.when(
+            data: (lesson) =>
+                TeacherToolsDisplay(lesson: lesson.data() ?? Lesson.isBlank()),
+            // エラー時の表示
+            error: (_, __) => const Center(
+              child: Text("読み込み失敗"),
+            ),
+            // 読込中の表示
+            loading: () => const Center(
+              child: SakuraProgressIndicator(),
+            ),
+          ),
         ),
       ),
     );
   }
 }
 
-class TeacherToolsDisplay extends HookConsumerWidget {
-  const TeacherToolsDisplay({
-    super.key,
-  });
+class TeacherToolsDisplay extends HookWidget {
+  const TeacherToolsDisplay({super.key, required this.lesson});
+
+  final Lesson lesson;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final tabController = useTabController(initialLength: 3);
-    final snapshot = ref.watch(currentLessonStreamProvider);
-    final lesson = snapshot?.data() ?? Lesson.isBlank();
 
     return Column(
       children: [
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: LessonStartSlide(),
-        ),
         Text(lesson.agendaPublish.title,
             style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
         TabBar(controller: tabController, tabs: [
@@ -64,9 +68,9 @@ class TeacherToolsDisplay extends HookConsumerWidget {
             child: TabBarView(
           controller: tabController,
           children: [
-            TeacherAgendaTabBarView(),
-            TeacherQuizTabBarView(),
-            Text("宿題"),
+            TeacherAgenda(lesson:lesson),
+            TeacherQuiz(lesson:lesson),
+            TeacherHomeworkTabBarView(),
           ],
         )),
       ],

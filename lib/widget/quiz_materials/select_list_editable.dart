@@ -21,7 +21,7 @@ class SelectListEditable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.8,
+      width: MediaQuery.of(context).size.width * 0.7,
       height: 250,
       child: ListView.builder(
         itemCount: options.length,

@@ -1,0 +1,24 @@
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../../data/firebase/tools_stream.dart';
+import '../../data/lesson/lesson.dart';
+import '../../pages/teacher/main/tools/teacher_quiz.dart';
+import '../utils/sakura_progress_indicator.dart';
+
+class TeacherQuizTabBarView extends HookConsumerWidget {
+  const TeacherQuizTabBarView({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final lessonStream = ref.watch(toolsStreamProvider);
+    return lessonStream.when(
+      data: (snapshot) =>
+          TeacherQuiz(lesson: snapshot.data() ?? Lesson.isBlank()),
+      // エラー時の表示
+      error: (_, __) => const Center(child: Text("読み込み失敗")),
+      // 読込中の表示
+      loading: () => const Center(child: SakuraProgressIndicator()),
+    );
+  }
+}

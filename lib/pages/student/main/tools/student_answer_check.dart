@@ -6,14 +6,10 @@ import '../../../../data/lesson/lesson.dart';
 import '../../../../data/result/result.dart';
 import '../../../../data/submission/submission.dart';
 import '../../../../widget/answer_check/answer_check.dart';
-import '../../../../widget/base_page/base_page.dart';
 import '../../../../widget/utils/sakura_progress_indicator.dart';
 
 class StudentAnswerCheck extends ConsumerWidget {
-  const StudentAnswerCheck({
-    super.key,
-    required this.lesson,
-  });
+  const StudentAnswerCheck({super.key, required this.lesson});
 
   final Lesson lesson;
 
@@ -60,7 +56,7 @@ class StudentAnswerCheckDisplay extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if(submission == null || submission!.testResults.isEmpty){
+    if (submission == null || submission!.testResults.isEmpty) {
       return const Center(child: Text("テストを受けていません"));
     }
     final quizzes = lesson.questionsPublish;

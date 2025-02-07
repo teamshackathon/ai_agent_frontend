@@ -35,15 +35,16 @@ class Lesson with _$Lesson {
     ];
 
     return Lesson(
-        reference: snapshot.reference,
-        agendaPublish: Agenda.fromMap(map?["agenda_publish"] ?? {}),
-        agendaDraft: Agenda.fromMap(map?["agenda_draft"] ?? {}),
-        questionsPublish: publish,
-        questionsDraft: draft,
-        count: map?["count"] ?? -1,
-        startPage: map?["start_page"] ?? 1,
-        endPage: map?["end_page"] ?? 1,
-        state: map?["state"] ?? "");
+      reference: snapshot.reference,
+      agendaPublish: Agenda.fromMap(map?["agenda_publish"] ?? {}),
+      agendaDraft: Agenda.fromMap(map?["agenda_draft"] ?? {}),
+      questionsPublish: publish,
+      questionsDraft: draft,
+      count: map?["count"] ?? 0,
+      startPage: map?["start_page"] ?? 0,
+      endPage: map?["end_page"] ?? 0,
+      state: map?["state"] ?? "",
+    );
   }
 
   // 基本使わない

@@ -1,11 +1,11 @@
 import 'dart:math' as math;
 
 import 'package:code/data/firebase/during_stream.dart';
-import 'package:code/data/firebase/lesson_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../data/firebase/tools_stream.dart';
 import '../../data/record/record.dart';
 
 class FloatingRecordButton extends HookConsumerWidget {
@@ -19,7 +19,7 @@ class FloatingRecordButton extends HookConsumerWidget {
     final recorderNot = ref.read(streamRecorderProvider.notifier);
     final dB = recorder.dB;
     final double elevation = math.min(math.max((dB + 60) / 10, 1.5), 20.0);
-    final lesson = ref.watch(currentLessonStreamProvider);
+    final lesson = ref.read(currentLessonProvider);
 
     void lessonStart() async {
       await recorderNot.start();
@@ -42,7 +42,7 @@ class FloatingRecordButton extends HookConsumerWidget {
     return InkWell(
       onLongPress: () async {
         await recorderNot.stop();
-        breakLessonToDuring(teacher: teacher, currentLesson: lesson!.data());
+        breakLessonToDuring(teacher: teacher, currentLesson: lesson);
       },
       child: AnimatedContainer(
         duration: Duration(milliseconds: 100),

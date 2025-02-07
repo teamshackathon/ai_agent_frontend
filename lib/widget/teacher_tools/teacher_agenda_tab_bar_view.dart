@@ -1,40 +1,44 @@
-import 'package:code/data/agenda/agenda.dart';
-import 'package:code/data/firebase/lesson_stream.dart';
-import 'package:code/pages/teacher/main/tools/teacher_quiz.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../data/lesson/lesson.dart';
+import '../../data/agenda/agenda.dart';
 import '../../widget/agenda_materials/agenda_editor_field.dart';
 import '../../widget/agenda_materials/sentence_card.dart';
-import '../../../route/route.dart';
+import '../../data/firebase/tools_stream.dart';
+import '../utils/sakura_progress_indicator.dart';
+import 'edit_agenda_action_button.dart';
+import 'teacher_agenda_sentence_card.dart';
 
-class TeacherAgendaTabBarView extends HookConsumerWidget {
-  const TeacherAgendaTabBarView({super.key});
+class _TeacherAgendaTabBarView extends HookConsumerWidget {
+  const _TeacherAgendaTabBarView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(currentLessonStreamProvider);
-    final lesson = snapshot?.data() ?? Lesson.isBlank();
+    final lessonStream = ref.watch(toolsStreamProvider);
 
-    return Scaffold(
-      // 透明
-      backgroundColor: Colors.transparent,
-      body: TeacherAgendaDisplay(lesson: lesson),
-      floatingActionButton: EditAgendaActionButton(
-        lesson: lesson,
+    return lessonStream.when(
+      data: (snapshot) => Scaffold(
+        // 透明
+        backgroundColor: Colors.transparent,
+        body: _TeacherAgendaDisplay(
+          lesson: snapshot.data() ?? Lesson.isBlank(),
+        ),
+        floatingActionButton: EditAgendaActionButton(
+          lesson: snapshot.data() ?? Lesson.isBlank(),
+        ),
       ),
+      // エラー時の表示
+      error: (_, __) => const Center(child: Text("読み込み失敗")),
+      // 読込中の表示
+      loading: () => const Center(child: SakuraProgressIndicator()),
     );
   }
 }
 
-class EditAgendaActionButton extends HookConsumerWidget {
-  const EditAgendaActionButton({
-    super.key,
-    required this.lesson,
-  });
+class _EditAgendaActionButton extends HookConsumerWidget {
+  const _EditAgendaActionButton({super.key, required this.lesson});
 
   final Lesson lesson;
 
@@ -170,8 +174,8 @@ class EditAgendaActionButton extends HookConsumerWidget {
   }
 }
 
-class TeacherAgendaDisplay extends HookConsumerWidget {
-  const TeacherAgendaDisplay({
+class _TeacherAgendaDisplay extends HookConsumerWidget {
+  const _TeacherAgendaDisplay({
     super.key,
     required this.lesson,
   });
@@ -205,12 +209,13 @@ class TeacherAgendaDisplay extends HookConsumerWidget {
   }
 }
 
-class TeacherAgendaSentenceCard extends ConsumerWidget {
-  const TeacherAgendaSentenceCard({
+class _TeacherAgendaSentenceCard extends ConsumerWidget {
+  const _TeacherAgendaSentenceCard({
     super.key,
     required this.sentence,
     required this.index,
   });
+
   final Sentence sentence;
   final int index;
 
@@ -308,37 +313,5 @@ class TeacherAgendaSentenceCard extends ConsumerWidget {
             ],
           )
         ]));
-  }
-}
-
-class TeacherQuizTabBarView extends HookConsumerWidget {
-  const TeacherQuizTabBarView({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(currentLessonStreamProvider);
-    final lesson = snapshot?.data() ?? Lesson.isBlank();
-
-    return Scaffold(
-      // 透明
-      backgroundColor: Colors.transparent,
-      body: TeacherQuiz(),
-    );
-  }
-}
-
-class TeacherHomeworkTabBarView extends HookConsumerWidget {
-  const TeacherHomeworkTabBarView({
-    super.key,
-    required this.lesson,
-  });
-
-  final Lesson lesson;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Text("宿題");
   }
 }

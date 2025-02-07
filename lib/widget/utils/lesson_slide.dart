@@ -6,15 +6,15 @@ import '../../data/firebase/during_stream.dart';
 import '../../data/firebase/lesson_stream.dart';
 import '../../data/lesson/lesson.dart';
 import '../../data/record/record.dart';
-import '../utils/sakura_progress_indicator.dart';
+import 'sakura_progress_indicator.dart';
 
 class LessonSlide extends ConsumerWidget {
-  const LessonSlide({super.key});
+  const LessonSlide({super.key, required this.lesson});
+
+  final Lesson lesson;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(currentLessonStreamProvider);
-    final lesson = snapshot?.data() ?? Lesson.isBlank();
     final during = ref.watch(duringStreamProvider);
     final currentRoom = ref.watch(currentRoomProvider);
 
@@ -34,10 +34,10 @@ class LessonSlide extends ConsumerWidget {
             return Text("他のコマで授業中です");
 
           case true:
-            return LessonCancelSlide();
+            return LessonCancelSlide(lesson: lesson);
 
           default:
-            return LessonStartSlide();
+            return LessonStartSlide(lesson: lesson);
         }
       }, // エラー時の表示
       error: (_, __) => const Center(
@@ -54,16 +54,16 @@ class LessonSlide extends ConsumerWidget {
 class LessonStartSlide extends ConsumerWidget {
   const LessonStartSlide({
     super.key,
-    this.width = 400,
+    required this.lesson,
+    this.width = 320,
     this.height = 60,
   });
 
+  final Lesson lesson;
   final double width, height;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(currentLessonStreamProvider);
-    final lesson = snapshot?.data() ?? Lesson.isBlank();
     final currentRoom = ref.watch(currentRoomProvider);
 
     return SwipeButton.expand(
@@ -86,16 +86,16 @@ class LessonStartSlide extends ConsumerWidget {
 class LessonCancelSlide extends ConsumerWidget {
   const LessonCancelSlide({
     super.key,
-    this.width = 400,
+    required this.lesson,
+    this.width = 320,
     this.height = 60,
   });
 
+  final Lesson lesson;
   final double width, height;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(currentLessonStreamProvider);
-    final lesson = snapshot?.data() ?? Lesson.isBlank();
     final currentRoom = ref.watch(currentRoomProvider);
     final recorder = ref.watch(streamRecorderProvider);
     final recorderNot = ref.read(streamRecorderProvider.notifier);
