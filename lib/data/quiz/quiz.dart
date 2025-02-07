@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:code/data/result/result.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -175,10 +178,10 @@ class QuizNotifier extends _$QuizNotifier {
 
   void rebuild() => state = [];
 
-  void init(List<Map<String, dynamic>> list) {
+  void init(List<Quiz> list) {
     rebuild();
-    for (var quizJson in list) {
-      add(fromJsonDetectFormat(quizJson));
+    for (var quiz in list) {
+      add(quiz);
     }
   }
 
@@ -188,6 +191,19 @@ class QuizNotifier extends _$QuizNotifier {
 
   Quiz fromJsonDetectFormat(Map<String, dynamic> json) {
     return Quiz.fromMap(json);
+  }
+
+  void readResult(List<Result> result) {
+    for (final rs in result) {
+      _importResult(rs.title, rs.correct);
+    }
+  }
+
+  void _importResult(String title, bool correct) {
+    state = [
+      for (final quiz in state)
+        quiz.title == title ? _correctAndCopy(quiz, correct) : quiz
+    ];
   }
 
   void writeAnswer(String title, String answer) {
@@ -205,6 +221,19 @@ class QuizNotifier extends _$QuizNotifier {
       return quiz.copyWith(answer: answer);
     } else if (quiz is Kijutsu) {
       return quiz.copyWith(answer: answer);
+    } else {
+      throw FormatException("Quizの型が正しくありません。");
+    }
+  }
+
+  Quiz _correctAndCopy(Quiz quiz, bool correct) {
+    if (quiz is Sentaku) {
+      //var numAnswer = int.parse(answer);
+      return quiz.copyWith(correct: correct);
+    } else if (quiz is Anaume) {
+      return quiz.copyWith(correct: correct);
+    } else if (quiz is Kijutsu) {
+      return quiz.copyWith(correct: correct);
     } else {
       throw FormatException("Quizの型が正しくありません。");
     }
