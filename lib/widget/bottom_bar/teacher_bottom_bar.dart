@@ -1,11 +1,12 @@
+import 'package:code/widget/bottom_bar/status_during.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import '../../data/firebase/during_stream.dart';
+// import '../../data/firebase/during_stream.dart';
 import '../../data/person/person.dart';
-import '../floating/floating_record_button.dart';
+// import '../floating/floating_record_button.dart';
 import 'bottom_bar_widget.dart';
 
 class TeacherBottomBar extends HookConsumerWidget {
@@ -20,7 +21,7 @@ class TeacherBottomBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final during = ref.watch(duringStreamProvider);
+    // final during = ref.watch(duringStreamProvider);
     final user = useState<Person>(Person.isBlank());
     // animation controllerが入ったリストを作成
     final controllers = useState<List<AnimationController>>(
@@ -45,72 +46,67 @@ class TeacherBottomBar extends HookConsumerWidget {
       user.value = await ref.watch(personStatusProvider.future);
     }
 
+    //
+    final posX = useState(150.0);
+    final posY = useState(150.0);
+
     useEffect(() {
       getUser();
       return null;
     }, []);
 
     return Scaffold(
-      body: navigationShell,
-      floatingActionButton: Align(
-        alignment: Alignment(0.945, 0.955),
-        child: during.when(
-          data: (snapshot) {
-            if (givingLesson(
-                  snapshotData: snapshot.docs,
-                  teacher: user.value.name,
-                ) ==
-                "lesson") {
-              return SizedBox(
-                width: 55,
-                height: 55,
-                child: FloatingRecordButton(teacher: user.value.name),
-              );
-            }
-            return null;
-          },
-          error: (_, __) => null,
-          loading: () => null,
-        ),
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: navigationShell.currentIndex,
-        destinations: [
-          ProfileLottieNavigationDestination(
-            label: 'プロフィール',
-            iconPath: selectedIndex.value == 0
-                ? 'assets/profile_black.json'
-                : 'assets/profile.json',
-            index: 0,
-            selectedIndex: selectedIndex.value,
-            animationController: controllers.value[0],
+        body: navigationShell,
+        floatingActionButton: Stack(children: [
+          Positioned(
+            left: posX.value,
+            top: posY.value,
+            child: GestureDetector(
+              onPanUpdate: (details) {
+                posX.value += details.delta.dx;
+                posY.value += details.delta.dy;
+              },
+              child: TeacherStatusMiniBottombar(teacher: user.value.name),
+            ),
           ),
-          RottieNavigationDestination(
-            label: 'ホーム',
-            iconPath: 'assets/home.json',
-            index: 1,
-            selectedIndex: selectedIndex.value,
-            animationController: controllers.value[1],
-          ),
-          ActivityLottieNavigationDestination(
-            label: '通知',
-            iconPath: 'assets/activity.json',
-            index: 2,
-            selectedIndex: selectedIndex.value,
-            animationController: controllers.value[2],
-          ),
-        ],
-        onDestinationSelected: (index) {
-          controllers.value[index].reset();
-          selectedIndex.value = index;
-          controllers.value[index].forward();
+        ]),
+        bottomNavigationBar: NavigationBar(
+          selectedIndex: navigationShell.currentIndex,
+          destinations: [
+            ProfileLottieNavigationDestination(
+              label: 'プロフィール',
+              iconPath: selectedIndex.value == 0
+                  ? 'assets/profile_black.json'
+                  : 'assets/profile.json',
+              index: 0,
+              selectedIndex: selectedIndex.value,
+              animationController: controllers.value[0],
+            ),
+            RottieNavigationDestination(
+              label: 'ホーム',
+              iconPath: 'assets/home.json',
+              index: 1,
+              selectedIndex: selectedIndex.value,
+              animationController: controllers.value[1],
+            ),
+            ActivityLottieNavigationDestination(
+              label: '通知',
+              iconPath: 'assets/activity.json',
+              index: 2,
+              selectedIndex: selectedIndex.value,
+              animationController: controllers.value[2],
+            ),
+          ],
+          onDestinationSelected: (index) {
+            controllers.value[index].reset();
+            selectedIndex.value = index;
+            controllers.value[index].forward();
 
-          navigationShell.goBranch(
-            index,
-            initialLocation: index == navigationShell.currentIndex,
-          );
-        },
-      ),
-    );
+            navigationShell.goBranch(
+              index,
+              initialLocation: index == navigationShell.currentIndex,
+            );
+          },
+        ));
   }
 }

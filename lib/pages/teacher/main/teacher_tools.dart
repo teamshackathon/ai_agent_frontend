@@ -6,7 +6,6 @@ import '../../../data/firebase/tools_stream.dart';
 import '../../../data/lesson/lesson.dart';
 import '../../../widget/base_page/base_page.dart';
 import '../../../widget/teacher_tools/teacher_homework_tab_bar_view.dart';
-import '../../../widget/teacher_tools/teacher_quiz_tab_bar_view.dart';
 import '../../../widget/utils/sakura_progress_indicator.dart';
 import 'tools/teacher_agenda.dart';
 import 'tools/teacher_quiz.dart';

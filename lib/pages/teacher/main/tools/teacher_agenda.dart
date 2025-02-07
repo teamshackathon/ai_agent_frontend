@@ -20,18 +20,18 @@ class TeacherAgenda extends StatelessWidget {
       floatingActionButton: Align(
         alignment: Alignment.bottomCenter,
         child: Row(
+          spacing: 20,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Spacer(),
-            LessonSlide(lesson: lesson),
-            Spacer(),
-            SizedBox(
-              width: 55,
-              height: 55,
-              child: Visibility(
-                visible: lesson.state == "before",
-                child: EditAgendaActionButton(lesson: lesson),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: LessonSlide(lesson: lesson),
               ),
+            ),
+            Visibility(
+              visible: lesson.state == "before",
+              child: EditAgendaActionButton(lesson: lesson),
             ),
           ],
         ),

@@ -1,15 +1,21 @@
+import 'package:code/pages/profile/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class IsMeMessageCard extends StatelessWidget {
+class IsMeMessageCard extends HookConsumerWidget {
   const IsMeMessageCard({
     super.key,
     required this.message,
+    required this.name,
+    required this.iconPath,
   });
 
   final String message;
+  final String name;
+  final String iconPath;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
       width: double.infinity,
       child: Container(
@@ -57,10 +63,11 @@ class IsMeMessageCard extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 10),
-            CircleAvatar(
-              backgroundColor: Colors.pink[100],
-              child: Icon(Icons.person, color: Colors.white),
-            ),
+            UserIcon(
+              iconPath: iconPath,
+              name: name,
+              radius: 20,
+            )
           ],
         ),
       ),
