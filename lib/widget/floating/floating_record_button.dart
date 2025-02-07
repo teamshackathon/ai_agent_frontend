@@ -25,8 +25,8 @@ class FloatingRecordButton extends HookConsumerWidget {
       await recorderNot.start();
     }
 
-    void lessonEnd() async{
-      if(await recorder.recorder.isRecording()){
+    void lessonEnd() async {
+      if (await recorder.recorder.isRecording()) {
         await recorderNot.stop();
       }
     }

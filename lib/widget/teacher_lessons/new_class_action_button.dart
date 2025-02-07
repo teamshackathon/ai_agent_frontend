@@ -217,7 +217,7 @@ class TeacherCreateLessonDisplay extends HookConsumerWidget {
                   );
                   createAgenda("${room.reference.path}/${document.id}",
                       start.value, end.value);
-                  if(context.mounted){
+                  if (context.mounted) {
                     GoRouter.of(context).pop();
                   }
                 }

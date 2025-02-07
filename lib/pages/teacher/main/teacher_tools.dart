@@ -68,8 +68,8 @@ class TeacherToolsDisplay extends HookWidget {
             child: TabBarView(
           controller: tabController,
           children: [
-            TeacherAgenda(lesson:lesson),
-            TeacherQuiz(lesson:lesson),
+            TeacherAgenda(lesson: lesson),
+            TeacherQuiz(lesson: lesson),
             TeacherHomeworkTabBarView(),
           ],
         )),

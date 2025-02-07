@@ -22,7 +22,3 @@ final lessonsStreamProvider = StreamProvider(
         .snapshots();
   },
 );
-
-
-
-

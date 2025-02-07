@@ -30,33 +30,37 @@ Future<void> addLessonToDuring({
     "teacher": teacher,
     "state": "lesson",
   });
-  await currentLesson.reference.update({"state":"lesson"});
+  await currentLesson.reference.update({"state": "lesson"});
 }
 
-Future<void> cancelLessonToDuring({required String teacher, required Lesson currentLesson}) async {
+Future<void> cancelLessonToDuring(
+    {required String teacher, required Lesson currentLesson}) async {
   await FirebaseFirestore.instance.collection("during").doc(teacher).delete();
-  await currentLesson.reference.update({"state":"before"});
+  await currentLesson.reference.update({"state": "before"});
 }
 
-Future<void> breakLessonToDuring({required String teacher, required Lesson currentLesson}) async {
+Future<void> breakLessonToDuring(
+    {required String teacher, required Lesson currentLesson}) async {
   await FirebaseFirestore.instance
       .collection("during")
       .doc(teacher)
       .update({"state": "break"});
-  await currentLesson.reference.update({"state":"break"});
+  await currentLesson.reference.update({"state": "break"});
 }
 
-Future<void> startTestToDuring({required String teacher, required Lesson currentLesson}) async{
+Future<void> startTestToDuring(
+    {required String teacher, required Lesson currentLesson}) async {
   await FirebaseFirestore.instance
       .collection("during")
       .doc(teacher)
       .update({"state": "test"});
-  await currentLesson.reference.update({"state":"test"});
+  await currentLesson.reference.update({"state": "test"});
 }
 
-Future<void> finishLessonToDuring({required String teacher, required Lesson currentLesson}) async {
+Future<void> finishLessonToDuring(
+    {required String teacher, required Lesson currentLesson}) async {
   await FirebaseFirestore.instance.collection("during").doc(teacher).delete();
-  await currentLesson.reference.update({"state":"after"});
+  await currentLesson.reference.update({"state": "after"});
 }
 
 // 現在行われている授業一覧に、指定した（今行っている）授業があればtrue、
