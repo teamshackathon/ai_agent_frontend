@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -32,6 +33,7 @@ class Person with _$Person {
     // indexの低い方に最新のクラスが来る
     /// [ { "room": "~", "year": "~" }, ... ]
     required List<Map<String, String>> rooms,
+    required String iconPath,
   }) = _Person;
 
   /// 生徒クラス
@@ -43,6 +45,7 @@ class Person with _$Person {
     // indexの低い方に最新のクラスが来る
     /// [ { "room": "~", "year": "~" }, ... ]
     required List<Map<String, String>> rooms,
+    required String iconPath,
   }) = Student;
 
   /// 先生クラス
@@ -54,12 +57,19 @@ class Person with _$Person {
     // indexの低い方に最新のクラスが来る
     /// [ { "subject": "~", "room": "~", "year": "~", "text": "~" }, ... ]
     required List<Map<String, String>> rooms,
+    required String iconPath,
   }) = Teacher;
 
   String get folderName => "$firstName.$familyName".toLowerCase();
 
   factory Person.isBlank() {
-    return Person(uid: "", name: "", firstName: "", familyName: "", rooms: []);
+    return Person(
+        uid: "",
+        name: "",
+        firstName: "",
+        familyName: "",
+        rooms: [],
+        iconPath: "");
   }
 }
 
@@ -70,6 +80,7 @@ class PersonStatus extends _$PersonStatus {
     // claimsに名前が入っていなければthrow
     final firstName = token.claims?["first_name"];
     final familyName = token.claims?["family_name"];
+    final iconPath = token.claims?["icon_path"] ?? "";
     if (firstName == null || familyName == null) {
       throw Exception("Error(buildStudent) : NAME IS EMPTY");
     }
@@ -100,6 +111,7 @@ class PersonStatus extends _$PersonStatus {
       firstName: firstName,
       familyName: familyName,
       rooms: list,
+      iconPath: iconPath,
     );
   }
 
@@ -111,6 +123,7 @@ class PersonStatus extends _$PersonStatus {
     // claimsに名前が入っていなければthrow
     final firstName = token.claims?["first_name"];
     final familyName = token.claims?["family_name"];
+    final iconPath = token.claims?["icon_path"] ?? "";
     if (firstName == null || familyName == null) {
       throw Exception("Error(buildTeacher) : NAME IS EMPTY");
     }
@@ -162,6 +175,7 @@ class PersonStatus extends _$PersonStatus {
       firstName: firstName,
       familyName: familyName,
       rooms: list,
+      iconPath: iconPath,
     );
   }
 
@@ -188,7 +202,12 @@ class PersonStatus extends _$PersonStatus {
     } catch (e) {
       warningToast(log: e);
       return Person(
-          uid: "", name: "", firstName: "", familyName: "", rooms: []);
+          uid: "",
+          name: "",
+          firstName: "",
+          familyName: "",
+          rooms: [],
+          iconPath: "");
     }
   }
 }

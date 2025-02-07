@@ -23,42 +23,73 @@ mixin _$Person {
       throw _privateConstructorUsedError; // indexの低い方に最新のクラスが来る
   /// [ { "room": "~", "year": "~" }, ... ]
   List<Map<String, String>> get rooms => throw _privateConstructorUsedError;
+  String get iconPath => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)
+            String familyName, List<Map<String, String>> rooms, String iconPath)
         $default, {
     required TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)
+            String familyName, List<Map<String, String>> rooms, String iconPath)
         student,
     required TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)
+            String familyName, List<Map<String, String>> rooms, String iconPath)
         teacher,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult? Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         $default, {
-    TResult? Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult? Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         student,
-    TResult? Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult? Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         teacher,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         $default, {
-    TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         student,
-    TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         teacher,
     required TResult orElse(),
   }) =>
@@ -102,7 +133,8 @@ abstract class $PersonCopyWith<$Res> {
       String name,
       String firstName,
       String familyName,
-      List<Map<String, String>> rooms});
+      List<Map<String, String>> rooms,
+      String iconPath});
 }
 
 /// @nodoc
@@ -125,6 +157,7 @@ class _$PersonCopyWithImpl<$Res, $Val extends Person>
     Object? firstName = null,
     Object? familyName = null,
     Object? rooms = null,
+    Object? iconPath = null,
   }) {
     return _then(_value.copyWith(
       uid: null == uid
@@ -147,6 +180,10 @@ class _$PersonCopyWithImpl<$Res, $Val extends Person>
           ? _value.rooms
           : rooms // ignore: cast_nullable_to_non_nullable
               as List<Map<String, String>>,
+      iconPath: null == iconPath
+          ? _value.iconPath
+          : iconPath // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -163,7 +200,8 @@ abstract class _$$PersonImplCopyWith<$Res> implements $PersonCopyWith<$Res> {
       String name,
       String firstName,
       String familyName,
-      List<Map<String, String>> rooms});
+      List<Map<String, String>> rooms,
+      String iconPath});
 }
 
 /// @nodoc
@@ -184,6 +222,7 @@ class __$$PersonImplCopyWithImpl<$Res>
     Object? firstName = null,
     Object? familyName = null,
     Object? rooms = null,
+    Object? iconPath = null,
   }) {
     return _then(_$PersonImpl(
       uid: null == uid
@@ -206,6 +245,10 @@ class __$$PersonImplCopyWithImpl<$Res>
           ? _value._rooms
           : rooms // ignore: cast_nullable_to_non_nullable
               as List<Map<String, String>>,
+      iconPath: null == iconPath
+          ? _value.iconPath
+          : iconPath // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -218,7 +261,8 @@ class _$PersonImpl extends _Person {
       required this.name,
       required this.firstName,
       required this.familyName,
-      required final List<Map<String, String>> rooms})
+      required final List<Map<String, String>> rooms,
+      required this.iconPath})
       : _rooms = rooms,
         super._();
 
@@ -243,8 +287,11 @@ class _$PersonImpl extends _Person {
   }
 
   @override
+  final String iconPath;
+
+  @override
   String toString() {
-    return 'Person(uid: $uid, name: $name, firstName: $firstName, familyName: $familyName, rooms: $rooms)';
+    return 'Person(uid: $uid, name: $name, firstName: $firstName, familyName: $familyName, rooms: $rooms, iconPath: $iconPath)';
   }
 
   @override
@@ -258,12 +305,14 @@ class _$PersonImpl extends _Person {
                 other.firstName == firstName) &&
             (identical(other.familyName, familyName) ||
                 other.familyName == familyName) &&
-            const DeepCollectionEquality().equals(other._rooms, _rooms));
+            const DeepCollectionEquality().equals(other._rooms, _rooms) &&
+            (identical(other.iconPath, iconPath) ||
+                other.iconPath == iconPath));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, uid, name, firstName, familyName,
-      const DeepCollectionEquality().hash(_rooms));
+      const DeepCollectionEquality().hash(_rooms), iconPath);
 
   /// Create a copy of Person
   /// with the given fields replaced by the non-null parameter values.
@@ -277,50 +326,80 @@ class _$PersonImpl extends _Person {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)
+            String familyName, List<Map<String, String>> rooms, String iconPath)
         $default, {
     required TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)
+            String familyName, List<Map<String, String>> rooms, String iconPath)
         student,
     required TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)
+            String familyName, List<Map<String, String>> rooms, String iconPath)
         teacher,
   }) {
-    return $default(uid, name, firstName, familyName, rooms);
+    return $default(uid, name, firstName, familyName, rooms, iconPath);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult? Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         $default, {
-    TResult? Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult? Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         student,
-    TResult? Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult? Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         teacher,
   }) {
-    return $default?.call(uid, name, firstName, familyName, rooms);
+    return $default?.call(uid, name, firstName, familyName, rooms, iconPath);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         $default, {
-    TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         student,
-    TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         teacher,
     required TResult orElse(),
   }) {
     if ($default != null) {
-      return $default(uid, name, firstName, familyName, rooms);
+      return $default(uid, name, firstName, familyName, rooms, iconPath);
     }
     return orElse();
   }
@@ -366,7 +445,8 @@ abstract class _Person extends Person {
       required final String name,
       required final String firstName,
       required final String familyName,
-      required final List<Map<String, String>> rooms}) = _$PersonImpl;
+      required final List<Map<String, String>> rooms,
+      required final String iconPath}) = _$PersonImpl;
   const _Person._() : super._();
 
   @override
@@ -380,6 +460,8 @@ abstract class _Person extends Person {
   /// [ { "room": "~", "year": "~" }, ... ]
   @override
   List<Map<String, String>> get rooms;
+  @override
+  String get iconPath;
 
   /// Create a copy of Person
   /// with the given fields replaced by the non-null parameter values.
@@ -401,7 +483,8 @@ abstract class _$$StudentImplCopyWith<$Res> implements $PersonCopyWith<$Res> {
       String name,
       String firstName,
       String familyName,
-      List<Map<String, String>> rooms});
+      List<Map<String, String>> rooms,
+      String iconPath});
 }
 
 /// @nodoc
@@ -422,6 +505,7 @@ class __$$StudentImplCopyWithImpl<$Res>
     Object? firstName = null,
     Object? familyName = null,
     Object? rooms = null,
+    Object? iconPath = null,
   }) {
     return _then(_$StudentImpl(
       uid: null == uid
@@ -444,6 +528,10 @@ class __$$StudentImplCopyWithImpl<$Res>
           ? _value._rooms
           : rooms // ignore: cast_nullable_to_non_nullable
               as List<Map<String, String>>,
+      iconPath: null == iconPath
+          ? _value.iconPath
+          : iconPath // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -456,7 +544,8 @@ class _$StudentImpl extends Student {
       required this.name,
       required this.firstName,
       required this.familyName,
-      required final List<Map<String, String>> rooms})
+      required final List<Map<String, String>> rooms,
+      required this.iconPath})
       : _rooms = rooms,
         super._();
 
@@ -481,8 +570,11 @@ class _$StudentImpl extends Student {
   }
 
   @override
+  final String iconPath;
+
+  @override
   String toString() {
-    return 'Person.student(uid: $uid, name: $name, firstName: $firstName, familyName: $familyName, rooms: $rooms)';
+    return 'Person.student(uid: $uid, name: $name, firstName: $firstName, familyName: $familyName, rooms: $rooms, iconPath: $iconPath)';
   }
 
   @override
@@ -496,12 +588,14 @@ class _$StudentImpl extends Student {
                 other.firstName == firstName) &&
             (identical(other.familyName, familyName) ||
                 other.familyName == familyName) &&
-            const DeepCollectionEquality().equals(other._rooms, _rooms));
+            const DeepCollectionEquality().equals(other._rooms, _rooms) &&
+            (identical(other.iconPath, iconPath) ||
+                other.iconPath == iconPath));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, uid, name, firstName, familyName,
-      const DeepCollectionEquality().hash(_rooms));
+      const DeepCollectionEquality().hash(_rooms), iconPath);
 
   /// Create a copy of Person
   /// with the given fields replaced by the non-null parameter values.
@@ -515,50 +609,80 @@ class _$StudentImpl extends Student {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)
+            String familyName, List<Map<String, String>> rooms, String iconPath)
         $default, {
     required TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)
+            String familyName, List<Map<String, String>> rooms, String iconPath)
         student,
     required TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)
+            String familyName, List<Map<String, String>> rooms, String iconPath)
         teacher,
   }) {
-    return student(uid, name, firstName, familyName, rooms);
+    return student(uid, name, firstName, familyName, rooms, iconPath);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult? Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         $default, {
-    TResult? Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult? Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         student,
-    TResult? Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult? Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         teacher,
   }) {
-    return student?.call(uid, name, firstName, familyName, rooms);
+    return student?.call(uid, name, firstName, familyName, rooms, iconPath);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         $default, {
-    TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         student,
-    TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         teacher,
     required TResult orElse(),
   }) {
     if (student != null) {
-      return student(uid, name, firstName, familyName, rooms);
+      return student(uid, name, firstName, familyName, rooms, iconPath);
     }
     return orElse();
   }
@@ -604,7 +728,8 @@ abstract class Student extends Person {
       required final String name,
       required final String firstName,
       required final String familyName,
-      required final List<Map<String, String>> rooms}) = _$StudentImpl;
+      required final List<Map<String, String>> rooms,
+      required final String iconPath}) = _$StudentImpl;
   const Student._() : super._();
 
   @override
@@ -618,6 +743,8 @@ abstract class Student extends Person {
   /// [ { "room": "~", "year": "~" }, ... ]
   @override
   List<Map<String, String>> get rooms;
+  @override
+  String get iconPath;
 
   /// Create a copy of Person
   /// with the given fields replaced by the non-null parameter values.
@@ -639,7 +766,8 @@ abstract class _$$TeacherImplCopyWith<$Res> implements $PersonCopyWith<$Res> {
       String name,
       String firstName,
       String familyName,
-      List<Map<String, String>> rooms});
+      List<Map<String, String>> rooms,
+      String iconPath});
 }
 
 /// @nodoc
@@ -660,6 +788,7 @@ class __$$TeacherImplCopyWithImpl<$Res>
     Object? firstName = null,
     Object? familyName = null,
     Object? rooms = null,
+    Object? iconPath = null,
   }) {
     return _then(_$TeacherImpl(
       uid: null == uid
@@ -682,6 +811,10 @@ class __$$TeacherImplCopyWithImpl<$Res>
           ? _value._rooms
           : rooms // ignore: cast_nullable_to_non_nullable
               as List<Map<String, String>>,
+      iconPath: null == iconPath
+          ? _value.iconPath
+          : iconPath // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -694,7 +827,8 @@ class _$TeacherImpl extends Teacher {
       required this.name,
       required this.firstName,
       required this.familyName,
-      required final List<Map<String, String>> rooms})
+      required final List<Map<String, String>> rooms,
+      required this.iconPath})
       : _rooms = rooms,
         super._();
 
@@ -719,8 +853,11 @@ class _$TeacherImpl extends Teacher {
   }
 
   @override
+  final String iconPath;
+
+  @override
   String toString() {
-    return 'Person.teacher(uid: $uid, name: $name, firstName: $firstName, familyName: $familyName, rooms: $rooms)';
+    return 'Person.teacher(uid: $uid, name: $name, firstName: $firstName, familyName: $familyName, rooms: $rooms, iconPath: $iconPath)';
   }
 
   @override
@@ -734,12 +871,14 @@ class _$TeacherImpl extends Teacher {
                 other.firstName == firstName) &&
             (identical(other.familyName, familyName) ||
                 other.familyName == familyName) &&
-            const DeepCollectionEquality().equals(other._rooms, _rooms));
+            const DeepCollectionEquality().equals(other._rooms, _rooms) &&
+            (identical(other.iconPath, iconPath) ||
+                other.iconPath == iconPath));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, uid, name, firstName, familyName,
-      const DeepCollectionEquality().hash(_rooms));
+      const DeepCollectionEquality().hash(_rooms), iconPath);
 
   /// Create a copy of Person
   /// with the given fields replaced by the non-null parameter values.
@@ -753,50 +892,80 @@ class _$TeacherImpl extends Teacher {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)
+            String familyName, List<Map<String, String>> rooms, String iconPath)
         $default, {
     required TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)
+            String familyName, List<Map<String, String>> rooms, String iconPath)
         student,
     required TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)
+            String familyName, List<Map<String, String>> rooms, String iconPath)
         teacher,
   }) {
-    return teacher(uid, name, firstName, familyName, rooms);
+    return teacher(uid, name, firstName, familyName, rooms, iconPath);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult? Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         $default, {
-    TResult? Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult? Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         student,
-    TResult? Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult? Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         teacher,
   }) {
-    return teacher?.call(uid, name, firstName, familyName, rooms);
+    return teacher?.call(uid, name, firstName, familyName, rooms, iconPath);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         $default, {
-    TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         student,
-    TResult Function(String uid, String name, String firstName,
-            String familyName, List<Map<String, String>> rooms)?
+    TResult Function(
+            String uid,
+            String name,
+            String firstName,
+            String familyName,
+            List<Map<String, String>> rooms,
+            String iconPath)?
         teacher,
     required TResult orElse(),
   }) {
     if (teacher != null) {
-      return teacher(uid, name, firstName, familyName, rooms);
+      return teacher(uid, name, firstName, familyName, rooms, iconPath);
     }
     return orElse();
   }
@@ -842,7 +1011,8 @@ abstract class Teacher extends Person {
       required final String name,
       required final String firstName,
       required final String familyName,
-      required final List<Map<String, String>> rooms}) = _$TeacherImpl;
+      required final List<Map<String, String>> rooms,
+      required final String iconPath}) = _$TeacherImpl;
   const Teacher._() : super._();
 
   @override
@@ -856,6 +1026,8 @@ abstract class Teacher extends Person {
   /// [ { "subject": "~", "room": "~", "year": "~", "text": "~" }, ... ]
   @override
   List<Map<String, String>> get rooms;
+  @override
+  String get iconPath;
 
   /// Create a copy of Person
   /// with the given fields replaced by the non-null parameter values.

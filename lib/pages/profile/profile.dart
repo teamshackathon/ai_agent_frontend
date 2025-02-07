@@ -1,6 +1,8 @@
 import 'package:code/widget/utils/sakura_progress_indicator.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../widget/base_page/base_page.dart';
 import '../../data/person/person.dart';
@@ -44,18 +46,9 @@ class ProfilePage extends ConsumerWidget {
                         ),
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: CircleAvatar(
-                            radius: 40, // プロフィール画像のサイズ
-                            backgroundColor: Colors.white,
-                            foregroundColor: Colors.green,
-                            child: Text(
-                              snapshot.data!.name.substring(0, 2), // 仮のイニシャル
-                              style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.green,
-                              ),
-                            ),
+                          child: UserIcon(
+                            iconPath: snapshot.data!.iconPath,
+                            name: snapshot.data!.name,
                           ),
                         ),
                       ),
@@ -97,6 +90,57 @@ class ProfilePage extends ConsumerWidget {
           }
         },
       ),
+    );
+  }
+}
+
+class UserIcon extends HookConsumerWidget {
+  const UserIcon({
+    super.key,
+    required this.iconPath,
+    required this.name,
+    this.radius = 40,
+  });
+
+  final String iconPath;
+  final String name;
+  final double radius;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final storage = FirebaseStorage.instance;
+    final pdf = storage.ref(iconPath).getDownloadURL();
+
+    final userIconPathState = useState<String>("");
+
+    return FutureBuilder(
+      future: pdf,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        } else if (snapshot.hasError || !snapshot.hasData) {
+          return CircleAvatar(
+            radius: radius, // プロフィール画像のサイズ
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.green,
+            child: Text(
+              name, // 仮のイニシャル
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.green,
+              ),
+            ),
+          );
+        } else {
+          final userIconPath = snapshot.data ?? "";
+          userIconPathState.value = userIconPath;
+          return CircleAvatar(
+            radius: radius,
+            backgroundImage: NetworkImage(userIconPath),
+          );
+        }
+      },
     );
   }
 }
