@@ -26,7 +26,7 @@ class Submission with _$Submission {
     final homeworks = [for (var m in map?["homeworks"] ?? []) Quiz.fromMap(m)];
     final List<Result> homeworkResults = [];
 
-    infoToast(log:map?["results"].toString());
+    infoToast(log: map?["results"].toString());
     // 採点結果を見る
     for (var m in map?["results"] ?? []) {
       testResults.add(Result.fromMap(m, true));

@@ -18,7 +18,7 @@ class StudentHomeworkWidget extends ConsumerWidget {
       //       editable: true, quiz: quizList[index], onChanged: onChanged),
       //   itemCount: quizList.length,
       // ),
-      child:Text("hoge"),
+      child: Text("hoge"),
     );
   }
 }
