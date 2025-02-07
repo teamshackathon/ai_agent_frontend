@@ -45,7 +45,10 @@ class ChatTeacherRoomScreen extends ConsumerWidget {
                           final isMe =
                               message.senderId == snapshot.data?.folderName;
                           return isMe
-                              ? IsMeMessageCard(message: message.text ?? "")
+                              ? IsMeMessageCard(
+                                  message: message.text ?? "",
+                                  name: snapshot.data?.name ?? "",
+                                  iconPath: snapshot.data?.iconPath ?? "")
                               : TeacherMessageCard(message: message.text ?? "");
                         },
                       ),

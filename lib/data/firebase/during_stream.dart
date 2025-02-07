@@ -81,6 +81,20 @@ bool? duringLesson({
   return null;
 }
 
+bool duringLessonNotCount({
+  required List<QueryDocumentSnapshot<Map<String, dynamic>>> snapshotData,
+  required String roomNumber,
+  required String subject,
+}) {
+  for (var d in snapshotData) {
+    var map = d.data();
+    if (map["room"] == roomNumber) {
+      return map["subject"] == subject;
+    }
+  }
+  return false;
+}
+
 String? givingLesson({
   required List<QueryDocumentSnapshot<Map<String, dynamic>>> snapshotData,
   required String teacher,

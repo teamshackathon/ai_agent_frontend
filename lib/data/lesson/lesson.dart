@@ -61,6 +61,7 @@ class Lesson with _$Lesson {
       "questions_draft": draft,
       "start_page": startPage,
       "end_page": endPage,
+      "state": state,
     };
   }
 

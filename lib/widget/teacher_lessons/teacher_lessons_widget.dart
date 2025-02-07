@@ -38,14 +38,18 @@ class TeacherLessonsSummary extends HookConsumerWidget {
                 Expanded(
                     child: Column(
                   children: [
-                    IconButton(onPressed: () {}, icon: Icon(Icons.book)),
+                    IconButton(
+                        onPressed: () {
+                          GoRouter.of(context).go(Routes.teacherReading);
+                        },
+                        icon: Icon(Icons.book)),
                     Text("教科書"),
                   ],
                 )),
                 Expanded(
                   child: ChatToAIBadgeIcon(onPressed: () {
                     createChatRoom(ref: ref, target: "ai");
-                    GoRouter.of(context).push(Routes.chatAI);
+                    GoRouter.of(context).push(Routes.chatAIAsTeacher);
                   }),
                 ),
                 Expanded(
