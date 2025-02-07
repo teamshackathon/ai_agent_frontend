@@ -10,62 +10,86 @@ class SentenceCard extends ConsumerWidget {
       {super.key,
       required this.sentence,
       required this.onChanged,
-      required this.editable});
+      required this.editable,
+      required this.index});
   final Sentence sentence;
   final ValueChanged<Sentence> onChanged;
   final bool editable;
+  final int index;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SizedBox(
-      child: Card(
-        child: Column(
-          children: [
-            SizedBox(
-              child: Row(
+    return Card(
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: EdgeInsets.only(left: 10, right: 10),
+            padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+            decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: Colors.pinkAccent))),
+            child: Text("項番${index + 1}", style: TextStyle(fontSize: 20)),
+          ),
+          Container(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("サブタイトル", style: TextStyle(fontSize: 16)),
+                AgendaEditorField(
+                  editable: editable,
+                  initialValue: sentence.subtitle,
+                  onChanged: (str) {
+                    onChanged(sentence.copyWith(subtitle: str));
+                  },
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 5),
+          Container(
+            padding: EdgeInsets.all(10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text("時間（分）", style: TextStyle(fontSize: 16)),
+                ),
+                Expanded(
+                  child: AgendaEditorField(
+                    editable: editable,
+                    textAlign: TextAlign.right,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    initialValue: sentence.time.toString(),
+                    onChanged: (str) {
+                      onChanged(sentence.copyWith(time: int.parse(str)));
+                    },
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 5),
+          Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Flexible(
-                    flex: 20,
-                    child: AgendaEditorField(
-                      editable: editable,
-                      initialValue: sentence.subtitle,
-                      onChanged: (str) {
-                        onChanged(sentence.copyWith(subtitle: str));
-                      },
-                    ),
-                  ),
-                  Spacer(flex: 10),
-                  Flexible(
-                    flex: 5,
-                    child: AgendaEditorField(
-                      editable: editable,
-                      textAlign: TextAlign.right,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      initialValue: sentence.time.toString(),
-                      onChanged: (str) {
-                        onChanged(sentence.copyWith(time: int.parse(str)));
-                      },
-                    ),
-                  ),
-                  Flexible(
-                    flex: 2,
-                    child: Text("分"),
+                  Text("説明", style: TextStyle(fontSize: 16)),
+                  AgendaEditorField(
+                    editable: editable,
+                    maxLines: null,
+                    initialValue: sentence.description,
+                    onChanged: (str) {
+                      onChanged(sentence.copyWith(description: str));
+                    },
                   ),
                 ],
-              ),
-            ),
-            SizedBox(
-              child: AgendaEditorField(
-                editable: editable,
-                maxLines: null,
-                initialValue: sentence.description,
-                onChanged: (str) {
-                  onChanged(sentence.copyWith(description: str));
-                },
-              ),
-            ),
-          ],
-        ),
+              ))
+        ],
       ),
     );
   }
