@@ -19,11 +19,13 @@ class QuizEditWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SizedBox(height: 30),
         QuizTextEditable(
           quizText: quiz.question,
           editable: editable,
           onChanged: (str) => onChanged(quiz.copyWith(question: str)),
         ),
+        SizedBox(height: 30),
         FormatAnswerEditable(
           quiz: quiz,
           editable: editable,

@@ -10,7 +10,6 @@ class QuizText extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.8,
-      height: 150,
       child: Text(quizText),
     );
   }
@@ -31,8 +30,8 @@ class QuizTextEditable extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.8,
-      height: 150,
       child: TextFormField(
+        maxLines: null,
         initialValue: quizText,
         onChanged: onChanged,
         enabled: editable,
