@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Check if PR branch name starts with AAHGC
         run: |
-          if [[ ! "${{ github.head_ref }}" =~ ^AAVGC ]]; then
+          if [[ ! "${{ github.head_ref }}" =~ ^AAHGC ]]; then
             echo "ERROR: PRs from 'stg' must have a branch name starting with 'AAHGC'."
             exit 1
           fi
