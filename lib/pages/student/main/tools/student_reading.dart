@@ -57,7 +57,7 @@ class StudentReadingDisplay extends HookConsumerWidget {
             flex: 19,
             child: ScrollConfiguration(
               // chrome上でスワイプを検知するために必要、実機ではいらない
-              behavior: MouseDraggableScrollBehavior(),
+              behavior: _MouseDraggableScrollBehavior(),
               child: PageView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: document?.pages.length ?? 0,
@@ -91,7 +91,7 @@ class StudentReadingDisplay extends HookConsumerWidget {
   }
 }
 
-class MouseDraggableScrollBehavior extends MaterialScrollBehavior {
+class _MouseDraggableScrollBehavior extends MaterialScrollBehavior {
   @override
   Set<PointerDeviceKind> get dragDevices => <PointerDeviceKind>{
         PointerDeviceKind.touch,

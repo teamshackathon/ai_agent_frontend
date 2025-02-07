@@ -1,11 +1,15 @@
-import 'package:code/data/firebase/lesson_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+import '../../../data/firebase/lesson_stream.dart';
+import '../../../data/firebase/tools_stream.dart';
 import '../../../widget/base_page/base_page.dart';
 import '../../../../data/lesson/lesson.dart';
-import '../../../widget/student_tools/student_tab_bar_view.dart';
+import '../../../widget/utils/sakura_progress_indicator.dart';
+import 'tools/student_agenda.dart';
+import 'tools/student_answer_check.dart';
+import 'tools/student_homework.dart';
 
 /// hotreloadの際は一度mainに帰って
 class StudentTools extends ConsumerWidget {
@@ -13,33 +17,38 @@ class StudentTools extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final lessonStream = ref.watch(toolsStreamProvider);
+    final currentRoom = ref.watch(currentRoomProvider);
+    final currentLesson = ref.watch(currentLessonProvider);
     const widthFactor = 0.95;
     const heightFactor = 0.95;
 
-    final snapshot = ref.watch(currentLessonStreamProvider);
-    final lesson = snapshot?.data() ?? Lesson.isBlank();
-    final currentRoom = ref.watch(currentRoomProvider);
-
     return BasePage(
-      pageTitle: "第${lesson.count}回 ${currentRoom.displaySubject}",
+      pageTitle: "第${currentLesson.count}回 ${currentRoom.displaySubject}",
       body: Center(
         child: FractionallySizedBox(
           widthFactor: widthFactor,
           heightFactor: heightFactor,
-          child: StudentToolsDisplay(lesson: lesson),
+          child: lessonStream.when(
+            data: (lesson) =>
+                StudentToolsDisplay(lesson: lesson.data() ?? Lesson.isBlank()),
+            // エラー時の表示
+            error: (_, __) => const Center(
+              child: Text("読み込み失敗"),
+            ),
+            // 読込中の表示
+            loading: () => const Center(
+              child: SakuraProgressIndicator(),
+            ),
+          ),
         ),
       ),
     );
   }
 }
 
-// class HomeworkTabBarView extends HookConsumerWidget {}
-
 class StudentToolsDisplay extends HookConsumerWidget {
-  const StudentToolsDisplay({
-    super.key,
-    required this.lesson,
-  });
+  const StudentToolsDisplay({super.key, required this.lesson});
 
   final Lesson lesson;
 
@@ -88,9 +97,9 @@ class StudentToolsDisplay extends HookConsumerWidget {
           child: TabBarView(
         controller: tabController,
         children: [
-          StudentAgendaDisplay(lesson: lesson),
-          StudentQuizTabBarView(lesson: lesson),
-          Text("宿題"),
+          StudentAgenda(lesson: lesson),
+          StudentAnswerCheck(lesson: lesson),
+          StudentHomework(lesson: lesson),
         ],
       )),
     ]);

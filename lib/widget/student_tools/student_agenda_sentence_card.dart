@@ -1,71 +1,24 @@
-import 'package:code/data/agenda/agenda.dart';
-import 'package:code/data/firebase/lesson_stream.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../../data/lesson/lesson.dart';
+import '../../data/agenda/agenda.dart';
 
-class StudentAgendaTabBarView extends HookConsumerWidget {
-  const StudentAgendaTabBarView({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(currentLessonStreamProvider);
-    final lesson = snapshot?.data() ?? Lesson.isBlank();
-
-    return StudentAgendaDisplay(lesson: lesson);
-  }
-}
-
-class StudentAgendaDisplay extends HookConsumerWidget {
-  const StudentAgendaDisplay({
-    super.key,
-    required this.lesson,
-  });
-
-  final Lesson lesson;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final agenda = lesson.agendaPublish;
-
-    return Container(
-        padding: EdgeInsets.only(top: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: agenda.sentences.isEmpty
-                  ? Text("まだ公開されていません")
-                  : ListView.builder(
-                      itemCount: agenda.sentences.length,
-                      itemBuilder: (context, index) {
-                        return StudentAgendaSentenceCard(
-                          sentence: agenda.sentences[index],
-                          index: index,
-                        );
-                      },
-                    ),
-            ),
-          ],
-        ));
-  }
-}
-
-class StudentAgendaSentenceCard extends ConsumerWidget {
+class StudentAgendaSentenceCard extends StatelessWidget {
   const StudentAgendaSentenceCard({
     super.key,
     required this.sentence,
     required this.index,
   });
+
   final Sentence sentence;
   final int index;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(top: 20, bottom: 20),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      margin: EdgeInsets.only(top: 20, bottom: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           Row(
             children: [
               Stack(
@@ -120,11 +73,13 @@ class StudentAgendaSentenceCard extends ConsumerWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(sentence.subtitle,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            )),
+                        Text(
+                          sentence.subtitle,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         Container(
                           width: 20,
                         ),
@@ -153,35 +108,9 @@ class StudentAgendaSentenceCard extends ConsumerWidget {
                 ),
               )
             ],
-          )
-        ]));
-  }
-}
-
-class StudentQuizTabBarView extends HookConsumerWidget {
-  const StudentQuizTabBarView({
-    super.key,
-    required this.lesson,
-  });
-
-  final Lesson lesson;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Text("クイズ");
-  }
-}
-
-class StudentHomeworkTabBarView extends HookConsumerWidget {
-  const StudentHomeworkTabBarView({
-    super.key,
-    required this.lesson,
-  });
-
-  final Lesson lesson;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Text("宿題");
+          ),
+        ],
+      ),
+    );
   }
 }

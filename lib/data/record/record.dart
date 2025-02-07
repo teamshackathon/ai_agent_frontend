@@ -7,9 +7,11 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:record/record.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:socket_io_client/socket_io_client.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../toast.dart';
 import '../firebase/during_stream.dart';
+import '../firebase/tools_stream.dart';
 import '../person/person.dart';
 
 part 'record.freezed.dart';
@@ -30,7 +32,7 @@ class StreamRecord with _$StreamRecord {
 class StreamRecorder extends _$StreamRecorder {
   final List<String> messages = [];
   StreamSubscription<Uint8List>? subscription;
-  final List<int> audioChunks = [];
+  final List<Uint8List> audioChunks = [];
   var silenceChunks = 0;
   var breakSilence = false;
 
@@ -44,24 +46,29 @@ class StreamRecorder extends _$StreamRecorder {
   // とりあえず規定時間を二秒にしておく
   final silenceDuring = 20;
 
+  WebSocketChannel? _channel;
+
   @override
   StreamRecord build() {
     final recorder = AudioRecorder();
     final socket = io(
-      'http://10.0.2.2:5002',
-      <String, dynamic>{
-        'transports': ['websocket'],
-        'autoConnect': false,
-      },
-    );
+        'http://localhost:3002',
+        OptionBuilder()
+            .setTransports(['websocket'])
+            .disableAutoConnect()
+            .build());
 
-    socket.onConnect((_) => infoToast(log: "WebSocket Connected"));
-    socket.on("message", (data) => messages.add(data));
+    socket.onConnect((_) {
+      infoToast(log: "WebSocket Connect");
+    });
     socket.onDisconnect((_) {
       infoToast(log: messages);
       infoToast(log: "WebSocket Disconnected");
     });
-    socket.on('error', (error) => infoToast(log: "WebSocket Error : $error"));
+    socket.on('message', (_) => infoToast(log: _));
+    socket.onError((error) => infoToast(log: "WebSocket Error : $error"));
+    socket.onConnectError(
+        (error) => infoToast(log: "WebSocket Connect Error : $error"));
     return StreamRecord(recorder: recorder, socket: socket);
   }
 
@@ -69,7 +76,11 @@ class StreamRecorder extends _$StreamRecorder {
   void _sendAudio() {
     if (audioChunks.isNotEmpty) {
       // 送信データをどうすればいいか確認
-      state.socket.emit("message", base64Encode(audioChunks));
+      final audioData =
+          Uint8List.fromList(audioChunks.expand((x) => x).toList());
+
+      //state.socket.emit('audio_data', Uint8List.fromList(audioData));
+      _channel!.sink.add(Uint8List.fromList(audioData));
       audioChunks.clear();
       silenceChunks = 0;
     }
@@ -86,11 +97,13 @@ class StreamRecorder extends _$StreamRecorder {
     var pcmData = Int16List.view(audioChunk.buffer);
     var rms = _calcRMS(pcmData);
     var currentDB = 20 *
-        math.log(math.max(rms / 32767, 0.000000000001)) / // 0来てバグらないように
-        math.ln10;
+            math.log(math.max(rms / 32767, 0.000000000001)) / // 0来てバグらないように
+            math.ln10 +
+        85; // 基準を調整
 
     state = state.copyWith(dB: currentDB);
 
+    //infoToast(log: 'AudioData Loading. $currentDB | $dBThreshold');
     // しきい値を下回ってるか
     if (currentDB < dBThreshold) {
       // ずっと沈黙が続いていなければ
@@ -98,11 +111,11 @@ class StreamRecorder extends _$StreamRecorder {
         silenceChunks++;
         // 沈黙し始めても少しの間はデータ格納
         if (silenceChunks <= silenceDuring / 2) {
-          audioChunk.map((data) => audioChunks.add(data));
+          audioChunks.add(audioChunk);
         }
       }
     } else {
-      audioChunk.map((data) => audioChunks.add(data));
+      audioChunks.add(audioChunk);
       breakSilence = true;
       silenceChunks = 0;
     }
@@ -117,22 +130,36 @@ class StreamRecorder extends _$StreamRecorder {
 
   Future<bool> _permission() async {
     if (await state.recorder.hasPermission()) return true;
-    final user = await ref.read(personStatusProvider.future);
-    removeLessonToDuring(teacher: user.name);
+    final user = await ref.watch(personStatusProvider.future);
+    final current = ref.watch(currentLessonProvider);
+    cancelLessonToDuring(teacher: user.name, currentLesson: current);
     return false;
   }
 
   Future<void> _startRecorder() async {
     audioChunks.clear();
     final stream = await state.recorder
-        .startStream(const RecordConfig(encoder: AudioEncoder.pcm16bits));
+        .startStream(const RecordConfig(encoder: AudioEncoder.wav));
     subscription = stream.listen(_onAudioDataAvailable);
     state = state.copyWith(isRecording: true);
   }
 
   Future<void> start() async {
     if (await _permission()) {
-      state.socket.connect();
+      //state.socket.connect();
+      _channel = WebSocketChannel.connect(Uri.parse('ws://localhost:3002'));
+      // サーバーからメッセージを受け取るためのリスナーを追加
+      _channel?.stream.listen((message) {
+        try {
+          infoToast(log: message);
+          if (message == 'quit') {
+            // 授業終了
+            stop();
+          }
+        } catch (e) {
+          infoToast(log: 'Failed Message: $e');
+        }
+      });
       await _startRecorder();
     }
   }
@@ -152,8 +179,10 @@ class StreamRecorder extends _$StreamRecorder {
 
   Future<void> stop() async {
     subscription!.cancel();
+    _sendAudio();
     state.recorder.stop();
-    state.socket.disconnect();
+    //state.socket.dispose();
+    _channel?.sink.close();
     state = state.copyWith(isRecording: false);
   }
 }

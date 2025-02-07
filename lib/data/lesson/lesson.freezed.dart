@@ -24,7 +24,9 @@ mixin _$Lesson {
   DocumentReference<Object?> get reference =>
       throw _privateConstructorUsedError;
   int get startPage => throw _privateConstructorUsedError;
-  int get endPage => throw _privateConstructorUsedError;
+  int get endPage =>
+      throw _privateConstructorUsedError; // before, lesson, break, test, afterの５状態
+  String get state => throw _privateConstructorUsedError;
 
   /// Create a copy of Lesson
   /// with the given fields replaced by the non-null parameter values.
@@ -45,7 +47,8 @@ abstract class $LessonCopyWith<$Res> {
       List<Quiz> questionsDraft,
       DocumentReference<Object?> reference,
       int startPage,
-      int endPage});
+      int endPage,
+      String state});
 
   $AgendaCopyWith<$Res> get agendaPublish;
   $AgendaCopyWith<$Res> get agendaDraft;
@@ -74,6 +77,7 @@ class _$LessonCopyWithImpl<$Res, $Val extends Lesson>
     Object? reference = null,
     Object? startPage = null,
     Object? endPage = null,
+    Object? state = null,
   }) {
     return _then(_value.copyWith(
       count: null == count
@@ -108,6 +112,10 @@ class _$LessonCopyWithImpl<$Res, $Val extends Lesson>
           ? _value.endPage
           : endPage // ignore: cast_nullable_to_non_nullable
               as int,
+      state: null == state
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 
@@ -147,7 +155,8 @@ abstract class _$$LessonImplCopyWith<$Res> implements $LessonCopyWith<$Res> {
       List<Quiz> questionsDraft,
       DocumentReference<Object?> reference,
       int startPage,
-      int endPage});
+      int endPage,
+      String state});
 
   @override
   $AgendaCopyWith<$Res> get agendaPublish;
@@ -176,6 +185,7 @@ class __$$LessonImplCopyWithImpl<$Res>
     Object? reference = null,
     Object? startPage = null,
     Object? endPage = null,
+    Object? state = null,
   }) {
     return _then(_$LessonImpl(
       count: null == count
@@ -210,6 +220,10 @@ class __$$LessonImplCopyWithImpl<$Res>
           ? _value.endPage
           : endPage // ignore: cast_nullable_to_non_nullable
               as int,
+      state: null == state
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -225,7 +239,8 @@ class _$LessonImpl extends _Lesson {
       required final List<Quiz> questionsDraft,
       required this.reference,
       required this.startPage,
-      required this.endPage})
+      required this.endPage,
+      required this.state})
       : _questionsPublish = questionsPublish,
         _questionsDraft = questionsDraft,
         super._();
@@ -259,10 +274,13 @@ class _$LessonImpl extends _Lesson {
   final int startPage;
   @override
   final int endPage;
+// before, lesson, break, test, afterの５状態
+  @override
+  final String state;
 
   @override
   String toString() {
-    return 'Lesson(count: $count, agendaPublish: $agendaPublish, agendaDraft: $agendaDraft, questionsPublish: $questionsPublish, questionsDraft: $questionsDraft, reference: $reference, startPage: $startPage, endPage: $endPage)';
+    return 'Lesson(count: $count, agendaPublish: $agendaPublish, agendaDraft: $agendaDraft, questionsPublish: $questionsPublish, questionsDraft: $questionsDraft, reference: $reference, startPage: $startPage, endPage: $endPage, state: $state)';
   }
 
   @override
@@ -283,7 +301,8 @@ class _$LessonImpl extends _Lesson {
                 other.reference == reference) &&
             (identical(other.startPage, startPage) ||
                 other.startPage == startPage) &&
-            (identical(other.endPage, endPage) || other.endPage == endPage));
+            (identical(other.endPage, endPage) || other.endPage == endPage) &&
+            (identical(other.state, state) || other.state == state));
   }
 
   @override
@@ -296,7 +315,8 @@ class _$LessonImpl extends _Lesson {
       const DeepCollectionEquality().hash(_questionsDraft),
       reference,
       startPage,
-      endPage);
+      endPage,
+      state);
 
   /// Create a copy of Lesson
   /// with the given fields replaced by the non-null parameter values.
@@ -316,7 +336,8 @@ abstract class _Lesson extends Lesson {
       required final List<Quiz> questionsDraft,
       required final DocumentReference<Object?> reference,
       required final int startPage,
-      required final int endPage}) = _$LessonImpl;
+      required final int endPage,
+      required final String state}) = _$LessonImpl;
   const _Lesson._() : super._();
 
   @override
@@ -334,7 +355,9 @@ abstract class _Lesson extends Lesson {
   @override
   int get startPage;
   @override
-  int get endPage;
+  int get endPage; // before, lesson, break, test, afterの５状態
+  @override
+  String get state;
 
   /// Create a copy of Lesson
   /// with the given fields replaced by the non-null parameter values.
