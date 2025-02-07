@@ -1,0 +1,17 @@
+name: Validate stg Branch Name
+
+on:
+  pull_request:
+    branches:
+      - stg
+
+jobs:
+  check-branch-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if PR branch name starts with AAHGC
+        run: |
+          if [[ ! "${{ github.head_ref }}" =~ ^AAVGC ]]; then
+            echo "ERROR: PRs from 'stg' must have a branch name starting with 'AAHGC'."
+            exit 1
+          fi
