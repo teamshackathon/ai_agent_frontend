@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -222,7 +221,7 @@ class TeacherCreateLessonDisplay extends HookConsumerWidget {
                   }
                 }
               },
-              child: Text("授業作成"),
+              child: Text("授業授業作成"),
             ),
           ],
         );
