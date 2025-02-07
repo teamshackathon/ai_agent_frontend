@@ -10,15 +10,18 @@ part 'lesson.freezed.dart';
 class Lesson with _$Lesson {
   const Lesson._();
 
-  const factory Lesson(
-      {required int count,
-      required Agenda agendaPublish,
-      required Agenda agendaDraft,
-      required List<Quiz> questionsPublish,
-      required List<Quiz> questionsDraft,
-      required DocumentReference reference,
-      required int startPage,
-      required int endPage}) = _Lesson;
+  const factory Lesson({
+    required int count,
+    required Agenda agendaPublish,
+    required Agenda agendaDraft,
+    required List<Quiz> questionsPublish,
+    required List<Quiz> questionsDraft,
+    required DocumentReference reference,
+    required int startPage,
+    required int endPage,
+    // before, lesson, break, test, afterの５状態
+    required String state,
+  }) = _Lesson;
 
   factory Lesson.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -37,9 +40,10 @@ class Lesson with _$Lesson {
       agendaDraft: Agenda.fromMap(map?["agenda_draft"] ?? {}),
       questionsPublish: publish,
       questionsDraft: draft,
-      count: map?["count"] ?? -1,
-      startPage: map?["start_page"] ?? 1,
-      endPage: map?["end_page"] ?? 1,
+      count: map?["count"] ?? 0,
+      startPage: map?["start_page"] ?? 0,
+      endPage: map?["end_page"] ?? 0,
+      state: map?["state"] ?? "",
     );
   }
 
@@ -62,13 +66,15 @@ class Lesson with _$Lesson {
 
   factory Lesson.isBlank() {
     return Lesson(
-        count: 0,
-        agendaPublish: Agenda.isBlank(),
-        agendaDraft: Agenda.isBlank(),
-        questionsPublish: [],
-        questionsDraft: [],
-        reference: FirebaseFirestore.instance.collection("2024").doc(),
-        startPage: 0,
-        endPage: 0);
+      count: 0,
+      agendaPublish: Agenda.isBlank(),
+      agendaDraft: Agenda.isBlank(),
+      questionsPublish: [],
+      questionsDraft: [],
+      reference: FirebaseFirestore.instance.collection("2024").doc(),
+      startPage: 0,
+      endPage: 0,
+      state: "",
+    );
   }
 }

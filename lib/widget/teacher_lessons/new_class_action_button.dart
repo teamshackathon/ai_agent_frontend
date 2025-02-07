@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code/api/api.dart';
-import 'package:code/data/firebase/lesson_stream.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +8,16 @@ import 'package:pdfrx/pdfrx.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../api/api.dart';
+import '../../data/firebase/lesson_stream.dart';
 import '../../widget/utils/sakura_progress_indicator.dart';
 import '../../data/lesson/lesson.dart';
 import '../../data/agenda/agenda.dart';
 
 class NewClassActionButton extends HookConsumerWidget {
-  const NewClassActionButton({super.key});
+  const NewClassActionButton({super.key, required this.lastLesson});
+
+  final Lesson lastLesson;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -83,6 +85,7 @@ class NewClassActionButton extends HookConsumerWidget {
                               // SharedPreferenceで保存できるか？
                               return TeacherCreateLessonDisplay(
                                 uri: Uri.parse(snapshot.data ?? ""),
+                                lastLesson: lastLesson,
                               );
                             }
                           },
@@ -112,15 +115,15 @@ class TeacherCreateLessonDisplay extends HookConsumerWidget {
   const TeacherCreateLessonDisplay({
     super.key,
     required this.uri,
+    required this.lastLesson,
   });
 
   final Uri uri;
+  final Lesson lastLesson;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final room = ref.watch(currentRoomProvider);
-    final lastLesson =
-        ref.watch(currentLessonStreamProvider)?.data() ?? Lesson.isBlank();
     final pageController =
         useMemoized(() => PageController(initialPage: lastLesson.endPage));
     final current = useState<int>(lastLesson.endPage + 1);
@@ -199,17 +202,9 @@ class TeacherCreateLessonDisplay extends HookConsumerWidget {
             ElevatedButton(
               onPressed: () async {
                 if (start.value > 0 && end.value > 0) {
-                  final lessonsStream = ref.watch(lessonsStreamProvider);
-                  final List<QuerySnapshot<Lesson>> lessons = [];
-                  lessonsStream.when(
-                      data: (snapshot) => lessons.add(snapshot),
-                      error: (_, __) => [],
-                      loading: () => []);
-                  Logger().i(lessons[0].docs.length);
-
                   final document = await room.reference.add(
                     Lesson(
-                      count: lessons[0].docs.length + 1,
+                      count: lastLesson.count + 1,
                       agendaPublish: Agenda.isBlank(),
                       agendaDraft: Agenda.isBlank(),
                       questionsPublish: [],
@@ -217,11 +212,14 @@ class TeacherCreateLessonDisplay extends HookConsumerWidget {
                       reference: room.reference.doc(),
                       startPage: start.value,
                       endPage: end.value,
+                      state: "before",
                     ).toMap(),
                   );
                   createAgenda("${room.reference.path}/${document.id}",
                       start.value, end.value);
-                  GoRouter.of(context).pop();
+                  if (context.mounted) {
+                    GoRouter.of(context).pop();
+                  }
                 }
               },
               child: Text("授業作成"),

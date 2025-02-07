@@ -10,12 +10,13 @@ import 'package:pdfrx/pdfrx.dart';
 
 import '../../../../data/agenda/agenda.dart';
 import '../../../../data/firebase/lesson_stream.dart';
+import '../../../../data/firebase/tools_stream.dart';
 import '../../../../data/lesson/lesson.dart';
 import '../../../../widget/base_page/base_page.dart';
 import '../../../../widget/utils/sakura_progress_indicator.dart';
 
-class TeacherCreateLesson extends HookConsumerWidget {
-  const TeacherCreateLesson({super.key});
+class _TeacherCreateLesson extends HookConsumerWidget {
+  const _TeacherCreateLesson({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,7 +37,7 @@ class TeacherCreateLesson extends HookConsumerWidget {
             return const Center(child: Text("教科書データが見つかりませんでした"));
           } else {
             // SharedPreferenceで保存できるか？
-            return TeacherCreateLessonDisplay(
+            return _TeacherCreateLessonDisplay(
               uri: Uri.parse(snapshot.data ?? ""),
             );
           }
@@ -46,8 +47,8 @@ class TeacherCreateLesson extends HookConsumerWidget {
   }
 }
 
-class TeacherCreateLessonDisplay extends HookConsumerWidget {
-  const TeacherCreateLessonDisplay({
+class _TeacherCreateLessonDisplay extends HookConsumerWidget {
+  const _TeacherCreateLessonDisplay({
     super.key,
     required this.uri,
   });
@@ -57,8 +58,7 @@ class TeacherCreateLessonDisplay extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final room = ref.watch(currentRoomProvider);
-    final lastLesson =
-        ref.watch(currentLessonStreamProvider)?.data() ?? Lesson.isBlank();
+    final lastLesson = ref.watch(currentLessonProvider);
     final pageController =
         useMemoized(() => PageController(initialPage: lastLesson.endPage));
     final current = useState<int>(lastLesson.endPage + 1);
@@ -174,6 +174,7 @@ class TeacherCreateLessonDisplay extends HookConsumerWidget {
                         reference: room.reference.doc(),
                         startPage: start.value,
                         endPage: end.value,
+                        state: "before",
                       ).toMap(),
                     );
                     GoRouter.of(context).pop();

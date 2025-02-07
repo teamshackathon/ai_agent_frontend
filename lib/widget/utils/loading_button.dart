@@ -1,3 +1,4 @@
+import 'package:code/widget/utils/sakura_progress_indicator.dart';
 import 'package:flutter/material.dart';
 
 class LoadingButton extends StatelessWidget {
@@ -30,15 +31,16 @@ class LoadingButton extends StatelessWidget {
           height: height,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: enabled
-                  ? Colors.pinkAccent.shade100
-                  : Colors.grey.shade300, // 無効化時の色
-              foregroundColor:
-                  enabled ? Colors.white : Colors.grey.shade600, // 無効化時のテキスト色
+              backgroundColor:
+                  enabled ? Colors.pinkAccent.shade100 : Colors.grey.shade300,
+              // 無効化時の色
+              foregroundColor: enabled ? Colors.white : Colors.grey.shade600,
+              // 無効化時のテキスト色
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(25), // 丸みを強調
               ),
-              elevation: 3, // 影を追加
+              elevation: 3,
+              // 影を追加
               shadowColor: Colors.pinkAccent.shade100.withOpacity(0.4),
             ),
             onPressed: (isLoading || !enabled) ? null : onPressed,
@@ -51,6 +53,14 @@ class LoadingButton extends StatelessWidget {
             ),
           ),
         ),
+        if (isLoading)
+          Center(
+            child: SizedBox(
+              width: height,
+              height: height,
+              child: const SakuraProgressIndicator(),
+            ),
+          ),
       ],
     );
   }

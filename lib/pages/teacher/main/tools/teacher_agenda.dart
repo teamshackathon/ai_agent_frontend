@@ -1,50 +1,67 @@
-import 'package:code/widget/agenda/teacher_agenda_display.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../../data/agenda/agenda.dart';
-import '../../../../data/firebase/lesson_stream.dart';
 import '../../../../data/lesson/lesson.dart';
-import '../../../../toast.dart';
-import '../../../../widget/base_page/base_page.dart';
+import '../../../../widget/teacher_tools/edit_agenda_action_button.dart';
+import '../../../../widget/teacher_tools/teacher_agenda_sentence_card.dart';
+import '../../../../widget/utils/lesson_slide.dart';
 
-class TeacherAgenda extends ConsumerWidget {
-  const TeacherAgenda({super.key});
+class TeacherAgenda extends StatelessWidget {
+  const TeacherAgenda({super.key, required this.lesson});
+
+  final Lesson lesson;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // 透明
+      backgroundColor: Colors.transparent,
+      body: TeacherAgendaDisplay(lesson: lesson),
+      floatingActionButton: Align(
+        alignment: Alignment.bottomCenter,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Spacer(),
+            LessonSlide(lesson: lesson),
+            Spacer(),
+            SizedBox(
+              width: 55,
+              height: 55,
+              child: Visibility(
+                visible: lesson.state == "before",
+                child: EditAgendaActionButton(lesson: lesson),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class TeacherAgendaDisplay extends HookConsumerWidget {
+  const TeacherAgendaDisplay({super.key, required this.lesson});
+
+  final Lesson lesson;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(currentLessonStreamProvider);
-    final lesson = snapshot?.data() ?? Lesson.isBlank();
-    final size = MediaQuery.of(context).size;
-    const widthFactor = 0.9;
-    const heightFactor = 0.95;
+    final agenda = lesson.agendaPublish;
 
-    // スマホだと戻るボタンに連動して、確認を出すことできるけど
-    // Chromeだとできなさそうだから一旦諦め
-    // return PopScope(
-    //   canPop: false,
-    //   onPopInvokedWithResult: (didPop, _) {
-    //     if (didPop) return;
-    //     if (editing) {
-    //     } else {
-    //       GoRouter.of(context).pop();
-    //     }
-    //   },
-    return BasePage(
-      pageTitle: "授業内容確認",
-
-      // childrenを縦に並べるWidget
-      body: Center(
-        child: FractionallySizedBox(
-          widthFactor: widthFactor,
-          heightFactor: heightFactor,
-          child: TeacherAgendaDisplay(
-            lesson: lesson,
-            displayWidth: size.width * widthFactor,
-            displayHeight: size.height * widthFactor,
-          ),
-        ),
-      ),
+    return Padding(
+      padding: EdgeInsets.only(top: 10),
+      child: agenda.sentences.isEmpty
+          ? Text("まだ公開されていません")
+          : ListView.builder(
+              itemCount: agenda.sentences.length,
+              itemBuilder: (context, index) {
+                return TeacherAgendaSentenceCard(
+                  sentence: agenda.sentences[index],
+                  index: index,
+                );
+              },
+            ),
     );
   }
 }

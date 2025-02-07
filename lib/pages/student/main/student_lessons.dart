@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../data/firebase/lesson_stream.dart';
+import '../../../data/firebase/tools_stream.dart';
 import '../../../data/lesson/lesson.dart';
 import '../../../route/route.dart';
 import '../../../widget/base_page/base_page.dart';
@@ -46,7 +47,7 @@ class StudentLessonsDisplay extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentRoom = ref.watch(currentRoomProvider);
-    final currentLessonNot = ref.read(currentLessonStreamProvider.notifier);
+    final currentLessonNot = ref.read(currentLessonProvider.notifier);
 
     return lessons.isEmpty
         ? Center(child: Text("授業がありません"))
@@ -66,7 +67,7 @@ class StudentLessonsDisplay extends ConsumerWidget {
                       angle: 0,
                       subject: currentRoom.subject,
                       onTap: () {
-                        currentLessonNot.state = lessons[index];
+                        currentLessonNot.state = lesson;
                         GoRouter.of(context).push(Routes.studentTools);
                       },
                     );

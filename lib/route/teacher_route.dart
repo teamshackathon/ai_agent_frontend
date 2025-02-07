@@ -58,23 +58,23 @@ final teacherBranch = StatefulShellRoute.indexedStack(
                   path: "tools",
                   builder: (context, state) => TeacherTools(),
                   routes: [
-                    GoRoute(
-                      parentNavigatorKey: _teacherMainKey,
-                      path: "agenda",
-                      builder: (context, state) => TeacherAgenda(),
-                    ),
-                    GoRoute(
-                      parentNavigatorKey: _teacherMainKey,
-                      path: "quiz",
-                      builder: (context, state) => TeacherQuiz(),
-                    ),
+                    // GoRoute(
+                    //   parentNavigatorKey: _teacherMainKey,
+                    //   path: "agenda",
+                    //   builder: (context, state) => TeacherAgenda(),
+                    // ),
+                    // GoRoute(
+                    //   parentNavigatorKey: _teacherMainKey,
+                    //   path: "quiz",
+                    //   builder: (context, state) => TeacherQuiz(),
+                    // ),
                   ],
                 ),
-                GoRoute(
-                  parentNavigatorKey: _teacherMainKey,
-                  path: "create",
-                  builder: (context, state) => TeacherCreateLesson(),
-                ),
+                // GoRoute(
+                //   parentNavigatorKey: _teacherMainKey,
+                //   path: "create",
+                //   builder: (context, state) => TeacherCreateLesson(),
+                // ),
               ],
             ),
           ],

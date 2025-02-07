@@ -65,6 +65,14 @@ class StudentMainDisplay extends ConsumerWidget {
 
   final List<Room> rooms;
 
+  String getClass(String room) {
+    return room.split("-")[1];
+  }
+
+  String getGrade(String room) {
+    return room.split("-")[0];
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentRoomNot = ref.read(currentRoomProvider.notifier);
@@ -77,7 +85,7 @@ class StudentMainDisplay extends ConsumerWidget {
               Padding(
                 padding: EdgeInsets.only(top: 0),
                 child: Text(
-                  "${rooms[0].year}年度 ${rooms[0].roomNumber}",
+                  "${rooms[0].year}年度 ${getGrade(rooms[0].roomNumber)}年${getClass(rooms[0].roomNumber)}組",
                   style: TextStyle(fontSize: 20),
                 ),
               ),

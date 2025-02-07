@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../../data/firebase/lesson_stream.dart';
+import '../../../../data/firebase/tools_stream.dart';
 import '../../../../data/lesson/lesson.dart';
 import '../../../../data/quiz/quiz.dart';
-import '../../../../toast.dart';
 import '../../../../widget/base_page/base_page.dart';
 import '../../../../widget/quiz/answer_widget.dart';
+import '../../../../widget/utils/sakura_progress_indicator.dart';
 
 class StudentQuiz extends ConsumerWidget {
   const StudentQuiz({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(currentLessonStreamProvider);
-    final lesson = snapshot?.data() ?? Lesson.isBlank();
+    final lessonStream = ref.watch(toolsStreamProvider);
     final size = MediaQuery.of(context).size;
     const widthFactor = 0.9;
     const heightFactor = 0.95;
@@ -28,10 +27,21 @@ class StudentQuiz extends ConsumerWidget {
         child: FractionallySizedBox(
           widthFactor: widthFactor,
           heightFactor: heightFactor,
-          child: StudentQuizDisplay(
-            lesson: lesson,
-            displayWidth: size.width * widthFactor,
-            displayHeight: size.height * widthFactor,
+          child: lessonStream.when(
+            data: (lesson) {
+              return StudentQuizDisplay(
+                lesson: lesson.data() ?? Lesson.isBlank(),
+                displayWidth: size.width * widthFactor,
+                displayHeight: size.height * widthFactor,
+              );
+            }, // エラー時の表示
+            error: (_, __) => const Center(
+              child: Text("読み込み失敗"),
+            ),
+            // 読込中の表示
+            loading: () => const Center(
+              child: SakuraProgressIndicator(),
+            ),
           ),
         ),
       ),
@@ -62,7 +72,6 @@ class StudentQuizDisplay extends HookConsumerWidget {
             itemBuilder: (context, index) => AnswerWidget(
               quiz: quizzes.value[index],
               onChanged: (str) {
-                infoToast(log: "before : ${quizzes.value}");
                 final list = [
                   for (var i = 0; i < quizzes.value.length; i++)
                     i == index
@@ -70,7 +79,6 @@ class StudentQuizDisplay extends HookConsumerWidget {
                         : quizzes.value[i],
                 ];
                 quizzes.value = list;
-                infoToast(log: "after : ${quizzes.value}");
               },
             ),
           ),

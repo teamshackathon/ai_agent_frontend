@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../lesson/lesson.dart';
@@ -23,8 +22,3 @@ final lessonsStreamProvider = StreamProvider(
         .snapshots();
   },
 );
-
-// 選択した授業内容を監視するプロバイダー
-// lessonsStreamProviderの支流を作るイメージ
-final currentLessonStreamProvider =
-    StateProvider<QueryDocumentSnapshot<Lesson>?>((ref) => null);

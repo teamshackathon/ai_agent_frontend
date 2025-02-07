@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code/data/person/person.dart';
-import 'package:code/toast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../lesson/lesson.dart';
+import '../person/person.dart';
 
 final duringStreamProvider = StreamProvider((ref) async* {
   final user = await ref.watch(personStatusProvider.future);
@@ -20,17 +21,46 @@ Future<void> addLessonToDuring({
   required String subject,
   required int count,
   required String teacher,
+  required Lesson currentLesson,
 }) async {
   await FirebaseFirestore.instance.collection("during").doc(teacher).set({
     "room": roomNumber,
     "subject": subject,
     "count": count,
     "teacher": teacher,
+    "state": "lesson",
   });
+  await currentLesson.reference.update({"state": "lesson"});
 }
 
-Future<void> removeLessonToDuring({required String teacher}) async {
+Future<void> cancelLessonToDuring(
+    {required String teacher, required Lesson currentLesson}) async {
   await FirebaseFirestore.instance.collection("during").doc(teacher).delete();
+  await currentLesson.reference.update({"state": "before"});
+}
+
+Future<void> breakLessonToDuring(
+    {required String teacher, required Lesson currentLesson}) async {
+  await FirebaseFirestore.instance
+      .collection("during")
+      .doc(teacher)
+      .update({"state": "break"});
+  await currentLesson.reference.update({"state": "break"});
+}
+
+Future<void> startTestToDuring(
+    {required String teacher, required Lesson currentLesson}) async {
+  await FirebaseFirestore.instance
+      .collection("during")
+      .doc(teacher)
+      .update({"state": "test"});
+  await currentLesson.reference.update({"state": "test"});
+}
+
+Future<void> finishLessonToDuring(
+    {required String teacher, required Lesson currentLesson}) async {
+  await FirebaseFirestore.instance.collection("during").doc(teacher).delete();
+  await currentLesson.reference.update({"state": "after"});
 }
 
 // 現在行われている授業一覧に、指定した（今行っている）授業があればtrue、
@@ -51,15 +81,15 @@ bool? duringLesson({
   return null;
 }
 
-bool givingLesson({
+String? givingLesson({
   required List<QueryDocumentSnapshot<Map<String, dynamic>>> snapshotData,
   required String teacher,
 }) {
   for (var d in snapshotData) {
     var map = d.data();
     if (map["teacher"] == teacher) {
-      return true;
+      return map["state"];
     }
   }
-  return false;
+  return null;
 }

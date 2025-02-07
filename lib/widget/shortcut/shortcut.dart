@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:code/data/firebase/during_stream.dart';
 import 'package:code/data/firebase/lesson_stream.dart';
 import 'package:code/toast.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../data/firebase/tools_stream.dart';
 import '../../data/room/room.dart';
 import '../../route/route.dart';
 
@@ -20,7 +22,7 @@ class ShortcutButton extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final data = shortcut.data();
     final currentRoomNot = ref.read(currentRoomProvider.notifier);
-    final currentLessonNot = ref.read(currentLessonStreamProvider.notifier);
+    final currentLessonNot = ref.read(currentLessonProvider.notifier);
 
     return FloatingActionButton(
       onPressed: () async {
@@ -31,7 +33,7 @@ class ShortcutButton extends HookConsumerWidget {
           final wannaGo = lessons.docs.firstWhere((lesson) {
             return lesson.data().count == data["count"];
           });
-          currentLessonNot.state = wannaGo;
+          currentLessonNot.state = wannaGo.data();
           if (context.mounted) {
             GoRouter.of(context).push(Routes.studentTools);
           }

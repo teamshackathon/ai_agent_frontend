@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "46244984723",
     "project_id": "demo-manabiya-ai",
-    "storage_bucket": "demo-manabiya-ai.firebasestorage.app"
+    "storage_bucket": "demo-manabiya-ai.appspot.com"
   },
   "client": [
     {

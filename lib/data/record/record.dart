@@ -11,6 +11,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../toast.dart';
 import '../firebase/during_stream.dart';
+import '../firebase/tools_stream.dart';
 import '../person/person.dart';
 
 part 'record.freezed.dart';
@@ -50,11 +51,13 @@ class StreamRecorder extends _$StreamRecorder {
   @override
   StreamRecord build() {
     final recorder = AudioRecorder();
-    final socket = io('http://localhost:3002', OptionBuilder()
-      .setTransports(['websocket'])
-      .disableAutoConnect()
-      .build());
-    
+    final socket = io(
+        'http://localhost:3002',
+        OptionBuilder()
+            .setTransports(['websocket'])
+            .disableAutoConnect()
+            .build());
+
     socket.onConnect((_) {
       infoToast(log: "WebSocket Connect");
     });
@@ -64,7 +67,10 @@ class StreamRecorder extends _$StreamRecorder {
     });
     socket.on('message', (_) => infoToast(log: _));
     socket.onError((error) => infoToast(log: "WebSocket Error : $error"));
-    socket.onConnectError((error) => infoToast(log: "WebSocket Connect Error : $error"));
+
+    socket.onConnectError(
+        (error) => infoToast(log: "WebSocket Connect Error : $error"));
+
     return StreamRecord(recorder: recorder, socket: socket);
   }
 
@@ -72,8 +78,10 @@ class StreamRecorder extends _$StreamRecorder {
   void _sendAudio() {
     if (audioChunks.isNotEmpty) {
       // 送信データをどうすればいいか確認
-      final audioData = Uint8List.fromList(audioChunks.expand((x) => x).toList());
-      
+
+      final audioData =
+          Uint8List.fromList(audioChunks.expand((x) => x).toList());
+
       //state.socket.emit('audio_data', Uint8List.fromList(audioData));
       _channel!.sink.add(Uint8List.fromList(audioData));
       audioChunks.clear();
@@ -90,11 +98,14 @@ class StreamRecorder extends _$StreamRecorder {
     // 音声データの実効値を計算して、dBに変換(AI三人に聞きました)
     var pcmData = Int16List.view(audioChunk.buffer);
     var rms = _calcRMS(pcmData);
-    var currentDB = 20 * math.log(math.max(rms / 32767, 0.000000000001)) / // 0来てバグらないように
-        math.ln10 + 85; // 基準を調整
+
+    var currentDB = 20 *
+            math.log(math.max(rms / 32767, 0.000000000001)) / // 0来てバグらないように
+            math.ln10 +
+        85; // 基準を調整
 
     state = state.copyWith(dB: currentDB);
-    
+
     //infoToast(log: 'AudioData Loading. $currentDB | $dBThreshold');
     // しきい値を下回ってるか
     if (currentDB < dBThreshold) {
@@ -122,8 +133,9 @@ class StreamRecorder extends _$StreamRecorder {
 
   Future<bool> _permission() async {
     if (await state.recorder.hasPermission()) return true;
-    final user = await ref.read(personStatusProvider.future);
-    removeLessonToDuring(teacher: user.name);
+    final user = await ref.watch(personStatusProvider.future);
+    final current = ref.watch(currentLessonProvider);
+    cancelLessonToDuring(teacher: user.name, currentLesson: current);
     return false;
   }
 
