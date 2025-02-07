@@ -90,8 +90,9 @@ class StreamRecorder extends _$StreamRecorder {
   }
 
   double _calcRMS(Int16List data) {
-    double squareSum = data.map((d) => (d * d).toDouble()).reduce((a, b) => a + b);
-    return  math.sqrt(squareSum / data.length);
+    double squareSum =
+        data.map((d) => (d * d).toDouble()).reduce((a, b) => a + b);
+    return math.sqrt(squareSum / data.length);
   }
 
   void _onAudioDataAvailable(Uint8List audioChunk) {

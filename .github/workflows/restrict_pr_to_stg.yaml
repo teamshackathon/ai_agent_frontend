@@ -1,0 +1,17 @@
+name: Restrict PR to Main from stg
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-pr-source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if PR is from stg
+        run: |
+          if [[ "${{ github.head_ref }}" != "stg" ]]; then
+            echo "ERROR: Only PRs from 'stg' are allowed to merge into 'main'."
+            exit 1
+          fi
