@@ -16,7 +16,7 @@ class StudentHomeworkWidget extends ConsumerWidget{
         
         child:ListView.builder(
           itemBuilder:(context,index)=> QuizEditWidget(editable: true, quiz: quizList[index], onChanged: onChanged),
-          itemCount: quizList.length,
+          itemCount: quizList.length,)
         
       );
     }
