@@ -10,6 +10,7 @@ import '../pages/teacher/main/teacher_main.dart';
 import '../pages/teacher/main/teacher_tools.dart';
 import '../pages/teacher/main/tools/teacher_agenda.dart';
 import '../pages/teacher/main/tools/teacher_quiz.dart';
+import '../pages/teacher/main/tools/teacher_reading.dart';
 import '../widget/bottom_bar/teacher_bottom_bar.dart';
 import 'route.dart';
 
@@ -58,11 +59,11 @@ final teacherBranch = StatefulShellRoute.indexedStack(
                   path: "tools",
                   builder: (context, state) => TeacherTools(),
                   routes: [
-                    // GoRoute(
-                    //   parentNavigatorKey: _teacherMainKey,
-                    //   path: "agenda",
-                    //   builder: (context, state) => TeacherAgenda(),
-                    // ),
+                    GoRoute(
+                      parentNavigatorKey: _teacherMainKey,
+                      path: "reading",
+                      builder: (context, state) => TeacherReading(),
+                    ),
                     // GoRoute(
                     //   parentNavigatorKey: _teacherMainKey,
                     //   path: "quiz",
