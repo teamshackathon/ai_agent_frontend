@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:code/data/firebase/during_stream.dart';
 import 'package:code/data/firebase/lesson_stream.dart';
 import 'package:code/toast.dart';
 import 'package:flutter/material.dart';
@@ -22,12 +23,12 @@ class ShortcutButton extends HookConsumerWidget {
     final data = shortcut.data();
     final currentRoomNot = ref.read(currentRoomProvider.notifier);
     final currentLessonNot = ref.read(currentLessonProvider.notifier);
-    final lessonStream = ref.watch(lessonsStreamProvider.future);
 
     return FloatingActionButton(
       onPressed: () async {
         // ショートカットで飛ばされる道中で入力されるべきデータをここで入力する
         currentRoomNot.state = await searchRoom(rooms, data["subject"]);
+        final lessonStream = ref.watch(lessonsStreamProvider.future);
         await lessonStream.then((lessons) {
           final wannaGo = lessons.docs.firstWhere((lesson) {
             return lesson.data().count == data["count"];
