@@ -71,8 +71,10 @@ class TeacherBottomBar extends HookConsumerWidget {
                 onPanUpdate: (details) {
                   final newX = posX.value + details.delta.dx;
                   final newY = posY.value + details.delta.dy;
-                  if (newX >= 0 && newX <= size.width - 380 &&
-                      newY >= 100 && newY <= size.height - 60) {
+                  if (newX >= 0 &&
+                      newX <= size.width - 380 &&
+                      newY >= 100 &&
+                      newY <= size.height - 60) {
                     posX.value = newX;
                     posY.value = newY;
                   }

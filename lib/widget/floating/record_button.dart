@@ -7,7 +7,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../data/record/record.dart';
 
 class RecordButton extends HookConsumerWidget {
-  const RecordButton({super.key, required this.teacher, required this.reference});
+  const RecordButton(
+      {super.key, required this.teacher, required this.reference});
 
   final String teacher;
 
@@ -38,7 +39,7 @@ class RecordButton extends HookConsumerWidget {
     // chatGPTなきゃ辿り着けんてそれは
     return IconButton(
       icon: recorder.isRecording ? Icon(Icons.mic) : Icon(Icons.mic_off),
-      onPressed: () async{
+      onPressed: () async {
         if (recorder.isRecording) {
           await recorderNot.pause();
         } else {

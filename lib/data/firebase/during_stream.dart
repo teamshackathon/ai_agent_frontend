@@ -119,9 +119,9 @@ Map<String, dynamic>? getMeFromDuring({
   required List<QueryDocumentSnapshot<Map<String, dynamic>>> queryList,
   required String name,
 }) {
-  for(final q in queryList){
+  for (final q in queryList) {
     final data = q.data();
-    if(data["teacher"] == name)return data;
+    if (data["teacher"] == name) return data;
   }
   return null;
 }

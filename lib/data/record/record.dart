@@ -168,7 +168,7 @@ class StreamRecorder extends _$StreamRecorder {
   }
 
   Future<void> pause() async {
-    state = state.copyWith(isRecording:false);
+    state = state.copyWith(isRecording: false);
     await state.recorder.pause();
     _sendAudio();
   }
@@ -179,7 +179,7 @@ class StreamRecorder extends _$StreamRecorder {
   }
 
   Future<void> stop() async {
-    state = state.copyWith(isRecording:false);
+    state = state.copyWith(isRecording: false);
     await subscription!.cancel();
     _sendAudio();
     await state.recorder.stop();
