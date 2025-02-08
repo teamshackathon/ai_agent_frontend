@@ -76,11 +76,26 @@ class Person with _$Person {
 @riverpod
 class PersonStatus extends _$PersonStatus {
   // 生徒としてビルド
-  Student buildToStudent(User user, IdTokenResult token) {
+  Future<Student> buildToStudent(User user, IdTokenResult token) async {
     // claimsに名前が入っていなければthrow
     final firstName = token.claims?["first_name"];
     final familyName = token.claims?["family_name"];
-    final iconPath = token.claims?["icon_path"] ?? "";
+    var iconPath = token.claims?["icon_path"] ?? "";
+
+    final store = ref.watch(firestoreProvider);
+    final iconRef = store.collection("basic").doc("icons");
+
+    // firestoreのiconsからアイコンデータを取得
+    final folderName = "$firstName.$familyName".toLowerCase();
+    await iconRef.get().then((DocumentSnapshot doc) {
+      final data = doc.data() as Map<String, dynamic>;
+      if (data[folderName] != null) {
+        iconPath = data[folderName]["icon_path"] ?? "";
+      }
+    }, onError: (e) {
+      throw Exception(e);
+    });
+
     if (firstName == null || familyName == null) {
       throw Exception("Error(buildStudent) : NAME IS EMPTY");
     }
@@ -123,7 +138,7 @@ class PersonStatus extends _$PersonStatus {
     // claimsに名前が入っていなければthrow
     final firstName = token.claims?["first_name"];
     final familyName = token.claims?["family_name"];
-    final iconPath = token.claims?["icon_path"] ?? "";
+    var iconPath = token.claims?["icon_path"] ?? "";
     if (firstName == null || familyName == null) {
       throw Exception("Error(buildTeacher) : NAME IS EMPTY");
     }
@@ -146,6 +161,17 @@ class PersonStatus extends _$PersonStatus {
             });
           }
         }
+      }
+    }, onError: (e) {
+      throw Exception(e);
+    });
+
+    // firestoreのiconsからアイコンデータを取得
+    final iconRef = store.collection("basic").doc("icons");
+    await iconRef.get().then((DocumentSnapshot doc) {
+      final data = doc.data() as Map<String, dynamic>;
+      if (data[folderName] != null) {
+        iconPath = data[folderName]["icon_path"] ?? "";
       }
     }, onError: (e) {
       throw Exception(e);

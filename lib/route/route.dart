@@ -30,6 +30,8 @@ class Routes {
   static const String teacherLessons = "/teacher/lessons";
   static const String teacherCreateLesson = "/teacher/lessons/create";
   static const String chatAIAsTeacher = "/teacher/lessons/chat/ai";
+  static const String chatStudents = "/teacher/lessons/chat/students";
+  static const String chatStudent = "/teacher/lessons/chat/student";
   static const String teacherTools = "/teacher/lessons/tools";
   static const String teacherReading = "/teacher/lessons/tools/reading";
   static const String teacherAgenda = "/teacher/lessons/tools/agenda";

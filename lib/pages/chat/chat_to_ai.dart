@@ -49,7 +49,11 @@ class ChatAIRoomScreen extends ConsumerWidget {
                                   message: message.text ?? "",
                                   name: snapshot.data?.name ?? "",
                                   iconPath: snapshot.data?.iconPath ?? "")
-                              : TeacherMessageCard(message: message.text ?? "");
+                              : TeacherMessageCard(
+                                  message: message.text ?? "",
+                                  name: "Manabiya AI",
+                                  iconPath: "",
+                                );
                         },
                       ),
                       loading: () =>
