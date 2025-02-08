@@ -33,7 +33,7 @@ class AnswerTextboxResult extends StatelessWidget {
       height: 50,
       width: MediaQuery.of(context).size.width * 0.8,
       child: Text(
-        answer,
+        "回答：$answer",
       ),
     );
   }

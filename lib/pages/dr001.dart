@@ -20,7 +20,7 @@ class DisplayResult extends ConsumerWidget {
       body: Center(
           child: DummyBasePage(
         floatingActionButton: FloatingActionButton(onPressed: () {
-          quizNot.init(readQuiz("mock"));
+          // quizNot.init(readQuiz("mock"));
           infoToast(log: quiz.toString());
         }),
         pageTitle: "ダミーメイン",

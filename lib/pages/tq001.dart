@@ -13,8 +13,8 @@ class Tq001 extends HookConsumerWidget {
     final quiz = ref.watch(quizNotifierProvider);
 
     return DummyBasePage(
-      floatingActionButton:
-          FloatingActionButton(onPressed: () => quizNot.init(readQuiz("mock"))),
+      // floatingActionButton:
+      //     FloatingActionButton(onPressed: () => quizNot.init(readQuiz("mock"))),
       pageTitle: "ダミーメイン",
       body: ListView.builder(
         itemCount: quiz.length,

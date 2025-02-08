@@ -1,18 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:code/toast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../lesson/lesson.dart';
-import '../person/person.dart';
+import 'auth_provider.dart';
 
 final duringStreamProvider = StreamProvider((ref) async* {
-  final user = await ref.watch(personStatusProvider.future);
   final reference = FirebaseFirestore.instance.collection("during");
-  if (user is Student) {
-    yield* reference
-        .where("room", isEqualTo: user.rooms[0]["room"])
-        .snapshots();
-  }
-  yield* reference.snapshots();
+  final authState = ref.watch(authStateProvider);
+  final user = authState.value;
+  if (user == null) yield* reference.snapshots();
+  final token = await user!.getIdTokenResult();
+  if (token.claims?["role"] != "student") yield* reference.snapshots();
+  final list = token.claims?["rooms"] ?? [];
+  if (list.isEmpty) yield* reference.snapshots();
+  list.sort((a, b) => -int.parse(a["year"]!).compareTo(int.parse(b["year"]!)));
+  yield* reference.where("room", isEqualTo: list[0]["room"]).snapshots();
 });
 
 // firestoreのduringに現在の授業情報を書き込み
@@ -29,6 +32,8 @@ Future<void> addLessonToDuring({
     "count": count,
     "teacher": teacher,
     "state": "lesson",
+    "finish": [],
+    "reference": currentLesson.reference,
   });
   await currentLesson.reference.update({"state": "lesson"});
 }

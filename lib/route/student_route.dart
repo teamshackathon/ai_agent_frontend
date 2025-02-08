@@ -66,16 +66,16 @@ final studentBranch = StatefulShellRoute.indexedStack(
                       path: "reading",
                       builder: (context, state) => StudentReading(),
                     ),
-                    // GoRoute(
-                    //   parentNavigatorKey: _studentMainKey,
-                    //   path: "agenda",
-                    //   builder: (context, state) => StudentAgenda(),
-                    // ),
-                    // GoRoute(
-                    //   parentNavigatorKey: _studentMainKey,
-                    //   path: "quiz",
-                    //   builder: (context, state) => StudentQuiz(),
-                    // ),
+                    //   GoRoute(
+                    //     parentNavigatorKey: _studentMainKey,
+                    //     path: "agenda",
+                    //     builder: (context, state) => StudentAgenda(),
+                    //   ),
+                    GoRoute(
+                      parentNavigatorKey: _studentMainKey,
+                      path: "quiz",
+                      builder: (context, state) => StudentQuiz(),
+                    ),
                   ],
                 ),
                 GoRoute(

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:code/data/result/result.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

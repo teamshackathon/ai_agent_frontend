@@ -9,7 +9,7 @@ final submissionStreamProvider = StreamProvider((ref) async* {
   final user = await ref.watch(personStatusProvider.future);
   if (user is Student) {
     yield* reference
-        .collection("student")
+        .collection("students")
         .where("name", isEqualTo: user.folderName)
         .withConverter(
           fromFirestore: (snapshot, _) => Submission.fromFirestore(snapshot),
@@ -18,7 +18,7 @@ final submissionStreamProvider = StreamProvider((ref) async* {
         .snapshots();
   } else {
     yield* reference
-        .collection("student")
+        .collection("students")
         .withConverter(
           fromFirestore: (snapshot, _) => Submission.fromFirestore(snapshot),
           toFirestore: (submission, _) => submission.toFirestore(),
