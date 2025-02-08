@@ -45,6 +45,11 @@ class TeacherLessonsSummary extends HookConsumerWidget {
                   ],
                 )),
                 Expanded(
+                  child: ChatToStudentBadgeIcon(onPressed: () {
+                    GoRouter.of(context).push(Routes.chatStudents);
+                  }),
+                ),
+                Expanded(
                   child: ChatToAIBadgeIcon(onPressed: () {
                     createChatRoom(ref: ref, target: "ai");
                     GoRouter.of(context).push(Routes.chatAIAsTeacher);
@@ -75,7 +80,25 @@ class AllAnalyticsBadgeIcon extends HookConsumerWidget {
           label: Text("new"),
           backgroundColor: Colors.blue,
           child: IconButton(onPressed: () {}, icon: Icon(Icons.analytics))),
-      Text("生徒の分析結果"),
+      Text("分析結果"),
+    ]);
+  }
+}
+
+class ChatToStudentBadgeIcon extends HookConsumerWidget {
+  const ChatToStudentBadgeIcon({super.key, required this.onPressed});
+
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // stream作成次第変更
+    return Column(children: [
+      Badge.count(
+          count: 3,
+          backgroundColor: Colors.lightBlue,
+          child: IconButton(onPressed: onPressed, icon: Icon(Icons.chat))),
+      Text("生徒とのチャット"),
     ]);
   }
 }
