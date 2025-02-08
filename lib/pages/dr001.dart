@@ -18,19 +18,14 @@ class DisplayResult extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-          child: DummyBasePage(
-        floatingActionButton: FloatingActionButton(onPressed: () {
-          // quizNot.init(readQuiz("mock"));
-          infoToast(log: quiz.toString());
-        }),
-        pageTitle: "ダミーメイン",
-        body: ListView.builder(
-          itemCount: quiz.length,
-          itemBuilder: (context, index) => AnswerResultWidget(
-            quiz: quiz[index],
-          ),
-        ),
-      )),
+        child: DummyBasePage(
+            floatingActionButton: FloatingActionButton(onPressed: () {
+              // quizNot.init(readQuiz("mock"));
+              infoToast(log: quiz.toString());
+            }),
+            pageTitle: "ダミーメイン",
+            body: Text("")),
+      ),
     );
   }
 }

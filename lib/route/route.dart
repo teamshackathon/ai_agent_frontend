@@ -41,7 +41,6 @@ class Routes {
   static const String editAnswer = "/ss003";
   static const String takeQuizzes = "/tq001";
   static const String editText = "/et001";
-  static const String displayResult = "/dr001";
   static const String requestFix = "/dr002";
   static const String profile = "/profile";
   static const String activity = "/activity";

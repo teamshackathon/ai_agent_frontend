@@ -256,3 +256,81 @@ class QuizNotifier extends _$QuizNotifier {
     return list;
   }
 }
+
+class QuizList {
+  List<Quiz> value;
+  QuizList(this.value);
+
+  Quiz fromJsonDetectFormat(Map<String, dynamic> json) {
+    return Quiz.fromMap(json);
+  }
+
+  List<Quiz> readResult(List<Result> result) {
+    for (final rs in result) {
+      _importResult(rs.title, rs.correct);
+    }
+    return value;
+  }
+
+  void _importResult(String title, bool correct) {
+    value = [
+      for (final quiz in value)
+        quiz.title == title ? _correctAndCopy(quiz, correct) : quiz
+    ];
+  }
+
+  QuizList writeAnswer(String title, String answer) {
+    value = [
+      for (final quiz in value)
+        quiz.title == title ? _answerAndCopy(quiz, answer) : quiz
+    ];
+
+    return QuizList(value);
+  }
+
+  Quiz _answerAndCopy(Quiz quiz, String answer) {
+    if (quiz is Sentaku) {
+      //var numAnswer = int.parse(answer);
+      return quiz.copyWith(answer: answer);
+    } else if (quiz is Anaume) {
+      return quiz.copyWith(answer: answer);
+    } else if (quiz is Kijutsu) {
+      return quiz.copyWith(answer: answer);
+    } else {
+      throw FormatException("Quizの型が正しくありません。");
+    }
+  }
+
+  Quiz _correctAndCopy(Quiz quiz, bool correct) {
+    if (quiz is Sentaku) {
+      //var numAnswer = int.parse(answer);
+      return quiz.copyWith(correct: correct);
+    } else if (quiz is Anaume) {
+      return quiz.copyWith(correct: correct);
+    } else if (quiz is Kijutsu) {
+      return quiz.copyWith(correct: correct);
+    } else {
+      throw FormatException("Quizの型が正しくありません。");
+    }
+  }
+
+  String getQuestion(int index) {
+    return value[index].question;
+  }
+
+  List<Quiz> replaceQuiz(Quiz replaceQuiz) {
+    value = [
+      for (final quiz in value)
+        quiz.title == replaceQuiz.title ? replaceQuiz : quiz
+    ];
+    return value;
+  }
+
+  List<Map<String, dynamic>> quizAnswersToListMap() {
+    List<Map<String, dynamic>> list = [];
+    for (var q in value) {
+      list.add(q.answerToMap());
+    }
+    return list;
+  }
+}
