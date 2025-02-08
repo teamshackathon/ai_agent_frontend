@@ -71,16 +71,16 @@ class TeacherLessonsDisplay extends HookConsumerWidget {
     final currentLessonNot = ref.read(currentLessonProvider.notifier);
     final currentRoom = ref.watch(currentRoomProvider);
 
-    return lessons.isEmpty
-        ? Center(child: Text("授業がありません"))
-        : Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: TeacherLessonsSummary(room: currentRoom),
-              ),
-              Expanded(
-                child: ListView.builder(
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: TeacherLessonsSummary(room: currentRoom),
+        ),
+        Expanded(
+          child: lessons.isEmpty
+              ? Center(child: Text("授業がありません"))
+              : ListView.builder(
                   itemCount: lessons.length,
                   itemBuilder: (context, index) {
                     final lesson = lessons[index].data();
@@ -93,8 +93,8 @@ class TeacherLessonsDisplay extends HookConsumerWidget {
                     );
                   },
                 ),
-              )
-            ],
-          );
+        ),
+      ],
+    );
   }
 }

@@ -19,7 +19,7 @@ class _TeacherAgendaDisplay extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final agenda = lesson.agendaPublish;
+    final agenda = lesson.agendaDraft;
 
     return Container(
       padding: EdgeInsets.only(top: 10),

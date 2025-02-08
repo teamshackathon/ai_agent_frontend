@@ -11,9 +11,42 @@ import '../../data/firebase/tools_stream.dart';
 import '../../data/room/room.dart';
 import '../../route/route.dart';
 
+String displaySubject(String subject) {
+  switch (subject) {
+    case "english":
+      return "英語";
+    case "japanese":
+      return "国語";
+    case "math":
+      return "数学";
+    case "science":
+      return "理科";
+    case "social":
+      return "社会";
+    default:
+      return "不明";
+  }
+}
+
+String displayState(String state) {
+  switch (state) {
+    case "lesson":
+      return "授業中";
+    case "break":
+      return "テスト前";
+    case "test":
+      return "テスト中";
+    default:
+      return "なぞのばしょ";
+  }
+}
+
 class ShortcutButton extends HookConsumerWidget {
-  const ShortcutButton(
-      {super.key, required this.shortcut, required this.rooms});
+  const ShortcutButton({
+    super.key,
+    required this.shortcut,
+    required this.rooms,
+  });
 
   final QueryDocumentSnapshot<Map<String, dynamic>> shortcut;
   final List<Room> rooms;
@@ -39,10 +72,27 @@ class ShortcutButton extends HookConsumerWidget {
           }
         }, onError: (e) => infoToast(log: "error : $e"));
       },
-      child: Column(children: [
-        Text("現在の授業"),
-        Text(data.toString()),
-      ]),
+      backgroundColor: Color(0xFFFFEEF5),
+      child: ShortcutButtonDesign(data: data),
+    );
+  }
+}
+
+class ShortcutButtonDesign extends StatelessWidget {
+  const ShortcutButtonDesign({super.key, required this.data});
+
+  final Map<String, dynamic> data;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Center(
+        child: Text(
+          "${displayState(data["state"])} : ${displaySubject(data["subject"])}",
+          style: TextStyle(fontSize: 20),
+        ),
+      ),
     );
   }
 }

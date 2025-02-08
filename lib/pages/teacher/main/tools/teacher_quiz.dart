@@ -110,27 +110,25 @@ class QuizEditDisplay extends HookConsumerWidget {
     return Column(
       children: [
         Flexible(
-          child: Container(
-            decoration: BoxDecoration(color: Colors.white),
-            child: ListView.separated(
-              itemCount: quizzes.value.length,
-              itemBuilder: (context, index) => QuizEditWidget(
-                quiz: quizzes.value[index],
-                onChanged: (quiz) {
-                  infoToast(log: "before : ${quizzes.value}");
-                  var list = [
-                    for (var i = 0; i < quizzes.value.length; i++)
-                      i == index ? quiz : quizzes.value[i]
-                  ];
-                  quizzes.value = list;
-                  drafting.value = true;
-                  draggableNot.state = false;
-                  infoToast(log: "after : ${quizzes.value}");
-                },
-                editable: true,
-              ),
-              separatorBuilder: (context, index) => Divider(height: 2),
+          child: ListView.separated(
+            itemCount: quizzes.value.length,
+            itemBuilder: (context, index) => QuizEditWidget(
+              quiz: quizzes.value[index],
+              onChanged: (quiz) {
+                infoToast(log: "before : ${quizzes.value}");
+                var list = [
+                  for (var i = 0; i < quizzes.value.length; i++)
+                    i == index ? quiz : quizzes.value[i]
+                ];
+                quizzes.value = list;
+                drafting.value = true;
+                draggableNot.state = false;
+                infoToast(log: "after : ${quizzes.value}");
+              },
+              editable: true,
+              index: index,
             ),
+            separatorBuilder: (context, index) => Divider(height: 2),
           ),
         ),
         SizedBox(height: 10),
@@ -159,7 +157,13 @@ class QuizEditDisplay extends HookConsumerWidget {
         ),
         Visibility(
           visible: draggable,
-          child: Text("上にスワイプしてテスト開始"),
+          child: Text(
+            "上にスワイプしてテスト開始",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
         ),
       ],
     );
@@ -181,6 +185,7 @@ class QuizSubmissionDisplay extends HookConsumerWidget {
       data: (snapshot) {
         final count = snapshot.size;
         final submission = snapshot.docs;
+        infoToast(log: submission);
         var finish = 0;
         for (var s in submission) {
           if (s.data().testResults != [] &&

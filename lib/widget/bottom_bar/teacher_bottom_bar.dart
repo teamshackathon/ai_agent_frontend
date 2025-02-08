@@ -46,9 +46,11 @@ class TeacherBottomBar extends HookConsumerWidget {
       user.value = await ref.watch(personStatusProvider.future);
     }
 
-    //
-    final posX = useState(150.0);
-    final posY = useState(150.0);
+    // 画面の真ん中を初期値にする
+    final size = MediaQuery.of(context).size;
+
+    final posX = useState(size.width / 2 - 350 / 2);
+    final posY = useState(size.height - 70);
 
     useEffect(() {
       getUser();
@@ -66,7 +68,7 @@ class TeacherBottomBar extends HookConsumerWidget {
                 posX.value += details.delta.dx;
                 posY.value += details.delta.dy;
               },
-              child: TeacherStatusMiniBottombar(teacher: user.value.name),
+              child: TeacherStatusMiniBottomBar(teacher: user.value.name),
             ),
           ),
         ]),

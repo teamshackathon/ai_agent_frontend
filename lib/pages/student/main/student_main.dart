@@ -96,9 +96,10 @@ class StudentMainDisplay extends ConsumerWidget {
                   style: TextStyle(fontSize: 15),
                 ),
               ),
+              SizedBox(height: 50),
               during.when(
                 data: (snapshots) {
-                  if (snapshots.docs.isEmpty) return Spacer();
+                  if (snapshots.docs.isEmpty) return SizedBox(height: 100);
                   return SizedBox(
                     width: 300,
                     height: 100,
@@ -108,9 +109,10 @@ class StudentMainDisplay extends ConsumerWidget {
                     ),
                   );
                 },
-                error: (_, __) => Spacer(),
-                loading: () => Spacer(),
+                error: (_, __) => SizedBox(height: 100),
+                loading: () => SizedBox(height: 100),
               ),
+              SizedBox(height: 150),
               RadialSakuraMenu(
                 items: rooms
                     .map(

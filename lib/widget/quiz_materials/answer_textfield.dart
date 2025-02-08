@@ -11,9 +11,10 @@ class AnswerTextbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
+      height: 60,
       width: MediaQuery.of(context).size.width * 0.8,
       child: TextFormField(
+        maxLines: null,
         initialValue: answer,
         onChanged: onChanged,
       ),
@@ -33,7 +34,7 @@ class AnswerTextboxResult extends StatelessWidget {
       height: 50,
       width: MediaQuery.of(context).size.width * 0.8,
       child: Text(
-        answer,
+        "回答：$answer",
       ),
     );
   }

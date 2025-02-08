@@ -1,3 +1,4 @@
+import 'package:code/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -25,12 +26,14 @@ class StudentAnswerCheck extends ConsumerWidget {
         widthFactor: widthFactor,
         heightFactor: heightFactor,
         child: submissions.when(
-          data: (snapshot) => StudentAnswerCheckDisplay(
-            lesson: lesson,
-            submission: snapshot.size > 0 ? snapshot.docs[0].data() : null,
-            displayWidth: size.width * widthFactor,
-            displayHeight: size.height * widthFactor,
-          ),
+          data: (snapshot) {
+            return StudentAnswerCheckDisplay(
+              lesson: lesson,
+              submission: snapshot.size > 0 ? snapshot.docs[0].data() : null,
+              displayWidth: size.width * widthFactor,
+              displayHeight: size.height * widthFactor,
+            );
+          },
           // エラー時の表示
           error: (_, __) => const Center(child: Text("読み込み失敗")),
           // 読込中の表示
