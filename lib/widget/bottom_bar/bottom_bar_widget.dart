@@ -175,7 +175,7 @@ class ProfileContainerRottieIcon extends HookConsumerWidget {
                   } else if (snapshot.hasError) {
                     return const Text("エラーが発生しました");
                   } else {
-                    Logger().i(snapshot.data?.iconPath);
+                    // Logger().i(snapshot.data?.iconPath);
                     final userIconPath = snapshot.data?.iconPath ?? "";
                     // userIconPathはstoreageに保存されている画像のパス
                     final storage = FirebaseStorage.instance;

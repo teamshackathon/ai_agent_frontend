@@ -20,46 +20,92 @@ class AnswerCheckWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Widget> widgetList = [
-      Text("${index + 1}問目 : ${quiz.title}"),
-      Text(quiz.question),
-      if (quiz is Sentaku)
-        RadioButton(
-          options: (quiz as Sentaku).options,
-          onChanged: (_) {},
-          stateText: result.answer,
+      Align(
+        alignment: Alignment.topLeft,
+        child: Text(
+          "${index + 1}問目 : ${quiz.title}",
+          style: TextStyle(fontSize: 18),
         ),
-      if (quiz is Anaume || quiz is Kijutsu)
-        AnswerTextboxResult(answer: result.answer),
+      ),
+      SizedBox(height: 10),
+      Align(
+        alignment: Alignment.topLeft,
+        child: Text(
+          "　${quiz.question}",
+          style: TextStyle(fontSize: 15),
+        ),
+      ),
+      SizedBox(height: 5),
     ];
 
-    if (result.graded) {
-      if (!result.correct) {
-        widgetList.add(Text("正答 : ${result.correctAnswer}"));
-      }
-      widgetList.add(Text(result.description));
-    } else {
-      if (result.answer != quiz.correctAnswer) {
-        widgetList.add(Text("模範解答 : ${quiz.correctAnswer}"));
+    if (quiz is Sentaku) {
+      widgetList.add(AnswerRadioButton(
+        options: (quiz as Sentaku).options,
+        stateText: result.answer,
+        correctAnswer:
+            result.graded ? result.correctAnswer : quiz.correctAnswer,
+      ));
+    }
+
+    if (quiz is Anaume || quiz is Kijutsu) {
+      widgetList.add(Align(
+        alignment: Alignment.bottomRight,
+        child: AnswerTextboxResult(
+          answer: "回答 ：　${result.answer}",
+          correct: result.correct || result.answer == quiz.correctAnswer,
+        ),
+      ));
+      if (!result.correct && result.answer != quiz.correctAnswer) {
+        widgetList.add(SizedBox(height: 5));
+        widgetList.add(Align(
+          alignment: Alignment.bottomRight,
+          child: AnswerTextboxResult(
+            answer: result.graded ? result.correctAnswer : quiz.correctAnswer,
+            correct: true,
+          ),
+        ));
       }
     }
 
+    if (result.graded) {
+      widgetList.add(SizedBox(height: 10));
+      widgetList.add(Align(
+        alignment: Alignment.topLeft,
+        child: Text(
+          result.description,
+          style: TextStyle(fontSize: 12),
+        ),
+      ));
+    }
+
     return Card(
-      child: Stack(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: widgetList,
-          ),
-          Align(
-            alignment: Alignment.topRight,
-            child: !result.graded
-                ? Icon(Icons.hourglass_bottom)
-                : result.correct
-                    ? Icon(Icons.circle_outlined)
-                    : Icon(Icons.close_sharp),
-          ),
-        ],
+      color: result.correct || result.answer == quiz.correctAnswer
+          ? Color(0xFFFFF0F5)
+          : Color(0xFFF5F0FF),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Stack(
+          children: [
+            Column(children: widgetList),
+            if (!result.graded)
+              Align(
+                alignment: Alignment.topRight,
+                child: Icon(
+                  Icons.hourglass_bottom,
+                  color: Color(0x66000000),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
 }
+// Align(
+// alignment: Alignment.topRight,
+// child: !result.graded
+// ? Icon(Icons.hourglass_bottom)
+//     : result.correct
+// ? Icon(Icons.circle_outlined, color: Colors.red)
+//     : Icon(Icons.close_sharp, color: Colors.blue),
+// ),
