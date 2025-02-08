@@ -80,8 +80,8 @@ class AnswerCheckWidget extends StatelessWidget {
 
     return Card(
       color: result.correct || result.answer == quiz.correctAnswer
-          ? Color(0xFFFFF0F5)
-          : Color(0xFFF5F0FF),
+          ? Colors.green[100]
+          : Colors.red[100],
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Stack(
