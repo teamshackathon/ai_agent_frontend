@@ -43,7 +43,6 @@ class StreamRecorder extends _$StreamRecorder {
   // https://zenn.dev/tatsuyasusukida/scraps/c9503b9fec2e51
   // とりあえず規定時間を二秒にしておく
   final silenceDuring = 20;
-  var busy = true;
 
   WebSocketChannel? _channel;
 
@@ -132,13 +131,11 @@ class StreamRecorder extends _$StreamRecorder {
   }
 
   Future<bool> _permission(DocumentReference reference) async {
-    busy = true;
     if (await state.recorder.hasPermission()) {
       return true;
     }
     final user = await ref.watch(personStatusProvider.future);
     cancelLessonToDuring(teacher: user.name, reference: reference);
-    busy = false;
     return false;
   }
 
@@ -150,7 +147,6 @@ class StreamRecorder extends _$StreamRecorder {
   }
 
   Future<void> start(DocumentReference reference) async {
-    busy = true;
     if (await _permission(reference)) {
       //state.socket.connect();
       _channel = WebSocketChannel.connect(Uri.parse('ws://localhost:3002'));
@@ -169,32 +165,25 @@ class StreamRecorder extends _$StreamRecorder {
       await _startRecorder();
       state = state.copyWith(isRecording: true);
     }
-    busy = false;
   }
 
   Future<void> pause() async {
-    busy = true;
     state = state.copyWith(isRecording:false);
     await state.recorder.pause();
     _sendAudio();
-    busy = false;
   }
 
   Future<void> resume() async {
-    busy = true;
     await state.recorder.resume();
     state = state.copyWith(isRecording: true);
-    busy = false;
   }
 
   Future<void> stop() async {
-    busy = true;
     state = state.copyWith(isRecording:false);
     await subscription!.cancel();
     _sendAudio();
     await state.recorder.stop();
     //state.socket.dispose();
     await _channel?.sink.close();
-    busy = false;
   }
 }

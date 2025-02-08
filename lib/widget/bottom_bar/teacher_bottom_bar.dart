@@ -52,7 +52,7 @@ class TeacherBottomBar extends HookConsumerWidget {
     final size = MediaQuery.of(context).size;
 
     final posX = useState(size.width / 2 - 350 / 2);
-    final posY = useState(size.height - 70);
+    final posY = useState(size.height / 2 - 60 / 2);
 
     useEffect(() {
       getUser();
@@ -61,30 +61,40 @@ class TeacherBottomBar extends HookConsumerWidget {
 
     return Scaffold(
         body: navigationShell,
-        floatingActionButton: during.when(
-          data: (snapshot) {
-            final map = getMeFromDuring(
-                queryList: snapshot.docs, name: user.value.name);
-            if (map != null) {
-              return Positioned(
-                left: posX.value,
-                top: posY.value,
-                child: GestureDetector(
-                  onPanUpdate: (details) {
-                    posX.value += details.delta.dx;
-                    posY.value += details.delta.dy;
+        // Stack外すと動かなくなるとは思わんやん…
+        floatingActionButton: Stack(
+          children: [
+            Positioned(
+              left: posX.value,
+              top: posY.value,
+              child: GestureDetector(
+                onPanUpdate: (details) {
+                  final newX = posX.value + details.delta.dx;
+                  final newY = posY.value + details.delta.dy;
+                  if (newX >= 0 && newX <= size.width - 380 &&
+                      newY >= 100 && newY <= size.height - 60) {
+                    posX.value = newX;
+                    posY.value = newY;
+                  }
+                },
+                child: during.when(
+                  data: (snapshot) {
+                    final map = getMeFromDuring(
+                        queryList: snapshot.docs, name: user.value.name);
+                    if (map != null) {
+                      return TeacherStatusMiniBottomBar(
+                        teacher: user.value.name,
+                        dataMap: map,
+                      );
+                    }
+                    return null;
                   },
-                  child: TeacherStatusMiniBottomBar(
-                    teacher: user.value.name,
-                    dataMap: map,
-                  ),
+                  error: (_, __) => null,
+                  loading: () => null,
                 ),
-              );
-            }
-            return null;
-          },
-          error: (_, __) => null,
-          loading: () => null,
+              ),
+            ),
+          ],
         ),
         bottomNavigationBar: NavigationBar(
           selectedIndex: navigationShell.currentIndex,
