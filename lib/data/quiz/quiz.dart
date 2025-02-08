@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:code/data/result/result.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -257,49 +255,4 @@ class QuizNotifier extends _$QuizNotifier {
     }
     return list;
   }
-}
-
-// TODO
-// 読み込みできるようにお願いします　to蓮見
-List<Map<String, dynamic>> readQuiz(String lessonId) {
-  return [
-    {
-      "title": "動詞の使い方",
-      "format": "Anaume",
-      "score": 25,
-      "question": "英語の文で「I _ a book.」と書く場合、空欄にはどの動詞を入れますか？",
-      "correct_answer": "read",
-      "answer": "read"
-    },
-    {
-      "title": "疑問文の作り方",
-      "format": "Sentaku",
-      "score": 25,
-      "question": "次の文を疑問文にするにはどの語順を使いますか？「He is a teacher.」",
-      "options": [
-        {"item_num": "1", "item_word": "Is he a teacher?"},
-        {"item_num": "2", "item_word": "He is a teacher?"},
-        {"item_num": "3", "item_word": "A teacher is he?"}
-      ],
-      "correct_answer": "Is he a teacher?",
-      "correctNum": 1,
-      "answer": "He is a teacher?"
-    },
-    {
-      "title": "名詞の複数形",
-      "format": "Kijutsu",
-      "score": 25,
-      "question": "「cat」の複数形は何ですか？",
-      "correct_answer": "cats",
-      "answer": "cas?"
-    },
-    {
-      "title": "時間の表現",
-      "format": "Anaume",
-      "score": 25,
-      "question": "英語で「今は3時です」と言いたい場合、空欄には何が入りますか？「It is _ o'clock.」",
-      "correct_answer": "three",
-      "answer": "san?"
-    },
-  ];
 }
