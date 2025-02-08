@@ -32,7 +32,7 @@ class LessonCard extends HookConsumerWidget {
             width: double.infinity,
             height: 100,
             child: Container(
-              margin: EdgeInsets.only(left: 50, right: 70),
+              margin: EdgeInsets.only(left: 45, right: 90),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 textDirection: TextDirection.ltr,
@@ -43,17 +43,17 @@ class LessonCard extends HookConsumerWidget {
                   Row(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: 1),
+                        padding: EdgeInsets.only(top: 0),
                         child: Text("第${lesson.count}回目の授業"),
                       ),
                       Container(
                         width: 10,
                       ),
-                      LessonDocumentTag(label: "授業後"),
+                      LessonTag(state: lesson.state),
                     ],
                   ),
                   Container(
-                    height: 5,
+                    height: 1,
                   ),
                   Text(
                     lesson.agendaPublish.title,
@@ -139,6 +139,66 @@ class PencilSvg extends HookWidget {
       child: svgString.value == null
           ? const SakuraProgressIndicator()
           : SvgPicture.string(svgString.value!),
+    );
+  }
+}
+
+class LessonTag extends HookConsumerWidget {
+  const LessonTag({super.key, required this.state});
+
+  final String state;
+
+  Map<String, dynamic> getState(String state) {
+    switch (state) {
+      case "before":
+        return {
+          "label": "授業前",
+          "color": Colors.red,
+        };
+      case "lesson":
+        return {
+          "label": "授業中",
+          "color": Colors.redAccent,
+        };
+      case "break":
+        return {
+          "label": "休憩中",
+          "color": Colors.blue,
+        };
+      case "test":
+        return {
+          "label": "テスト中",
+          "color": Colors.green,
+        };
+      case "after":
+        return {
+          "label": "授業後",
+          "color": Colors.grey,
+        };
+      default:
+        return {
+          "label": "不明",
+          "color": Colors.grey,
+        };
+    }
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final status = getState(state);
+
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: status["color"] ?? Colors.grey), // 枠線
+        borderRadius: BorderRadius.circular(5), // 角丸
+      ),
+      child: Text(
+        status["label"] ?? "不明",
+        style: TextStyle(
+          fontSize: 12, // フォントサイズ
+          color: status["color"] ?? Colors.grey, // テキストの色
+        ),
+      ),
     );
   }
 }

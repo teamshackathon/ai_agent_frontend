@@ -1,3 +1,4 @@
+import 'package:code/data/firebase/tools_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swipe_button/flutter_swipe_button.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -72,18 +73,21 @@ class LessonStartSlide extends ConsumerWidget {
           color: Colors.pink[200]), // Cherry blossom icon
       activeThumbColor: Colors.pink[100],
       activeTrackColor: Colors.pink[50],
+      enabled: lesson.agendaPublish.title != "",
       child: Text(
         "授業開始",
         style: TextStyle(color: Colors.black),
       ),
       onSwipeEnd: () async {
-        await addLessonToDuring(
-          roomNumber: currentRoom.roomNumber,
-          subject: currentRoom.subject,
-          count: lesson.count,
-          teacher: currentRoom.teacher,
-          currentLesson: lesson,
-        );
+        if (lesson.agendaPublish.title != "") {
+          await addLessonToDuring(
+            roomNumber: currentRoom.roomNumber,
+            subject: currentRoom.subject,
+            count: lesson.count,
+            teacher: currentRoom.teacher,
+            currentLesson: lesson,
+          );
+        }
       },
     );
   }

@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Submission {
+  String get name => throw _privateConstructorUsedError;
   List<Result> get testResults => throw _privateConstructorUsedError;
   List<Quiz> get homeworks => throw _privateConstructorUsedError;
   List<Result> get homeworkResults => throw _privateConstructorUsedError;
@@ -36,7 +37,8 @@ abstract class $SubmissionCopyWith<$Res> {
       _$SubmissionCopyWithImpl<$Res, Submission>;
   @useResult
   $Res call(
-      {List<Result> testResults,
+      {String name,
+      List<Result> testResults,
       List<Quiz> homeworks,
       List<Result> homeworkResults,
       DocumentReference<Object?> reference});
@@ -57,12 +59,17 @@ class _$SubmissionCopyWithImpl<$Res, $Val extends Submission>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? name = null,
     Object? testResults = null,
     Object? homeworks = null,
     Object? homeworkResults = null,
     Object? reference = null,
   }) {
     return _then(_value.copyWith(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
       testResults: null == testResults
           ? _value.testResults
           : testResults // ignore: cast_nullable_to_non_nullable
@@ -92,7 +99,8 @@ abstract class _$$SubmissionImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<Result> testResults,
+      {String name,
+      List<Result> testResults,
       List<Quiz> homeworks,
       List<Result> homeworkResults,
       DocumentReference<Object?> reference});
@@ -111,12 +119,17 @@ class __$$SubmissionImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? name = null,
     Object? testResults = null,
     Object? homeworks = null,
     Object? homeworkResults = null,
     Object? reference = null,
   }) {
     return _then(_$SubmissionImpl(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
       testResults: null == testResults
           ? _value._testResults
           : testResults // ignore: cast_nullable_to_non_nullable
@@ -141,7 +154,8 @@ class __$$SubmissionImplCopyWithImpl<$Res>
 
 class _$SubmissionImpl extends _Submission {
   const _$SubmissionImpl(
-      {required final List<Result> testResults,
+      {required this.name,
+      required final List<Result> testResults,
       required final List<Quiz> homeworks,
       required final List<Result> homeworkResults,
       required this.reference})
@@ -150,6 +164,8 @@ class _$SubmissionImpl extends _Submission {
         _homeworkResults = homeworkResults,
         super._();
 
+  @override
+  final String name;
   final List<Result> _testResults;
   @override
   List<Result> get testResults {
@@ -179,7 +195,7 @@ class _$SubmissionImpl extends _Submission {
 
   @override
   String toString() {
-    return 'Submission(testResults: $testResults, homeworks: $homeworks, homeworkResults: $homeworkResults, reference: $reference)';
+    return 'Submission(name: $name, testResults: $testResults, homeworks: $homeworks, homeworkResults: $homeworkResults, reference: $reference)';
   }
 
   @override
@@ -187,6 +203,7 @@ class _$SubmissionImpl extends _Submission {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SubmissionImpl &&
+            (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality()
                 .equals(other._testResults, _testResults) &&
             const DeepCollectionEquality()
@@ -200,6 +217,7 @@ class _$SubmissionImpl extends _Submission {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      name,
       const DeepCollectionEquality().hash(_testResults),
       const DeepCollectionEquality().hash(_homeworks),
       const DeepCollectionEquality().hash(_homeworkResults),
@@ -216,12 +234,15 @@ class _$SubmissionImpl extends _Submission {
 
 abstract class _Submission extends Submission {
   const factory _Submission(
-      {required final List<Result> testResults,
+      {required final String name,
+      required final List<Result> testResults,
       required final List<Quiz> homeworks,
       required final List<Result> homeworkResults,
       required final DocumentReference<Object?> reference}) = _$SubmissionImpl;
   const _Submission._() : super._();
 
+  @override
+  String get name;
   @override
   List<Result> get testResults;
   @override

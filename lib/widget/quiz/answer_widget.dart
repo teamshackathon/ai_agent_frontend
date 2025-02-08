@@ -32,7 +32,7 @@ class AnswerWidget extends HookConsumerWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "  Q$count : ${quiz.title}",
+                "  Q$count",
                 style: TextStyle(fontSize: 20),
               ),
             ),

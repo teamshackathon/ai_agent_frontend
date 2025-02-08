@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code/toast.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../quiz/quiz.dart';
@@ -12,6 +11,7 @@ class Submission with _$Submission {
   const Submission._();
 
   const factory Submission({
+    required String name,
     required List<Result> testResults,
     required List<Quiz> homeworks,
     required List<Result> homeworkResults,
@@ -26,9 +26,8 @@ class Submission with _$Submission {
     final homeworks = [for (var m in map?["homeworks"] ?? []) Quiz.fromMap(m)];
     final List<Result> homeworkResults = [];
 
-    infoToast(log: map?["results"].toString());
     // 採点結果を見る
-    for (var m in map?["results"] ?? []) {
+    for (var m in map?["questions_result"] ?? []) {
       testResults.add(Result.fromMap(m, true));
     }
     // 採点結果に穴があれば採点前回答で埋める
@@ -49,6 +48,7 @@ class Submission with _$Submission {
     }
 
     return Submission(
+      name: map?["name"] ?? "",
       testResults: testResults,
       homeworks: homeworks,
       homeworkResults: homeworkResults,
@@ -62,9 +62,20 @@ class Submission with _$Submission {
     final hwr = [for (var r in homeworkResults) r.toMap()];
 
     return {
+      "name": name,
       "results": tr,
       "homeworks": hw,
       "homework_results": hwr,
     };
+  }
+
+  factory Submission.isBlank() {
+    return Submission(
+      name: "",
+      testResults: [],
+      homeworks: [],
+      homeworkResults: [],
+      reference: FirebaseFirestore.instance.collection("2024").doc(),
+    );
   }
 }
