@@ -19,6 +19,7 @@ class Tq001 extends HookConsumerWidget {
       body: ListView.builder(
         itemCount: quiz.length,
         itemBuilder: (context, index) => AnswerWidget(
+          count: index+1,
           quiz: quiz[index],
           onChanged: (value) => quizNot.writeAnswer(quiz[index].title, value),
         ),

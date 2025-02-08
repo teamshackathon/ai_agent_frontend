@@ -91,10 +91,18 @@ class StudentQuizDisplay extends HookConsumerWidget {
 
     return Column(
       children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "小テスト",
+            style: TextStyle(fontSize: 25),
+          ),
+        ),
         Flexible(
-          child: ListView.builder(
+          child: ListView.separated(
             itemCount: quizzes.value.length,
             itemBuilder: (context, index) => AnswerWidget(
+              count: index + 1,
               quiz: quizzes.value[index],
               onChanged: (str) {
                 quizzes.value = [
@@ -105,6 +113,9 @@ class StudentQuizDisplay extends HookConsumerWidget {
                 ];
               },
             ),
+            separatorBuilder: (context, index) {
+              return SizedBox(height: 10);
+            },
           ),
         ),
         SizedBox(height: 20),
@@ -124,7 +135,7 @@ class StudentQuizDisplay extends HookConsumerWidget {
             loading.value = false;
           },
           isLoading: loading.value,
-          width: 200,
+          width: 150,
         ),
         SizedBox(height: 40),
       ],

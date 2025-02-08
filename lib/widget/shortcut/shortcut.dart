@@ -12,8 +12,11 @@ import '../../data/room/room.dart';
 import '../../route/route.dart';
 
 class ShortcutButton extends HookConsumerWidget {
-  const ShortcutButton(
-      {super.key, required this.shortcut, required this.rooms});
+  const ShortcutButton({
+    super.key,
+    required this.shortcut,
+    required this.rooms,
+  });
 
   final QueryDocumentSnapshot<Map<String, dynamic>> shortcut;
   final List<Room> rooms;
@@ -44,5 +47,16 @@ class ShortcutButton extends HookConsumerWidget {
         Text(data.toString()),
       ]),
     );
+  }
+}
+
+class ShortcutButtonDesign extends StatelessWidget {
+  const ShortcutButtonDesign({super.key, required this.data});
+
+  final Map<String, dynamic> data;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(child: Text(""));
   }
 }

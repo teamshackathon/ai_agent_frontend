@@ -181,6 +181,7 @@ class QuizSubmissionDisplay extends HookConsumerWidget {
       data: (snapshot) {
         final count = snapshot.size;
         final submission = snapshot.docs;
+        infoToast(log: submission);
         var finish = 0;
         for (var s in submission) {
           if (s.data().testResults != [] &&
