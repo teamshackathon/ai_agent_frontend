@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code/toast.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../quiz/quiz.dart';
@@ -68,5 +67,15 @@ class Submission with _$Submission {
       "homeworks": hw,
       "homework_results": hwr,
     };
+  }
+
+  factory Submission.isBlank() {
+    return Submission(
+      name: "",
+      testResults: [],
+      homeworks: [],
+      homeworkResults: [],
+      reference: FirebaseFirestore.instance.collection("2024").doc(),
+    );
   }
 }
