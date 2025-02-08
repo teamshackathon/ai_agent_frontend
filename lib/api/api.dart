@@ -11,6 +11,8 @@ class _HttpConst {
   static const chatsAsTeacher = '/chats_as_teacher';
   static const testFirebaseEndpoint = '/test_firebase';
   static const createAgendaEndpoint = '/create_agenda';
+  static const answerQuestionsEndpoint = '/answered_questions';
+  static const submitHomeworkEndpoint = '/submit_homework';
   static const createQuestionsEndpoint = '/create_questions';
   static const templatePostEndpoint = '/templatePost';
   static const templateGetEndpoint = '/templateGet';
@@ -109,6 +111,48 @@ Future<void> createQuestions(String reference) async {
       Uri.http(
         _HttpConst.url,
         _HttpConst.createQuestionsEndpoint,
+      ),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'reference': reference,
+      }));
+
+  if (responce.statusCode == 200) {
+    return;
+  } else {
+    throw HttpException("HTTP ERROR ${responce.statusCode}");
+  }
+}
+
+Future<void> answeredQuestions(String reference) async {
+  var responce = await http.post(
+      Uri.http(
+        _HttpConst.url,
+        _HttpConst.answerQuestionsEndpoint,
+      ),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'reference': reference,
+      }));
+
+  if (responce.statusCode == 200) {
+    return;
+  } else if (responce.statusCode == 400) {
+    throw HttpException("HTTP ERROR :${responce.body}");
+  } else {
+    throw HttpException("HTTP ERROR ${responce.statusCode}");
+  }
+}
+
+Future<void> submitHomework(String reference) async {
+  var responce = await http.post(
+      Uri.http(
+        _HttpConst.url,
+        _HttpConst.submitHomeworkEndpoint,
       ),
       headers: {
         'Content-Type': 'application/json',
