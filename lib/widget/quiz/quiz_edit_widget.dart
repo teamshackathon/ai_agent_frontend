@@ -10,29 +10,63 @@ class QuizEditWidget extends StatelessWidget {
     required this.editable,
     required this.quiz,
     required this.onChanged,
+    required this.index,
   });
   final bool editable;
   final Quiz quiz;
   final ValueChanged<Quiz> onChanged;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: 30),
-        QuizTextEditable(
-          quizText: quiz.question,
-          editable: editable,
-          onChanged: (str) => onChanged(quiz.copyWith(question: str)),
+    return Card(
+        elevation: 4.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
         ),
-        SizedBox(height: 30),
-        FormatAnswerEditable(
-          quiz: quiz,
-          editable: editable,
-          onChanged: onChanged,
-        ),
-      ],
-    );
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin: EdgeInsets.only(left: 10, right: 10),
+              padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+              decoration: BoxDecoration(
+                  border: Border(bottom: BorderSide(color: Colors.pinkAccent))),
+              child: Text("問題 ${index + 1}", style: TextStyle(fontSize: 20)),
+            ),
+            const SizedBox(height: 10),
+            Container(
+              margin: EdgeInsets.only(left: 10, right: 10),
+              padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+              child: Text("問題文", style: TextStyle(fontSize: 16)),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 10, right: 10),
+              padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+              child: QuizTextEditable(
+                quizText: quiz.question,
+                editable: editable,
+                onChanged: (str) => onChanged(quiz.copyWith(question: str)),
+              ),
+            ),
+            SizedBox(height: 10),
+            Container(
+              margin: EdgeInsets.only(left: 10, right: 10),
+              padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+              child: Text("回答", style: TextStyle(fontSize: 16)),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 10, right: 10),
+              padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+              child: FormatAnswerEditable(
+                quiz: quiz,
+                editable: editable,
+                onChanged: onChanged,
+              ),
+            ),
+            const SizedBox(height: 10),
+          ],
+        ));
   }
 }
 

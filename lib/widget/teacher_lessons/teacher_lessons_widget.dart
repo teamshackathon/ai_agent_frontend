@@ -1,5 +1,3 @@
-import 'package:code/data/firebase/during_stream.dart';
-import 'package:code/data/firebase/lesson_stream.dart';
 import 'package:code/firebase/firestore/chat/create_chat_room.dart';
 import 'package:code/route/route.dart';
 import 'package:flutter/material.dart';
@@ -103,38 +101,14 @@ class TeacherLessonsCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final during = ref.watch(duringStreamProvider);
-    final currentRoom = ref.watch(currentRoomProvider);
-
-    // 授業中かどうか
-    final status = during.when(
-        data: (snapshot) {
-          switch (duringLesson(
-            snapshotData: snapshot.docs,
-            roomNumber: currentRoom.roomNumber,
-            subject: currentRoom.subject,
-            count: lesson.count,
-          )) {
-            case true:
-              return true;
-            case false:
-              return false;
-            default:
-              return false;
-          }
-        },
-        // エラー時の表示
-        error: (_, __) => false,
-        // 読込中の表示
-        loading: () => false);
-
     return InkWell(
         onTap: onTap,
         child: Column(
           children: [
             ListTile(
-              leading:
-                  lesson.agendaPublish.title == "" ? Text("下書き") : Text("公開済"),
+              leading: LessonTag(
+                state: lesson.state,
+              ),
               title: Row(
                 children: [
                   Text(
@@ -146,19 +120,6 @@ class TeacherLessonsCard extends HookConsumerWidget {
                   ),
                   Container(
                     width: 20,
-                  ),
-                  status
-                      ? LessonDocumentTag(
-                          label: "授業中",
-                          color: Colors.redAccent,
-                        )
-                      : Text(""),
-                  Container(
-                    width: 20,
-                  ),
-                  LessonDocumentTag(
-                    label: "テスト作成前",
-                    color: Colors.red,
                   ),
                 ],
               ),
@@ -208,5 +169,65 @@ class LessonDocumentTag extends HookConsumerWidget {
             ),
           ],
         ));
+  }
+}
+
+class LessonTag extends HookConsumerWidget {
+  const LessonTag({super.key, required this.state});
+
+  final String state;
+
+  Map<String, dynamic> getState(String state) {
+    switch (state) {
+      case "before":
+        return {
+          "label": "授業前",
+          "color": Colors.red,
+        };
+      case "lesson":
+        return {
+          "label": "授業中",
+          "color": Colors.redAccent,
+        };
+      case "break":
+        return {
+          "label": "休憩中",
+          "color": Colors.blue,
+        };
+      case "test":
+        return {
+          "label": "テスト中",
+          "color": Colors.green,
+        };
+      case "after":
+        return {
+          "label": "授業後",
+          "color": Colors.grey,
+        };
+      default:
+        return {
+          "label": "不明",
+          "color": Colors.grey,
+        };
+    }
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final status = getState(state);
+
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: status["color"] ?? Colors.grey), // 枠線
+        borderRadius: BorderRadius.circular(5), // 角丸
+      ),
+      child: Text(
+        status["label"] ?? "不明",
+        style: TextStyle(
+          fontSize: 12, // フォントサイズ
+          color: status["color"] ?? Colors.grey, // テキストの色
+        ),
+      ),
+    );
   }
 }
