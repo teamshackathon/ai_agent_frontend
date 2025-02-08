@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:code/api/api.dart';
 import 'package:code/data/firebase/during_stream.dart';
 import 'package:code/data/firebase/lesson_stream.dart';
 import 'package:code/data/firebase/tools_stream.dart';
@@ -160,11 +161,13 @@ class TeacherStatusChangeButton extends HookConsumerWidget {
         onPressed: () async {
           Logger()
               .i("Change status to ${doc["state"]}, ${currentlesson.count}");
+          Logger().i("Create questions: ${currentlesson.reference.path}");
           if (doc["state"] == "lesson" && currentlesson.count != 0) {
             await breakLessonToDuring(
               teacher: currentRoom.teacher,
               currentLesson: currentlesson,
             );
+            createQuestions(currentlesson.reference.path);
             if (recorder.isRecording) {
               await recorderNot.stop();
             }
