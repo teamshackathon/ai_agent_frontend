@@ -32,26 +32,44 @@ class SelectListEditable extends StatelessWidget {
               groupValue: correctAnswer,
               onChanged: (value) => onChanged(options, value ?? ""),
             ),
-            SizedBox(
-              height: 50,
-              width: 380,
-              child: TextFormField(
-                initialValue: options[index].word,
-                onChanged: (str) {
-                  var list = [
-                    for (var i = 0; i < options.length; i++)
-                      i == index ? options[i].copyWith(word: str) : options[i]
-                  ];
+            Expanded(
+                child: TextFormField(
+              maxLines: null,
+              initialValue: options[index].word,
+              onChanged: (str) {
+                var list = [
+                  for (var i = 0; i < options.length; i++)
+                    i == index ? options[i].copyWith(word: str) : options[i]
+                ];
 
-                  if (correctAnswer != options[index].word) {
-                    onChanged(list, correctAnswer);
-                  } else {
-                    onChanged(list, str);
-                  }
-                },
-                enabled: editable,
+                if (correctAnswer != options[index].word) {
+                  onChanged(list, correctAnswer);
+                } else {
+                  onChanged(list, str);
+                }
+              },
+              enabled: editable,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.black87,
+                fontWeight: FontWeight.w500,
               ),
-            ),
+              decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: Colors.grey.shade400, width: 1.5),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue.shade700, width: 2),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                filled: true,
+                fillColor: Colors.grey.shade100,
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              ),
+            ))
           ],
         ),
       ),

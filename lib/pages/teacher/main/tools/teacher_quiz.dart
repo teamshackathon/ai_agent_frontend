@@ -111,7 +111,6 @@ class QuizEditDisplay extends HookConsumerWidget {
       children: [
         Flexible(
           child: Container(
-            decoration: BoxDecoration(color: Colors.white),
             child: ListView.separated(
               itemCount: quizzes.value.length,
               itemBuilder: (context, index) => QuizEditWidget(
@@ -128,6 +127,7 @@ class QuizEditDisplay extends HookConsumerWidget {
                   infoToast(log: "after : ${quizzes.value}");
                 },
                 editable: true,
+                index: index,
               ),
               separatorBuilder: (context, index) => Divider(height: 2),
             ),
@@ -159,7 +159,13 @@ class QuizEditDisplay extends HookConsumerWidget {
         ),
         Visibility(
           visible: draggable,
-          child: Text("上にスワイプしてテスト開始"),
+          child: Text(
+            "上にスワイプしてテスト開始",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
         ),
       ],
     );

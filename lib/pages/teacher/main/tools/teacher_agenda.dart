@@ -52,7 +52,9 @@ class TeacherAgendaDisplay extends HookConsumerWidget {
     return Padding(
       padding: EdgeInsets.only(top: 10),
       child: agenda.sentences.isEmpty
-          ? Text("まだ公開されていません")
+          ? Center(
+              child: Text("まだ公開されていません"),
+            )
           : ListView.builder(
               itemCount: agenda.sentences.length,
               itemBuilder: (context, index) {

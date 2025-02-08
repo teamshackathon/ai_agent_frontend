@@ -25,6 +25,7 @@ class PreviewAnswer extends ConsumerWidget {
           quiz: quiz[index],
           onChanged: (value) => quizNot.replaceQuiz(value),
           editable: true,
+          index: index,
         ),
       ),
     );
