@@ -6,7 +6,7 @@ part of 'record.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$streamRecorderHash() => r'8896b4ef629ce27152b4ed874de92a6045bdf52f';
+String _$streamRecorderHash() => r'255a93643768d85dec544dc7f60342269f9f0a9f';
 
 /// See also [StreamRecorder].
 @ProviderFor(StreamRecorder)

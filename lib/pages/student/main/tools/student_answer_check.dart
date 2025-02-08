@@ -1,4 +1,3 @@
-import 'package:code/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -18,7 +17,7 @@ class StudentAnswerCheck extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final submissions = ref.watch(submissionStreamProvider);
     final size = MediaQuery.of(context).size;
-    const widthFactor = 0.9;
+    const widthFactor = 0.95;
     const heightFactor = 0.95;
 
     return Center(
@@ -64,14 +63,30 @@ class StudentAnswerCheckDisplay extends HookConsumerWidget {
     }
     final quizzes = lesson.questionsPublish;
     final results = sortWithQuizzes(submission!.testResults, quizzes);
+    var score = 0;
+    var total = 0;
+
+    for(var i = 0 ; i < quizzes.length; i++){
+      var q = quizzes[i];
+      var r = results[i];
+      total = total + q.score;
+      if(r.graded ? r.correct : q.answer == q.correctAnswer){
+        score = score + q.score;
+      }
+    }
 
     return ListView.builder(
-      itemCount: quizzes.length,
-      itemBuilder: (context, index) => AnswerCheckWidget(
-        index: index,
-        quiz: quizzes[index],
-        result: results[index],
-      ),
+      itemCount: quizzes.length + 1,
+      itemBuilder: (context, index) {
+        if(index == 0){
+          return Center(child: Text("点数　：　$score / $total"));
+        }
+        return AnswerCheckWidget(
+          index: index - 1,
+          quiz: quizzes[index - 1],
+          result: results[index - 1],
+        );
+      },
     );
   }
 }
