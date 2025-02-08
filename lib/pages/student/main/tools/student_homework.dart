@@ -18,7 +18,7 @@ class StudentHomework extends ConsumerWidget {
     final homeworkNot = QuizNotifier();
     return homework.when(
         data: (snap) {
-          if (snap.docs.isEmpty) {
+          if (snap.docs.isEmpty || snap.docs[0].data().homeworks.isEmpty) {
             return anasked();
           } else {
             homeworkNot.init(snap.docs[0].data().homeworks);

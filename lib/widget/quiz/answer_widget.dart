@@ -11,22 +11,38 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class AnswerWidget extends HookConsumerWidget {
   const AnswerWidget({
     super.key,
+    required this.count,
     required this.quiz,
     required this.onChanged,
   });
-  final Quiz quiz;
 
+  final int count;
+  final Quiz quiz;
   final ValueChanged<String> onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = useTextEditingController(text: quiz.answer);
-    return Column(
-      children: [
-        Text("test"),
-        QuizText(quizText: quiz.question),
-        formatAnswer(quiz, controller),
-      ],
+    final size = MediaQuery.of(context).size;
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 15.0),
+        child: Column(
+          spacing: 5,
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "  Q$count : ${quiz.title}",
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+            QuizText(quizText: quiz.question),
+            formatAnswer(quiz, controller),
+          ],
+        ),
+      ),
     );
   }
 
@@ -58,6 +74,7 @@ class AnswerResultWidget extends HookConsumerWidget {
     super.key,
     required this.quiz,
   });
+
   final Quiz quiz;
 
   @override
