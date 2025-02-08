@@ -70,9 +70,6 @@ class Router extends _$Router {
     // firebase側でログイン状態を保持しておいてくれる
     final authState = ref.watch(authStateProvider);
 
-    // 画面乗っ取りを常に監視
-    // final hackState = ref.watch(hackedProvider);
-
     // personプロバイダーから情報を得ずに、authから情報を取ってくるように変更
     final role = ref.watch(roleProvider);
 

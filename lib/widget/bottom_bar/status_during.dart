@@ -10,8 +10,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 
-class TeacherStatusMiniBottombar extends HookConsumerWidget {
-  const TeacherStatusMiniBottombar({
+class TeacherStatusMiniBottomBar extends HookConsumerWidget {
+  const TeacherStatusMiniBottomBar({
     super.key,
     required this.teacher,
   });
@@ -38,10 +38,11 @@ class TeacherStatusMiniBottombar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentRoom = ref.watch(currentRoomProvider);
-    final currentlesson = ref.watch(currentLessonProvider);
+    final currentLesson = ref.watch(currentLessonProvider);
+
     final during = ref.watch(duringStreamProvider);
 
-    final lesson = useState<Lesson>(currentlesson);
+    final lesson = useState<Lesson>(currentLesson);
 
     String getStatus(Map<String, dynamic> docs) {
       if (docs["state"] == "lesson") {
@@ -61,16 +62,16 @@ class TeacherStatusMiniBottombar extends HookConsumerWidget {
                   snapshotData: snap.docs,
                   roomNumber: currentRoom.roomNumber,
                   subject: currentRoom.subject,
-                  count: currentlesson.count,
+                  count: currentLesson.count,
                 ) ==
                 true) {
-              lesson.value = currentlesson;
+              lesson.value = currentLesson;
             }
           },
           error: (_, __) {},
           loading: () {});
       return null;
-    }, [currentRoom, currentlesson, during]);
+    }, [currentRoom, currentLesson, during]);
 
     return during.when(
       data: (snap) {

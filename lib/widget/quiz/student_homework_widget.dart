@@ -13,10 +13,12 @@ class StudentHomeworkWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final quizList = ref.read(quizNotifierProvider);
     return Expanded(
-        child: ListView.builder(
-      itemBuilder: (context, index) => QuizEditWidget(
-          editable: true, quiz: quizList[index], onChanged: onChanged),
-      itemCount: quizList.length,
-    ));
+      // child: ListView.builder(
+      //   itemBuilder: (context, index) => QuizEditWidget(
+      //       editable: true, quiz: quizList[index], onChanged: onChanged),
+      //   itemCount: quizList.length,
+      // ),
+      child: Text("hoge"),
+    );
   }
 }

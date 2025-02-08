@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:code/toast.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../quiz/quiz.dart';
@@ -25,6 +26,7 @@ class Submission with _$Submission {
     final homeworks = [for (var m in map?["homeworks"] ?? []) Quiz.fromMap(m)];
     final List<Result> homeworkResults = [];
 
+    infoToast(log: map?["results"].toString());
     // 採点結果を見る
     for (var m in map?["results"] ?? []) {
       testResults.add(Result.fromMap(m, true));

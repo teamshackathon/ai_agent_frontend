@@ -20,7 +20,7 @@ class AnswerCheckWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Widget> widgetList = [
-      Text("$index問目 : ${quiz.title}"),
+      Text("${index + 1}問目 : ${quiz.title}"),
       Text(quiz.question),
       if (quiz is Sentaku)
         RadioButton(
