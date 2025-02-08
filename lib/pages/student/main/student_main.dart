@@ -96,20 +96,21 @@ class StudentMainDisplay extends ConsumerWidget {
                   style: TextStyle(fontSize: 15),
                 ),
               ),
+              SizedBox(height: 50),
               during.when(
                 data: (snapshots) {
-                  if (snapshots.docs.isEmpty) return SizedBox(height: 150);
+                  if (snapshots.docs.isEmpty) return SizedBox(height: 100);
                   return SizedBox(
                     width: 300,
-                    height: 150,
+                    height: 100,
                     child: ShortcutButton(
                       rooms: rooms,
                       shortcut: snapshots.docs.first,
                     ),
                   );
                 },
-                error: (_, __) => SizedBox(height: 150),
-                loading: () => SizedBox(height: 150),
+                error: (_, __) => SizedBox(height: 100),
+                loading: () => SizedBox(height: 100),
               ),
               SizedBox(height: 150),
               RadialSakuraMenu(
