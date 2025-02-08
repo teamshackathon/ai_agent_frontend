@@ -78,6 +78,20 @@
             "command": "dart format lib",
             "args": [],
             "problemMatcher": [],
+        },
+        {
+            "label": "[chrome]flutterの起動(開発モード)",
+            "type": "shell",
+            "command": "flutter run -d chrome --dart-define=env=.env.development",
+            "args": [],
+            "problemMatcher": [],
+        },
+        {
+            "label": "[android]flutterの起動(開発モード)",
+            "type": "shell",
+            "command": "flutter run -d emulator-5554 --dart-define=env=.env.development",
+            "args": [],
+            "problemMatcher": [],
         }
     ],
     "inputs": [

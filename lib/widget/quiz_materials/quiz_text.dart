@@ -5,12 +5,17 @@ class QuizText extends StatelessWidget {
     super.key,
     required this.quizText,
   });
+
   final String quizText;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.8,
-      child: Text(quizText),
+      child: Text(
+        quizText,
+        style: TextStyle(fontSize: 15),
+      ),
     );
   }
 }
@@ -22,6 +27,7 @@ class QuizTextEditable extends StatelessWidget {
     required this.onChanged,
     required this.quizText,
   });
+
   final String quizText;
   final bool editable;
   final ValueChanged<String> onChanged;
