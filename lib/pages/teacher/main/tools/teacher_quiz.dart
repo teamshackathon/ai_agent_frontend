@@ -10,10 +10,13 @@ import '../../../../data/firebase/lesson_stream.dart';
 import '../../../../data/firebase/submission_stream.dart';
 import '../../../../data/lesson/lesson.dart';
 import '../../../../data/quiz/quiz.dart';
+import '../../../../data/submission/submission.dart';
 import '../../../../toast.dart';
 import '../../../../widget/quiz/quiz_edit_widget.dart';
 import '../../../../widget/utils/loading_button.dart';
 import '../../../../widget/utils/sakura_progress_indicator.dart';
+import '../../../student/main/tools/student_answer_check.dart';
+import 'quiz_submission_display.dart';
 
 final draggableProvider = StateProvider<bool>((ref) => false);
 
@@ -36,7 +39,7 @@ class TeacherQuiz extends ConsumerWidget {
       case "test":
         widget = QuizSubmissionDisplay(lesson: lesson);
       case "after":
-        widget = Text("生徒たちの成績");
+        widget = QuizResultsDisplay(lesson: lesson);
       default:
         widget = Text("読み込み失敗");
     }
@@ -183,23 +186,73 @@ class QuizSubmissionDisplay extends HookConsumerWidget {
 
     return results.when(
       data: (snapshot) {
-        final count = snapshot.size;
-        final submission = snapshot.docs;
-        infoToast(log: submission);
-        var finish = 0;
-        for (var s in submission) {
-          if (s.data().testResults != [] &&
-              s.data().testResults[0].description != "") {
-            finish++;
+        final count = currentRoom.students.length;
+        final submissions = snapshot.docs;
+        final List<Submission> busy = [];
+        final List<Submission> finish = [];
+        for (final s in submissions) {
+          if (s.data().testResults.first.graded) {
+            finish.add(s.data());
+          } else {
+            busy.add(s.data());
           }
         }
+        final testing = count - busy.length - finish.length;
 
         return Center(
           child: Column(children: [
-            Spacer(),
-            Text("テスト中 : ${currentRoom.students.length - count}"),
-            Text("提出済み : ${count - finish}"),
-            Text("採点済み : $finish"),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Divider(height: 2),
+            ),
+            Theme(
+              data:
+                  Theme.of(context).copyWith(dividerColor: Colors.transparent),
+              child: ExpansionTile(
+                backgroundColor: Color(0xFFEEDDDD),
+                collapsedBackgroundColor: Color(0xFFEEDDDD),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("テスト中", style: TextStyle(fontSize: 20)),
+                    Text("$testing", style: TextStyle(fontSize: 20)),
+                  ],
+                ),
+                children: [],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Divider(height: 2),
+            ),
+            TeacherSubmissionsExpansionTile(
+              lesson: lesson,
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("採点中", style: TextStyle(fontSize: 20)),
+                  Text("${busy.length}", style: TextStyle(fontSize: 20)),
+                ],
+              ),
+              submissions: busy,
+              color: Color(0xFFEEEEDD),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Divider(height: 2),
+            ),
+            TeacherSubmissionsExpansionTile(
+              lesson: lesson,
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("採点中", style: TextStyle(fontSize: 20)),
+                  Text("${finish.length}", style: TextStyle(fontSize: 20)),
+                ],
+              ),
+              submissions: finish,
+              color: Color(0xFFDDEEDD),
+            ),
             Spacer(),
             LoadingButton(
               width: 200,
@@ -232,11 +285,83 @@ class QuizSubmissionDisplay extends HookConsumerWidget {
   }
 }
 
-class QuizResultsDisplay extends StatelessWidget {
-  const QuizResultsDisplay({super.key});
+class QuizResultsDisplay extends ConsumerWidget {
+  const QuizResultsDisplay({super.key, required this.lesson});
+
+  final Lesson lesson;
 
   @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final results = ref.watch(submissionStreamProvider);
+
+    return results.when(
+      data: (snapshot) {
+        final submissions = snapshot.docs;
+        final List<Widget> list = [];
+
+        for (var sub in submissions) {
+          list.add(ListTile(
+            title: Text(sub.data().name, style: TextStyle(fontSize: 20)),
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(25.0)),
+                ),
+                builder: (BuildContext context) {
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.85,
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "  ${sub.data().name}",
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.close),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        ),
+                        Expanded(
+                          child: FractionallySizedBox(
+                            widthFactor: 0.95,
+                            heightFactor: 0.95,
+                            child: StudentAnswerCheckDisplay(
+                              lesson: lesson,
+                              submission: sub.data(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+          ));
+        }
+
+        return ListView(children: list);
+      },
+      // エラー時の表示
+      error: (_, __) => const Center(
+        child: Text("読み込み失敗"),
+      ),
+      // 読込中の表示
+      loading: () => const Center(
+        child: SakuraProgressIndicator(),
+      ),
+    );
   }
 }

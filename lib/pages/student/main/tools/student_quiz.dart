@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:code/api/api.dart';
 import 'package:code/data/person/person.dart';
 import 'package:code/toast.dart';
 import 'package:code/widget/utils/loading_button.dart';
@@ -132,6 +133,8 @@ class StudentQuizDisplay extends HookConsumerWidget {
             await duringRef.update({
               "finish": FieldValue.arrayUnion([student.folderName])
             });
+            answeredQuestions(
+                "${reference.path}/students/${student.folderName}");
             loading.value = false;
           },
           isLoading: loading.value,
