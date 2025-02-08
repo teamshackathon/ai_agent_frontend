@@ -39,16 +39,10 @@ class TeacherStatusMiniBottomBar extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentRoom = ref.watch(currentRoomProvider);
     final currentLesson = ref.watch(currentLessonProvider);
-    final recorder = ref.watch(streamRecorderProvider);
-    final recorderNot = ref.read(streamRecorderProvider.notifier);
 
     final during = ref.watch(duringStreamProvider);
 
     final lesson = useState<Lesson>(currentLesson);
-
-    Logger().i("currentRoom: $currentRoom");
-    Logger().i("currentlesson: $currentLesson");
-    Logger().i("lesson: $lesson");
 
     String getStatus(Map<String, dynamic> docs) {
       if (docs["state"] == "lesson") {
@@ -77,8 +71,7 @@ class TeacherStatusMiniBottomBar extends HookConsumerWidget {
           error: (_, __) {},
           loading: () {});
       return null;
-    }, [currentRoom, currentlesson, during]);
-
+    }, [currentRoom, currentLesson, during]);
 
     return during.when(
       data: (snap) {
