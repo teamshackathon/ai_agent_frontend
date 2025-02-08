@@ -1,5 +1,4 @@
 import 'package:code/data/quiz/quiz.dart';
-import 'package:code/toast.dart';
 import 'package:code/widget/quiz_materials/answer_textfield.dart';
 import 'package:code/widget/quiz_materials/quiz_text.dart';
 import 'package:code/widget/quiz_materials/radio_button.dart';
@@ -34,7 +33,7 @@ class AnswerWidget extends HookConsumerWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "  Q$count : ${quiz.title}",
+                "  Q$count",
                 style: TextStyle(fontSize: 20),
               ),
             ),

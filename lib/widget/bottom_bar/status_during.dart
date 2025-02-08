@@ -5,6 +5,7 @@ import 'package:code/data/firebase/lesson_stream.dart';
 import 'package:code/data/firebase/tools_stream.dart';
 import 'package:code/data/lesson/lesson.dart';
 import 'package:code/data/record/record.dart';
+import 'package:code/pages/teacher/main/tools/teacher_quiz.dart';
 import 'package:code/widget/floating/record_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -152,6 +153,7 @@ class TeacherStatusChangeButton extends HookConsumerWidget {
     final currentlesson = ref.watch(currentLessonProvider);
     final recorder = ref.watch(streamRecorderProvider);
     final recorderNot = ref.watch(streamRecorderProvider.notifier);
+    final draggableNot = ref.watch(draggableProvider.notifier);
 
     return Padding(
       padding: EdgeInsets.only(right: 0, top: 0),
@@ -171,6 +173,7 @@ class TeacherStatusChangeButton extends HookConsumerWidget {
             if (recorder.isRecording) {
               await recorderNot.stop();
             }
+            draggableNot.state = false;
           } else if (doc["state"] == "break" && currentlesson.count != 0) {
             await startTestToDuring(
                 teacher: teacher, currentLesson: currentlesson);
