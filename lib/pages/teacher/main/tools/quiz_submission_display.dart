@@ -9,6 +9,19 @@ import '../../pages/student/main/tools/student_answer_check.dart';
 
 final _checkKey = GlobalKey<NavigatorState>();
 
+final _checkRoute = GoRouter(
+  navigatorKey: _checkKey,
+  initialLocation: "/",
+  routes: [
+    GoRoute(
+      path: "/",
+    ),
+    GoRoute(
+      path: "/answer",
+    )
+  ],
+);
+
 class TeacherSubmissionsExpansionTitle extends HookConsumerWidget {
   const TeacherSubmissionsExpansionTitle({
     super.key,
@@ -23,25 +36,14 @@ class TeacherSubmissionsExpansionTitle extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tabController = useTabController(initialLength: 3);
     final List<Widget> list = [];
-
-    final checkRoute = GoRouter(
-      routes: [
-        GoRoute(
-          path: "/",
-        ),
-        GoRoute(
-          path: "/answer",
-        )
-      ],
-    );
+    final subState = useState<Submission>(Submission.isBlank());
 
     for (var sub in submissions) {
       list.add(ListTile(
         title: Text(sub.name),
         onTap: () {
-          // Navigator.of(context).push();
+          subState.value = sub;
         },
       ));
     }
