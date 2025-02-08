@@ -47,13 +47,15 @@ class TeacherAgendaDisplay extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final agenda = lesson.agendaDraft;
-
+    final agenda = lesson.agendaPublish;
+    final agendaDraft = lesson.agendaDraft;
     return Padding(
       padding: EdgeInsets.only(top: 10),
       child: agenda.sentences.isEmpty
           ? Center(
-              child: Text("まだ公開されていません"),
+              child: agendaDraft.sentences.isEmpty
+                  ? Text("まだ公開されていません")
+                  : Text("下書きがあります。編集して公開して下さい。"),
             )
           : ListView.builder(
               itemCount: agenda.sentences.length,

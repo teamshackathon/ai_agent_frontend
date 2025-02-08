@@ -80,7 +80,10 @@ class StudentToolsDisplay extends HookConsumerWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text(lesson.agendaPublish.title),
+              Text(
+                lesson.agendaPublish.title,
+                maxLines: null,
+              ),
             ],
           ),
         )
