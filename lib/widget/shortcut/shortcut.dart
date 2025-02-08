@@ -28,8 +28,8 @@ String displaySubject(String subject) {
   }
 }
 
-String displayState(String state){
-  switch(state){
+String displayState(String state) {
+  switch (state) {
     case "lesson":
       return "授業中";
     case "break":

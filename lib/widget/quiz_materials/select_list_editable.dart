@@ -73,7 +73,7 @@ class SelectListEditable extends StatelessWidget {
             )),
           ],
         ),
-        separatorBuilder: (context,index){
+        separatorBuilder: (context, index) {
           return SizedBox(height: 10);
         },
       ),
