@@ -70,10 +70,18 @@ class StudentAnswerCheckDisplay extends HookConsumerWidget {
     }
 
     return ListView.builder(
-      itemCount: quizzes.length + 1,
+      itemCount: quizzes.length + 2,
       itemBuilder: (context, index) {
         if (index == 0) {
-          return Center(child: Text("点数　：　$score / $total"));
+          return Center(
+            child: Text(
+              "点数　：　$score / $total",
+              style: TextStyle(fontSize: 20),
+            ),
+          );
+        }
+        if (index == quizzes.length + 1) {
+          return SizedBox(height: 25);
         }
         return AnswerCheckWidget(
           index: index - 1,

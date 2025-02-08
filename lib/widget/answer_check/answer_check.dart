@@ -101,11 +101,3 @@ class AnswerCheckWidget extends StatelessWidget {
     );
   }
 }
-// Align(
-// alignment: Alignment.topRight,
-// child: !result.graded
-// ? Icon(Icons.hourglass_bottom)
-//     : result.correct
-// ? Icon(Icons.circle_outlined, color: Colors.red)
-//     : Icon(Icons.close_sharp, color: Colors.blue),
-// ),
