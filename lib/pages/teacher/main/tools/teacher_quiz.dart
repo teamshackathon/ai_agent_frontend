@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:code/widget/utils/loading_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +12,7 @@ import '../../../../data/lesson/lesson.dart';
 import '../../../../data/quiz/quiz.dart';
 import '../../../../toast.dart';
 import '../../../../widget/quiz/quiz_edit_widget.dart';
+import '../../../../widget/utils/loading_button.dart';
 import '../../../../widget/utils/sakura_progress_indicator.dart';
 
 final draggableProvider = StateProvider<bool>((ref) => false);
@@ -229,5 +229,14 @@ class QuizSubmissionDisplay extends HookConsumerWidget {
         child: SakuraProgressIndicator(),
       ),
     );
+  }
+}
+
+class QuizResultsDisplay extends StatelessWidget {
+  const QuizResultsDisplay({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }

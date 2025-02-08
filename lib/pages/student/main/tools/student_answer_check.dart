@@ -16,7 +16,6 @@ class StudentAnswerCheck extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final submissions = ref.watch(submissionStreamProvider);
-    final size = MediaQuery.of(context).size;
     const widthFactor = 0.95;
     const heightFactor = 0.95;
 
@@ -29,8 +28,6 @@ class StudentAnswerCheck extends ConsumerWidget {
             return StudentAnswerCheckDisplay(
               lesson: lesson,
               submission: snapshot.size > 0 ? snapshot.docs[0].data() : null,
-              displayWidth: size.width * widthFactor,
-              displayHeight: size.height * widthFactor,
             );
           },
           // エラー時の表示
@@ -46,13 +43,10 @@ class StudentAnswerCheck extends ConsumerWidget {
 class StudentAnswerCheckDisplay extends HookConsumerWidget {
   const StudentAnswerCheckDisplay({
     super.key,
-    required this.displayWidth,
-    required this.displayHeight,
     required this.lesson,
     required this.submission,
   });
 
-  final double displayWidth, displayHeight;
   final Lesson lesson;
   final Submission? submission;
 
