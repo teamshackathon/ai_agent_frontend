@@ -49,19 +49,26 @@ class StudentLessonsDisplay extends ConsumerWidget {
     final currentRoom = ref.watch(currentRoomProvider);
     final currentLessonNot = ref.read(currentLessonProvider.notifier);
 
-    return lessons.isEmpty
-        ? Center(child: Text("授業がありません"))
-        : Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: LessonsSummary(room: currentRoom),
-              ),
-              Expanded(
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: LessonsSummary(room: currentRoom),
+        ),
+        lessons.isEmpty
+            ? Center(child: Text("授業がありません"))
+            : Expanded(
                 child: ListView.builder(
                   itemCount: lessons.length,
                   itemBuilder: (context, index) {
                     final lesson = lessons[index].data();
+                    if (lesson.agendaPublish.title == "") {
+                      if (lessons.length == 1) {
+                        return Center(child: Text("授業がありません"));
+                      }
+                      return const SizedBox();
+                    }
+
                     return LessonCard(
                       lesson: lesson,
                       angle: 0,
@@ -74,7 +81,7 @@ class StudentLessonsDisplay extends ConsumerWidget {
                   },
                 ),
               ),
-            ],
-          );
+      ],
+    );
   }
 }
