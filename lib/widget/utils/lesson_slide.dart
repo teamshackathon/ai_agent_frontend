@@ -68,7 +68,14 @@ class LessonStartSlide extends ConsumerWidget {
 
     return SwipeButton.expand(
       height: height,
-      child: Text("授業開始"),
+      thumb: Icon(Icons.local_florist,
+          color: Colors.pink[200]), // Cherry blossom icon
+      activeThumbColor: Colors.pink[100],
+      activeTrackColor: Colors.pink[50],
+      child: Text(
+        "授業開始",
+        style: TextStyle(color: Colors.black),
+      ),
       onSwipeEnd: () async {
         await addLessonToDuring(
           roomNumber: currentRoom.roomNumber,

@@ -1,6 +1,7 @@
 import 'package:code/widget/utils/loading_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../data/agenda/agenda.dart';
 import '../../data/lesson/lesson.dart';
@@ -83,7 +84,13 @@ class EditAgendaDisplay extends HookWidget {
         ),
         const SizedBox(height: 16),
         // 他のウィジェットをここに追加
-        Align(alignment: Alignment.bottomLeft, child: Text("タイトル")),
+        Text(
+          "授業アジェンダのタイトル",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         AgendaEditorField(
           initialValue: agendaState.value.title,
           onChanged: (str) {
@@ -92,6 +99,7 @@ class EditAgendaDisplay extends HookWidget {
           },
           editable: true,
         ),
+        const SizedBox(height: 30),
         ListView.builder(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
@@ -108,9 +116,11 @@ class EditAgendaDisplay extends HookWidget {
                 agendaState.value = agendaState.value.copyWith(sentences: list);
                 drafting.value = true;
               },
+              index: index,
             );
           },
         ),
+        const SizedBox(height: 15),
         Align(
           alignment: Alignment.bottomCenter,
           child: LoadingButton(
@@ -125,6 +135,8 @@ class EditAgendaDisplay extends HookWidget {
               } else {
                 await reference
                     .update({"agenda_publish": agendaState.value.toMap()});
+                // go_routeの閉じる処理
+                GoRouter.of(context).pop();
               }
               loading.value = false;
             },

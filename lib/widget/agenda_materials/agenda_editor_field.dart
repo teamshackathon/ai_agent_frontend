@@ -47,6 +47,33 @@ class AgendaEditorField extends HookWidget {
           onComplete!(text.value);
         }
       },
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.0),
+          borderSide: BorderSide(
+            color: Colors.lightBlue.shade200,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.0),
+          borderSide: BorderSide(
+            color: Colors.lightBlue.shade200,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.0),
+          borderSide: BorderSide(
+            color: Colors.lightBlue.shade400,
+          ),
+        ),
+        filled: true,
+        fillColor: Colors.lightBlue.shade50,
+        contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+      ),
+      style: TextStyle(
+        fontSize: 16.0,
+        color: Colors.black87,
+      ),
     );
   }
 }
