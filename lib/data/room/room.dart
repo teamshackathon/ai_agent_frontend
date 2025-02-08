@@ -146,7 +146,8 @@ Future<List<Room>> activeRooms(ref) async {
                   year: r["year"]!,
                   roomNumber: r["room"]!,
                   subject: r["subject"]!,
-                  chatId: "",
+                  chatId:
+                      "${r["year"]}-${r["room"]}-${teacher.folderName}-${doc.id}",
                   // 教師はchatIdを持たない
                   reference: docRef.doc(r["subject"]!).collection("lessons"),
                   students: students,
