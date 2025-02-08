@@ -19,7 +19,6 @@ class StudentHomework extends ConsumerWidget {
     return submitStream.when(
         data: (snap) {
           if (snap.docs.isEmpty ||
-              snap.docs[0].toString() == "null" ||
               snap.docs[0].data().homeworks.isEmpty) {
             return anasked();
           } else {
