@@ -80,14 +80,14 @@ class AnswerRadioButton extends StatelessWidget {
               ),
             ));
           }
-        }else if(options[index].word == correctAnswer){
+        } else if (options[index].word == correctAnswer) {
           title.add(SizedBox(
             width: 20,
             height: 20,
             child: Padding(
                 padding: const EdgeInsets.only(left: 3),
                 child:
-                Icon(Icons.circle_outlined, color: Colors.red, size: 18)),
+                    Icon(Icons.circle_outlined, color: Colors.red, size: 18)),
           ));
         }
 

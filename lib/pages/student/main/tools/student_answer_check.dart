@@ -66,11 +66,11 @@ class StudentAnswerCheckDisplay extends HookConsumerWidget {
     var score = 0;
     var total = 0;
 
-    for(var i = 0 ; i < quizzes.length; i++){
+    for (var i = 0; i < quizzes.length; i++) {
       var q = quizzes[i];
       var r = results[i];
       total = total + q.score;
-      if(r.graded ? r.correct : q.answer == q.correctAnswer){
+      if (r.graded ? r.correct : q.answer == q.correctAnswer) {
         score = score + q.score;
       }
     }
@@ -78,7 +78,7 @@ class StudentAnswerCheckDisplay extends HookConsumerWidget {
     return ListView.builder(
       itemCount: quizzes.length + 1,
       itemBuilder: (context, index) {
-        if(index == 0){
+        if (index == 0) {
           return Center(child: Text("点数　：　$score / $total"));
         }
         return AnswerCheckWidget(
