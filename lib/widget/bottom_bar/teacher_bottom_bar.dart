@@ -5,7 +5,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 // import '../../data/firebase/during_stream.dart';
+import '../../data/firebase/during_stream.dart';
 import '../../data/person/person.dart';
+
 // import '../floating/floating_record_button.dart';
 import 'bottom_bar_widget.dart';
 
@@ -21,7 +23,7 @@ class TeacherBottomBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final during = ref.watch(duringStreamProvider);
+    final during = ref.watch(duringStreamProvider);
     final user = useState<Person>(Person.isBlank());
     // animation controllerが入ったリストを作成
     final controllers = useState<List<AnimationController>>(
@@ -59,19 +61,31 @@ class TeacherBottomBar extends HookConsumerWidget {
 
     return Scaffold(
         body: navigationShell,
-        floatingActionButton: Stack(children: [
-          Positioned(
-            left: posX.value,
-            top: posY.value,
-            child: GestureDetector(
-              onPanUpdate: (details) {
-                posX.value += details.delta.dx;
-                posY.value += details.delta.dy;
-              },
-              child: TeacherStatusMiniBottomBar(teacher: user.value.name),
-            ),
-          ),
-        ]),
+        floatingActionButton: during.when(
+          data: (snapshot) {
+            final map = getMeFromDuring(
+                queryList: snapshot.docs, name: user.value.name);
+            if (map != null) {
+              return Positioned(
+                left: posX.value,
+                top: posY.value,
+                child: GestureDetector(
+                  onPanUpdate: (details) {
+                    posX.value += details.delta.dx;
+                    posY.value += details.delta.dy;
+                  },
+                  child: TeacherStatusMiniBottomBar(
+                    teacher: user.value.name,
+                    dataMap: map,
+                  ),
+                ),
+              );
+            }
+            return null;
+          },
+          error: (_, __) => null,
+          loading: () => null,
+        ),
         bottomNavigationBar: NavigationBar(
           selectedIndex: navigationShell.currentIndex,
           destinations: [

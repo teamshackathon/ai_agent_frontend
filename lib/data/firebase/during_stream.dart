@@ -10,7 +10,10 @@ final duringStreamProvider = StreamProvider((ref) async* {
   final user = authState.value;
   if (user == null) yield* reference.snapshots();
   final token = await user!.getIdTokenResult();
+  // 生徒以外はduring全てを持ってくる
   if (token.claims?["role"] != "student") yield* reference.snapshots();
+
+  // 生徒は現在の自分のクラスのduringだけ見るようにしてある
   final list = token.claims?["rooms"] ?? [];
   if (list.isEmpty) yield* reference.snapshots();
   list.sort((a, b) => -int.parse(a["year"]!).compareTo(int.parse(b["year"]!)));
@@ -38,33 +41,33 @@ Future<void> addLessonToDuring({
 }
 
 Future<void> cancelLessonToDuring(
-    {required String teacher, required Lesson currentLesson}) async {
+    {required String teacher, required DocumentReference reference}) async {
   await FirebaseFirestore.instance.collection("during").doc(teacher).delete();
-  await currentLesson.reference.update({"state": "before"});
+  await reference.update({"state": "before"});
 }
 
 Future<void> breakLessonToDuring(
-    {required String teacher, required Lesson currentLesson}) async {
+    {required String teacher, required DocumentReference reference}) async {
   await FirebaseFirestore.instance
       .collection("during")
       .doc(teacher)
       .update({"state": "break"});
-  await currentLesson.reference.update({"state": "break"});
+  await reference.update({"state": "break"});
 }
 
 Future<void> startTestToDuring(
-    {required String teacher, required Lesson currentLesson}) async {
+    {required String teacher, required DocumentReference reference}) async {
   await FirebaseFirestore.instance
       .collection("during")
       .doc(teacher)
       .update({"state": "test"});
-  await currentLesson.reference.update({"state": "test"});
+  await reference.update({"state": "test"});
 }
 
 Future<void> finishLessonToDuring(
-    {required String teacher, required Lesson currentLesson}) async {
+    {required String teacher, required DocumentReference reference}) async {
   await FirebaseFirestore.instance.collection("during").doc(teacher).delete();
-  await currentLesson.reference.update({"state": "after"});
+  await reference.update({"state": "after"});
 }
 
 // 現在行われている授業一覧に、指定した（今行っている）授業があればtrue、
@@ -108,6 +111,17 @@ String? givingLesson({
     if (map["teacher"] == teacher) {
       return map["state"];
     }
+  }
+  return null;
+}
+
+Map<String, dynamic>? getMeFromDuring({
+  required List<QueryDocumentSnapshot<Map<String, dynamic>>> queryList,
+  required String name,
+}) {
+  for(final q in queryList){
+    final data = q.data();
+    if(data["teacher"] == name)return data;
   }
   return null;
 }
