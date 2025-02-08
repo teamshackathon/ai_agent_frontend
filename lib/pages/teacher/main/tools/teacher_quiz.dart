@@ -110,27 +110,25 @@ class QuizEditDisplay extends HookConsumerWidget {
     return Column(
       children: [
         Flexible(
-          child: Container(
-            child: ListView.separated(
-              itemCount: quizzes.value.length,
-              itemBuilder: (context, index) => QuizEditWidget(
-                quiz: quizzes.value[index],
-                onChanged: (quiz) {
-                  infoToast(log: "before : ${quizzes.value}");
-                  var list = [
-                    for (var i = 0; i < quizzes.value.length; i++)
-                      i == index ? quiz : quizzes.value[i]
-                  ];
-                  quizzes.value = list;
-                  drafting.value = true;
-                  draggableNot.state = false;
-                  infoToast(log: "after : ${quizzes.value}");
-                },
-                editable: true,
-                index: index,
-              ),
-              separatorBuilder: (context, index) => Divider(height: 2),
+          child: ListView.separated(
+            itemCount: quizzes.value.length,
+            itemBuilder: (context, index) => QuizEditWidget(
+              quiz: quizzes.value[index],
+              onChanged: (quiz) {
+                infoToast(log: "before : ${quizzes.value}");
+                var list = [
+                  for (var i = 0; i < quizzes.value.length; i++)
+                    i == index ? quiz : quizzes.value[i]
+                ];
+                quizzes.value = list;
+                drafting.value = true;
+                draggableNot.state = false;
+                infoToast(log: "after : ${quizzes.value}");
+              },
+              editable: true,
+              index: index,
             ),
+            separatorBuilder: (context, index) => Divider(height: 2),
           ),
         ),
         SizedBox(height: 10),

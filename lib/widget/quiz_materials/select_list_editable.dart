@@ -18,12 +18,13 @@ class SelectListEditable extends StatelessWidget {
   // callbackを書くことで、実際の処理をWidget外で記述することができる
 //  final ValueChanged<List<Option>> onChanged;
   final void Function(List<Option>, String) onChanged;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.85,
-      height: 250,
-      child: ListView.builder(
+      height: options.length * 55 + 20,
+      child: ListView.separated(
         itemCount: options.length,
         itemBuilder: (context, index) => Row(
           children: [
@@ -69,9 +70,12 @@ class SelectListEditable extends StatelessWidget {
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 12, horizontal: 16),
               ),
-            ))
+            )),
           ],
         ),
+        separatorBuilder: (context,index){
+          return SizedBox(height: 10);
+        },
       ),
     );
   }
