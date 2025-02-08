@@ -104,15 +104,18 @@ Future<void> createAgenda(
   }
 }
 
-Future<void> createQuestions(String refarence) async {
+Future<void> createQuestions(String reference) async {
   var responce = await http.post(
       Uri.http(
         _HttpConst.url,
         _HttpConst.createQuestionsEndpoint,
       ),
-      body: {
-        'refarence': refarence,
-      });
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'reference': reference,
+      }));
 
   if (responce.statusCode == 200) {
     return;
