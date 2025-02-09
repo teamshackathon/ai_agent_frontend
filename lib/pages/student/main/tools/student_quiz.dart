@@ -133,7 +133,7 @@ class StudentQuizDisplay extends HookConsumerWidget {
               "finish": FieldValue.arrayUnion([student.folderName])
             });
             answeredQuestions(
-                "${reference.path}/students/${student.folderName}");
+                "${reference.path}/students/${student.folderName}", []);
             loading.value = false;
           },
           isLoading: loading.value,
