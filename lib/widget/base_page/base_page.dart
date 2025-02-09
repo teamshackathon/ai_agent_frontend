@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import '../../dummy/data/dummy_provider.dart';
 import '../../firebase/auth/logout/logout_firebase.dart';
 
 /// ハンバーガーメニュー付きページの雛型
@@ -83,20 +81,11 @@ class CustomDrawer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final dummyNot = ref.read(dummyModeProvider.notifier);
 
     return Drawer(
       child: ListView(
         children: [
-          // メニューのヘッダー、childにWidgetを置くことで見た目をいじれる
           DrawerHeader(child: Text("メニュー")),
-
-          // 以下、メニュー内容
-          ListTile(
-              title: Text("ダミーモード"),
-              onTap: () {
-                dummyNot.state = true;
-              }),
           ListTile(
             title: Text("ログアウト"),
             onTap: () async => await logoutFirebase(),
