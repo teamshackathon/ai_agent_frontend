@@ -23,7 +23,26 @@
           "other_platform_oauth_client": []
         }
       }
-    }
+    },
+    {
+        "client_info": {
+          "mobilesdk_app_id": "1:46244984723:android:6dcf9e1b8bc28cf0b2da66",
+          "android_client_info": {
+            "package_name": "ai.manabiya.sakura.debug"
+          }
+        },
+        "oauth_client": [],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDe07GNb82zGFlEPS6Y2trbmAxi46vgd6A"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": []
+          }
+        }
+      }
   ],
   "configuration_version": "1"
 }
