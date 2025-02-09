@@ -3,11 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../data/firebase/auth_provider.dart';
-import '../dummy/data/dummy_provider.dart';
-
-import '../dummy/route/dummy_route.dart';
 import '../pages/login/login.dart';
-import '../pages/dr001.dart';
 import 'student_route.dart';
 import 'teacher_route.dart';
 
@@ -38,13 +34,6 @@ class Routes {
   static const String teacherQuiz = "/teacher/lessons/tools/quiz";
   static const String makeQuizzes = "/quiz";
   static const String editQuizzes = "/quiz/edit";
-  static const String submitStatus = "/ss001";
-  static const String previewAnswer = "/ss002";
-  static const String editAnswer = "/ss003";
-  static const String takeQuizzes = "/tq001";
-  static const String editText = "/et001";
-  static const String displayResult = "/dr001";
-  static const String requestFix = "/dr002";
   static const String profile = "/profile";
   static const String activity = "/activity";
 }
@@ -75,9 +64,6 @@ class Router extends _$Router {
     // personプロバイダーから情報を得ずに、authから情報を取ってくるように変更
     final role = ref.watch(roleProvider);
 
-    // ダミーモード用
-    final dummy = ref.watch(dummyModeProvider);
-
     // 実際の画面遷移構成
     return GoRouter(
       initialLocation: Routes.login,
@@ -98,7 +84,6 @@ class Router extends _$Router {
 
             // ユーザーがログイン済みの場合
             if (isLoggingIn) {
-              if (dummy) return DummyRoutes.main;
               if (role.value == "teacher") {
                 return Routes.teacherMain;
               } else if (role.value == "student") {
@@ -120,20 +105,11 @@ class Router extends _$Router {
           builder: (context, state) => LoginPage(),
         ),
 
-        // // ダミー用の分岐
-        dummyBranch,
-
         // 先生用のbottomBarを含めた分岐
         if (role.value == "teacher") teacherBranch,
 
         // 生徒用のbottomBarを含めた分岐
         if (role.value == "student") studentBranch,
-
-        // 画面乗っ取り用のルート。後ほど変わる予定
-        GoRoute(
-          path: "/dr001",
-          builder: (context, state) => DisplayResult(),
-        ),
       ],
       debugLogDiagnostics: false,
     );
