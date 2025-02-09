@@ -15,7 +15,41 @@ import 'package:flutter/foundation.dart'
 /// );
 /// ```
 class DefaultFirebaseOptions {
-  static FirebaseOptions get currentPlatform {
+  static FirebaseOptions get DevelopPlatform {
+    if (kIsWeb) {
+      return webdev;
+    }
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        return androidDev;
+      case TargetPlatform.iOS:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      case TargetPlatform.macOS:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      case TargetPlatform.windows:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      case TargetPlatform.linux:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for linux - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      default:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions are not supported for this platform.',
+        );
+    }
+  }
+
+  static FirebaseOptions get ProductionPlatform {
     if (kIsWeb) {
       return web;
     }
@@ -49,7 +83,7 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
+  static const FirebaseOptions webdev = FirebaseOptions(
     apiKey: 'AIzaSyBdFJng3SETUR9cZUd2bXsKhlHudCZlaiE',
     appId: '1:46244984723:web:c8875db7c7b59f86b2da66',
     messagingSenderId: '46244984723',
@@ -59,11 +93,29 @@ class DefaultFirebaseOptions {
     measurementId: 'G-HCM3YZLMJ5',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
+  static const FirebaseOptions androidDev = FirebaseOptions(
     apiKey: 'AIzaSyDe07GNb82zGFlEPS6Y2trbmAxi46vgd6A',
     appId: '1:46244984723:android:6dcf9e1b8bc28cf0b2da66',
     messagingSenderId: '46244984723',
     projectId: 'demo-manabiya-ai',
     storageBucket: 'demo-manabiya-ai.appspot.com',
+  );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyBM_Ha_NdaiD1yeAcX6eAuhJzRBLFGm8qE',
+    appId: '1:329548540152:web:3fe292c24d890aab53f30d',
+    messagingSenderId: '329548540152',
+    projectId: 'manabiyaai',
+    authDomain: 'manabiyaai.firebaseapp.com',
+    storageBucket: 'manabiyaai.firebasestorage.app',
+    measurementId: 'G-J2K4SL47H7',
+  );
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyBJJWiGAWprITjd5r_T_BqUo5ZMzzx0A4E',
+    appId: '1:329548540152:android:b8e7653656e42b6d53f30d',
+    messagingSenderId: '329548540152',
+    projectId: 'manabiyaai',
+    storageBucket: 'manabiyaai.firebasestorage.app',
   );
 }

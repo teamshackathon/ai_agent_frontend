@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "46244984723",
-    "project_id": "demo-manabiya-ai",
-    "storage_bucket": "demo-manabiya-ai.appspot.com"
+    "project_number": "329548540152",
+    "project_id": "manabiyaai",
+    "storage_bucket": "manabiyaai.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:46244984723:android:6dcf9e1b8bc28cf0b2da66",
+        "mobilesdk_app_id": "1:329548540152:android:b8e7653656e42b6d53f30d",
         "android_client_info": {
           "package_name": "ai.manabiya.sakura"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "46244984723-n99mlhqkhlu09n45tbpi34vama3qkjv9.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDe07GNb82zGFlEPS6Y2trbmAxi46vgd6A"
+          "current_key": "AIzaSyBJJWiGAWprITjd5r_T_BqUo5ZMzzx0A4E"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "46244984723-n99mlhqkhlu09n45tbpi34vama3qkjv9.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

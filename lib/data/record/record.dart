@@ -18,7 +18,7 @@ part 'record.freezed.dart';
 
 part 'record.g.dart';
 
-final websocket = dotenv.env['WEB_SOCKET_SERVER'];
+final websocket = dotenv.env['WEB_SOCKET'];
 
 @freezed
 class StreamRecord with _$StreamRecord {
