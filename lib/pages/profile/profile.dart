@@ -94,7 +94,7 @@ class ProfilePage extends ConsumerWidget {
   }
 }
 
-class UserIcon extends HookConsumerWidget {
+class UserIcon extends ConsumerWidget {
   const UserIcon({
     super.key,
     required this.iconPath,
@@ -111,13 +111,21 @@ class UserIcon extends HookConsumerWidget {
     final storage = FirebaseStorage.instance;
     final pdf = storage.ref(iconPath).getDownloadURL();
 
-    final userIconPathState = useState<String>("");
-
     return FutureBuilder(
       future: pdf,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return SizedBox(
+            width: 80,
+            height: 80,
+            child: Center(
+              child: SizedBox(
+                width: 60,
+                height: 60,
+                child: const CircularProgressIndicator(),
+              ),
+            ),
+          );
         } else if (snapshot.hasError || !snapshot.hasData) {
           return CircleAvatar(
             radius: radius, // プロフィール画像のサイズ
@@ -134,11 +142,26 @@ class UserIcon extends HookConsumerWidget {
           );
         } else {
           final userIconPath = snapshot.data ?? "";
-          userIconPathState.value = userIconPath;
-          return CircleAvatar(
-            radius: radius,
-            backgroundImage: NetworkImage(userIconPath),
-          );
+          if (userIconPath == "") {
+            return CircleAvatar(
+              radius: radius, // プロフィール画像のサイズ
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.green,
+              child: Text(
+                name, // 仮のイニシャル
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green,
+                ),
+              ),
+            );
+          } else {
+            return CircleAvatar(
+              radius: radius,
+              backgroundImage: NetworkImage(userIconPath),
+            );
+          }
         }
       },
     );

@@ -80,7 +80,6 @@ class LessonStartSlide extends ConsumerWidget {
       ),
       onSwipeEnd: () async {
         if (lesson.agendaPublish.title != "") {
-          infoToast(log: currentRoom.toString());
           await addLessonToDuring(
             roomNumber: currentRoom.roomNumber,
             subject: currentRoom.subject,
