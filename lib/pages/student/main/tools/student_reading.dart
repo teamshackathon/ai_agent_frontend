@@ -17,7 +17,8 @@ class StudentReading extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final room = ref.watch(currentRoomProvider);
     final storage = FirebaseStorage.instance;
-    final pdf = storage.ref("text/${room.textDataName}").getDownloadURL();
+    final pdf =
+        storage.ref().child("text/${room.textDataName}").getDownloadURL();
 
     return BasePage(
       pageTitle: "教科書",
@@ -32,6 +33,7 @@ class StudentReading extends HookConsumerWidget {
             return const Center(child: Text("教科書データが見つかりませんでした"));
           } else {
             // SharedPreferenceで保存できるか？
+
             return StudentReadingDisplay(uri: Uri.parse(snapshot.data ?? ""));
           }
         },

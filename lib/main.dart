@@ -19,7 +19,11 @@ Future<void> main() async {
   // 環境変数を読み込む
   await dotenv.load(fileName: envFile);
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+    options: dotenv.env['ENV'] == 'development'
+        ? DefaultFirebaseOptions.DevelopPlatform
+        : DefaultFirebaseOptions.ProductionPlatform,
+  );
 
   // ローカル環境の場合はエミュレータを使用する
   if (dotenv.env['ENV'] == 'development') {
