@@ -81,6 +81,7 @@ class PersonStatus extends _$PersonStatus {
     final firstName = token.claims?["first_name"];
     final familyName = token.claims?["family_name"];
     var iconPath = token.claims?["icon_path"] ?? "";
+    infoToast(log: token.claims.toString());
 
     final store = ref.watch(firestoreProvider);
     final iconRef = store.collection("basic").doc("icons");

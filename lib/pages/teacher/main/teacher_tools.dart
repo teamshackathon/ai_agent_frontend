@@ -56,8 +56,10 @@ class TeacherToolsDisplay extends HookWidget {
 
     return Column(
       children: [
-        Text(lesson.agendaPublish.title,
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+        Flexible(
+          child: Text(lesson.agendaPublish.title,
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+        ),
         TabBar(controller: tabController, tabs: [
           Tab(text: "授業内容"),
           Tab(text: "テスト"),
