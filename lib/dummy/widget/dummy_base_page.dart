@@ -1,10 +1,10 @@
 // ダミーのヘッダー
 
-import 'package:code/dummy/data/dummy_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../firebase/auth/logout/logout_firebase.dart';
+import '../data/dummy_provider.dart';
 
 /// ハンバーガーメニュー付きページの雛型(ダミー)
 ///

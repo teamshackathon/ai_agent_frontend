@@ -1,6 +1,6 @@
 {
-    "name": "code",
-    "short_name": "code",
+    "name": "sakura",
+    "short_name": "sakura",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

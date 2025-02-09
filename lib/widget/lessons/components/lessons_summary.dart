@@ -1,10 +1,10 @@
-import 'package:code/firebase/firestore/chat/create_chat_room.dart';
-import 'package:code/route/route.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../data/room/room.dart';
+import '../../../firebase/firestore/chat/create_chat_room.dart';
+import '../../../route/route.dart';
 import 'lesson_badge_icon.dart';
 
 class LessonsSummary extends HookConsumerWidget {

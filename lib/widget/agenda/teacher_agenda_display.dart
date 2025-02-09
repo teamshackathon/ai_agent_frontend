@@ -1,12 +1,7 @@
-import 'package:code/data/agenda/agenda.dart';
-import 'package:code/data/lesson/lesson.dart';
-import 'package:code/toast.dart';
-import 'package:code/widget/agenda_materials/sentence_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../agenda_materials/agenda_editor_field.dart';
+import '../../data/lesson/lesson.dart';
 import '../teacher_tools/teacher_agenda_sentence_card.dart';
 
 class _TeacherAgendaDisplay extends HookConsumerWidget {

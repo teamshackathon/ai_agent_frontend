@@ -2,10 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
+final aiAgentApi = dotenv.env['AI_AGENT_API'];
+
 class _HttpConst {
-  static const url = kIsWeb ? 'localhost:3001' : '10.0.2.2:3001';
+  static final url = aiAgentApi ?? (kIsWeb ? 'localhost:3001' : '10.0.2.2:3001');
   static const helloAiEndpoint = '/';
   static const chatsAsStudent = '/chats_as_student';
   static const chatsAsTeacher = '/chats_as_teacher';

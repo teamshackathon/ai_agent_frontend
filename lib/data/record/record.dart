@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:math' as math;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:record/record.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -16,6 +17,8 @@ import '../person/person.dart';
 part 'record.freezed.dart';
 
 part 'record.g.dart';
+
+final websocket = dotenv.env['WEB_SOCKET_SERVER'];
 
 @freezed
 class StreamRecord with _$StreamRecord {
@@ -149,7 +152,7 @@ class StreamRecorder extends _$StreamRecorder {
   Future<void> start(DocumentReference reference) async {
     if (await _permission(reference)) {
       //state.socket.connect();
-      _channel = WebSocketChannel.connect(Uri.parse('ws://localhost:3002'));
+      _channel = WebSocketChannel.connect(Uri.parse(websocket ?? 'ws://localhost:3002'));
       // サーバーからメッセージを受け取るためのリスナーを追加
       _channel?.stream.listen((message) {
         try {

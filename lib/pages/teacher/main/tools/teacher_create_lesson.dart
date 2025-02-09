@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:code/toast.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -140,8 +139,6 @@ class _TeacherCreateLessonDisplay extends HookConsumerWidget {
                       if (end.value == 0 || end.value < start.value) {
                         end.value = current.value;
                       }
-                      infoToast(
-                          log: "start : ${start.value} , end : ${end.value}");
                     },
                     child: Text("ここから"),
                   ),
@@ -151,8 +148,6 @@ class _TeacherCreateLessonDisplay extends HookConsumerWidget {
                       if (start.value == 0 || start.value > end.value) {
                         start.value = current.value;
                       }
-                      infoToast(
-                          log: "start : ${start.value} , end : ${end.value}");
                     },
                     child: Text("ここまで"),
                   ),

@@ -1,14 +1,8 @@
-import 'dart:convert';
-
-import 'package:code/test/audio_recorder_test.dart';
-import 'package:code/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../data/quiz/quiz.dart';
-import '../../widget/quiz/answer_widget.dart';
-import '../data/dummy_provider.dart';
 import '../widget/dummy_base_page.dart';
 import 'package:http/http.dart' as http;
 
