@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:sakura/toast.dart';
 
 final aiAgentApi = dotenv.env['AI_AGENT_API'];
 
@@ -35,11 +36,11 @@ Future<String> helloAi() async {
 
 Future<void> aiChatTriggerAsStudent(String reference) async {
   var responce = await http.post(
-    Uri.http(_HttpConst.url, _HttpConst.chatsAsStudent),
+    Uri.https(_HttpConst.url, _HttpConst.chatsAsStudent),
     headers: {
       'Content-Type': 'application/json',
     },
-    body: jsonEncode({
+    body: jsonEncode(<String, String>{
       'reference': reference,
     }),
   );
@@ -54,11 +55,11 @@ Future<void> aiChatTriggerAsStudent(String reference) async {
 
 Future<void> aiChatTriggerAsTeacher(String reference) async {
   var responce = await http.post(
-    Uri.http(_HttpConst.url, _HttpConst.chatsAsTeacher),
+    Uri.https(_HttpConst.url, _HttpConst.chatsAsTeacher),
     headers: {
       'Content-Type': 'application/json',
     },
-    body: jsonEncode({
+    body: jsonEncode(<String, String>{
       'reference': reference,
     }),
   );
@@ -73,7 +74,7 @@ Future<void> aiChatTriggerAsTeacher(String reference) async {
 
 Future<String> testFirebase(String refarence) async {
   var responce = await http.get(
-    Uri.http(
+    Uri.https(
         _HttpConst.url, _HttpConst.testFirebaseEndpoint, {'path': refarence}),
   );
 
@@ -87,20 +88,19 @@ Future<String> testFirebase(String refarence) async {
 Future<void> createAgenda(String refarence, int startPage, int finishPage,
     List<String> notice) async {
   var responce = await http.post(
-      Uri.http(
+      Uri.https(
         _HttpConst.url,
         _HttpConst.createAgendaEndpoint,
       ),
       headers: {
         'Content-Type': 'application/json',
       },
-      body: jsonEncode({
+      body: jsonEncode(<String, String>{
         'reference': refarence,
         'start_page': startPage.toString(),
         'finish_page': finishPage.toString(),
-        'notice': notice,
+        'notice': notice.toString(),
       }));
-
   if (responce.statusCode == 200) {
     return;
   } else if (responce.statusCode == 400) {
@@ -112,16 +112,16 @@ Future<void> createAgenda(String refarence, int startPage, int finishPage,
 
 Future<void> createQuestions(String reference, List<String> notice) async {
   var responce = await http.post(
-      Uri.http(
+      Uri.https(
         _HttpConst.url,
         _HttpConst.createQuestionsEndpoint,
       ),
       headers: {
         'Content-Type': 'application/json',
       },
-      body: jsonEncode({
+      body: jsonEncode(<String, String>{
         'reference': reference,
-        'notice': notice,
+        'notice': notice.toString(),
       }));
 
   if (responce.statusCode == 200) {
@@ -133,16 +133,16 @@ Future<void> createQuestions(String reference, List<String> notice) async {
 
 Future<void> answeredQuestions(String reference, List<String> notice) async {
   var responce = await http.post(
-      Uri.http(
+      Uri.https(
         _HttpConst.url,
         _HttpConst.answerQuestionsEndpoint,
       ),
       headers: {
         'Content-Type': 'application/json',
       },
-      body: jsonEncode({
+      body: jsonEncode(<String, String>{
         'reference': reference,
-        'notice': notice,
+        'notice': notice.toString(),
       }));
 
   if (responce.statusCode == 200) {
@@ -156,16 +156,16 @@ Future<void> answeredQuestions(String reference, List<String> notice) async {
 
 Future<void> submitHomework(String reference, List<String> notice) async {
   var responce = await http.post(
-      Uri.http(
+      Uri.https(
         _HttpConst.url,
         _HttpConst.submitHomeworkEndpoint,
       ),
       headers: {
         'Content-Type': 'application/json',
       },
-      body: jsonEncode({
+      body: jsonEncode(<String, String>{
         'reference': reference,
-        'notice': notice,
+        'notice': notice.toString(),
       }));
 
   if (responce.statusCode == 200) {
@@ -177,7 +177,7 @@ Future<void> submitHomework(String reference, List<String> notice) async {
 
 Future<void> templatePost(String arg1, String arg2) async {
   var responce = await http.post(
-      Uri.http(
+      Uri.https(
         _HttpConst.url,
         _HttpConst.templatePostEndpoint,
       ),
@@ -195,7 +195,7 @@ Future<void> templatePost(String arg1, String arg2) async {
 
 Future<void> templateGet(String arg1, String arg2) async {
   var responce = await http.get(
-    Uri.http(_HttpConst.url, _HttpConst.templateGetEndpoint, {
+    Uri.https(_HttpConst.url, _HttpConst.templateGetEndpoint, {
       'paramater1': arg1,
       'paramater2': arg2,
     }),
