@@ -124,7 +124,7 @@ class TeacherStatusChangeButton extends HookConsumerWidget {
                     teacher: teacher,
                     reference: doc["reference"],
                   );
-                  createQuestions(doc["reference"].path);
+                  createQuestions(doc["reference"].path, []);
                   if (recorder.isRecording) {
                     await recorderNot.stop();
                   }
