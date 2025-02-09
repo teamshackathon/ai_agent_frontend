@@ -134,17 +134,35 @@ class ProfileContainerRottieIcon extends HookConsumerWidget {
     }
 
     useEffect(() {
-      userAsync.whenData(userInit);
+      if (path.value == "") {
+        userAsync.whenData(userInit);
+      }
       return;
     }, [userAsync]);
 
     return Stack(
       alignment: Alignment.center,
       children: [
-        CircleAvatar(
-          backgroundImage: NetworkImage(path.value),
-          radius: 16,
-        ),
+        if (path.value == "")
+          SizedBox(
+            width: 32,
+            height: 32,
+            child: Center(
+              child: SizedBox(
+                width: 22,
+                height: 22,
+                child: const CircularProgressIndicator(
+                  strokeWidth: 2,
+                ),
+              ),
+            ),
+          ),
+        if (path.value != "")
+          CircleAvatar(
+            backgroundImage: NetworkImage(path.value),
+            radius: 16,
+            backgroundColor: Color(0xFFDDDDFF),
+          ),
         Visibility(
           visible: index == selectedIndex,
           child: Lottie.asset(
