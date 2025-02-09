@@ -1,8 +1,9 @@
-import 'package:code/data/quiz/quiz.dart';
-import 'package:code/widget/quiz_materials/answer_text_editable.dart';
-import 'package:code/widget/quiz_materials/quiz_text.dart';
-import 'package:code/widget/quiz_materials/select_list_editable.dart';
 import 'package:flutter/material.dart';
+
+import '../../data/quiz/quiz.dart';
+import '../quiz_materials/answer_text_editable.dart';
+import '../quiz_materials/quiz_text.dart';
+import '../quiz_materials/select_list_editable.dart';
 
 class QuizEditWidget extends StatelessWidget {
   const QuizEditWidget({

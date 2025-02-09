@@ -1,5 +1,3 @@
-import 'package:code/toast.dart';
-import 'package:code/widget/utils/sakura_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -10,6 +8,7 @@ import '../../../data/firebase/lesson_stream.dart';
 import '../../../data/room/room.dart';
 import '../../../route/route.dart';
 import '../../../widget/base_page/base_page.dart';
+import '../../../widget/utils/sakura_progress_indicator.dart';
 
 class TeacherMain extends HookConsumerWidget {
   const TeacherMain({super.key});
@@ -61,7 +60,6 @@ class ClassesTabBarView extends HookConsumerWidget {
               return InkWell(
                 onTap: () {
                   ref.read(currentRoomProvider.notifier).state = room;
-                  infoToast(log: room.toString());
                   GoRouter.of(context).push(Routes.teacherLessons);
                 },
                 child: Stack(children: [

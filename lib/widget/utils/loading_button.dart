@@ -1,4 +1,4 @@
-import 'package:code/widget/utils/sakura_progress_indicator.dart';
+import 'package:sakura/widget/utils/sakura_progress_indicator.dart';
 import 'package:flutter/material.dart';
 
 class LoadingButton extends StatelessWidget {

@@ -1,8 +1,9 @@
-import 'package:code/data/quiz/quiz.dart';
-import 'package:code/dummy/widget/dummy_base_page.dart';
-import 'package:code/widget/quiz/answer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../data/quiz/quiz.dart';
+import '../dummy/widget/dummy_base_page.dart';
+import '../widget/quiz/answer_widget.dart';
 
 class Tq001 extends HookConsumerWidget {
   const Tq001({super.key});

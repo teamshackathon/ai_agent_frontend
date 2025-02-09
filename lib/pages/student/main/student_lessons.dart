@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code/widget/utils/sakura_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,6 +10,7 @@ import '../../../route/route.dart';
 import '../../../widget/base_page/base_page.dart';
 import '../../../widget/lessons/components/lesson_card.dart';
 import '../../../widget/lessons/components/lessons_summary.dart';
+import '../../../widget/utils/sakura_progress_indicator.dart';
 
 class StudentLessons extends ConsumerWidget {
   const StudentLessons({super.key});

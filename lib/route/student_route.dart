@@ -1,13 +1,12 @@
 // 長くなりそうなのでファイル分け
-import 'package:code/pages/chat/chat_to_ai.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../pages/chat/chat_to_ai.dart';
 import '../pages/profile/profile.dart';
 import '../pages/student/activity/student_activity.dart';
 import '../pages/student/main/student_lessons.dart';
 import '../pages/student/main/student_main.dart';
-import '../pages/student/main/tools/student_agenda.dart';
 import '../pages/student/main/tools/student_quiz.dart';
 import '../pages/student/main/tools/student_reading.dart';
 import '../pages/student/main/student_tools.dart';

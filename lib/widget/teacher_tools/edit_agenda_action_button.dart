@@ -1,4 +1,3 @@
-import 'package:code/widget/utils/loading_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
@@ -7,6 +6,7 @@ import '../../data/agenda/agenda.dart';
 import '../../data/lesson/lesson.dart';
 import '../agenda_materials/agenda_editor_field.dart';
 import '../agenda_materials/sentence_card.dart';
+import '../utils/loading_button.dart';
 
 class EditAgendaActionButton extends StatelessWidget {
   const EditAgendaActionButton({super.key, required this.lesson});

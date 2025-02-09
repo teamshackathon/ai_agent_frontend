@@ -1,4 +1,3 @@
-import 'package:code/widget/utils/sakura_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -8,6 +7,7 @@ import '../../../firebase/firestore/notice/send_notice_to_myself.dart';
 import '../../../widget/base_page/base_page.dart';
 import '../../../widget/activity/activity_list_item.dart';
 import '../../../widget/activity/activity_filter_button.dart';
+import '../../../widget/utils/sakura_progress_indicator.dart';
 
 class TeacherActivityPage extends HookConsumerWidget {
   const TeacherActivityPage({super.key});
