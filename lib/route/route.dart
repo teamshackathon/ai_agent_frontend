@@ -110,7 +110,6 @@ class Router extends _$Router {
 
         // 生徒用のbottomBarを含めた分岐
         if (role.value == "student") studentBranch,
-
       ],
       debugLogDiagnostics: false,
     );
