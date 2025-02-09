@@ -1,11 +1,10 @@
 import 'dart:ui';
 
-import 'package:code/api/api.dart';
-import 'package:code/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../api/api.dart';
 import '../../../../data/firebase/submission_stream.dart';
 import '../../../../data/person/person.dart';
 import '../../../../data/quiz/quiz.dart';
@@ -71,7 +70,7 @@ class StudentHomeworkWidget extends ConsumerWidget {
           ];
           await reference
               .update({"homework_answers": list, "name": student.name});
-          // await submitHomework(reference.path);
+          await submitHomework(reference.path);
         },
       ),
     );
