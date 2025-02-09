@@ -64,7 +64,7 @@ class StudentAnswerCheckDisplay extends HookConsumerWidget {
       var q = quizzes[i];
       var r = results[i];
       total = total + q.score;
-      if (r.graded ? r.correct : q.answer == q.correctAnswer) {
+      if (r.graded ? r.correct : r.answer == q.correctAnswer) {
         score = score + q.score;
       }
     }

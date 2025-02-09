@@ -101,6 +101,7 @@ class Quiz with _$Quiz {
     if (this is Anaume) {
       return {
         "title": title,
+        "answer": answer,
         "format": "Anaume",
         "score": score,
         "question": question,
@@ -115,6 +116,7 @@ class Quiz with _$Quiz {
       }
       return {
         "title": title,
+        "answer": answer,
         "format": "Sentaku",
         "score": score,
         "question": question,
@@ -125,6 +127,7 @@ class Quiz with _$Quiz {
     } else {
       return {
         "title": title,
+        "answer": answer,
         "format": "Kijutsu",
         "score": score,
         "question": question,

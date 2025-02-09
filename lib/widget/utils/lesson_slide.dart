@@ -117,12 +117,12 @@ class LessonCancelSlide extends ConsumerWidget {
         if (lesson.state != "break") {
           await cancelLessonToDuring(
             teacher: currentRoom.teacher,
-            currentLesson: lesson,
+            reference: lesson.reference,
           );
         } else {
           await finishLessonToDuring(
             teacher: currentRoom.teacher,
-            currentLesson: lesson,
+            reference: lesson.reference,
           );
         }
         if (recorder.isRecording) {

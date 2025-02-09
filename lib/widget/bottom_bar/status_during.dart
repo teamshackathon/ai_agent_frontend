@@ -12,13 +12,15 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 
-class TeacherStatusMiniBottomBar extends HookConsumerWidget {
+class TeacherStatusMiniBottomBar extends HookWidget {
   const TeacherStatusMiniBottomBar({
     super.key,
     required this.teacher,
+    required this.dataMap,
   });
 
   final String teacher;
+  final Map<String, dynamic> dataMap;
 
   String subjectToJapanese(String subject) {
     switch (subject) {
@@ -38,101 +40,64 @@ class TeacherStatusMiniBottomBar extends HookConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final currentRoom = ref.watch(currentRoomProvider);
-    final currentLesson = ref.watch(currentLessonProvider);
-
-    final during = ref.watch(duringStreamProvider);
-
-    final lesson = useState<Lesson>(currentLesson);
-
+  Widget build(BuildContext context) {
     String getStatus(Map<String, dynamic> docs) {
       if (docs["state"] == "lesson") {
-        return "${subjectToJapanese(currentRoom.subject)}  第${lesson.value.count}回 授業中";
+        return "${docs["room"]}  ${subjectToJapanese(docs["subject"])}  第${docs["count"]}回 授業中";
       } else if (docs["state"] == "break") {
-        return "${subjectToJapanese(currentRoom.subject)}  第${lesson.value.count}回 テスト準備中";
+        return "${docs["room"]}  ${subjectToJapanese(docs["subject"])}  第${docs["count"]}回 テスト準備中";
       } else if (docs["state"] == "test") {
-        return "${subjectToJapanese(currentRoom.subject)}  第${lesson.value.count}回 テスト中";
+        return "${docs["room"]}  ${subjectToJapanese(docs["subject"])}  第${docs["count"]}回 テスト中";
       }
       return "";
     }
 
-    useEffect(() {
-      during.when(
-          data: (snap) {
-            if (duringLesson(
-                  snapshotData: snap.docs,
-                  roomNumber: currentRoom.roomNumber,
-                  subject: currentRoom.subject,
-                  count: currentLesson.count,
-                ) ==
-                true) {
-              lesson.value = currentLesson;
-            }
-          },
-          error: (_, __) {},
-          loading: () {});
-      return null;
-    }, [currentRoom, currentLesson, during]);
-
-    return during.when(
-      data: (snap) {
-        if (duringLessonNotCount(
-          snapshotData: snap.docs,
-          roomNumber: currentRoom.roomNumber,
-          subject: currentRoom.subject,
-        )) {
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            padding: const EdgeInsets.all(10),
-            width: 350,
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 4),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: Colors.pink[100],
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Center(
-                          child: snap.docs[0]["state"] == "lesson"
-                              ? RecordButton(teacher: teacher)
-                              : Icon(Icons.local_florist,
-                                  color: Colors.pink[200]),
-                        )),
-                    const SizedBox(width: 10),
-                    Text(
-                      getStatus(snap.docs[0].data()),
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                TeacherStatusChangeButton(
-                  teacher: teacher,
-                  doc: snap.docs[0],
-                ),
-              ],
-            ),
-          );
-        } else {
-          return const SizedBox.shrink();
-        }
-      },
-      error: (_, __) => const SizedBox.shrink(),
-      loading: () => const SizedBox.shrink(),
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.all(10),
+      width: 350,
+      height: 60,
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 4),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            children: [
+              Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.pink[100],
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Center(
+                    child: dataMap["state"] == "lesson"
+                        ? RecordButton(
+                            teacher: teacher,
+                            reference: dataMap["reference"],
+                          )
+                        : Icon(Icons.local_florist, color: Colors.pink[200]),
+                  )),
+              const SizedBox(width: 10),
+              Text(
+                getStatus(dataMap),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          TeacherStatusChangeButton(
+            teacher: teacher,
+            doc: dataMap,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -145,44 +110,33 @@ class TeacherStatusChangeButton extends HookConsumerWidget {
   });
 
   final String teacher;
-  final QueryDocumentSnapshot<Map<String, dynamic>> doc;
+  final Map<String, dynamic> doc;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentRoom = ref.watch(currentRoomProvider);
-    final currentlesson = ref.watch(currentLessonProvider);
     final recorder = ref.watch(streamRecorderProvider);
     final recorderNot = ref.watch(streamRecorderProvider.notifier);
-    final draggableNot = ref.watch(draggableProvider.notifier);
 
     return Padding(
       padding: EdgeInsets.only(right: 0, top: 0),
-      child: IconButton(
-        iconSize: 25,
-        icon: Icon(Icons.stop_circle, size: 25),
-        onPressed: () async {
-          Logger()
-              .i("Change status to ${doc["state"]}, ${currentlesson.count}");
-          Logger().i("Create questions: ${currentlesson.reference.path}");
-          if (doc["state"] == "lesson" && currentlesson.count != 0) {
-            await breakLessonToDuring(
-              teacher: currentRoom.teacher,
-              currentLesson: currentlesson,
-            );
-            createQuestions(currentlesson.reference.path);
-            if (recorder.isRecording) {
-              await recorderNot.stop();
-            }
-            draggableNot.state = false;
-          } else if (doc["state"] == "break" && currentlesson.count != 0) {
-            await startTestToDuring(
-                teacher: teacher, currentLesson: currentlesson);
-          } else if (doc["state"] == "test" && currentlesson.count != 0) {
-            await finishLessonToDuring(
-                teacher: teacher, currentLesson: currentlesson);
-          }
-        },
-      ),
+      child: doc["state"] == "lesson"
+          ? IconButton(
+              iconSize: 25,
+              icon: Icon(Icons.stop_circle, size: 25),
+              onPressed: () async {
+                if (doc["state"] == "lesson") {
+                  await breakLessonToDuring(
+                    teacher: teacher,
+                    reference: doc["reference"],
+                  );
+                  createQuestions(doc["reference"].path);
+                  if (recorder.isRecording) {
+                    await recorderNot.stop();
+                  }
+                }
+              },
+            )
+          : SizedBox(width: 25, height: 25),
     );
   }
 }

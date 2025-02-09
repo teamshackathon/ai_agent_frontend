@@ -102,7 +102,7 @@ class StudentToolsDisplay extends HookConsumerWidget {
         children: [
           StudentAgenda(lesson: lesson),
           StudentAnswerCheck(lesson: lesson),
-          StudentHomework(lesson: lesson),
+          StudentHomework(),
         ],
       )),
     ]);
