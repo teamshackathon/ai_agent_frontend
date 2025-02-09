@@ -52,7 +52,7 @@ class TeacherBottomBar extends HookConsumerWidget {
     final size = MediaQuery.of(context).size;
 
     final posX = useState(size.width / 2 - 350 / 2);
-    final posY = useState(size.height / 2 - 60 / 2);
+    final posY = useState(100.0);
 
     useEffect(() {
       getUser();
@@ -89,10 +89,10 @@ class TeacherBottomBar extends HookConsumerWidget {
                         dataMap: map,
                       );
                     }
-                    return null;
+                    return SizedBox(width: 1,height: 1);
                   },
-                  error: (_, __) => null,
-                  loading: () => null,
+                  error: (_, __) => SizedBox(width: 1,height: 1),
+                  loading: () => SizedBox(width: 1,height: 1),
                 ),
               ),
             ),

@@ -61,25 +61,22 @@ class QuizEditScreen extends HookConsumerWidget {
     final draggable = ref.watch(draggableProvider);
     final currentRoom = ref.watch(currentRoomProvider);
 
-    return Center(
-      child: ScrollConfiguration(
-        // chrome上でスワイプを検知するために必要、実機ではいらない
-        behavior: _MouseDraggableScrollBehavior(),
-        child: PageView(
-          // controller: PageController(initialPage: ),
-          physics: draggable ? null : const NeverScrollableScrollPhysics(),
-          scrollDirection: Axis.vertical,
-          children: [
-            QuizEditDisplay(lesson: lesson),
-            SizedBox(),
-          ],
-          onPageChanged: (page) async {
-            await startTestToDuring(
-              teacher: currentRoom.teacher,
-              reference: lesson.reference,
-            );
-          },
-        ),
+    return ScrollConfiguration(
+      // chrome上でスワイプを検知するために必要、実機ではいらない
+      behavior: _MouseDraggableScrollBehavior(),
+      child: PageView(
+        physics: draggable ? null : const NeverScrollableScrollPhysics(),
+        scrollDirection: Axis.vertical,
+        children: [
+          QuizEditDisplay(lesson: lesson),
+          SizedBox(),
+        ],
+        onPageChanged: (page) async {
+          await startTestToDuring(
+            teacher: currentRoom.teacher,
+            reference: lesson.reference,
+          );
+        },
       ),
     );
   }
@@ -199,88 +196,82 @@ class QuizSubmissionDisplay extends HookConsumerWidget {
         }
         final testing = count - busy.length - finish.length;
 
-        return Center(
-          child: Column(children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Divider(height: 2),
-            ),
-            Theme(
-              data:
-                  Theme.of(context).copyWith(dividerColor: Colors.transparent),
-              child: ExpansionTile(
-                backgroundColor: Color(0xFFEEDDDD),
-                collapsedBackgroundColor: Color(0xFFEEDDDD),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("テスト中", style: TextStyle(fontSize: 20)),
-                    Text("$testing", style: TextStyle(fontSize: 20)),
-                  ],
-                ),
-                children: [],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Divider(height: 2),
-            ),
-            TeacherSubmissionsExpansionTile(
-              lesson: lesson,
+        return Column(children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Divider(height: 2),
+          ),
+          Theme(
+            data:
+            Theme.of(context).copyWith(dividerColor: Colors.transparent),
+            child: ExpansionTile(
+              backgroundColor: Color(0xFFEEDDDD),
+              collapsedBackgroundColor: Color(0xFFEEDDDD),
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("採点中", style: TextStyle(fontSize: 20)),
-                  Text("${busy.length}", style: TextStyle(fontSize: 20)),
+                  Text("テスト中", style: TextStyle(fontSize: 20)),
+                  Text("$testing", style: TextStyle(fontSize: 20)),
                 ],
               ),
-              submissions: busy,
-              color: Color(0xFFEEEEDD),
+              children: [],
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Divider(height: 2),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Divider(height: 2),
+          ),
+          TeacherSubmissionsExpansionTile(
+            lesson: lesson,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("採点中", style: TextStyle(fontSize: 20)),
+                Text("${busy.length}", style: TextStyle(fontSize: 20)),
+              ],
             ),
-            TeacherSubmissionsExpansionTile(
-              lesson: lesson,
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("採点中", style: TextStyle(fontSize: 20)),
-                  Text("${finish.length}", style: TextStyle(fontSize: 20)),
-                ],
-              ),
-              submissions: finish,
-              color: Color(0xFFDDEEDD),
+            submissions: busy,
+            color: Color(0xFFEEEEDD),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Divider(height: 2),
+          ),
+          TeacherSubmissionsExpansionTile(
+            lesson: lesson,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("採点中", style: TextStyle(fontSize: 20)),
+                Text("${finish.length}", style: TextStyle(fontSize: 20)),
+              ],
             ),
-            Spacer(),
-            LoadingButton(
-              width: 200,
-              onPressed: () async {
-                loading.value = true;
-                await finishLessonToDuring(
-                  teacher: currentRoom.teacher,
-                  reference: lesson.reference,
-                );
-                if (context.mounted) {
-                  GoRouter.of(context).pop();
-                }
-                loading.value = false;
-              },
-              isLoading: loading.value,
-              text: "テスト終了",
-            ),
-          ]),
-        );
+            submissions: finish,
+            color: Color(0xFFDDEEDD),
+          ),
+          Spacer(),
+          LoadingButton(
+            width: 200,
+            onPressed: () async {
+              loading.value = true;
+              await finishLessonToDuring(
+                teacher: currentRoom.teacher,
+                reference: lesson.reference,
+              );
+              if (context.mounted) {
+                GoRouter.of(context).pop();
+              }
+              loading.value = false;
+            },
+            isLoading: loading.value,
+            text: "テスト終了",
+          ),
+        ]);
       },
       // エラー時の表示
-      error: (_, __) => const Center(
-        child: Text("読み込み失敗"),
-      ),
+      error: (_, __) => const Text("読み込み失敗"),
       // 読込中の表示
-      loading: () => const Center(
-        child: SakuraProgressIndicator(),
-      ),
+      loading: () => const SakuraProgressIndicator(),
     );
   }
 }
@@ -355,13 +346,9 @@ class QuizResultsDisplay extends ConsumerWidget {
         return ListView(children: list);
       },
       // エラー時の表示
-      error: (_, __) => const Center(
-        child: Text("読み込み失敗"),
-      ),
+      error: (_, __) => const Text("読み込み失敗"),
       // 読込中の表示
-      loading: () => const Center(
-        child: SakuraProgressIndicator(),
-      ),
+      loading: () => const SakuraProgressIndicator(),
     );
   }
 }

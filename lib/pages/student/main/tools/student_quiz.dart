@@ -1,17 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code/api/api.dart';
-import 'package:code/data/person/person.dart';
-import 'package:code/toast.dart';
-import 'package:code/widget/utils/loading_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../api/api.dart';
 import '../../../../data/firebase/during_stream.dart';
 import '../../../../data/firebase/tools_stream.dart';
 import '../../../../data/lesson/lesson.dart';
+import '../../../../data/person/person.dart';
 import '../../../../data/quiz/quiz.dart';
 import '../../../../widget/quiz/answer_widget.dart';
+import '../../../../widget/utils/loading_button.dart';
 import '../../../../widget/utils/sakura_progress_indicator.dart';
 
 class StudentQuiz extends HookConsumerWidget {
@@ -46,7 +45,7 @@ class StudentQuiz extends HookConsumerWidget {
           data: (snapshot) {
             final duringList = snapshot.docs;
             if (duringList.isEmpty) {
-              return const Center(child: SakuraProgressIndicator());
+              return const SakuraProgressIndicator();
             }
             final testLesson = ref.watch(testToolsStreamProvider);
             return testLesson.when(
@@ -59,12 +58,12 @@ class StudentQuiz extends HookConsumerWidget {
                   duringRef: duringRef.value,
                 );
               },
-              error: (_, __) => const Center(child: Text("読み込み失敗")),
-              loading: () => const Center(child: SakuraProgressIndicator()),
+              error: (_, __) => const Text("読み込み失敗"),
+              loading: () => const SakuraProgressIndicator(),
             );
           },
-          error: (_, __) => const Center(child: Text("読み込み失敗")),
-          loading: () => const Center(child: SakuraProgressIndicator()),
+          error: (_, __) => const Text("読み込み失敗"),
+          loading: () => const SakuraProgressIndicator(),
         ),
       ),
     );
@@ -129,7 +128,7 @@ class StudentQuizDisplay extends HookConsumerWidget {
             await reference
                 .collection("students")
                 .doc(student.folderName)
-                .set({"answers": list, "name": student.name});
+                .update({"answers": list, "name": student.name});
             await duringRef.update({
               "finish": FieldValue.arrayUnion([student.folderName])
             });
