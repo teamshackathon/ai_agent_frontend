@@ -8,7 +8,8 @@ import 'package:http/http.dart' as http;
 final aiAgentApi = dotenv.env['AI_AGENT_API'];
 
 class _HttpConst {
-  static final url = aiAgentApi ?? (kIsWeb ? 'localhost:3001' : '10.0.2.2:3001');
+  static final url =
+      aiAgentApi ?? (kIsWeb ? 'localhost:3001' : '10.0.2.2:3001');
   static const helloAiEndpoint = '/';
   static const chatsAsStudent = '/chats_as_student';
   static const chatsAsTeacher = '/chats_as_teacher';

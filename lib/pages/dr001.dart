@@ -19,9 +19,7 @@ class DisplayResult extends ConsumerWidget {
       appBar: AppBar(),
       body: Center(
           child: DummyBasePage(
-        floatingActionButton: FloatingActionButton(onPressed: () {
-
-        }),
+        floatingActionButton: FloatingActionButton(onPressed: () {}),
         pageTitle: "ダミーメイン",
         body: ListView.builder(
           itemCount: quiz.length,

@@ -152,7 +152,8 @@ class StreamRecorder extends _$StreamRecorder {
   Future<void> start(DocumentReference reference) async {
     if (await _permission(reference)) {
       //state.socket.connect();
-      _channel = WebSocketChannel.connect(Uri.parse(websocket ?? 'ws://localhost:3002'));
+      _channel = WebSocketChannel.connect(
+          Uri.parse(websocket ?? 'ws://localhost:3002'));
       // サーバーからメッセージを受け取るためのリスナーを追加
       _channel?.stream.listen((message) {
         try {
