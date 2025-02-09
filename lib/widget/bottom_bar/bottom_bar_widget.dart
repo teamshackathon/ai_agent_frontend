@@ -158,13 +158,13 @@ class ProfileContainerRottieIcon extends HookConsumerWidget {
               values: [
                 index == selectedIndex
                     ? ValueDelegate.color(
-                  const ['**'],
-                  value: Color(0xFF020b19),
-                )
+                        const ['**'],
+                        value: Color(0xFF020b19),
+                      )
                     : ValueDelegate.color(
-                  const ['**'],
-                  value: Colors.blueAccent,
-                ),
+                        const ['**'],
+                        value: Colors.blueAccent,
+                      ),
               ],
             ),
           ),
