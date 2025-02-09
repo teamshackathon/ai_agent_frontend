@@ -70,7 +70,7 @@ class StudentHomeworkWidget extends ConsumerWidget {
           ];
           await reference
               .update({"homework_answers": list, "name": student.name});
-          await submitHomework(reference.path);
+          await submitHomework(reference.path, []);
         },
       ),
     );

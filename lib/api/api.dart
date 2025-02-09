@@ -81,8 +81,8 @@ Future<String> testFirebase(String refarence) async {
   }
 }
 
-Future<void> createAgenda(
-    String refarence, int startPage, int finishPage) async {
+Future<void> createAgenda(String refarence, int startPage, int finishPage,
+    List<String> notice) async {
   var responce = await http.post(
       Uri.http(
         _HttpConst.url,
@@ -95,6 +95,7 @@ Future<void> createAgenda(
         'reference': refarence,
         'start_page': startPage.toString(),
         'finish_page': finishPage.toString(),
+        'notice': notice,
       }));
 
   if (responce.statusCode == 200) {
@@ -106,7 +107,7 @@ Future<void> createAgenda(
   }
 }
 
-Future<void> createQuestions(String reference) async {
+Future<void> createQuestions(String reference, List<String> notice) async {
   var responce = await http.post(
       Uri.http(
         _HttpConst.url,
@@ -117,6 +118,7 @@ Future<void> createQuestions(String reference) async {
       },
       body: jsonEncode({
         'reference': reference,
+        'notice': notice,
       }));
 
   if (responce.statusCode == 200) {
@@ -126,7 +128,7 @@ Future<void> createQuestions(String reference) async {
   }
 }
 
-Future<void> answeredQuestions(String reference) async {
+Future<void> answeredQuestions(String reference, List<String> notice) async {
   var responce = await http.post(
       Uri.http(
         _HttpConst.url,
@@ -137,6 +139,7 @@ Future<void> answeredQuestions(String reference) async {
       },
       body: jsonEncode({
         'reference': reference,
+        'notice': notice,
       }));
 
   if (responce.statusCode == 200) {
@@ -148,7 +151,7 @@ Future<void> answeredQuestions(String reference) async {
   }
 }
 
-Future<void> submitHomework(String reference) async {
+Future<void> submitHomework(String reference, List<String> notice) async {
   var responce = await http.post(
       Uri.http(
         _HttpConst.url,
@@ -159,6 +162,7 @@ Future<void> submitHomework(String reference) async {
       },
       body: jsonEncode({
         'reference': reference,
+        'notice': notice,
       }));
 
   if (responce.statusCode == 200) {

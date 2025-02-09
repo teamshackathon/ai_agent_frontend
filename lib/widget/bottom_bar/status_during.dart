@@ -1,16 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code/api/api.dart';
 import 'package:code/data/firebase/during_stream.dart';
-import 'package:code/data/firebase/lesson_stream.dart';
-import 'package:code/data/firebase/tools_stream.dart';
-import 'package:code/data/lesson/lesson.dart';
 import 'package:code/data/record/record.dart';
-import 'package:code/pages/teacher/main/tools/teacher_quiz.dart';
 import 'package:code/widget/floating/record_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:logger/logger.dart';
 
 class TeacherStatusMiniBottomBar extends HookWidget {
   const TeacherStatusMiniBottomBar({
@@ -129,7 +123,7 @@ class TeacherStatusChangeButton extends HookConsumerWidget {
                     teacher: teacher,
                     reference: doc["reference"],
                   );
-                  createQuestions(doc["reference"].path);
+                  createQuestions(doc["reference"].path, []);
                   if (recorder.isRecording) {
                     await recorderNot.stop();
                   }
