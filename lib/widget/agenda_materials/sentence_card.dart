@@ -1,9 +1,9 @@
-import 'package:code/widget/agenda_materials/agenda_editor_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../data/agenda/agenda.dart';
+import 'agenda_editor_field.dart';
 
 class SentenceCard extends ConsumerWidget {
   const SentenceCard(

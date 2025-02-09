@@ -1,8 +1,8 @@
-import 'package:code/data/firebase/chat_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 
 import '../../../data/chat/chat_models.dart';
+import '../../../data/firebase/chat_provider.dart';
 import '../../../data/person/person.dart';
 import '../../../data/firebase/lesson_stream.dart';
 

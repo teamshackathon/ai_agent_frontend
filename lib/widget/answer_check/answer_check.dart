@@ -1,9 +1,9 @@
-import 'package:code/widget/quiz_materials/answer_textfield.dart';
-import 'package:code/widget/quiz_materials/radio_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/quiz/quiz.dart';
 import '../../data/result/result.dart';
+import '../quiz_materials/answer_textfield.dart';
+import '../quiz_materials/radio_button.dart';
 
 class AnswerCheckWidget extends StatelessWidget {
   const AnswerCheckWidget({

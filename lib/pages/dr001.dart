@@ -1,10 +1,10 @@
-import 'package:code/data/quiz/quiz.dart';
-import 'package:code/dummy/data/dummy_provider.dart';
-import 'package:code/dummy/widget/dummy_base_page.dart';
-import 'package:code/toast.dart';
-import 'package:code/widget/quiz/answer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../data/quiz/quiz.dart';
+import '../dummy/data/dummy_provider.dart';
+import '../dummy/widget/dummy_base_page.dart';
+import '../widget/quiz/answer_widget.dart';
 
 class DisplayResult extends ConsumerWidget {
   const DisplayResult({super.key});
@@ -19,10 +19,7 @@ class DisplayResult extends ConsumerWidget {
       appBar: AppBar(),
       body: Center(
           child: DummyBasePage(
-        floatingActionButton: FloatingActionButton(onPressed: () {
-          // quizNot.init(readQuiz("mock"));
-          infoToast(log: quiz.toString());
-        }),
+        floatingActionButton: FloatingActionButton(onPressed: () {}),
         pageTitle: "ダミーメイン",
         body: ListView.builder(
           itemCount: quiz.length,

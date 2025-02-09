@@ -1,7 +1,8 @@
-import 'package:code/data/result/result.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../result/result.dart';
 
 part 'quiz.freezed.dart';
 

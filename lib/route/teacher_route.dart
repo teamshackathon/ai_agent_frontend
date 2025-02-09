@@ -1,17 +1,14 @@
 // 長くなりそうなのでファイル分け
-import 'package:code/pages/chat/chat_to_ai.dart';
-import 'package:code/pages/chat/chat_to_student.dart';
-import 'package:code/pages/teacher/main/tools/teacher_create_lesson.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../pages/chat/chat_to_ai.dart';
+import '../pages/chat/chat_to_student.dart';
 import '../pages/profile/profile.dart';
 import '../pages/teacher/activity/teacher_activity.dart';
 import '../pages/teacher/main/teacher_lessons.dart';
 import '../pages/teacher/main/teacher_main.dart';
 import '../pages/teacher/main/teacher_tools.dart';
-import '../pages/teacher/main/tools/teacher_agenda.dart';
-import '../pages/teacher/main/tools/teacher_quiz.dart';
 import '../pages/teacher/main/tools/teacher_reading.dart';
 import '../widget/bottom_bar/teacher_bottom_bar.dart';
 import 'route.dart';

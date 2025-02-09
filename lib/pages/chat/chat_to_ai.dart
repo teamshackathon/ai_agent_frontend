@@ -1,13 +1,13 @@
-import 'package:code/api/api.dart';
-import 'package:code/data/firebase/chat_provider.dart';
-import 'package:code/data/firebase/lesson_stream.dart';
-import 'package:code/data/person/person.dart';
-import 'package:code/widget/chat/message_card.dart';
-import 'package:code/widget/utils/sakura_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../api/api.dart';
+import '../../data/firebase/chat_provider.dart';
+import '../../data/firebase/lesson_stream.dart';
+import '../../data/person/person.dart';
 import '../../widget/base_page/base_page.dart';
+import '../../widget/chat/message_card.dart';
+import '../../widget/utils/sakura_progress_indicator.dart';
 
 class ChatAIRoomScreen extends ConsumerWidget {
   const ChatAIRoomScreen({

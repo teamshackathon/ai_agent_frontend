@@ -1,6 +1,7 @@
-import 'package:code/pages/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../../pages/profile/profile.dart';
 
 class IsMeMessageCard extends HookConsumerWidget {
   const IsMeMessageCard({

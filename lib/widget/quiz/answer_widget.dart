@@ -1,11 +1,12 @@
-import 'package:code/data/quiz/quiz.dart';
-import 'package:code/widget/quiz_materials/answer_textfield.dart';
-import 'package:code/widget/quiz_materials/quiz_text.dart';
-import 'package:code/widget/quiz_materials/radio_button.dart';
-import 'package:code/widget/quiz_materials/result_and_correct.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../../data/quiz/quiz.dart';
+import '../quiz_materials/answer_textfield.dart';
+import '../quiz_materials/quiz_text.dart';
+import '../quiz_materials/radio_button.dart';
+import '../quiz_materials/result_and_correct.dart';
 
 class AnswerWidget extends HookConsumerWidget {
   const AnswerWidget({
@@ -22,7 +23,6 @@ class AnswerWidget extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = useTextEditingController(text: quiz.answer);
-    final size = MediaQuery.of(context).size;
 
     return Card(
       child: Padding(

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code/toast.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -185,7 +184,6 @@ Future<List<Room>> activeRooms(ref) async {
     }
     throw Exception("Error(Rooms) : ROLE IS UNFIT");
   } catch (e) {
-    warningToast(log: e);
     return [];
   }
 }
@@ -312,7 +310,6 @@ Future<List<Room>> archiveRooms(ref) async {
     }
     throw Exception("Error(Rooms) : ROLE IS UNFIT");
   } catch (e) {
-    warningToast(log: e);
     return [];
   }
 }

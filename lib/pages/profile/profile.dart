@@ -1,4 +1,3 @@
-import 'package:code/widget/utils/sakura_progress_indicator.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -6,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../widget/base_page/base_page.dart';
 import '../../data/person/person.dart';
+import '../../widget/utils/sakura_progress_indicator.dart';
 
 class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});

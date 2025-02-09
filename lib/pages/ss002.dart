@@ -1,9 +1,10 @@
-import 'package:code/data/quiz/quiz.dart';
-import 'package:code/dummy/data/dummy_provider.dart';
-import 'package:code/dummy/widget/dummy_base_page.dart';
-import 'package:code/widget/quiz/quiz_edit_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../data/quiz/quiz.dart';
+import '../dummy/data/dummy_provider.dart';
+import '../dummy/widget/dummy_base_page.dart';
+import '../widget/quiz/quiz_edit_widget.dart';
 
 class PreviewAnswer extends ConsumerWidget {
   const PreviewAnswer({super.key});

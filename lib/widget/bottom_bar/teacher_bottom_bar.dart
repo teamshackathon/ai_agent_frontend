@@ -1,15 +1,12 @@
-import 'package:code/widget/bottom_bar/status_during.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-// import '../../data/firebase/during_stream.dart';
 import '../../data/firebase/during_stream.dart';
 import '../../data/person/person.dart';
-
-// import '../floating/floating_record_button.dart';
 import 'bottom_bar_widget.dart';
+import 'status_during.dart';
 
 class TeacherBottomBar extends HookConsumerWidget {
   const TeacherBottomBar({
