@@ -94,6 +94,25 @@ class ProfilePage extends ConsumerWidget {
   }
 }
 
+final iconUrlCacheProvider = StateProvider.family((ref, String path) => "");
+
+final iconUrlProvider =
+    FutureProvider.family<String, String>((ref, String path) async {
+  // キャッシュをチェック
+  final cached = ref.read(iconUrlCacheProvider(path));
+  if (cached != "") {
+    return cached;
+  }
+
+  // キャッシュがない場合は新しく取得
+  final storage = FirebaseStorage.instance;
+  final url = await storage.ref(path).getDownloadURL();
+
+  // 取得したURLをキャッシュに保存
+  ref.read(iconUrlCacheProvider(path).notifier).state = url;
+  return url;
+});
+
 class UserIcon extends ConsumerWidget {
   const UserIcon({
     super.key,
@@ -108,62 +127,46 @@ class UserIcon extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final storage = FirebaseStorage.instance;
-    final pdf = storage.ref(iconPath).getDownloadURL();
+    final iconUrlAsync = ref.watch(iconUrlProvider(iconPath));
 
-    return FutureBuilder(
-      future: pdf,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return SizedBox(
-            width: 80,
-            height: 80,
-            child: Center(
-              child: SizedBox(
-                width: 60,
-                height: 60,
-                child: const CircularProgressIndicator(),
-              ),
-            ),
-          );
-        } else if (snapshot.hasError || !snapshot.hasData) {
-          return CircleAvatar(
-            radius: radius, // プロフィール画像のサイズ
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.green,
-            child: Text(
-              name, // 仮のイニシャル
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.green,
-              ),
-            ),
-          );
-        } else {
-          final userIconPath = snapshot.data ?? "";
-          if (userIconPath == "") {
-            return CircleAvatar(
-              radius: radius, // プロフィール画像のサイズ
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.green,
-              child: Text(
-                name, // 仮のイニシャル
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green,
-                ),
-              ),
-            );
-          } else {
-            return CircleAvatar(
-              radius: radius,
-              backgroundImage: NetworkImage(userIconPath),
-            );
-          }
+    return iconUrlAsync.when(
+      loading: () => SizedBox(
+        width: 80,
+        height: 80,
+        child: Center(
+          child: SizedBox(
+            width: 60,
+            height: 60,
+            child: const CircularProgressIndicator(),
+          ),
+        ),
+      ),
+      error: (_, __) => _buildDefaultAvatar(),
+      data: (url) {
+        if (url.isEmpty) {
+          return _buildDefaultAvatar();
         }
+        return CircleAvatar(
+          radius: radius,
+          backgroundImage: NetworkImage(url),
+        );
       },
+    );
+  }
+
+  Widget _buildDefaultAvatar() {
+    return CircleAvatar(
+      radius: radius,
+      backgroundColor: Colors.white,
+      foregroundColor: Colors.green,
+      child: Text(
+        name,
+        style: TextStyle(
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+          color: Colors.green,
+        ),
+      ),
     );
   }
 }
