@@ -76,7 +76,7 @@ class QuizEditScreen extends HookConsumerWidget {
           onPageChanged: (page) async {
             await startTestToDuring(
               teacher: currentRoom.teacher,
-              currentLesson: lesson,
+              reference: lesson.reference,
             );
           },
         ),
@@ -260,7 +260,7 @@ class QuizSubmissionDisplay extends HookConsumerWidget {
                 loading.value = true;
                 await finishLessonToDuring(
                   teacher: currentRoom.teacher,
-                  currentLesson: lesson,
+                  reference: lesson.reference,
                 );
                 if (context.mounted) {
                   GoRouter.of(context).pop();

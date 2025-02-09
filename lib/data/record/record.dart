@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:math' as math;
-import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:record/record.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -11,7 +11,6 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../toast.dart';
 import '../firebase/during_stream.dart';
-import '../firebase/tools_stream.dart';
 import '../person/person.dart';
 
 part 'record.freezed.dart';
@@ -40,7 +39,6 @@ class StreamRecorder extends _$StreamRecorder {
   // 設定欄から感度調整バーがあってもいいかも
   // SharedPreferenceで端末側に情報を残して
   final dBThreshold = 45.0;
-
   // 下のページを見る限り、1chunk0.1secっぽい
   // https://zenn.dev/tatsuyasusukida/scraps/c9503b9fec2e51
   // とりあえず規定時間を二秒にしておく
@@ -132,11 +130,12 @@ class StreamRecorder extends _$StreamRecorder {
     }
   }
 
-  Future<bool> _permission() async {
-    if (await state.recorder.hasPermission()) return true;
+  Future<bool> _permission(DocumentReference reference) async {
+    if (await state.recorder.hasPermission()) {
+      return true;
+    }
     final user = await ref.watch(personStatusProvider.future);
-    final current = ref.watch(currentLessonProvider);
-    cancelLessonToDuring(teacher: user.name, currentLesson: current);
+    cancelLessonToDuring(teacher: user.name, reference: reference);
     return false;
   }
 
@@ -145,11 +144,10 @@ class StreamRecorder extends _$StreamRecorder {
     final stream = await state.recorder
         .startStream(const RecordConfig(encoder: AudioEncoder.wav));
     subscription = stream.listen(_onAudioDataAvailable);
-    state = state.copyWith(isRecording: true);
   }
 
-  Future<void> start() async {
-    if (await _permission()) {
+  Future<void> start(DocumentReference reference) async {
+    if (await _permission(reference)) {
       //state.socket.connect();
       _channel = WebSocketChannel.connect(Uri.parse('ws://localhost:3002'));
       // サーバーからメッセージを受け取るためのリスナーを追加
@@ -165,28 +163,27 @@ class StreamRecorder extends _$StreamRecorder {
         }
       });
       await _startRecorder();
-    }
-  }
-
-  Future<void> pause() async {
-    await state.recorder.pause();
-    _sendAudio();
-    state = state.copyWith(isRecording: false);
-  }
-
-  Future<void> resume() async {
-    if (await _permission()) {
-      await state.recorder.resume();
       state = state.copyWith(isRecording: true);
     }
   }
 
-  Future<void> stop() async {
-    subscription!.cancel();
-    _sendAudio();
-    state.recorder.stop();
-    //state.socket.dispose();
-    _channel?.sink.close();
+  Future<void> pause() async {
     state = state.copyWith(isRecording: false);
+    await state.recorder.pause();
+    _sendAudio();
+  }
+
+  Future<void> resume() async {
+    await state.recorder.resume();
+    state = state.copyWith(isRecording: true);
+  }
+
+  Future<void> stop() async {
+    state = state.copyWith(isRecording: false);
+    await subscription!.cancel();
+    _sendAudio();
+    await state.recorder.stop();
+    //state.socket.dispose();
+    await _channel?.sink.close();
   }
 }

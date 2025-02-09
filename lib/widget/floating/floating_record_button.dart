@@ -8,8 +8,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../data/firebase/tools_stream.dart';
 import '../../data/record/record.dart';
 
-class FloatingRecordButton extends HookConsumerWidget {
-  const FloatingRecordButton({super.key, required this.teacher});
+class _FloatingRecordButton extends HookConsumerWidget {
+  const _FloatingRecordButton({super.key, required this.teacher});
 
   final String teacher;
 
@@ -22,7 +22,7 @@ class FloatingRecordButton extends HookConsumerWidget {
     final lesson = ref.read(currentLessonProvider);
 
     void lessonStart() async {
-      await recorderNot.start();
+      // await recorderNot.start();
     }
 
     void lessonEnd() async {
@@ -42,7 +42,7 @@ class FloatingRecordButton extends HookConsumerWidget {
     return InkWell(
       onLongPress: () async {
         await recorderNot.stop();
-        breakLessonToDuring(teacher: teacher, currentLesson: lesson);
+        // breakLessonToDuring(teacher: teacher, currentLesson: lesson);
       },
       child: AnimatedContainer(
         duration: Duration(milliseconds: 100),
