@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:sakura/toast.dart';
 
 import '../data/firebase/auth_provider.dart';
 import '../dummy/data/dummy_provider.dart';
@@ -61,7 +60,6 @@ final roleProvider = FutureProvider<String>((ref) async {
   final user = authState.value;
   if (user == null) return "";
   final token = await user.getIdTokenResult();
-  infoToast(log: token.claims.toString());
   return token.claims?["role"] ?? "";
 });
 

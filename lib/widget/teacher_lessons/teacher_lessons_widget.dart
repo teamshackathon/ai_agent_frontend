@@ -55,9 +55,9 @@ class TeacherLessonsSummary extends HookConsumerWidget {
                     GoRouter.of(context).push(Routes.chatAIAsTeacher);
                   }),
                 ),
-                Expanded(
-                  child: AllAnalyticsBadgeIcon(onPressed: () {}),
-                ),
+                // Expanded(
+                //   child: AllAnalyticsBadgeIcon(onPressed: () {}),
+                // ),
               ]),
               Divider(),
               Container(

@@ -124,86 +124,69 @@ class ProfileContainerRottieIcon extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.read(personStatusProvider.future);
+    final userAsync = ref.watch(personStatusProvider);
+    final path = useState<String>("");
 
-    final userIconPathState = useState<String>("");
-
-    Widget defaultIcon() {
-      return Icon(
-        Icons.person,
-        color: index == selectedIndex
-            ? Color(0xFF020b19)
-            : const Color(0xFF448AFF),
-        size: 25,
-      );
+    Future<void> userInit(Person user) async {
+      final userIconPath = user.iconPath;
+      path.value =
+          await FirebaseStorage.instance.ref(userIconPath).getDownloadURL();
     }
+
+    useEffect(() {
+      if (path.value == "") {
+        userAsync.whenData(userInit);
+      }
+      return;
+    }, [userAsync]);
 
     return Stack(
       alignment: Alignment.center,
       children: [
-        Lottie.asset(
-          iconPath,
-          controller: controller,
-          onLoaded: onLoaded,
-          width: width,
-          height: height,
-          repeat: repeat,
-          delegates: LottieDelegates(
-            values: [
-              index == selectedIndex
-                  ? ValueDelegate.color(
-                      const ['**'],
-                      value: Color(0xFF020b19),
-                    )
-                  : ValueDelegate.color(
-                      const ['**'],
-                      value: Colors.blueAccent,
-                    ),
-            ],
+        if (path.value == "")
+          SizedBox(
+            width: 32,
+            height: 32,
+            child: Center(
+              child: SizedBox(
+                width: 22,
+                height: 22,
+                child: const CircularProgressIndicator(
+                  strokeWidth: 2,
+                ),
+              ),
+            ),
+          ),
+        if (path.value != "")
+          CircleAvatar(
+            backgroundImage: NetworkImage(path.value),
+            radius: 16,
+            backgroundColor: Color(0xFFDDDDFF),
+          ),
+        Visibility(
+          visible: index == selectedIndex,
+          child: Lottie.asset(
+            iconPath,
+            controller: controller,
+            onLoaded: onLoaded,
+            width: width,
+            height: height,
+            repeat: repeat,
+            delegates: LottieDelegates(
+              values: [
+                index == selectedIndex
+                    ? ValueDelegate.color(
+                        const ['**'],
+                        value: Color(0xFF020b19),
+                      )
+                    : ValueDelegate.color(
+                        const ['**'],
+                        value: Colors.blueAccent,
+                      ),
+              ],
+            ),
           ),
         ),
-        userIconPathState.value != ""
-            ? CircleAvatar(
-                radius: 12,
-                backgroundImage: NetworkImage(userIconPathState.value),
-              )
-            : FutureBuilder(
-                future: user,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return const Text("エラーが発生しました");
-                  } else {
-                    // Logger().i(snapshot.data?.iconPath);
-                    final userIconPath = snapshot.data?.iconPath ?? "";
-                    // userIconPathはstoreageに保存されている画像のパス
-                    final storage = FirebaseStorage.instance;
-                    final pdf = storage.ref(userIconPath).getDownloadURL();
-                    return FutureBuilder(
-                      future: pdf,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return defaultIcon();
-                        } else if (snapshot.hasError) {
-                          return defaultIcon();
-                        } else if (!snapshot.hasData) {
-                          return defaultIcon();
-                        } else {
-                          if (userIconPath == "") {
-                            return defaultIcon();
-                          }
-                          return CircleAvatar(
-                            backgroundImage: NetworkImage(snapshot.data ?? ""),
-                            radius: 12.5,
-                          );
-                        }
-                      },
-                    );
-                  }
-                },
-              ),
       ],
     );
   }
@@ -273,7 +256,8 @@ class ActivityContainerRottieIcon extends ConsumerWidget {
 
   Widget lottieIcon() {
     return Lottie.asset(iconPath,
-        controller: controller, // 対応するコントローラを指定
+        controller: controller,
+        // 対応するコントローラを指定
         onLoaded: onLoaded,
         width: width,
         height: height,
