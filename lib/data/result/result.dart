@@ -26,7 +26,7 @@ class Result with _$Result {
       correct: map["correct"] ?? false,
       answer: map["user_answer"] ?? map["answer"] ?? "",
       correctAnswer: map["correct_answer"] ?? "",
-      description: map["discription"] ?? "",
+      description: map["description"] ?? "",
     );
   }
 
@@ -36,7 +36,7 @@ class Result with _$Result {
       "correct": correct,
       "user_answer": answer,
       "correct_answer": correctAnswer,
-      "discription": description,
+      "description": description,
     };
   }
 

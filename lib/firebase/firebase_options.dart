@@ -87,9 +87,9 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyBdFJng3SETUR9cZUd2bXsKhlHudCZlaiE',
     appId: '1:46244984723:web:c8875db7c7b59f86b2da66',
     messagingSenderId: '46244984723',
-    projectId: 'demo-manabiya-ai',
-    authDomain: 'demo-manabiya-ai.firebaseapp.com',
-    storageBucket: 'demo-manabiya-ai.appspot.com',
+    projectId: 'manabiyaai',
+    authDomain: 'manabiyaai.firebaseapp.com',
+    storageBucket: 'manabiyaai.firebasestorage.app',
     measurementId: 'G-HCM3YZLMJ5',
   );
 
@@ -97,8 +97,8 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyDe07GNb82zGFlEPS6Y2trbmAxi46vgd6A',
     appId: '1:46244984723:android:6dcf9e1b8bc28cf0b2da66',
     messagingSenderId: '46244984723',
-    projectId: 'demo-manabiya-ai',
-    storageBucket: 'demo-manabiya-ai.appspot.com',
+    projectId: 'manabiyaai',
+    storageBucket: 'manabiyaai.firebasestorage.app',
   );
 
   static const FirebaseOptions web = FirebaseOptions(
