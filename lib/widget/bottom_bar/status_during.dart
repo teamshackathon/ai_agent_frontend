@@ -119,22 +119,24 @@ class TeacherStatusChangeButton extends HookConsumerWidget {
 
     return Padding(
       padding: EdgeInsets.only(right: 0, top: 0),
-      child: doc["state"] == "lesson" ? IconButton(
-        iconSize: 25,
-        icon: Icon(Icons.stop_circle, size: 25),
-        onPressed: () async {
-          if (doc["state"] == "lesson") {
-            await breakLessonToDuring(
-              teacher: teacher,
-              reference: doc["reference"],
-            );
-            createQuestions(doc["reference"].path);
-            if (recorder.isRecording) {
-              await recorderNot.stop();
-            }
-          }
-        },
-      ) : SizedBox(width: 25, height: 25),
+      child: doc["state"] == "lesson"
+          ? IconButton(
+              iconSize: 25,
+              icon: Icon(Icons.stop_circle, size: 25),
+              onPressed: () async {
+                if (doc["state"] == "lesson") {
+                  await breakLessonToDuring(
+                    teacher: teacher,
+                    reference: doc["reference"],
+                  );
+                  createQuestions(doc["reference"].path);
+                  if (recorder.isRecording) {
+                    await recorderNot.stop();
+                  }
+                }
+              },
+            )
+          : SizedBox(width: 25, height: 25),
     );
   }
 }

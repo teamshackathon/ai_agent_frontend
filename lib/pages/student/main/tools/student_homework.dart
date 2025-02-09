@@ -78,7 +78,6 @@ class StudentHomeworkWidget extends ConsumerWidget {
   }
 }
 
-
 class _MouseDraggableScrollBehavior extends MaterialScrollBehavior {
   @override
   Set<PointerDeviceKind> get dragDevices => <PointerDeviceKind>{

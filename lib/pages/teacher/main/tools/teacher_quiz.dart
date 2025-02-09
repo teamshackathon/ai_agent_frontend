@@ -202,8 +202,7 @@ class QuizSubmissionDisplay extends HookConsumerWidget {
             child: Divider(height: 2),
           ),
           Theme(
-            data:
-            Theme.of(context).copyWith(dividerColor: Colors.transparent),
+            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
             child: ExpansionTile(
               backgroundColor: Color(0xFFEEDDDD),
               collapsedBackgroundColor: Color(0xFFEEDDDD),

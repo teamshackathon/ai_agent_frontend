@@ -89,10 +89,10 @@ class TeacherBottomBar extends HookConsumerWidget {
                         dataMap: map,
                       );
                     }
-                    return SizedBox(width: 1,height: 1);
+                    return SizedBox(width: 1, height: 1);
                   },
-                  error: (_, __) => SizedBox(width: 1,height: 1),
-                  loading: () => SizedBox(width: 1,height: 1),
+                  error: (_, __) => SizedBox(width: 1, height: 1),
+                  loading: () => SizedBox(width: 1, height: 1),
                 ),
               ),
             ),
