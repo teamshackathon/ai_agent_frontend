@@ -31,17 +31,17 @@ class Submission with _$Submission {
       testResults.add(Result.fromMap(m, true));
     }
     // 採点結果に穴があれば採点前回答で埋める
-    for (var m in map?["answers"] ?? []) {
+    for (var m in map?["questions_answer"] ?? []) {
       if (testResults.where((r) => r.title == m["title"]).isEmpty) {
         testResults.add(Result.fromMap(m, false));
       }
     }
 
     // ↑の宿題版
-    for (var m in map?["homework_results"] ?? []) {
+    for (var m in map?["homeworks_result"] ?? []) {
       homeworkResults.add(Result.fromMap(m, true));
     }
-    for (var m in map?["homework_answers"] ?? []) {
+    for (var m in map?["homeworks_answer"] ?? []) {
       if (homeworkResults.where((r) => r.title == m["title"]).isEmpty) {
         homeworkResults.add(Result.fromMap(m, false));
       }
@@ -63,9 +63,9 @@ class Submission with _$Submission {
 
     return {
       "name": name,
-      "results": tr,
+      "questions_result": tr,
       "homeworks": hw,
-      "homework_results": hwr,
+      "homeworks_result": hwr,
     };
   }
 

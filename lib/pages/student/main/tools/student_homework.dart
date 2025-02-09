@@ -69,7 +69,7 @@ class StudentHomeworkWidget extends ConsumerWidget {
             for (final quiz in submission.homeworks) quiz.answerToMap()
           ];
           await reference
-              .update({"homework_answers": list, "name": student.name});
+              .update({"homeworks_answer": list, "name": student.name});
           await submitHomework(reference.path, []);
         },
       ),
