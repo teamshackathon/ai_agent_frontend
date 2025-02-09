@@ -39,7 +39,7 @@ class BasePage extends StatelessWidget {
       // スクロールに合わせて非表示にしたい場合は、別の作り方が必要
       appBar: AppBar(
         // タイトルが入力されていればタイトルを表示
-        title: Text(pageTitle ?? ""),
+        title: Flexible(child: Text(pageTitle ?? "")),
 
         // バー背景色
         backgroundColor: Colors.white,
