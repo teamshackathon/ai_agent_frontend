@@ -43,11 +43,11 @@ class TeacherStatusMiniBottomBar extends HookWidget {
   Widget build(BuildContext context) {
     String getStatus(Map<String, dynamic> docs) {
       if (docs["state"] == "lesson") {
-        return "${subjectToJapanese(docs["subject"])}  第${docs["count"]}回 授業中";
+        return "${docs["room"]}  ${subjectToJapanese(docs["subject"])}  第${docs["count"]}回 授業中";
       } else if (docs["state"] == "break") {
-        return "${subjectToJapanese(docs["subject"])}  第${docs["count"]}回 テスト準備中";
+        return "${docs["room"]}  ${subjectToJapanese(docs["subject"])}  第${docs["count"]}回 テスト準備中";
       } else if (docs["state"] == "test") {
-        return "${subjectToJapanese(docs["subject"])}  第${docs["count"]}回 テスト中";
+        return "${docs["room"]}  ${subjectToJapanese(docs["subject"])}  第${docs["count"]}回 テスト中";
       }
       return "";
     }
@@ -119,22 +119,24 @@ class TeacherStatusChangeButton extends HookConsumerWidget {
 
     return Padding(
       padding: EdgeInsets.only(right: 0, top: 0),
-      child: IconButton(
-        iconSize: 25,
-        icon: Icon(Icons.stop_circle, size: 25),
-        onPressed: () async {
-          if (doc["state"] == "lesson") {
-            await breakLessonToDuring(
-              teacher: teacher,
-              reference: doc["reference"],
-            );
-            createQuestions(doc["reference"].path);
-            if (recorder.isRecording) {
-              await recorderNot.stop();
-            }
-          }
-        },
-      ),
+      child: doc["state"] == "lesson"
+          ? IconButton(
+              iconSize: 25,
+              icon: Icon(Icons.stop_circle, size: 25),
+              onPressed: () async {
+                if (doc["state"] == "lesson") {
+                  await breakLessonToDuring(
+                    teacher: teacher,
+                    reference: doc["reference"],
+                  );
+                  createQuestions(doc["reference"].path);
+                  if (recorder.isRecording) {
+                    await recorderNot.stop();
+                  }
+                }
+              },
+            )
+          : SizedBox(width: 25, height: 25),
     );
   }
 }
