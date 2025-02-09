@@ -22,7 +22,6 @@ class NewClassActionButton extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final room = ref.watch(currentRoomProvider);
     final storage = FirebaseStorage.instance;
-    Logger().i("text/${room.textDataName}");
     final pdf = storage.ref("text/${room.textDataName}").getDownloadURL();
 
     return FloatingActionButton(

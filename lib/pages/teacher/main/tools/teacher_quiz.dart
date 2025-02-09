@@ -59,6 +59,7 @@ class QuizEditScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final draggable = ref.watch(draggableProvider);
+    final draggableNot = ref.read(draggableProvider.notifier);
     final currentRoom = ref.watch(currentRoomProvider);
 
     return ScrollConfiguration(
@@ -72,6 +73,7 @@ class QuizEditScreen extends HookConsumerWidget {
           SizedBox(),
         ],
         onPageChanged: (page) async {
+          draggableNot.state = false;
           await startTestToDuring(
             teacher: currentRoom.teacher,
             reference: lesson.reference,
@@ -107,66 +109,77 @@ class QuizEditDisplay extends HookConsumerWidget {
     final draggableNot = ref.read(draggableProvider.notifier);
     final loading = useState<bool>(false);
 
-    return Column(
-      children: [
-        Flexible(
-          child: ListView.separated(
-            itemCount: quizzes.value.length,
-            itemBuilder: (context, index) => QuizEditWidget(
-              quiz: quizzes.value[index],
-              onChanged: (quiz) {
-                infoToast(log: "before : ${quizzes.value}");
-                var list = [
-                  for (var i = 0; i < quizzes.value.length; i++)
-                    i == index ? quiz : quizzes.value[i]
-                ];
-                quizzes.value = list;
-                drafting.value = true;
-                draggableNot.state = false;
-                infoToast(log: "after : ${quizzes.value}");
-              },
-              editable: true,
-              index: index,
-            ),
-            separatorBuilder: (context, index) => Divider(height: 2),
-          ),
-        ),
-        SizedBox(height: 10),
-        Visibility(
-          visible: !draggable,
-          child: LoadingButton(
-            width: 160,
-            onPressed: () async {
-              loading.value = true;
-              if (drafting.value) {
-                await reference.update({
-                  "questions_draft": [for (var q in quizzes.value) q.toMap()]
-                });
-                drafting.value = false;
-              } else {
-                await reference.update({
-                  "questions_publish": [for (var q in quizzes.value) q.toMap()]
-                });
-                draggableNot.state = true;
-              }
-              loading.value = false;
-            },
-            isLoading: loading.value,
-            text: drafting.value ? "下書き保存" : "保存",
-          ),
-        ),
-        Visibility(
-          visible: draggable,
-          child: Text(
-            "上にスワイプしてテスト開始",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-          ),
-        ),
-      ],
-    );
+    return lesson.questionsDraft.isNotEmpty
+        ? Column(
+            children: [
+              Flexible(
+                child: ListView.separated(
+                  itemCount: quizzes.value.length,
+                  itemBuilder: (context, index) => QuizEditWidget(
+                    quiz: quizzes.value[index],
+                    onChanged: (quiz) {
+                      infoToast(log: "before : ${quizzes.value}");
+                      var list = [
+                        for (var i = 0; i < quizzes.value.length; i++)
+                          i == index ? quiz : quizzes.value[i]
+                      ];
+                      quizzes.value = list;
+                      drafting.value = true;
+                      draggableNot.state = false;
+                      infoToast(log: "after : ${quizzes.value}");
+                    },
+                    editable: true,
+                    index: index,
+                  ),
+                  separatorBuilder: (context, index) => Divider(height: 2),
+                ),
+              ),
+              Visibility(
+                visible: !draggable,
+                child: SizedBox(height: 8),
+              ),
+              Visibility(
+                visible: !draggable,
+                child: LoadingButton(
+                  width: 160,
+                  height: 35,
+                  onPressed: () async {
+                    loading.value = true;
+                    if (drafting.value) {
+                      await reference.update({
+                        "questions_draft": [
+                          for (var q in quizzes.value) q.toMap()
+                        ]
+                      });
+                      drafting.value = false;
+                    } else {
+                      await reference.update({
+                        "questions_publish": [
+                          for (var q in quizzes.value) q.toMap()
+                        ]
+                      });
+                      draggableNot.state = true;
+                    }
+                    loading.value = false;
+                  },
+                  isLoading: loading.value,
+                  text: drafting.value ? "下書き保存" : "保存",
+                ),
+              ),
+              Visibility(visible: !draggable, child: SizedBox(height: 2)),
+              Visibility(
+                visible: draggable,
+                child: Text(
+                  "上にスワイプしてテスト開始",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                  ),
+                ),
+              ),
+            ],
+          )
+        : const Center(child: SakuraProgressIndicator());
   }
 }
 

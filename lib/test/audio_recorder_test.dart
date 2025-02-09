@@ -8,8 +8,6 @@ import 'package:logger/logger.dart';
 import 'package:record/record.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
-import '../dummy/widget/dummy_base_page.dart';
-
 class AudioRecorderTest extends HookConsumerWidget {
   const AudioRecorderTest({super.key});
 
@@ -123,86 +121,6 @@ class AudioRecorderTest extends HookConsumerWidget {
       }
     }
 
-    return DummyBasePage(
-        pageTitle: "録音と通信テスト",
-        body: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            children: [
-              Row(
-                spacing: 10,
-                children: [
-                  TextButton(
-                      onPressed: () async {
-                        if (recordingState.value) {
-                          onPressedStop();
-                        } else {
-                          onPressStart();
-                        }
-                      },
-                      child:
-                          recordingState.value ? Text("録音停止") : Text("録音開始")),
-                  TextButton(
-                      onPressed: () async {
-                        if (socketState.value) {
-                          socketState.value = false;
-                          socket.disconnect();
-                        } else {
-                          socketState.value = true;
-                          socket.connect();
-                        }
-                      },
-                      child: socketState.value ? Text("通信停止") : Text("通信開始")),
-                ],
-              ),
-              Row(
-                spacing: 40,
-                children: [
-                  Expanded(
-                      child: Container(
-                          color:
-                              recordingState.value ? Colors.red : Colors.blue,
-                          child: Text("録音ステータス: ${recordingState.value}"))),
-                  Expanded(
-                      child: Container(
-                          color: socketState.value ? Colors.red : Colors.blue,
-                          child: Text("録音ステータス: ${socketState.value}"))),
-                ],
-              ),
-              Center(
-                child: TextButton(
-                  child: Text("音声データを送信する"),
-                  onPressed: sendAudio,
-                ),
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: controller,
-                      decoration: const InputDecoration(
-                        hintText: 'メッセージを入力してください',
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.send),
-                    onPressed: sendMessage,
-                  ),
-                ],
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: messages.value.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(messages.value[index]),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ));
+    return Placeholder();
   }
 }

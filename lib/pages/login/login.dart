@@ -12,8 +12,8 @@ class LoginPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final displaySize = MediaQuery.of(context).size;
-    final mail = useState<String>("edamae.yousei@manabiya.ai");
-    final pass = useState<String>("zundamon");
+    final mail = useState<String>("");
+    final pass = useState<String>("");
     final registerLoad = useState<bool>(false);
     final loginLoad = useState<bool>(false);
 
@@ -62,7 +62,6 @@ class LoginPage extends HookWidget {
                           width: 300, 'assets/logo-manabiya-ai.svg'),
                     ),
                     SizedBox(height: 20),
-                    // SvgPicture.asset('assets/sakura.svg'),
                     Lottie.asset('assets/sakura.json'),
                     SizedBox(height: 20),
                     SizedBox(
@@ -141,22 +140,6 @@ class LoginPage extends HookWidget {
                         await loginFirebase(
                           email: mail.value,
                           pass: pass.value,
-                        );
-                        loginLoad.value = false;
-                      },
-                    ),
-                    SizedBox(height: 30),
-                    LoadingButton(
-                      text: "英語教師ログイン",
-                      width: displaySize.width * 0.28,
-                      height: displaySize.width * 0.07,
-                      isLoading: loginLoad.value,
-                      enabled: !registerLoad.value,
-                      onPressed: () async {
-                        loginLoad.value = true;
-                        await loginFirebase(
-                          email: "propane.gas@manabiya.ai",
-                          pass: "tsundere",
                         );
                         loginLoad.value = false;
                       },

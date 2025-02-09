@@ -36,39 +36,42 @@ class AnswerTextboxResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Flexible(
+          child: Text(
             "$answer  ",
-            style: TextStyle(fontSize: 16, height: 0),
+            style: TextStyle(
+              fontSize: 16,
+              height: 0,
+            ),
           ),
-          if (correct != null)
-            correct!
-                ? SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 3),
-                      child: Icon(
-                        Icons.circle_outlined,
-                        color: Colors.red,
-                        size: 18,
-                      ),
-                    ),
-                  )
-                : SizedBox(
-                    width: 20,
-                    height: 20,
+        ),
+        if (correct != null)
+          correct!
+              ? SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 3),
                     child: Icon(
-                      Icons.close_sharp,
-                      color: Colors.blue,
-                      size: 23,
+                      Icons.circle_outlined,
+                      color: Colors.red,
+                      size: 18,
                     ),
                   ),
-        ],
-      ),
+                )
+              : SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: Icon(
+                    Icons.close_sharp,
+                    color: Colors.blue,
+                    size: 23,
+                  ),
+                ),
+      ],
     );
   }
 }
