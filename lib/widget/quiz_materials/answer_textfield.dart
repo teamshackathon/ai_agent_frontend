@@ -36,37 +36,39 @@ class AnswerTextboxResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Text(
-          "$answer  ",
-          style: TextStyle(fontSize: 16, height: 0),
-        ),
-        if (correct != null)
-          correct!
-              ? SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 3),
+    return Flexible(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(
+            "$answer  ",
+            style: TextStyle(fontSize: 16, height: 0),
+          ),
+          if (correct != null)
+            correct!
+                ? SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 3),
+                      child: Icon(
+                        Icons.circle_outlined,
+                        color: Colors.red,
+                        size: 18,
+                      ),
+                    ),
+                  )
+                : SizedBox(
+                    width: 20,
+                    height: 20,
                     child: Icon(
-                      Icons.circle_outlined,
-                      color: Colors.red,
-                      size: 18,
+                      Icons.close_sharp,
+                      color: Colors.blue,
+                      size: 23,
                     ),
                   ),
-                )
-              : SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: Icon(
-                    Icons.close_sharp,
-                    color: Colors.blue,
-                    size: 23,
-                  ),
-                ),
-      ],
+        ],
+      ),
     );
   }
 }

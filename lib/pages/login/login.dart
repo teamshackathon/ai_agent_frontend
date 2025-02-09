@@ -12,8 +12,8 @@ class LoginPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final displaySize = MediaQuery.of(context).size;
-    final mail = useState<String>("daisuke.suzuki@manabiya.ai.com");
-    final pass = useState<String>("Manab1yaa1daisuke.suzuki");
+    final mail = useState<String>("edamae.yousei@manabiya.ai");
+    final pass = useState<String>("zundamon");
     final registerLoad = useState<bool>(false);
     final loginLoad = useState<bool>(false);
 
@@ -155,8 +155,8 @@ class LoginPage extends HookWidget {
                       onPressed: () async {
                         loginLoad.value = true;
                         await loginFirebase(
-                          email: "aoi.fujimoto@manabiya.ai.com",
-                          pass: "Manab1yaa1aoi.fujimoto",
+                          email: "propane.gas@manabiya.ai",
+                          pass: "tsundere",
                         );
                         loginLoad.value = false;
                       },
