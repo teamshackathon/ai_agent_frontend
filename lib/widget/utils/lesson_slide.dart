@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swipe_button/flutter_swipe_button.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sakura/toast.dart';
 
 import '../../data/firebase/during_stream.dart';
 import '../../data/firebase/lesson_stream.dart';
@@ -79,6 +80,7 @@ class LessonStartSlide extends ConsumerWidget {
       ),
       onSwipeEnd: () async {
         if (lesson.agendaPublish.title != "") {
+          infoToast(log: currentRoom.toString());
           await addLessonToDuring(
             roomNumber: currentRoom.roomNumber,
             subject: currentRoom.subject,

@@ -180,28 +180,27 @@ class ProfileContainerRottieIcon extends HookConsumerWidget {
                     // userIconPathはstoreageに保存されている画像のパス
                     final storage = FirebaseStorage.instance;
                     final pdf = storage.ref(userIconPath).getDownloadURL();
-                    return userIconPath == ""
-                        ? defaultIcon()
-                        : FutureBuilder(
-                            future: pdf,
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return defaultIcon();
-                              } else if (snapshot.hasError) {
-                                return defaultIcon();
-                              } else if (!snapshot.hasData) {
-                                return defaultIcon();
-                              } else {
-                                userIconPathState.value = snapshot.data ?? "";
-                                return CircleAvatar(
-                                  backgroundImage:
-                                      NetworkImage(snapshot.data ?? ""),
-                                  radius: 12.5,
-                                );
-                              }
-                            },
+                    return FutureBuilder(
+                      future: pdf,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return defaultIcon();
+                        } else if (snapshot.hasError) {
+                          return defaultIcon();
+                        } else if (!snapshot.hasData) {
+                          return defaultIcon();
+                        } else {
+                          if (userIconPath == "") {
+                            return defaultIcon();
+                          }
+                          return CircleAvatar(
+                            backgroundImage: NetworkImage(snapshot.data ?? ""),
+                            radius: 12.5,
                           );
+                        }
+                      },
+                    );
                   }
                 },
               ),
