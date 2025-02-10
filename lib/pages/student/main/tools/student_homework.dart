@@ -144,7 +144,6 @@ class StudentHomeworkDisplay extends HookConsumerWidget {
           child: Text(
             "上にスワイプしてテスト開始",
             style: TextStyle(
-              fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
           ),

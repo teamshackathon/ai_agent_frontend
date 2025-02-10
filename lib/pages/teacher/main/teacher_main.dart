@@ -175,8 +175,10 @@ class TeacherMainDisplay extends HookConsumerWidget {
             Tab(text: "3年生"),
           ],
         ),
+        SizedBox(height: 4),
         Row(
           spacing: 10,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: subjectList.map((s) {
             return ChoiceChip(
               label: Text(subjectToJapanese(s)),

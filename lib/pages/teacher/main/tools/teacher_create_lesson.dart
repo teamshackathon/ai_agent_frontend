@@ -11,6 +11,7 @@ import '../../../../data/agenda/agenda.dart';
 import '../../../../data/firebase/lesson_stream.dart';
 import '../../../../data/firebase/tools_stream.dart';
 import '../../../../data/lesson/lesson.dart';
+import '../../../../data/summary/summary.dart';
 import '../../../../widget/base_page/base_page.dart';
 import '../../../../widget/utils/sakura_progress_indicator.dart';
 
@@ -166,6 +167,7 @@ class _TeacherCreateLessonDisplay extends HookConsumerWidget {
                         agendaDraft: Agenda.isBlank(),
                         questionsPublish: [],
                         questionsDraft: [],
+                        summary: Summary.isBlank(),
                         reference: room.reference.doc(),
                         startPage: start.value,
                         endPage: end.value,

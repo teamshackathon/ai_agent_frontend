@@ -7,8 +7,11 @@ import '../../../data/lesson/lesson.dart';
 import '../../../widget/base_page/base_page.dart';
 import '../../../widget/teacher_tools/teacher_homework_tab_bar_view.dart';
 import '../../../widget/utils/sakura_progress_indicator.dart';
+import '../../student/main/tools/student_reading.dart';
 import 'tools/teacher_agenda.dart';
+import 'tools/teacher_markdown.dart';
 import 'tools/teacher_quiz.dart';
+import 'tools/teacher_total.dart';
 
 /// hotreloadの際は一度mainに帰って
 class TeacherTools extends ConsumerWidget {
@@ -52,7 +55,7 @@ class TeacherToolsDisplay extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabController = useTabController(initialLength: 3);
+    final tabController = useTabController(initialLength: 6, initialIndex: 1);
 
     return Column(
       children: [
@@ -62,17 +65,29 @@ class TeacherToolsDisplay extends HookWidget {
           softWrap: false,
         ),
         TabBar(controller: tabController, tabs: [
+          Tab(text: "教科書"),
           Tab(text: "授業内容"),
           Tab(text: "テスト"),
           Tab(text: "宿題"),
+          Tab(text: "集計"),
+          Tab(text: "分析"),
         ]),
         Expanded(
             child: TabBarView(
           controller: tabController,
           children: [
+            FractionallySizedBox(
+              widthFactor: 0.95,
+              heightFactor: 0.95,
+              child: StudentReadingWidget(
+                initial: lesson.startPage,
+              ),
+            ),
             TeacherAgenda(lesson: lesson),
             TeacherQuiz(lesson: lesson),
             TeacherHomeworkTabBarView(),
+            TeacherTotal(lesson: lesson),
+            TeacherMarkdown(lesson: lesson),
           ],
         )),
       ],
