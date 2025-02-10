@@ -276,7 +276,7 @@ class QuizSubmissionDisplay extends HookConsumerWidget {
               loading.value = true;
               var user = await ref.watch(personStatusProvider.future);
               await createSummary(
-                  lesson.reference.path, <String>['"${user.folderName}"']);
+                  lesson.reference.path, <String>[user.folderName]);
 
               await finishLessonToDuring(
                 teacher: currentRoom.teacher,
