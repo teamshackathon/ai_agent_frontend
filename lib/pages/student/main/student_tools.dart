@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:sakura/pages/student/main/tools/student_reading.dart';
 
 import '../../../data/firebase/lesson_stream.dart';
 import '../../../data/firebase/tools_stream.dart';
@@ -54,7 +55,7 @@ class StudentToolsDisplay extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tabController = useTabController(initialLength: 3);
+    final tabController = useTabController(initialLength: 4, initialIndex: 1);
     final currentRoom = ref.watch(currentRoomProvider);
 
     return Column(children: [
@@ -91,6 +92,7 @@ class StudentToolsDisplay extends HookConsumerWidget {
       TabBar(
         controller: tabController,
         tabs: [
+          Tab(text: "教科書"),
           Tab(text: "授業資料"),
           Tab(text: "テスト"),
           Tab(text: "宿題"),
@@ -100,6 +102,13 @@ class StudentToolsDisplay extends HookConsumerWidget {
           child: TabBarView(
         controller: tabController,
         children: [
+          FractionallySizedBox(
+            widthFactor: 0.95,
+            heightFactor: 0.95,
+            child: StudentReadingWidget(
+              initial: lesson.startPage,
+            ),
+          ),
           StudentAgenda(lesson: lesson),
           StudentAnswerCheck(lesson: lesson),
           StudentHomework(),

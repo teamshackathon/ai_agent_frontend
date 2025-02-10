@@ -18,6 +18,7 @@ class _HttpConst {
   static const answerQuestionsEndpoint = '/answered_questions';
   static const submitHomeworkEndpoint = '/submit_homework';
   static const createQuestionsEndpoint = '/create_questions';
+  static const createSummaryEndpoint = '/create_summary';
   static const templatePostEndpoint = '/templatePost';
   static const templateGetEndpoint = '/templateGet';
 }
@@ -159,6 +160,27 @@ Future<void> submitHomework(String reference, List<String> notice) async {
       Uri.https(
         _HttpConst.url,
         _HttpConst.submitHomeworkEndpoint,
+      ),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(<String, String>{
+        'reference': reference,
+        'notice': notice.toString(),
+      }));
+
+  if (responce.statusCode == 200) {
+    return;
+  } else {
+    throw HttpException("HTTP ERROR ${responce.statusCode}");
+  }
+}
+
+Future<void> createSummary(String reference, List<String> notice) async {
+  var responce = await http.post(
+      Uri.https(
+        _HttpConst.url,
+        _HttpConst.createSummaryEndpoint,
       ),
       headers: {
         'Content-Type': 'application/json',

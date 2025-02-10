@@ -6,6 +6,7 @@ import 'package:logger/logger.dart';
 import 'package:pdfrx/pdfrx.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sakura/data/summary/summary.dart';
 
 import '../../api/api.dart';
 import '../../data/firebase/lesson_stream.dart';
@@ -22,6 +23,7 @@ class NewClassActionButton extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final room = ref.watch(currentRoomProvider);
     final storage = FirebaseStorage.instance;
+
     final pdf = storage.ref("text/${room.textDataName}").getDownloadURL();
 
     return FloatingActionButton(
@@ -134,30 +136,39 @@ class TeacherCreateLessonDisplay extends HookConsumerWidget {
       if (document?.pages.isNotEmpty == true) {
         return Column(mainAxisSize: MainAxisSize.min, children: [
           SizedBox(
-            height: 300,
-            child: PageView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemCount: document?.pages.length ?? 0,
-              itemBuilder: (context, index) => PdfPageView(
-                document: document,
-                pageNumber: index + 1,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: inRange(start.value, end.value, index)
-                      ? [
-                          BoxShadow(
-                            color: Colors.red,
-                            spreadRadius: 3,
-                            blurRadius: 10,
-                          )
-                        ]
-                      : null,
+            height: 400,
+            child: ScrollConfiguration(
+              behavior: _MouseDraggableScrollBehavior(),
+              child: PageView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: document?.pages.length ?? 0,
+                itemBuilder: (context, index) => PdfPageView(
+                  document: document,
+                  pageNumber: index + 1,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: inRange(start.value, end.value, index)
+                        ? [
+                            BoxShadow(
+                              color: Colors.red,
+                              spreadRadius: 3,
+                              blurRadius: 10,
+                            )
+                          ]
+                        : null,
+                  ),
                 ),
+                onPageChanged: (page) {
+                  current.value = page + 1;
+                  if (stepper.value == 0) {
+                    start.value = current.value;
+                  } else if (stepper.value == 1) {
+                    end.value = current.value;
+                  }
+                },
+                controller: pageController,
               ),
-              onPageChanged: (page) => current.value = page + 1,
-              controller: pageController,
             ),
           ),
           Slider(
@@ -170,8 +181,10 @@ class TeacherCreateLessonDisplay extends HookConsumerWidget {
                 ? current.value.toDouble()
                 : 1.0,
             divisions: _calcDivisions(document?.pages.length),
-            onChanged: (value) =>
-                pageController.jumpToPage((value - 1).round()),
+            onChanged: (value) {
+              pageController.jumpToPage((value - 1).round());
+              current.value = value.toInt();
+            },
           ),
           Stepper(
             currentStep: stepper.value,
@@ -179,65 +192,76 @@ class TeacherCreateLessonDisplay extends HookConsumerWidget {
               if (stepper.value < 2) {
                 stepper.value++;
               }
+              if (stepper.value == 1) {
+                start.value = current.value;
+                end.value = current.value;
+              } else if (stepper.value == 2) {
+                if (start.value > end.value) {
+                  end.value = start.value;
+                } else {
+                  end.value = current.value;
+                }
+              }
             },
             onStepCancel: () {
               if (stepper.value > 0) {
                 stepper.value--;
               }
+              if (stepper.value == 1) {
+                current.value = end.value;
+                pageController.jumpToPage((end.value - 1).round());
+              } else if (stepper.value == 0) {
+                pageController.jumpToPage((start.value - 1).round());
+                current.value == start.value;
+                start.value = 0;
+                end.value = 0;
+              }
             },
             steps: [
-              _buildStep(
-                  title: "開始ページを設定",
-                  content: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          start.value = current.value;
-                          if (end.value == 0 || end.value < start.value) {
-                            end.value = current.value;
-                          }
-                        },
-                        child: Text("開始ページに設定"),
-                      ),
-                      const SizedBox(height: 8),
-                      Text("開始ページ: ${start.value}"),
-                    ],
-                  )),
-              _buildStep(
-                title: "終了ページを設定",
-                content: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        end.value = current.value;
-                        if (start.value == 0 || start.value > end.value) {
-                          start.value = current.value;
-                        }
-                      },
-                      child: Text("終了ページに設定"),
-                    ),
-                    const SizedBox(height: 8),
-                    Text("終了ページ: ${end.value}"),
-                  ],
+              Step(
+                title: Text(
+                  "開始ページを設定　　　${(stepper.value == 0) ? '${start.value != 0 ? start.value : current.value > (document?.pages.length ?? lastLesson.endPage + 1) ? (document?.pages.length ?? lastLesson.endPage + 1) - 1 : current.value}　～' : ''}",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: stepper.value == 0
+                          ? Colors.black
+                          : Color(0x66000000)),
                 ),
+                content: SizedBox(),
+                isActive: stepper.value == 0,
               ),
-              _buildStep(
-                  title: "授業アジェンダの作成",
-                  content: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("開始ページ: ${start.value}"),
-                      const SizedBox(height: 4),
-                      Text("終了ページ: ${end.value}"),
-                    ],
-                  ))
+              Step(
+                title: Text(
+                  "終了ページを設定　　　${(stepper.value == 1) ? '${start.value}　～　${current.value < start.value ? start.value : current.value}' : ''}",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: stepper.value == 1
+                          ? Colors.black
+                          : Color(0x66000000)),
+                ),
+                content: SizedBox(),
+                isActive: stepper.value == 1,
+              ),
+              Step(
+                title: Text(
+                  "授業アジェンダの作成　　　${(stepper.value == 2) ? '${start.value}　～　${end.value}' : ''}",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: stepper.value == 2
+                          ? Colors.black
+                          : Color(0x66000000)),
+                ),
+                content: SizedBox(),
+                isActive: stepper.value == 2,
+              ),
             ],
             controlsBuilder: (BuildContext context, ControlsDetails details) {
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   if (details.onStepContinue != null)
                     FilledButton(
@@ -251,6 +275,7 @@ class TeacherCreateLessonDisplay extends HookConsumerWidget {
                                     agendaDraft: Agenda.isBlank(),
                                     questionsPublish: [],
                                     questionsDraft: [],
+                                    summary: Summary.isBlank(),
                                     reference: room.reference.doc(),
                                     startPage: start.value,
                                     endPage: end.value,
@@ -286,25 +311,9 @@ class TeacherCreateLessonDisplay extends HookConsumerWidget {
       }
     });
   }
-
-  Step _buildStep({required String title, required Widget content}) {
-    return Step(
-      title: Text(title,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-      content: Card(
-        elevation: 3,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: content,
-        ),
-      ),
-      isActive: true,
-    );
-  }
 }
 
-class MouseDraggableScrollBehavior extends MaterialScrollBehavior {
+class _MouseDraggableScrollBehavior extends MaterialScrollBehavior {
   @override
   Set<PointerDeviceKind> get dragDevices => <PointerDeviceKind>{
         PointerDeviceKind.touch,

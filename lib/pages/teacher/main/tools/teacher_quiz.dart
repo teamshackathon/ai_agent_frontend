@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../api/api.dart';
 import '../../../../data/firebase/during_stream.dart';
 import '../../../../data/firebase/lesson_stream.dart';
 import '../../../../data/firebase/submission_stream.dart';
@@ -61,6 +62,7 @@ class QuizEditScreen extends HookConsumerWidget {
     final draggable = ref.watch(draggableProvider);
     final draggableNot = ref.read(draggableProvider.notifier);
     final currentRoom = ref.watch(currentRoomProvider);
+    final reference = lesson.reference;
 
     return ScrollConfiguration(
       // chrome上でスワイプを検知するために必要、実機ではいらない
@@ -74,6 +76,7 @@ class QuizEditScreen extends HookConsumerWidget {
         ],
         onPageChanged: (page) async {
           draggableNot.state = false;
+          await reference.update({"questions_publish": lesson.publishMap});
           await startTestToDuring(
             teacher: currentRoom.teacher,
             reference: lesson.reference,
@@ -104,82 +107,86 @@ class QuizEditDisplay extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final reference = lesson.reference;
     final quizzes = useState<List<Quiz>>(lesson.questionsDraft);
-    final drafting = useState<bool>(false);
     final draggable = ref.watch(draggableProvider);
     final draggableNot = ref.read(draggableProvider.notifier);
     final loading = useState<bool>(false);
 
-    return lesson.questionsDraft.isNotEmpty
-        ? Column(
-            children: [
-              Flexible(
-                child: ListView.separated(
-                  itemCount: quizzes.value.length,
-                  itemBuilder: (context, index) => QuizEditWidget(
-                    quiz: quizzes.value[index],
-                    onChanged: (quiz) {
-                      infoToast(log: "before : ${quizzes.value}");
-                      var list = [
-                        for (var i = 0; i < quizzes.value.length; i++)
-                          i == index ? quiz : quizzes.value[i]
-                      ];
-                      quizzes.value = list;
-                      drafting.value = true;
-                      draggableNot.state = false;
-                      infoToast(log: "after : ${quizzes.value}");
-                    },
-                    editable: true,
-                    index: index,
-                  ),
-                  separatorBuilder: (context, index) => Divider(height: 2),
-                ),
-              ),
-              Visibility(
-                visible: !draggable,
-                child: SizedBox(height: 8),
-              ),
-              Visibility(
-                visible: !draggable,
-                child: LoadingButton(
+    return Stack(
+      children: [
+        ListView.separated(
+          itemCount: quizzes.value.length + 2,
+          itemBuilder: (context, index) {
+            if (index == 0) {
+              return SizedBox(height: 20);
+            } else if (index < quizzes.value.length) {
+              return QuizEditWidget(
+                quiz: quizzes.value[index - 1],
+                onChanged: (quiz) {
+                  var list = [
+                    for (var i = 0; i < quizzes.value.length; i++)
+                      i == index - 1 ? quiz : quizzes.value[i]
+                  ];
+                  quizzes.value = list;
+                  draggableNot.state = false;
+                },
+                editable: true,
+                index: index - 1,
+              );
+            } else {
+              return SizedBox(height: 30);
+            }
+          },
+          separatorBuilder: (context, index) {
+            if (index == 0 || index > quizzes.value.length - 2) {
+              return SizedBox();
+            } else {
+              return Divider(height: 2);
+            }
+          },
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Visibility(
+            visible: !draggable,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                LoadingButton(
                   width: 160,
                   height: 35,
                   onPressed: () async {
                     loading.value = true;
-                    if (drafting.value) {
-                      await reference.update({
-                        "questions_draft": [
-                          for (var q in quizzes.value) q.toMap()
-                        ]
-                      });
-                      drafting.value = false;
-                    } else {
-                      await reference.update({
-                        "questions_publish": [
-                          for (var q in quizzes.value) q.toMap()
-                        ]
-                      });
-                      draggableNot.state = true;
-                    }
+                    await reference.update({
+                      "questions_draft": [
+                        for (var q in quizzes.value) q.toMap()
+                      ]
+                    });
+                    draggableNot.state = true;
                     loading.value = false;
                   },
                   isLoading: loading.value,
-                  text: drafting.value ? "下書き保存" : "保存",
+                  text: "保存",
                 ),
+                SizedBox(height: 10),
+              ],
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Visibility(
+            visible: draggable,
+            child: Text(
+              "上にスワイプしてテスト開始",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
               ),
-              Visibility(visible: !draggable, child: SizedBox(height: 2)),
-              Visibility(
-                visible: draggable,
-                child: Text(
-                  "上にスワイプしてテスト開始",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                  ),
-                ),
-              ),
-            ],
-          )
-        : const Center(child: SakuraProgressIndicator());
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
 
@@ -254,7 +261,7 @@ class QuizSubmissionDisplay extends HookConsumerWidget {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("採点中", style: TextStyle(fontSize: 20)),
+                Text("採点終了", style: TextStyle(fontSize: 20)),
                 Text("${finish.length}", style: TextStyle(fontSize: 20)),
               ],
             ),
@@ -266,6 +273,7 @@ class QuizSubmissionDisplay extends HookConsumerWidget {
             width: 200,
             onPressed: () async {
               loading.value = true;
+              await createSummary(lesson.reference.path, []);
               await finishLessonToDuring(
                 teacher: currentRoom.teacher,
                 reference: lesson.reference,
@@ -278,6 +286,7 @@ class QuizSubmissionDisplay extends HookConsumerWidget {
             isLoading: loading.value,
             text: "テスト終了",
           ),
+          SizedBox(height: 5),
         ]);
       },
       // エラー時の表示
@@ -355,7 +364,11 @@ class QuizResultsDisplay extends ConsumerWidget {
           ));
         }
 
-        return ListView(children: list);
+        return Stack(
+          children: [
+            ListView(children: list),
+          ],
+        );
       },
       // エラー時の表示
       error: (_, __) => const Text("読み込み失敗"),

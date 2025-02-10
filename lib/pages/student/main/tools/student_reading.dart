@@ -10,8 +10,22 @@ import '../../../../data/firebase/lesson_stream.dart';
 import '../../../../widget/base_page/base_page.dart';
 import '../../../../widget/utils/sakura_progress_indicator.dart';
 
-class StudentReading extends HookConsumerWidget {
+class StudentReading extends StatelessWidget {
   const StudentReading({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BasePage(
+      pageTitle: "教科書",
+      body: StudentReadingWidget(),
+    );
+  }
+}
+
+class StudentReadingWidget extends HookConsumerWidget {
+  const StudentReadingWidget({super.key, this.initial = 0});
+
+  final int initial;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,37 +34,37 @@ class StudentReading extends HookConsumerWidget {
     final pdf =
         storage.ref().child("text/${room.textDataName}").getDownloadURL();
 
-    return BasePage(
-      pageTitle: "教科書",
-      body: FutureBuilder(
-        future: pdf,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: SakuraProgressIndicator());
-          } else if (snapshot.hasError) {
-            return const Center(child: Text("読み込み失敗"));
-          } else if (!snapshot.hasData) {
-            return const Center(child: Text("教科書データが見つかりませんでした"));
-          } else {
-            // SharedPreferenceで保存できるか？
-
-            return StudentReadingDisplay(uri: Uri.parse(snapshot.data ?? ""));
-          }
-        },
-      ),
+    return FutureBuilder(
+      future: pdf,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: SakuraProgressIndicator());
+        } else if (snapshot.hasError) {
+          return const Center(child: Text("読み込み失敗"));
+        } else if (!snapshot.hasData) {
+          return const Center(child: Text("教科書データが見つかりませんでした"));
+        } else {
+          return StudentReadingDisplay(
+            initial: initial,
+            uri: Uri.parse(snapshot.data ?? ""),
+          );
+        }
+      },
     );
   }
 }
 
 class StudentReadingDisplay extends HookConsumerWidget {
-  const StudentReadingDisplay({super.key, required this.uri});
+  const StudentReadingDisplay({super.key, required this.uri, this.initial = 0});
 
   final Uri uri;
+  final int initial;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageController = useMemoized(() => PageController());
-    final current = useState<int>(1);
+    final pageController =
+        useMemoized(() => PageController(initialPage: initial));
+    final current = useState<int>(initial + 1);
 
     return PdfDocumentViewBuilder.uri(uri, builder: (context, document) {
       return Column(
@@ -58,12 +72,10 @@ class StudentReadingDisplay extends HookConsumerWidget {
           Flexible(
             flex: 19,
             child: ScrollConfiguration(
-              // chrome上でスワイプを検知するために必要、実機ではいらない
               behavior: _MouseDraggableScrollBehavior(),
               child: PageView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: document?.pages.length ?? 0,
-                // ダブルタップで拡大はこのWidgetだと実装されていない、一旦諦め
                 itemBuilder: (context, index) => InteractiveViewer(
                   child: PdfPageView(
                     document: document,
@@ -81,7 +93,9 @@ class StudentReadingDisplay extends HookConsumerWidget {
             child: Slider(
               max: (document?.pages.length ?? 1).toDouble(),
               min: 1.0,
-              value: current.value.toDouble(),
+              value: current.value > (document?.pages.length ?? 1)
+                  ? 1
+                  : current.value.toDouble(),
               divisions: _calcDivisions(document?.pages.length),
               onChanged: (value) =>
                   pageController.jumpToPage((value - 1).round()),
