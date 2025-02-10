@@ -56,9 +56,11 @@ class LessonsSummary extends HookConsumerWidget {
                     GoRouter.of(context).push(Routes.chatAI);
                   }),
                 ),
-                Expanded(
-                  child: AnalyticsBadgeIcon(onPressed: () {}),
-                ),
+                //Todo
+                //自己分析機能の実装
+                // Expanded(
+                //   child: AnalyticsBadgeIcon(onPressed: () {}),
+                // ),
               ]),
               Divider(),
               Container(

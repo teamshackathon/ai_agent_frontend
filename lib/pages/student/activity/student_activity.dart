@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sakura/toast.dart';
 
 import '../../../data/firebase/store_provider.dart';
 import '../../../firebase/firestore/notice/send_notice_to_myself.dart';
@@ -158,9 +159,13 @@ class StudentActivityPage extends HookConsumerWidget {
           );
         },
         // エラー時の表示
-        error: (o, e) => const Center(
-          child: Text("読み込み失敗"),
-        ),
+        error: (obj, stactrace) {
+          if (stactrace.toString().isEmpty) {
+            return Center(child: Text("通知なし"));
+          } else {
+            return Center(child: Text("読み込み失敗"));
+          }
+        },
         // 読込中の表示
         loading: () => const Center(
           child: SakuraProgressIndicator(),
