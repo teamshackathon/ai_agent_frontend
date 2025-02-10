@@ -189,7 +189,11 @@ Future<void> createSummary(String reference, List<String> notice) async {
         'reference': reference,
         'notice': notice.toString(),
       }));
-
+  infoToast(
+      log: jsonEncode(<String, String>{
+    'reference': reference,
+    'notice': notice.toString(),
+  }));
   if (responce.statusCode == 200) {
     return;
   } else {
