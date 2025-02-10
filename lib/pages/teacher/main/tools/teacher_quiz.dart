@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sakura/data/person/person.dart';
 
 import '../../../../api/api.dart';
 import '../../../../data/firebase/during_stream.dart';
@@ -273,15 +274,18 @@ class QuizSubmissionDisplay extends HookConsumerWidget {
             width: 200,
             onPressed: () async {
               loading.value = true;
-              await createSummary(lesson.reference.path, []);
+              var user = await ref.watch(personStatusProvider.future);
+              await createSummary(
+                  lesson.reference.path, <String>['"${user.folderName}"']);
+
               await finishLessonToDuring(
                 teacher: currentRoom.teacher,
                 reference: lesson.reference,
               );
+              loading.value = false;
               if (context.mounted) {
                 GoRouter.of(context).pop();
               }
-              loading.value = false;
             },
             isLoading: loading.value,
             text: "テスト終了",
