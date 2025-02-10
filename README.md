@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/branding-manabiya-ai.png" alt="Manabiya AI Logo" width="200"/>
+  <img src="assets/branding-manabiya-ai.png" alt="Manabiya AI Logo"/>
 </div>
 
 # Manabiya AIについて
