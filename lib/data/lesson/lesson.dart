@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../agenda/agenda.dart';
 import '../quiz/quiz.dart';
+import '../summary/summary.dart';
 
 part 'lesson.freezed.dart';
 
@@ -16,6 +17,7 @@ class Lesson with _$Lesson {
     required Agenda agendaDraft,
     required List<Quiz> questionsPublish,
     required List<Quiz> questionsDraft,
+    required Summary summary,
     required DocumentReference reference,
     required int startPage,
     required int endPage,
@@ -40,6 +42,7 @@ class Lesson with _$Lesson {
       agendaDraft: Agenda.fromMap(map?["agenda_draft"] ?? {}),
       questionsPublish: publish,
       questionsDraft: draft,
+      summary: Summary.fromMap(map?["summary"] ?? {}),
       count: map?["count"] ?? 0,
       startPage: map?["start_page"] ?? 0,
       endPage: map?["end_page"] ?? 0,
@@ -72,10 +75,14 @@ class Lesson with _$Lesson {
       agendaDraft: Agenda.isBlank(),
       questionsPublish: [],
       questionsDraft: [],
+      summary: Summary.isBlank(),
       reference: FirebaseFirestore.instance.collection("2024").doc(),
       startPage: 0,
       endPage: 0,
       state: "",
     );
   }
+
+  List<Map<String, dynamic>> get publishMap =>
+      [for (final d in questionsDraft) d.toMap()];
 }

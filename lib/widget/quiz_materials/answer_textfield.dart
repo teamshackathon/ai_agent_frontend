@@ -39,14 +39,10 @@ class AnswerTextboxResult extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Flexible(
-          child: Text(
-            "$answer  ",
-            style: TextStyle(
-              fontSize: 16,
-              height: 0,
-            ),
-          ),
+        Text(
+          "$answer  ",
+          style: TextStyle(fontSize: 16, height: 0),
+          maxLines: null,
         ),
         if (correct != null)
           correct!

@@ -27,7 +27,6 @@ class StudentActivityPage extends HookConsumerWidget {
         onPressed: () async => await sendNoticeToMyself(ref: ref),
       ),
       body: noticeStream.when(
-        // データを受け取れたときの処理
         data: (snapshot) {
           final notices = snapshot.docs;
           // noticesの配列をリバースする
@@ -53,37 +52,38 @@ class StudentActivityPage extends HookConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Flex(
-                        direction: Axis.horizontal,
-                        children: [
-                          ActivitySelectableFilterButton(
-                            selected: filter.value == "all",
-                            child: Text('すべて'),
-                            onPressed: () => {filter.value = "all"},
-                          ),
-                          ActivitySelectableFilterButton(
-                            selected: filter.value == "unread",
-                            child: Text('未読のみ'),
-                            onPressed: () => {filter.value = "unread"},
-                          ),
-                          ActivitySelectableFilterButton(
-                            selected: filter.value == "teacher",
-                            child: Text('先生からの通知'),
-                            onPressed: () => {filter.value = "teacher"},
-                          ),
-                          ActivitySelectableFilterButton(
-                            selected: filter.value == "manabiya-ai",
-                            child: Text('Manabiya AIからの通知'),
-                            onPressed: () => {filter.value = "manabiya-ai"},
-                          ),
-                          ActivitySelectableFilterButton(
-                            selected: filter.value == "system",
-                            child: Text('システムからの通知'),
-                            onPressed: () => {filter.value = "system"},
-                          ),
-                        ],
-                      )),
+                    scrollDirection: Axis.horizontal,
+                    child: Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        ActivitySelectableFilterButton(
+                          selected: filter.value == "all",
+                          child: Text('すべて'),
+                          onPressed: () => {filter.value = "all"},
+                        ),
+                        ActivitySelectableFilterButton(
+                          selected: filter.value == "unread",
+                          child: Text('未読のみ'),
+                          onPressed: () => {filter.value = "unread"},
+                        ),
+                        ActivitySelectableFilterButton(
+                          selected: filter.value == "teacher",
+                          child: Text('先生からの通知'),
+                          onPressed: () => {filter.value = "teacher"},
+                        ),
+                        ActivitySelectableFilterButton(
+                          selected: filter.value == "manabiya-ai",
+                          child: Text('Manabiya AIからの通知'),
+                          onPressed: () => {filter.value = "manabiya-ai"},
+                        ),
+                        ActivitySelectableFilterButton(
+                          selected: filter.value == "system",
+                          child: Text('システムからの通知'),
+                          onPressed: () => {filter.value = "system"},
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 Expanded(child: Center(child: Text("通知がありません")))
               ],

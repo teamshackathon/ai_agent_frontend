@@ -58,12 +58,19 @@ class TeacherAgendaDisplay extends HookConsumerWidget {
                   : Text("下書きがあります。編集して公開して下さい。"),
             )
           : ListView.builder(
-              itemCount: agenda.sentences.length,
+              itemCount: agenda.sentences.length + 1,
               itemBuilder: (context, index) {
-                return TeacherAgendaSentenceCard(
-                  sentence: agenda.sentences[index],
-                  index: index,
-                );
+                if (index < agenda.sentences.length) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 15.0),
+                    child: TeacherAgendaSentenceCard(
+                      sentence: agenda.sentences[index],
+                      index: index,
+                    ),
+                  );
+                } else {
+                  return SizedBox(height: 80);
+                }
               },
             ),
     );

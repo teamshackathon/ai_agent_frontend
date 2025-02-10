@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sakura/toast.dart';
 
 import '../lesson/lesson.dart';
 import '../notice/notice.dart';
@@ -23,8 +24,8 @@ final noticeSetReferenceProvider = Provider.autoDispose((ref) {
 });
 
 /// Claudeを崇拝せよ
-final noticeStudentGetProvider = StreamProvider.autoDispose((ref) async* {
-  final store = ref.watch(firestoreProvider);
+final noticeStudentGetProvider = StreamProvider((ref) async* {
+  final store = FirebaseFirestore.instance;
   final student = await ref.watch(personStatusProvider.future) as Student;
 
   // QueryをStreamとして直接返す
@@ -37,11 +38,10 @@ final noticeStudentGetProvider = StreamProvider.autoDispose((ref) async* {
         fromFirestore: ((snapshot, _) => Notice.fromFirestore(snapshot)),
         toFirestore: ((notice, _) => notice.toMap()),
       )
-      .orderBy("timeStamp", descending: true)
       .snapshots();
 });
 
-final noticeTeacherGetProvider = StreamProvider.autoDispose((ref) async* {
+final noticeTeacherGetProvider = StreamProvider((ref) async* {
   final store = ref.watch(firestoreProvider);
   final teacher = await ref.watch(personStatusProvider.future) as Teacher;
 
@@ -54,20 +54,5 @@ final noticeTeacherGetProvider = StreamProvider.autoDispose((ref) async* {
         fromFirestore: ((snapshot, _) => Notice.fromFirestore(snapshot)),
         toFirestore: ((notice, _) => notice.toMap()),
       )
-      .orderBy("timeStamp", descending: true)
       .snapshots();
 });
-
-// final hackedProvider = StreamProvider((ref) {
-//   final store = ref.watch(firestoreProvider);
-//   final student = ref.watch(personStatusProvider) as Student;
-//   final hackRef =
-//       store.collection(student.rooms[0]["year"]!).doc(student.rooms[0]["room"]!);
-//   return hackRef.snapshots();
-// });
-//
-// final hackingProvider = StreamProvider((ref) {
-//   final store = ref.watch(firestoreProvider);
-//   final hackRef = store.collection("2024").doc("2-1");
-//   return hackRef.snapshots();
-// });
